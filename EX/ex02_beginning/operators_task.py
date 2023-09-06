@@ -65,7 +65,6 @@ else:
 """If t value is not the same as u value then print True. If not then print False."""
 t = int(input("Enter the value for t:"))
 u = int(input("Enter the value for u:"))
-print()
 if t != u:
     print(True)
 else:
