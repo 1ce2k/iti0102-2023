@@ -74,8 +74,8 @@ else:
 length = int(input("Enter the value for length:"))
 width = int(input("Enter the value for width:"))
 height = int(input("Enter the value for height:"))
-result = length * width * height
-print(result)
+volume = length * width * height
+print(volume)
 
 """Convert days, minutes, hours and seconds into minutes.
 
