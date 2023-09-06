@@ -105,8 +105,9 @@ output
 """
 ects = int(input("Enter the amount of ECTS: "))
 weeks = int(input("Enter the number of weeks: "))
-result = ects * 26 / weeks
-if result > 0:
+eap_hours = ects * 26
+if eap_hours < weeks * 168:
+    result = eap_hours / weeks
     print(result)
 else:
     print(-1)
