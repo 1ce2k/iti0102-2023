@@ -108,7 +108,8 @@ weeks = int(input("Enter the number of weeks: "))
 hours_needed = ects * 26
 if weeks == 0:
     print(-1)
+elif hours_needed > weeks * 168:
+    print(-1)
 else:
     hours_per_week = hours_needed / weeks
     print(int(hours_per_week))
-
