@@ -29,7 +29,8 @@ print(i % j)
 """Divide k by l. Print out the floor value. Use an arithmetic operator."""
 k = int(input("Enter the value for k:"))
 l: int = int(input("Enter the value for l:"))
-print(math.floor(k / l))
+result = math.floor(k / l)
+print(result)
 
 """Calculate m raised to the power of n. Print out the result."""
 m = int(input("Enter the value for m:"))
@@ -74,7 +75,8 @@ else:
 length = int(input("Enter the value for length:"))
 width = int(input("Enter the value for width:"))
 height = int(input("Enter the value for height:"))
-print(length * width * height)
+result = length * width * height
+print(result)
 
 """Convert days, minutes, hours and seconds into minutes.
 
