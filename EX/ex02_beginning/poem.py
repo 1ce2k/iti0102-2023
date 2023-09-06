@@ -17,4 +17,4 @@ And so will you!
 color = input("Enter a color: ")
 objects = input("Enter some objects: ")
 activity = input("Enter some activity: ")
-print(f"Roses are {color},\n{objects} are blue,\nI love {activity}\nAnd so will you!")
+print(f"Roses are {color},\n{objects} are blue,\nI love to {activity}\nAnd so will you!")
