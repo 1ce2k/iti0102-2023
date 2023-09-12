@@ -24,15 +24,13 @@ def control_number(encrypted_string: str) -> bool:
     for char in encrypted_string:
         if char in symbols_for_5:
             res += 5
-            num_from_str = ''
         if char.isalpha():
-            num_from_str = ''
             if char == char.lower():
                 res += 1
             else:
                 res += 2
-    reversed = encrypted_string[::-1]
-    for x in reversed:
+    reversed_str = encrypted_string[::-1]
+    for x in reversed_str:
         if x.isdigit():
             num_from_str += x
         else:
