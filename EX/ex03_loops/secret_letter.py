@@ -24,7 +24,7 @@ def secret_letter(letter: str) -> bool:
                 upper_count += 1
         if char.isdigit():
             sum_of_digits += int(char)
-    if lower_count > upper_count:
+    if lower_count >= upper_count:
         return False
     if sum_of_digits > upper_count:
         return False
