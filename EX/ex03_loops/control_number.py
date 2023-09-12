@@ -32,15 +32,16 @@ def control_number(encrypted_string: str) -> bool:
     num_to_check = len(str(count))
     other_symbols_in = encrypted_string[-num_to_check:]
     if other_symbols_in.isdigit():
-        if count == int(other_symbols_in):
+        if str(count) == other_symbols_in:
             return True
     return False
 
 
 if __name__ == '__main__':
-    print(control_number("mE0W5"))  # True
-    print(control_number("SomeControlNR?20"))  # False
-    print(control_number("False?Nr9"))  # False
-    print(control_number("#Hello?!?26"))  # True
-    print(control_number("3423982340000000.....///....0"))  # True
-    print(control_number("#Shift6"))  # False
+#    print(control_number("mE0W5"))  # True
+#    print(control_number("SomeControlNR?20"))  # False
+#    print(control_number("False?Nr9"))  # False
+#    print(control_number("#Hello?!?26"))  # True
+#    print(control_number("3423982340000000.....///....0"))  # True
+#    print(control_number("#Shift6"))  # False
+    print(control_number('/.-,%&/{1234567890[]}()"0'))
