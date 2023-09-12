@@ -18,8 +18,8 @@ def is_prime_number(number: int) -> bool:
         for x in range(2, number):
             if number % x == 0:
                 return False
-    else:
-        return True
+    if number == 0 or number == 1:
+        return False
     return True
 
 if __name__ == '__main__':
