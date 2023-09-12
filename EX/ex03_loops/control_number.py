@@ -21,9 +21,9 @@ def control_number(encrypted_string: str) -> bool:
     count = 0
     symbols_for_5 = ['!', '@', '#', '?']
     for char in encrypted_string:
-        if char.lower():
+        if char.islower():
             count += 1
-        elif char.upper():
+        elif char.isupper():
             count += 2
         elif char in symbols_for_5:
             count += 5
