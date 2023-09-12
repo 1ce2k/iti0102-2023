@@ -51,15 +51,9 @@ def control_number(encrypted_string: str) -> bool:
                 count += 2
         elif char in symbols_for_5:
             count += 5
-    code_num = ''
-    reversed_text = encrypted_string[::-1]
-    for x in reversed_text:
-        if x.isdigit():
-            code_num += x
-        else:
-            break
 
-    if count == int(code_num[::-1]):
+    index_to_check = len(str(count))
+    if str(count) == encrypted_string[-index_to_check:]:
         return True
     return False
 
@@ -67,8 +61,7 @@ def control_number(encrypted_string: str) -> bool:
 if __name__ == '__main__':
     print(control_number("mE0W5"))  # True
     print(control_number("SomeControlNR?20"))  # False
-    print(control_number("False?Nr"))  # False
+    print(control_number("False?Nr9"))  # False
     print(control_number("#Hello?!?26"))  # True
     print(control_number("3423982340000000.....///....0"))  # True
     print(control_number("#Shift6"))  # False
-    print(control_number("#Shift06"))  # False
