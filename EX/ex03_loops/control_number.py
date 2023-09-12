@@ -21,7 +21,6 @@ def control_number(encrypted_string: str) -> bool:
     res = 0
     symbols_for_5 = ['?', '!', '@', '#']
     num_from_str = ''
-    nums = []
     for char in encrypted_string:
         if char in symbols_for_5:
             res += 5
@@ -32,16 +31,16 @@ def control_number(encrypted_string: str) -> bool:
                 res += 1
             else:
                 res += 2
-        if char.isdigit():
-            num_from_str = num_from_str + char
-    if num_from_str != '':
-        nums.append(int(num_from_str))
+    reversed = encrypted_string[::-1]
+    for x in reversed:
+        if x.isdigit():
+            num_from_str += x
+        else:
+            break
 
-    if res == nums[-1]:
+    if res == int(num_from_str[::-1]):
         return True
-    elif len(nums) == 1:
-        if int(encrypted_string[-1]) == res:
-            return True
+
     return False
 
 
