@@ -18,29 +18,6 @@ def control_number(encrypted_string: str) -> bool:
     :param encrypted_string: encrypted string
     :return: validation
     """
-    # res = 0
-    # symbols_for_5 = ['?', '!', '@', '#']
-    # num_from_str = ''
-    # for char in encrypted_string:
-    #     if char in symbols_for_5:
-    #         res += 5
-    #     if char.isalpha():
-    #         if char == char.lower():
-    #             res += 1
-    #         else:
-    #             res += 2
-    # reversed_str = encrypted_string[::-1]
-    # for x in reversed_str:
-    #     if x.isdigit():
-    #         num_from_str += x
-    #     else:
-    #         break
-    #
-    # if res == int(num_from_str[::-1]):
-    #     return True
-    #
-    # return False
-
     count = 0
     symbols_for_5 = ['!', '@', '#', '?']
     for char in encrypted_string:
@@ -52,9 +29,11 @@ def control_number(encrypted_string: str) -> bool:
         elif char in symbols_for_5:
             count += 5
 
-    index_to_check = len(str(count))
-    if str(count) == encrypted_string[-index_to_check:]:
-        return True
+    num_to_check = len(str(count))
+    other_symbols_in = encrypted_string[-num_to_check:]
+    if other_symbols_in.isdigit():
+        if count == int(other_symbols_in):
+            return True
     return False
 
 
