@@ -48,12 +48,9 @@ def control_number(encrypted_string: str) -> bool:
             if char == char.lower():
                 count += 1
             else:
-                count +=2
-        if char.isdigit():
-            continue
-        if char in symbols_for_5:
+                count += 2
+        elif char in symbols_for_5:
             count += 5
-
     code_num = ''
     reversed_text = encrypted_string[::-1]
     for x in reversed_text:
