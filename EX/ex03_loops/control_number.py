@@ -36,11 +36,11 @@ def control_number(encrypted_string: str) -> bool:
             num_from_str = num_from_str + char
     if num_from_str != '':
         nums.append(int(num_from_str))
-    if len(nums) == 1:
-        if int(encrypted_string[-1]) == 0:
-            return True
-    else:
-        if res == nums[-1]:
+
+    if res == nums[-1]:
+        return True
+    elif len(nums) == 1:
+        if int(encrypted_string[-1]) == res:
             return True
     return False
 
