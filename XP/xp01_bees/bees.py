@@ -29,7 +29,7 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
 
 
 def analyze_movement_pattern(positions):
-    """Return movement pattern"""
+    """Return movement pattern."""
     constant_gap = True
     gap = positions[1] - positions[0]
     for i in range(2, len(positions)):
@@ -69,6 +69,7 @@ def analyze_movement_pattern(positions):
 
 
 def calculate_position_honey_hopper(positions, pattern, honeycomb_width):
+    """Calculate size of honey comb."""
     comb_size = calculate_honeycomb_size(honeycomb_width)
     calculated_positions = []
     if pattern == "constant_gap":
