@@ -30,12 +30,7 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
 
 def analyze_movement_pattern(positions):
     """Return movement pattern."""
-    constant_gap = True
-    gap = positions[1] - positions[0]
-    for i in range(2, len(positions)):
-        if positions[i] - positions[i - 1] != gap and gap != 0:
-            constant_gap = False
-            break
+    constant_gap = all(positions[i] - positions[i - 1] == positions[1] - positions[0] for i in range(1, len(positions)))
     if constant_gap:
         return 'constant_gap'
 
