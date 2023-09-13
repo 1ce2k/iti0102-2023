@@ -74,6 +74,7 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
 #     raise ValueError("Insufficient data for sequence identification")
 
 def analyze_movement_pattern(sequence):
+    """Return position pattern."""
     end = len(sequence)
     for i in range(2, end):
         # arithmetic sequence
@@ -81,8 +82,7 @@ def analyze_movement_pattern(sequence):
             print(0)
             return 'constant_gap'
         # if one is not moving
-        elif sequence[i] - sequence[i - 1] == sequence[1] - sequence[0] == sequence[end - 1] - sequence[
-            end - 2] == 0:
+        elif all(sequence[i] == sequence[0] for i in range(1, len(sequence))):
             print(1)
             return 'is_not_moving'
         # geometric sequence
@@ -95,8 +95,7 @@ def analyze_movement_pattern(sequence):
             print(3)
             return 'increasing_eometric_gap'
         # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
-        elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == \
-            (sequence[end - 1] - sequence[end - 2]) / (end - 1):
+        elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i:
             print(4)
             return 'increasing_gap'
         else:
