@@ -95,8 +95,7 @@ def analyze_movement_pattern(sequence):
             print(3)
             return 'increasing_eometric_gap'
         # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
-        elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == \
-            (sequence[end - 1] - sequence[end - 2]) / (end - 1):
+        elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == (sequence[end - 1] - sequence[end - 2]) / (end - 1):
             print(4)
             return 'increasing_gap'
         else:
