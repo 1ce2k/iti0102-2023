@@ -30,7 +30,6 @@ def encode(message: str, shift: int) -> str:
                 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     for char in message:
         new_char = ''
-        new_char_index = 0
         if char.isalpha() and char == char.lower():
             for letter in alphabet:
                 if char == letter.lower():

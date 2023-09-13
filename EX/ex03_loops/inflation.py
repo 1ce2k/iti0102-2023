@@ -44,3 +44,4 @@ if __name__ == '__main__':
     print(inflation(2, 5784))  # 11520
     print(inflation(39, 3400))  # 5616
     print(inflation(5, 10))  # 10
+    print(inflation(8, 13))
