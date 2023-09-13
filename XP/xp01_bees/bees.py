@@ -28,31 +28,131 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     return False
 
 
-def analyze_movement_pattern(positions):
-    """Return movement pattern."""
-    constant_gap = all(positions[i] - positions[i - 1] == positions[1] - positions[0] for i in range(1, len(positions)))
-    if constant_gap:
-        return 'constant_gap'
+# def analyze_movement_pattern(positions):
+#     """Return movement pattern."""
+#     constant_gap = True
+#     gap = positions[1] - positions[0]
+#     for i in range(2, len(positions)):
+#         if positions[i] - positions[i - 1] != gap and gap != 0:
+#             constant_gap = False
+#             break
+#     if constant_gap:
+#         print(0)
+#         return 'constant_gap'
+#
+#     increasing_gap = True
+#     for i in range(2, len(positions)):
+#         if positions[i] - positions[i - 1] <= positions[1] - positions[0]:
+#             increasing_gap = False
+#             break
+#     if increasing_gap:
+#         print(1)
+#         return "increasing_gap"
+#
+#     geometric_sequence = True
+#     ratio = positions[1] // positions[0]
+#     for i in range(2, len(positions) - 1):
+#         if positions[i] // positions[i - 1] != ratio:
+#             geometric_sequence = False
+#             break
+#     if geometric_sequence:
+#         print(2)
+#         return "geometric_sequence"
+#
+#     increasing_geometric_gap = True
+#     for i in range(1, len(positions)):
+#         if positions[i + 1] // positions[i] <= positions[1] // positions[0]:
+#             increasing_geometric_gap = False
+#             break
+#     if increasing_geometric_gap:
+#         print(3)
+#         return 'increasing_geometric_sequence'
+#
+#     if all(position == positions[0] for position in positions):
+#         print(4)
+#         return 'is_not_moving'
+#     raise ValueError("Insufficient data for sequence identification")
 
-    increasing_gap = all(
-        positions[i] / positions[i - 1] == positions[1] / positions[0] for i in range(1, len(positions)))
-    if increasing_gap:
-        return "increasing_gap"
+def analyze_movement_pattern(sequence):
+    end = len(sequence)
+    for i in range(2, end):
+        # arithmetic sequence
+        if sequence[end - 1] - sequence[end - 2] == sequence[i] - sequence[i - 1] == sequence[1] - sequence[0] != 0:
+            print(0)
+            return 'constant_gap'
+        # if one is not moving
+        elif sequence[i] - sequence[i - 1] == sequence[1] - sequence[0] == sequence[end - 1] - sequence[
+            end - 2] == 0:
+            print(1)
+            return 'is_not_moving'
+        # geometric sequence
+        elif sequence[end - 1] / sequence[end - 2] == sequence[i] / sequence[i - 1] == sequence[1] / sequence[0]:
+            print(2)
+            return 'geometric_sequence'
+        # sequence where different is in geometrical sequence 1,3,7,15
+        elif int(sequence[end - 1] - sequence[end - 2]) == int(sequence[i] - sequence[i - 1]) * i == \
+                int(sequence[1] - sequence[0]) * i * i:
+            print(3)
+            return 'increasing_eometric_gap'
+        # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
+        elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == \
+            (sequence[end - 1] - sequence[end - 2]) / (end - 1):
+            print(4)
+            return 'increasing_gap'
+        else:
+            raise ValueError("Insufficient data for sequence identification")
 
-    geometric_sequence = all(
-        positions[i] / positions[i - 1] == positions[1] / positions[0] for i in range(1, len(positions)))
-    if geometric_sequence:
-        return "geometric_sequence"
+# def analyze_movement_pattern(positions):
+#     """Return movement pattern."""
+#     constant_gap = all(positions[i] - positions[i - 1] == positions[1] - positions[0]\
+#     for i in range(1, len(positions)))
+#     if constant_gap:
+#         return 'constant_gap'
+#     increasing_gap = all(
+#         positions[i] / positions[i - 1] == positions[1] / positions[0] for i in range(1, len(positions)))
+#     if increasing_gap:
+#         return "increasing_gap"
+#     geometric_sequence = all(
+#         positions[i] / positions[i - 1] == positions[1] / positions[0] for i in range(1, len(positions)))
+#     if geometric_sequence:
+#         return "geometric_sequence"
+#     increasing_geometric_gap = all(
+#         positions[i] / positions[i - 1] > positions[1] - positions[0] for i in range(1, len(positions)))
+#     if increasing_geometric_gap:
+#         return
+#     if all(position == positions[0] for position in positions):
+#         return 'is_not_moving'
+#     raise ValueError("Insufficient data for sequence identification")
 
-    increasing_geometric_gap = all(
-        positions[i] / positions[i - 1] > positions[1] - positions[0] for i in range(1, len(positions)))
-    if increasing_geometric_gap:
-        return
 
-    if all(position == positions[0] for position in positions):
-        return 'is_not_moving'
-
-    raise ValueError("Insufficient data for sequence identification")
+# def analyze_movement_pattern(positions):
+#     if len(positions) < 2:
+#         raise ValueError("Insufficient data for sequence identification")
+#
+#     diff = positions[1] - positions[0]
+#     ratio = positions[1] / positions[0]
+#
+#     if all(positions[i] - positions[i - 1] == diff and diff != 0 for i in range(2, len(positions))):
+#         print(1)
+#         return 'constant_gap'
+#
+#     if all(positions[i] - positions[i - 1] > 0 for i in range(2, len(positions))):
+#         print(2)
+#         return "increasing_gap"
+#
+#     if all(positions[i] / positions[i - 1] == ratio for i in range(2, len(positions))):
+#         print(3)
+#         return "geometric_sequence"
+#
+#     if all(positions[i] // positions[i - 1] == ratio for i in range(2, len(positions))):
+#         print(4)
+#         return "increasing_geometric_gap"
+#
+#     if all(position == positions[0] for position in positions):
+#         print(5)
+#         return 'is_not_moving'
+#
+#     raise ValueError("Insufficient data for sequence identification")
 
 
 def calculate_position_honey_hopper(positions, pattern, honeycomb_width) -> list:
@@ -123,5 +223,8 @@ def calculate_honeycomb_size(honeycomb_width) -> int:
     return comb_size
 
 
-print(do_bees_meet(3, '1,2,3,4', '1,2,3,4'))  # =>7, 0, 1, True
-print(do_bees_meet(3, '1,2,4,8', '1,2,4,8'))  # =>7, 0, 1, True
+print(do_bees_meet(3, '1,2,3,4', '5,9,13,17'))  # =>7, 0, 0, True
+print(do_bees_meet(3, '0,0,0,0', '2,2,2,2'))  # =>7, 1, 1, True
+print(do_bees_meet(3, '1,2,4,8', '2,6,18,54'))  # =>7, 2, 2, True
+print(do_bees_meet(3, '1,3,7,15', '5,9,17,33'))  # =>7, 3, 3, True
+print(do_bees_meet(3, '1,2,4,7', '5,9,17,29'))  # =>7, 4, 4, True
