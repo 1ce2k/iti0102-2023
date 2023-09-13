@@ -34,28 +34,18 @@ def analyze_movement_pattern(positions):
     if constant_gap:
         return 'constant_gap'
 
-    increasing_gap = True
-    for i in range(2, len(positions)):
-        if positions[i] - positions[i - 1] <= positions[1] - positions[0]:
-            increasing_gap = False
-            break
+    increasing_gap = all(
+        positions[i] / positions[i - 1] == positions[1] / positions[0] for i in range(1, len(positions)))
     if increasing_gap:
         return "increasing_gap"
 
-    geometric_sequence = True
-    ratio = positions[1] // positions[0]
-    for i in range(2, len(positions) - 1):
-        if positions[i] // positions[i - 1] != ratio:
-            geometric_sequence = False
-            break
+    geometric_sequence = all(
+        positions[i] / positions[i - 1] == positions[1] / positions[0] for i in range(1, len(positions)))
     if geometric_sequence:
         return "geometric_sequence"
 
-    increasing_geometric_gap = True
-    for i in range(1, len(positions)):
-        if positions[i + 1] // positions[i] <= positions[1] // positions[0]:
-            increasing_geometric_gap = False
-            break
+    increasing_geometric_gap = all(
+        positions[i] / positions[i - 1] > positions[1] - positions[0] for i in range(1, len(positions)))
     if increasing_geometric_gap:
         return
 
@@ -66,7 +56,7 @@ def analyze_movement_pattern(positions):
 
 
 def calculate_position_honey_hopper(positions, pattern, honeycomb_width) -> list:
-    """Return position for honey hopper"""
+    """Return position for honey hopper."""
     # comb_size = calculate_honeycomb_size(honeycomb_width)
     calculated_positions = []
     if pattern == "constant_gap":
@@ -89,7 +79,7 @@ def calculate_position_honey_hopper(positions, pattern, honeycomb_width) -> list
 
 
 def calculate_position_pollen_paddle(positions, pattern, honeycomb_width) -> list:
-    """Return position for pollen paddle"""
+    """Return position for pollen paddle."""
     calculated_positions = []
     comb_size = calculate_honeycomb_size(honeycomb_width)
     position = comb_size
@@ -134,6 +124,4 @@ def calculate_honeycomb_size(honeycomb_width) -> int:
 
 
 print(do_bees_meet(3, '1,2,3,4', '1,2,3,4'))  # =>7, 0, 1, True
-print(do_bees_meet(3, '1,2,3,4', '5,9,17,33'))  # =>7, 0, 2, False
-print(do_bees_meet(3, '1,2,3,4', '1,2,4,7'))  # =>7, 0, 3, True
-print(do_bees_meet(3, '0,0,0,0', '1,2,4,7'))  # =>7, 0, 3, False
+print(do_bees_meet(3, '1,2,4,8', '1,2,4,8'))  # =>7, 0, 1, True
