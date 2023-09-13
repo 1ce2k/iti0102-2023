@@ -16,12 +16,14 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     pollen_paddle_pattern = analyze_movement_pattern(pollen_paddle_positions)
 
     # Calculate position
-    honeyhopper_hex_positions = calculate_position(honey_hopper_positions, honey_hopper_pattern, honeycomb_width)
-    pollenpadle_hex_positions = calculate_position(pollen_paddle_positions, pollen_paddle_pattern, honeycomb_width)
+    honey_hopper_hex_positions = calculate_position_honey_hopper(honey_hopper_positions, honey_hopper_pattern,
+                                                                 honeycomb_width)
+    pollen_paddle_hex_positions = calculate_position_pollen_paddle(pollen_paddle_positions, pollen_paddle_pattern,
+                                                                   honeycomb_width)
 
     # Check gor intersection
-    for honeyhopper_pos in honeyhopper_hex_positions:
-        if honeyhopper_pos in pollenpadle_hex_positions:
+    for honey_hopper_pos in honey_hopper_hex_positions:
+        if honey_hopper_pos in pollen_paddle_hex_positions:
             return True
     return False
 
@@ -31,15 +33,15 @@ def analyze_movement_pattern(positions):
     constant_gap = True
     gap = positions[1] - positions[0]
     for i in range(2, len(positions)):
-        if positions[i] - positions[i - 1] != gap:
+        if positions[i] - positions[i - 1] != gap and gap != 0:
             constant_gap = False
             break
     if constant_gap:
         return 'constant_gap'
 
     increasing_gap = True
-    for i in range(1, len(positions)):
-        if positions[i + 1] - positions[i] <= positions[i] - positions[i - 1]:
+    for i in range(2, len(positions)):
+        if positions[i] - positions[i - 1] <= positions[1] - positions[0]:
             increasing_gap = False
             break
     if increasing_gap:
@@ -47,8 +49,8 @@ def analyze_movement_pattern(positions):
 
     geometric_sequence = True
     ratio = positions[1] // positions[0]
-    for i in range(1, len(positions) - 1):
-        if positions[i + 1] // positions[i] != ratio:
+    for i in range(2, len(positions) - 1):
+        if positions[i] // positions[i - 1] != ratio:
             geometric_sequence = False
             break
     if geometric_sequence:
@@ -56,18 +58,19 @@ def analyze_movement_pattern(positions):
 
     increasing_geometric_gap = True
     for i in range(1, len(positions)):
-        if positions[i + 1] // positions[i] <= positions[i] // positions[i - 1]:
+        if positions[i + 1] // positions[i] <= positions[1] // positions[0]:
             increasing_geometric_gap = False
             break
     if increasing_geometric_gap:
-        return "increasing_geometric_gap"
+        return
 
-    raise ValueError("Pattern not recognized")
+    if all(position == positions[0] for position in positions):
+        return 'is_not_moving'
 
 
-def calculate_position(positions, pattern, honeycomb_width):
+def calculate_position_honey_hopper(positions, pattern, honeycomb_width):
+    comb_size = calculate_honeycomb_size(honeycomb_width)
     calculated_positions = []
-
     if pattern == "constant_gap":
         gap = positions[1] - positions[0]
         for i in range(len(positions)):
@@ -82,9 +85,55 @@ def calculate_position(positions, pattern, honeycomb_width):
     elif pattern == "increasing_geometric_gap":
         for i in range(len(positions)):
             calculated_positions.append(positions[i] * (2 ** i))
+    elif pattern == "is_not_moving":
+        calculated_positions.append(positions[0])
     return calculated_positions
 
+
+def calculate_position_pollen_paddle(positions, pattern, honeycomb_width):
+    calculated_positions = []
+    comb_size = calculate_honeycomb_size(honeycomb_width)
+    position = comb_size
+
+    if pattern == "constant_gap":
+        gap = positions[1] - positions[0]
+        for i in range(len(positions)):
+            if position >= 0:
+                position = positions[i] - gap * i
+                calculated_positions.append(position)
+            else:
+                position = comb_size - abs(position[i] - gap * 1) % comb_size
+                calculated_positions.append(position)
+    elif pattern == "increasing_gap":
+        for i in range(len(positions)):
+            if position >= 0:
+                position = positions[i] - (i * (i + 1) // 2)
+                calculated_positions.append(position)
+            else:
+                position = comb_size - (position[i] - (i * (i + 1))) % comb_size
+    elif pattern == "geometric_sequence":
+        ratio = positions[1] // positions[0]
+        for i in range(len(positions)):
+            calculated_positions.append(positions[i] * (ratio ** i))
+    elif pattern == "increasing_geometric_gap":
+        for i in range(len(positions)):
+            calculated_positions.append(positions[i] * (2 ** i))
+    elif pattern == "is_not_moving":
+        calculated_positions.append(positions[0])
+    return calculated_positions
+
+
+def calculate_honeycomb_size(honeycomb_width):
+    comb_length = int(honeycomb_width / 2) + 1
+    comb_size = comb_length
+    while comb_length < honeycomb_width:
+        comb_size = comb_size + comb_length + 1
+        comb_length += 1
+    comb_size = comb_size * 2 - honeycomb_width
+    return comb_size
+
+
 print(do_bees_meet(3, '1,2,3,4', '1,2,3,4'))  # =>7, 0, 1, True
-# print(do_bees_meet(3, '1,2,3,4', '5,9,17,33'))  # =>7, 0, 2, False
-# print(do_bees_meet(3, '1,2,3,4', '1,2,4,7'))  # =>7, 0, 3, False
-# print(do_bees_meet(3, '0,0,0,0', '1,2,4,7'))  # =>7, 0, 3, False
+print(do_bees_meet(3, '1,2,3,4', '5,9,17,33'))  # =>7, 0, 2, False
+print(do_bees_meet(3, '1,2,3,4', '1,2,4,7'))  # =>7, 0, 3, True
+print(do_bees_meet(3, '0,0,0,0', '1,2,4,7'))  # =>7, 0, 3, False
