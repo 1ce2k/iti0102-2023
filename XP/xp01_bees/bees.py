@@ -67,10 +67,12 @@ def analyze_movement_pattern(positions):
     if all(position == positions[0] for position in positions):
         return 'is_not_moving'
 
+    raise ValueError("Insufficient data for sequence identification")
 
-def calculate_position_honey_hopper(positions, pattern, honeycomb_width):
-    """Calculate size of honey comb."""
-    comb_size = calculate_honeycomb_size(honeycomb_width)
+
+def calculate_position_honey_hopper(positions, pattern, honeycomb_width) -> list:
+    """Return position for honey hopper"""
+    # comb_size = calculate_honeycomb_size(honeycomb_width)
     calculated_positions = []
     if pattern == "constant_gap":
         gap = positions[1] - positions[0]
@@ -91,7 +93,8 @@ def calculate_position_honey_hopper(positions, pattern, honeycomb_width):
     return calculated_positions
 
 
-def calculate_position_pollen_paddle(positions, pattern, honeycomb_width):
+def calculate_position_pollen_paddle(positions, pattern, honeycomb_width) -> list:
+    """Return position for pollen paddle"""
     calculated_positions = []
     comb_size = calculate_honeycomb_size(honeycomb_width)
     position = comb_size
@@ -124,7 +127,8 @@ def calculate_position_pollen_paddle(positions, pattern, honeycomb_width):
     return calculated_positions
 
 
-def calculate_honeycomb_size(honeycomb_width):
+def calculate_honeycomb_size(honeycomb_width) -> int:
+    """Return size of honey comb."""
     comb_length = int(honeycomb_width / 2) + 1
     comb_size = comb_length
     while comb_length < honeycomb_width:
