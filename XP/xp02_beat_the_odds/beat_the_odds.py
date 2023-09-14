@@ -158,6 +158,5 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
             if word.count('_') == sentence.count(''):
                 probability = sum(word.count(letter)) / len(word)
         letter_probabilities[letter] = probability
-    best_letter = max(letter_probabilities, key = letter_probabilities.get)
+    best_letter = max(letter_probabilities, key=letter_probabilities.get)
     return best_letter
-
