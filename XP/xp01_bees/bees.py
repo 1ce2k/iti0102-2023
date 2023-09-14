@@ -69,7 +69,7 @@ def analyze_movement_pattern(sequence):
 
 
 def calculate_position(positions, start_pos, pattern, comb_size, who):
-    """Calculate bee positions"""
+    """Calculate bee positions."""
     calculated_positions = []
 
     # calculate difference and ratio for sequence
@@ -91,7 +91,7 @@ def calculate_position(positions, start_pos, pattern, comb_size, who):
     # calculate for geometric sequence
     elif pattern == 2:
         for n in range(1, comb_size):
-            position = start_pos + (-1 if who == 'p' else 1) * start_pos * q ** (n - 1)
+            position = int(calculated_positions[n - 1] + (-1 if who == 'p' else 1) * positions[0] * q ** (n - 1))
             calculated_positions.append(position % comb_size or comb_size)
 
     # sequence where different is in geometrical sequence
@@ -115,7 +115,7 @@ def calculate_position(positions, start_pos, pattern, comb_size, who):
 
 
 if __name__ == "__main__":
-     print(do_bees_meet(3, '1,2,4,7', '1,2,4,8'))
+    print(do_bees_meet(3, '1,2,4,7', '1,2,4,8'))
     # print(calculate_honeycomb_size(5))
     # print(calculate_honeycomb_size(23))
     # print(calculate_honeycomb_size(30))
