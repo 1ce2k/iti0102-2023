@@ -52,7 +52,7 @@ def analyze_movement_pattern(sequence):
         elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == (sequence[end - 1] - sequence[end - 2]) / (end - 1):
             return 4
         else:
-            raise ValueError("1")
+            raise ValueError("Insufficient data for sequence identification")
 
 
 def calculate_position(positions, start_pos, pattern, comb_size, who_is_moving):
