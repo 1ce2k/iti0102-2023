@@ -149,14 +149,25 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
     """
     possible_letters = set()
     for word in word_dict:
-        for char in guessed_letters:
-            if word.count(char) <= sentence.count(char) and word.count('_') == sentence.count('_'):
-                possible_letters.update(word)
+        for letter in word:
+            possible_letters.add(letter, )
+
     letter_probabilities = {}
     for letter in possible_letters:
-        for word in word_dict:
-            if word.count('_') == sentence.count(''):
-                probability = sum(word.count(letter)) / len(word)
+        probability = sum(word.count(word) / len(word) for word in word_dict if word.count('_') == sentence.count('_'))
         letter_probabilities[letter] = probability
-    best_letter = max(letter_probabilities, key=letter_probabilities.get)
-    return best_letter
+    print(letter_probabilities)
+    if letter_probabilities:
+        best_letter = max(letter_probabilities, key=letter_probabilities.get)
+        return best_letter
+    else:
+        return ''
+
+
+if __name__ == "__main__":
+    sonastik = read_words('sonastik.txt')
+    arvatav_lause = "t _ _ _ t _ _ _ _ _ _ t"
+    arvatud_tahed = ['t']
+    parim = guess(arvatav_lause,arvatud_tahed, sonastik)
+    print(read_words('sonastik.txt'))
+    print(f"Parim täht arvamiseks on: {parim}")
