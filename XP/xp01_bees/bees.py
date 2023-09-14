@@ -24,11 +24,6 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     pollen_paddle_hex_positions = calculate_position(pollen_paddle_positions, p_start_pos, pollen_paddle_pattern,
                                                      honey_comb_size, 'p')
 
-    for i in range(len(honey_hopper_hex_positions)):
-        if honey_hopper_hex_positions[i] == pollen_paddle_hex_positions[i]:
-            return True
-    return False
-
     # Check gor intersection
     for x in range(len(honey_hopper_hex_positions)):
         for i in range(len(pollen_paddle_hex_positions)):
@@ -51,12 +46,10 @@ def analyze_movement_pattern(sequence):
         elif sequence[end - 1] / sequence[end - 2] == sequence[i] / sequence[i - 1] == sequence[1] / sequence[0]:
             return 2
         # sequence where different is in geometrical sequence 1,3,7,15
-        elif int(sequence[end - 1] - sequence[end - 2]) == int(sequence[i] - sequence[i - 1]) * i == \
-                int(sequence[1] - sequence[0]) * i * i:
+        elif int(sequence[end - 1] - sequence[end - 2]) == int(sequence[i] - sequence[i - 1]) * i == int(sequence[1] - sequence[0]) * i * i:
             return 3
         # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
-        elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == (
-                sequence[end - 1] - sequence[end - 2]) / (end - 1):
+        elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == (sequence[end - 1] - sequence[end - 2]) / (end - 1):
             return 4
         else:
             raise ValueError("1")
@@ -185,7 +178,8 @@ def calculate_honeycomb_size(honeycomb_width) -> int:
     return comb_size
 
 
-print(do_bees_meet(3, '1,2,3,4', '5,9,13,17'))  # => 0, 0, True
+print(do_bees_meet(3, '1,2,3,4', '1,2,3,4'))  # => 0, 0, True
+
 print(do_bees_meet(3, '1,1,1,1', '2,2,2,2'))  # =>7, 1, 1, False
 print(do_bees_meet(3, '1,1,1,1', '1,2,3,4'))  # =>7, 1, 1, False
 print(do_bees_meet(3, '1,2,4,8', '2,6,18,54'))  # =>7, 2, 2, True
