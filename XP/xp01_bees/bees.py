@@ -69,6 +69,7 @@ def analyze_movement_pattern(sequence):
 
 
 def calculate_position(positions, start_pos, pattern, comb_size, who):
+    """Calculate bee positions"""
     calculated_positions = []
 
     # calculate difference and ratio for sequence
@@ -82,19 +83,19 @@ def calculate_position(positions, start_pos, pattern, comb_size, who):
             calculated_positions.append(position % comb_size or comb_size)
 
     # calculate for not moving
-    if pattern == 1:
+    elif pattern == 1:
         for n in range(1, comb_size + 1):
             position = start_pos
             calculated_positions.append(start_pos)
 
     # calculate for geometric sequence
-    if pattern == 2:
+    elif pattern == 2:
         for n in range(1, comb_size):
-            position = int(calculated_positions[n - 1] + (-1 if who == 'p' else 1) * positions[0] * q ** (n - 1))
+            position = start_pos + (-1 if who == 'p' else 1) * start_pos * q ** (n - 1)
             calculated_positions.append(position % comb_size or comb_size)
 
     # sequence where different is in geometrical sequence
-    if pattern == 3:
+    elif pattern == 3:
         q2 = positions[2] // positions[1]
         for n in range(1, comb_size):
             step = d * q2 ** (n - 1)
@@ -102,7 +103,7 @@ def calculate_position(positions, start_pos, pattern, comb_size, who):
             calculated_positions.append(position % comb_size or comb_size)
 
     # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
-    if pattern == 4:
+    elif pattern == 4:
         calculated_positions.append(start_pos)
         for n in range(1, comb_size):
             position = calculated_positions[n - 1] + (-1 if who == 'p' else 1) * d * n
@@ -114,8 +115,12 @@ def calculate_position(positions, start_pos, pattern, comb_size, who):
 
 
 if __name__ == "__main__":
-    print(do_bees_meet(15457, '1,2,4,7', '1,2,4,7'))
+     print(do_bees_meet(3, '1,2,4,7', '1,2,4,8'))
     # print(calculate_honeycomb_size(5))
     # print(calculate_honeycomb_size(23))
     # print(calculate_honeycomb_size(30))
     # print(calculate_honeycomb_size(50))
+#    sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
+#    sequence_2 = ",".join(
+#        str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
+#    assert do_bees_meet(300, sequence_1, sequence_2) is True
