@@ -1,5 +1,5 @@
 """Beat the odds."""
-import collections
+from collections import Counter
 
 
 def read_words(filename: str) -> dict:
@@ -14,15 +14,16 @@ def read_words(filename: str) -> dict:
     :param filename: File to read
     :return: Dictionary of word counts
     """
-    dict = collections.defaultdict(int)
-    with open(filename, 'r') as fail:
-        for line in fail:
+    word_dict = {}
+    with open(filename, 'r') as file:
+        for line in file:
             word = line.strip()
-            dict[word] += 1
-    return dict
+            if word:
+                word_dict[word] = word_dict.get(word, 0) + 1
+    return word_dict
 
 
-def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
+def calculate_letter_probabilities(sentence: str, guessed_letters: list, word_dict: dict) -> dict:
     """
     Offer the letter which would most probably give the best result.
 
@@ -147,34 +148,23 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
     Use the output from read_words.
     :return: The letter with the best probability.
     """
-    possible_words = {}
-    for word in word_dict:
-        for letter in sentence:
-            if word.count(letter) <= sentence.count(letter) and word.count('_') == sentence.count('_'):
-                possible_words[word] = word_dict[word]
+    letter_probabilities = Counter()
+    total_words = sum(word_dict.values())
 
-    possible_letters = collections.defaultdict(int)
-    for word in possible_words:
-        for letter in word:
-            if letter not in guessed_letters:
-                possible_letters[letter] = possible_words[word]
-    print(possible_letters)
+    for word, count in word_dict.items():
+        remaining_letters = set(sentence) - set(guessed_letters)
+        for letter in remaining_letters:
+            if letter in word:
+                letter_probabilities[letter] += count / total_words
 
-    letter_probabilities = {}
-    letter_cnt = 0
-    all_letters_cnt = sum(possible_letters.values())
-    for letter in possible_letters:
-        letter_cnt = possible_letters[letter]
-        probability = int(letter_cnt / all_letters_cnt * 100)
-        letter_probabilities[letter] = probability
+    return letter_probabilities
 
-    print(letter_probabilities)
-    if letter_probabilities:
-        best_letter = max(letter_probabilities, key=letter_probabilities.get)
-        return best_letter
-    else:
-        return ''
+
+def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
+    letter_probabilities = calculate_letter_probabilities(sentence, guessed_letters,word_dict)
+    best_letter = max(letter_probabilities, key=letter_probabilities.get)
+    return best_letter
 
 
 if __name__ == "__main__":
-    print(guess('hello', ['h'], {'hi': 1, 'he': 2}))
+    print(guess('__', ['h'], {'he': 1, 'hi': 1}))
