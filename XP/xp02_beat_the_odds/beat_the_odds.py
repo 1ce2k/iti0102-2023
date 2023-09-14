@@ -147,29 +147,20 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
     Use the output from read_words.
     :return: The letter with the best probability.
     """
-    possible_letters = set()
-    for word in word_dict:
-        for letter in word:
-            if letter not in guessed_letters:
-                possible_letters.add(letter)
-
-    total_letters = 0
-    for key in word_dict.keys():
-        total_letters += len(key)
-    letter_probabilities = {}
-    for letter in possible_letters:
-        probability = int(sum(word.count(letter) / total_letters for word in word_dict if word.count('_') == sentence.count('_')) * 200)
-        letter_probabilities[letter] = probability
-    print(letter_probabilities)
-    if letter_probabilities:
-        best_letter = max(letter_probabilities, key=letter_probabilities.get)
-        return best_letter
-    else:
-        return ''
+    words = sentence.split(' ')
+    possible_words = []
+    dict_of_words = {}
+    for word in words:
+        for key in word_dict.keys():
+            if len(word) == len(key):
+                dict_of_words[word] = word_dict[key]
+    possible_words.append(dict_of_words)
+    print(dict_of_words)
+    print(words)
 
 if __name__ == "__main__":
-    sentence = 'so fun'
+    sentence = 'hi this is me'
     filename = 'wordlist.txt'
     word_dict = read_words(filename)
-    guessed_letters = []
+    guessed_letters = ['h']
     print(guess(sentence, guessed_letters, word_dict))
