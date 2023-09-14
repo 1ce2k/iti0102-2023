@@ -124,7 +124,7 @@ def calculate_position(positions, start_pos, pattern, comb_size, who):
 
 def do_they_meet():
     array_a = calculate_position([1, 2, 3, 4], 1, 0, 7, 'h')
-    array_b = calculate_position([1, 3, 7, 15], 7, 3, 7, 'p')
+    array_b = calculate_position([1, 2, 3, 4], 7, 3, 7, 'p')
 
     for i in range(len(array_a)):
         if array_a[i] == array_b[i]:
