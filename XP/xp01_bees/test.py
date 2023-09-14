@@ -43,14 +43,14 @@ def calculate_position(positions, start_pos, pattern, comb_size, who):
                     calculated_positions.append(position)
                 else:
                     position = position % comb_size
-                    if 1 <= position <= comb_size :
+                    if 1 <= position <= comb_size:
                         calculated_positions.append(position)
                     elif position == 0:
                         position = start_pos
                         calculated_positions.append(position)
         elif pattern == 4:
             calculated_positions.append(start_pos)
-            for n in range(1 , comb_size):
+            for n in range(1, comb_size):
                 position = calculated_positions[n - 1] + d * n
                 if 1 <= position <= comb_size:
                     calculated_positions.append(position)
@@ -100,14 +100,14 @@ def calculate_position(positions, start_pos, pattern, comb_size, who):
                     calculated_positions.append(position)
                 else:
                     position = position % comb_size
-                    if 1 <= position <= comb_size :
+                    if 1 <= position <= comb_size:
                         calculated_positions.append(position)
                     elif position == 0:
                         position = start_pos
                         calculated_positions.append(position)
         elif pattern == 4:
             calculated_positions.append(start_pos)
-            for n in range(1 , comb_size):
+            for n in range(1, comb_size):
                 position = calculated_positions[n - 1] - d * n
                 if 1 <= position <= comb_size:
                     calculated_positions.append(position)
@@ -148,4 +148,3 @@ print(calculate_position([1, 2, 4, 7], 1, 4, 7, 'h'))
 print(calculate_position([1, 2, 4, 7], 7, 4, 7, 'p'))
 
 print(do_they_meet())
-
