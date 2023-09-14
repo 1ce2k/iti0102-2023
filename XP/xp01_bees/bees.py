@@ -5,7 +5,7 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     """Return whether bees meet."""
     # Validate the input
     if not honeycomb_width > 0 or len(honey_hopper_data.split(',')) < 4 or len(pollen_paddle_data.split(',')) < 4:
-        raise ValueError("2")
+        raise ValueError("Insufficient data for sequence identification")
 
     # Parse input
     honey_hopper_positions = list(map(int, honey_hopper_data.split(',')))
@@ -43,25 +43,20 @@ def analyze_movement_pattern(sequence):
     for i in range(2, end):
         # arithmetic sequence
         if sequence[end - 1] - sequence[end - 2] == sequence[i] - sequence[i - 1] == sequence[1] - sequence[0] != 0:
-            print(0)
             return 0
         # if one is not moving
         elif all(sequence[i] == sequence[0] for i in range(1, len(sequence))):
-            print(1)
             return 1
         # geometric sequence
         elif sequence[end - 1] / sequence[end - 2] == sequence[i] / sequence[i - 1] == sequence[1] / sequence[0]:
-            print(2)
             return 2
         # sequence where different is in geometrical sequence 1,3,7,15
         elif int(sequence[end - 1] - sequence[end - 2]) == int(sequence[i] - sequence[i - 1]) * i == \
                 int(sequence[1] - sequence[0]) * i * i:
-            print(3)
             return 3
         # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
         elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == (
                 sequence[end - 1] - sequence[end - 2]) / (end - 1):
-            print(4)
             return 4
         else:
             raise ValueError("1")
@@ -70,7 +65,7 @@ def analyze_movement_pattern(sequence):
 def calculate_position(positions, start_pos, pattern, comb_size, who_is_moving):
     calculated_positions = []
     d = positions[1] - positions[0]
-    d2 = positions[2] - positions[1]
+    # d2 = positions[2] - positions[1]
     q = positions[1] / positions[0]
     q2 = positions[2] / positions[1]
     if who_is_moving == 'h':
@@ -164,7 +159,7 @@ def calculate_position(positions, start_pos, pattern, comb_size, who_is_moving):
                         calculated_positions.append(position)
         elif pattern == 4:
             calculated_positions.append(start_pos)
-            for n in range(1 , comb_size):
+            for n in range(1, comb_size):
                 position = calculated_positions[n - 1] - d * n
                 if 1 <= position <= comb_size:
                     calculated_positions.append(position)
