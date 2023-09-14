@@ -4,7 +4,7 @@
 def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_data: str) -> bool:
     """Return whether bees meet."""
     # Validate the input
-    if not honeycomb_width > 0 or len(honey_hopper_data.split(',')) < 4 or len(pollen_paddle_data.split(',')) < 4:
+    if not honeycomb_width >= 3 or len(honey_hopper_data.split(',')) < 4 or len(pollen_paddle_data.split(',')) < 4:
         raise ValueError("Insufficient data for sequence identification")
 
     # Parse input
@@ -19,10 +19,8 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     h_start_pos = honey_hopper_positions[0]
     p_start_pos = honey_comb_size - pollen_paddle_positions[0]
     # Calculate position
-    honey_hopper_hex_positions = calculate_position(honey_hopper_positions, h_start_pos, honey_hopper_pattern,
-                                                    honey_comb_size, 'h')
-    pollen_paddle_hex_positions = calculate_position(pollen_paddle_positions, p_start_pos, pollen_paddle_pattern,
-                                                     honey_comb_size, 'p')
+    honey_hopper_hex_positions = calculate_position(honey_hopper_positions, h_start_pos, honey_hopper_pattern, honey_comb_size, 'h')
+    pollen_paddle_hex_positions = calculate_position(pollen_paddle_positions, p_start_pos, pollen_paddle_pattern, honey_comb_size, 'p')
 
     # Check gor intersection
     for x in range(len(honey_hopper_hex_positions)):
@@ -198,18 +196,19 @@ def calculate_position(positions, start_pos, pattern, comb_size, who):
 
 def calculate_honeycomb_size(honeycomb_width) -> int:
     """Return size of honey comb."""
-    comb_length = int(honeycomb_width / 2) + 1
-    comb_size = comb_length
-    while comb_length < honeycomb_width:
-        comb_size = comb_size + comb_length + 1
-        comb_length += 1
-    comb_size = comb_size * 2 - honeycomb_width
-    return comb_size
+    if honeycomb_width <= 0:
+        return 0
+    cells_count = 0
+    for i in range(honeycomb_width):
+        cells_count = cells_count + honeycomb_width + i
+    cells_count = cells_count * 2 - (2 * honeycomb_width - 1)
+    return cells_count
 
 
 print(do_bees_meet(3, '1,2,3,4', '1,2,3,4'))  # => 0, 0, True
+print(do_bees_meet(923, '1,4,7,10', '1,2,4,7'))  # => 0, 0, True
 
-print(do_bees_meet(3, '1,1,1,1', '2,2,2,2'))  # =>7, 1, 1, False
+print(do_bees_meet(3, '1,1,1,1', '1,2,3,4'))  # =>7, 1, 1, True
 print(do_bees_meet(3, '1,1,1,1', '1,2,3,4'))  # =>7, 1, 1, False
 print(do_bees_meet(3, '1,2,4,8', '2,6,18,54'))  # =>7, 2, 2, True
 print(do_bees_meet(3, '1,3,7,15', '5,9,17,33'))  # =>7, 3, 3, True
