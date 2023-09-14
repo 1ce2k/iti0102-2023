@@ -1,4 +1,5 @@
 """Beat the odds."""
+import random
 from collections import Counter
 
 
@@ -161,10 +162,15 @@ def calculate_letter_probabilities(sentence: str, guessed_letters: list, word_di
 
 
 def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
-    letter_probabilities = calculate_letter_probabilities(sentence, guessed_letters,word_dict)
-    best_letter = max(letter_probabilities, key=letter_probabilities.get)
+    letter_probabilities = calculate_letter_probabilities(sentence, guessed_letters, word_dict)
+
+    if not letter_probabilities:
+        return random.choice(list(set(sentence) - set(guessed_letters)))
+
+    best_letter = max(letter_probabilities, key=lambda letter: letter_probabilities[letter])
+    print(letter_probabilities)
     return best_letter
 
 
 if __name__ == "__main__":
-    print(guess('__', ['h'], {'he': 1, 'hi': 1}))
+    print(guess('hello', ['h'], {'he': 1, 'hi': 1, 'loop': 1}))
