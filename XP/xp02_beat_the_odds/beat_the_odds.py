@@ -147,15 +147,27 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
     Use the output from read_words.
     :return: The letter with the best probability.
     """
-    possible_letters = set()
+    possible_words = {}
     for word in word_dict:
+        for letter in sentence:
+            if word.count(letter) <= sentence.count(letter) and word.count('_') == sentence.count('_'):
+                possible_words[word] = word_dict[word]
+
+    possible_letters = collections.defaultdict(int)
+    for word in possible_words:
         for letter in word:
-            possible_letters.add(letter, )
+            if letter not in guessed_letters:
+                possible_letters[letter] = possible_words[word]
+    print(possible_letters)
 
     letter_probabilities = {}
+    letter_cnt = 0
+    all_letters_cnt = sum(possible_letters.values())
     for letter in possible_letters:
-        probability = sum(word.count(word) / len(word) for word in word_dict if word.count('_') == sentence.count('_'))
+        letter_cnt = possible_letters[letter]
+        probability = int(letter_cnt / all_letters_cnt * 100)
         letter_probabilities[letter] = probability
+
     print(letter_probabilities)
     if letter_probabilities:
         best_letter = max(letter_probabilities, key=letter_probabilities.get)
@@ -165,9 +177,4 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
 
 
 if __name__ == "__main__":
-    sonastik = read_words('sonastik.txt')
-    arvatav_lause = "t _ _ _ t _ _ _ _ _ _ t"
-    arvatud_tahed = ['t']
-    parim = guess(arvatav_lause,arvatud_tahed, sonastik)
-    print(read_words('sonastik.txt'))
-    print(f"Parim täht arvamiseks on: {parim}")
+    print(guess('hello', ['h'], {'hi': 1, 'he': 2}))
