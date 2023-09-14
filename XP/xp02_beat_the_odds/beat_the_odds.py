@@ -14,12 +14,12 @@ def read_words(filename: str) -> dict:
     :param filename: File to read
     :return: Dictionary of word counts
     """
-    dic = collections.defaultdict(int)
+    dict = collections.defaultdict(int)
     with open(filename, 'r') as fail:
         for line in fail:
             word = line.strip()
-            dic[word] += 1
-    return dic
+            dict[word] += 1
+    return dict
 
 
 def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
@@ -147,4 +147,17 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
     Use the output from read_words.
     :return: The letter with the best probability.
     """
-    return 't'
+    possible_letters = set()
+    for word in word_dict:
+        for char in guessed_letters:
+            if word.count(char) <= sentence.count(char) and word.count('_') == sentence.count('_'):
+                possible_letters.update(word)
+    letter_probabilities = {}
+    for letter in possible_letters:
+        for word in word_dict:
+            if word.count('_') == sentence.count(''):
+                probability = sum(word.count(letter)) / len(word)
+        letter_probabilities[letter] = probability
+    best_letter = max(letter_probabilities, key = letter_probabilities.get)
+    return best_letter
+
