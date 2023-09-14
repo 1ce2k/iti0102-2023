@@ -5,7 +5,7 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     """Return whether bees meet."""
     # Validate the input
     if not honeycomb_width > 0 or len(honey_hopper_data.split(',')) < 4 or len(pollen_paddle_data.split(',')) < 4:
-        raise ValueError("Insufficient data for sequence identification")
+        raise ValueError("2")
 
     # Parse input
     honey_hopper_positions = list(map(int, honey_hopper_data.split(',')))
@@ -64,7 +64,7 @@ def analyze_movement_pattern(sequence):
             print(4)
             return 4
         else:
-            raise ValueError("Insufficient data for sequence identification")
+            raise ValueError("1")
 
 
 def calculate_position(positions, start_pos, pattern, comb_size, who_is_moving):
@@ -192,6 +192,7 @@ def calculate_honeycomb_size(honeycomb_width) -> int:
 
 print(do_bees_meet(3, '1,2,3,4', '5,9,13,17'))  # => 0, 0, True
 print(do_bees_meet(3, '1,1,1,1', '2,2,2,2'))  # =>7, 1, 1, False
+print(do_bees_meet(3, '1,1,1,1', '1,2,3,4'))  # =>7, 1, 1, False
 print(do_bees_meet(3, '1,2,4,8', '2,6,18,54'))  # =>7, 2, 2, True
 print(do_bees_meet(3, '1,3,7,15', '5,9,17,33'))  # =>7, 3, 3, True
 print(do_bees_meet(3, '1,2,4,7', '5,9,17,29'))  # =>7, 4, 4, True
