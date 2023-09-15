@@ -45,7 +45,7 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
                 if h_pos > honey_comb_size:
                     h_pos = h_pos % honey_comb_size
             elif h_pattern == 4:
-                h_pos = h_pos + honey_step * (i - 1)
+                h_pos = h_pos + honey_step * i
                 if h_pos > honey_comb_size:
                     h_pos = h_pos % honey_comb_size
 
