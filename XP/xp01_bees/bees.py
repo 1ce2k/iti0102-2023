@@ -92,10 +92,12 @@ def analyze_movement_pattern(sequence):
         elif sequence[end - 1] / sequence[end - 2] == sequence[i] / sequence[i - 1] == sequence[1] / sequence[0]:
             return 2
         # sequence where different is in geometrical sequence 1,3,7,15
-        elif int(sequence[end - 1] - sequence[end - 2]) == int(sequence[i] - sequence[i - 1]) * i == int(sequence[1] - sequence[0]) * i * i:
+        elif int(sequence[end - 1] - sequence[end - 2]) == int(sequence[i] - sequence[i - 1]) * i == int(
+                sequence[1] - sequence[0]) * i * i:
             return 3
         # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
-        elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == (sequence[end - 1] - sequence[end - 2]) / (end - 1):
+        elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == (
+                sequence[end - 1] - sequence[end - 2]) / (end - 1):
             return 4
         else:
             raise ValueError("Insufficient data for sequence identification")
@@ -106,7 +108,7 @@ def calculate_position(positions, pattern, who) -> int:
     step = 0
     # calculate for arithmetic
     if pattern == 0:
-       step = (-1 if who == 'p' else 1) * (positions[1] - positions[0])
+        step = (-1 if who == 'p' else 1) * (positions[1] - positions[0])
     # calculate for not moving
     elif pattern == 1:
         step = positions[1] - positions[0]
