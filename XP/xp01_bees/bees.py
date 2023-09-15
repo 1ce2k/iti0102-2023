@@ -31,14 +31,38 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
         if h_pos == p_pos:
             return True
         else:
+            # calculate next pos for honey hopper
             if h_pattern == 0:
                 h_pos = h_pos + honey_step
                 if h_pos > honey_comb_size:
                     h_pos = h_pos % honey_comb_size
+            elif h_pattern == 2:
+                h_pos = h_pos * honey_step
+                if h_pos > honey_comb_size:
+                    h_pos = h_pos % honey_comb_size
+            elif h_pattern == 3:
+                h_pos = h_pos * honey_step
+                if h_pos > honey_comb_size:
+                    h_pos = h_pos % honey_comb_size
+            elif h_pattern == 4:
+                h_pos = h_pos + honey_step * (i - 1)
+                if h_pos > honey_comb_size:
+                    h_pos = h_pos % honey_comb_size
+
+            # calculate next pos for pollen paddle
             if p_pattern == 0:
                 p_pos = p_pos + pollen_step
                 if p_pos < 0:
                     p_pos = honey_comb_size + p_pos
+            elif p_pattern == 2:
+                p_pos = p_pos - pollen_step ** (i - 1)
+                if p_pos < 0:
+                    p_pos = honey_comb_size % abs(p_pos)
+            elif p_pattern == 4:
+                p_pos = p_pos + pollen_step * i
+                if p_pos < 0:
+                    p_pos = p_pos % honey_comb_size
+
             print(h_pos, p_pos)
     return False
 
@@ -95,13 +119,12 @@ def calculate_position(positions, pattern, who) -> int:
     # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
     elif pattern == 4:
         step = (-1 if who == 'p' else 1) * (positions[1] - positions[0])
-    print(step)
-    print(pattern)
+    print(f"pattern: {pattern} and step: {step}")
     return step
 
 
 if __name__ == "__main__":
-    print(do_bees_meet(3, '1,2,3,4', '5,9,13,17'))
+    print(do_bees_meet(3, '1,2,4,7', '1,2,4,7'))
     # print(calculate_honeycomb_size(5))
     # print(calculate_honeycomb_size(23))
     # print(calculate_honeycomb_size(30))
