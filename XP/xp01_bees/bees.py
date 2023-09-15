@@ -23,8 +23,8 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     else:
         p_pos = honey_comb_size - pollen_paddle_positions[0]
     # Calculate position
-    honey_step = calculate_position(honey_hopper_positions, h_pattern, 'h')
-    pollen_step = calculate_position(pollen_paddle_positions, p_pattern, 'p')
+    honey_step = calculate_step(honey_hopper_positions, h_pattern, 'h')
+    pollen_step = calculate_step(pollen_paddle_positions, p_pattern, 'p')
 
     # Check for intersection
     for i in range(1, honey_comb_size):
@@ -55,9 +55,15 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
                 if p_pos < 0:
                     p_pos = honey_comb_size + p_pos
             elif p_pattern == 2:
-                p_pos = p_pos - pollen_step ** (i - 1)
+                step = pollen_step ** (i - 1)
+                pos_temp = p_pos
+                p_pos = p_pos - step
                 if p_pos < 0:
-                    p_pos = honey_comb_size % abs(p_pos)
+                    temp = abs(p_pos) // honey_comb_size
+                    if temp == 0:
+                        p_pos = honey_comb_size % abs(p_pos)
+                    else:
+                        p_pos = honey_comb_size - (abs(p_pos) % honey_comb_size)
             elif p_pattern == 4:
                 p_pos = p_pos + pollen_step * i
                 if p_pos < 0:
@@ -65,6 +71,10 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
 
             print(h_pos, p_pos)
     return False
+
+
+def calculate_next_step_p(positions: list, ):
+    pass
 
 
 def calculate_honeycomb_size(honeycomb_width) -> int:
@@ -103,8 +113,8 @@ def analyze_movement_pattern(sequence):
             raise ValueError("Insufficient data for sequence identification")
 
 
-def calculate_position(positions, pattern, who) -> int:
-    """Calculate bee positions"""
+def calculate_step(positions, pattern, who) -> int:
+    """Calculate bee positions."""
     step = 0
     # calculate for arithmetic
     if pattern == 0:
@@ -126,12 +136,12 @@ def calculate_position(positions, pattern, who) -> int:
 
 
 if __name__ == "__main__":
-    print(do_bees_meet(3, '1,2,4,7', '1,2,4,7'))
-    # print(calculate_honeycomb_size(5))
-    # print(calculate_honeycomb_size(23))
-    # print(calculate_honeycomb_size(30))
-    # print(calculate_honeycomb_size(50))
-#    sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
-#    sequence_2 = ",".join(
-#        str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
-#    assert do_bees_meet(300, sequence_1, sequence_2) is True
+    print(do_bees_meet(3, '1,2,4,7', '1,2,4,8'))
+# print(calculate_honeycomb_size(5))
+# print(calculate_honeycomb_size(23))
+# print(calculate_honeycomb_size(30))
+# print(calculate_honeycomb_size(50))
+# sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
+# sequence_2 = ",".join(
+#     str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
+# assert do_bees_meet(300, sequence_1, sequence_2) is True
