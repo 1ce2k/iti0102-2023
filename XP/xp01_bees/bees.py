@@ -56,7 +56,6 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
                     p_pos = honey_comb_size + p_pos
             elif p_pattern == 2:
                 step = pollen_step ** (i - 1)
-                pos_temp = p_pos
                 p_pos = p_pos - step
                 if p_pos < 0:
                     temp = abs(p_pos) // honey_comb_size
@@ -136,7 +135,7 @@ def calculate_step(positions, pattern, who) -> int:
 
 
 if __name__ == "__main__":
-    print(do_bees_meet(3, '1,2,4,7', '1,2,4,8'))
+    print(do_bees_meet(3, '1,2,4,8', '1,2,4,8'))
 # print(calculate_honeycomb_size(5))
 # print(calculate_honeycomb_size(23))
 # print(calculate_honeycomb_size(30))
