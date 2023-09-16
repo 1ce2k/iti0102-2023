@@ -91,20 +91,20 @@ def analyze_movement_pattern(sequence):
     end = len(sequence)
     for i in range(2, end):
         # arithmetic sequence
-        if sequence[end - 1] - sequence[end - 2] == sequence[i] - sequence[i - 1] == sequence[1] - sequence[0] != 0:
+        if abs(sequence[end - 1] - sequence[end - 2]) == abs(sequence[i] - sequence[i - 1]) == abs(sequence[1] - sequence[0]) != 0:
             return 0
         # if one is not moving
         elif all(sequence[i] == sequence[0] for i in range(1, len(sequence))):
             return 1
         # geometric sequence
-        elif sequence[end - 1] / sequence[end - 2] == sequence[i] / sequence[i - 1] == sequence[1] / sequence[0]:
+        elif abs(sequence[end - 1] / sequence[end - 2]) == abs(sequence[i] / sequence[i - 1]) == abs(sequence[1] / sequence[0]):
             return 2
         # sequence where different is in geometrical sequence 1,3,7,15
-        elif int(sequence[end - 1] - sequence[end - 2]) == int(sequence[i] - sequence[i - 1]) * i == int(
-                sequence[1] - sequence[0]) * i * i:
+        elif abs(int(sequence[end - 1] - sequence[end - 2])) == abs(int(sequence[i] - sequence[i - 1]) * i) == abs(int(
+                sequence[1] - sequence[0]) * i * i):
             return 3
         # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
-        elif sequence[1] - sequence[0] == (sequence[i] - sequence[i - 1]) / i == (
+        elif abs(sequence[1] - sequence[0]) == abs(sequence[i] - sequence[i - 1]) / i == (
                 sequence[end - 1] - sequence[end - 2]) / (end - 1):
             return 4
         else:
