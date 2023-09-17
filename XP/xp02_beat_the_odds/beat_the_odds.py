@@ -1,5 +1,6 @@
 """Beat the odds."""
 import collections
+import re
 
 
 def read_words(filename: str) -> dict:
@@ -147,20 +148,40 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
     Use the output from read_words.
     :return: The letter with the best probability.
     """
-    words = sentence.split(' ')
-    possible_words = []
-    dict_of_words = {}
-    for word in words:
-        for key in word_dict.keys():
-            if len(word) == len(key):
-                dict_of_words[word] = word_dict[key]
-    possible_words.append(dict_of_words)
-    print(dict_of_words)
-    print(words)
+    letter_probabilities = {}
+
+    # Создаем регулярное выражение для поиска слов в предложении
+    word_pattern = re.compile(r'\b\w+\b')
+
+    # Разбиваем угадываемое предложение на слова
+    words_in_sentence = re.findall(word_pattern, sentence)
+
+    for word in words_in_sentence:
+        # Проверяем, есть ли это слово в словаре
+        if word in word_dict:
+            word_length = len(word)
+            word_count = word_dict[word]
+
+            for letter in word:
+                # Проверяем, не угадана ли уже данная буква
+                if letter not in guessed_letters:
+                    # Вычисляем вероятность буквы в данном слове
+                    letter_probability = int(1 / (word_length * word_count) * 100)
+
+                    # Добавляем вероятность буквы в словарь
+                    if letter in letter_probabilities:
+                        letter_probabilities[letter] += letter_probability
+                    else:
+                        letter_probabilities[letter] = letter_probability
+
+    print(letter_probabilities)
+    best_letter = max(letter_probabilities, key=letter_probabilities.get)
+    return best_letter
+
 
 if __name__ == "__main__":
     sentence = 'hi this is me'
     filename = 'wordlist.txt'
-    word_dict = read_words(filename)
+    x = {'hi': 1}
     guessed_letters = ['h']
-    print(guess(sentence, guessed_letters, word_dict))
+    print(guess(sentence, guessed_letters, x))
