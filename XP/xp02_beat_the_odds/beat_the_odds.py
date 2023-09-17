@@ -173,10 +173,12 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict) -> str:
                         letter_probabilities[letter] += letter_probability
                     else:
                         letter_probabilities[letter] = letter_probability
+    if letter_probabilities:
+        best_letter = max(letter_probabilities, key=letter_probabilities.get)
+        return best_letter
+    else:
+        return ''
 
-    print(letter_probabilities)
-    best_letter = max(letter_probabilities, key=letter_probabilities.get)
-    return best_letter
 
 
 if __name__ == "__main__":
