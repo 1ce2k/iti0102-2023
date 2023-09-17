@@ -90,8 +90,8 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     return False
 
 
-def calculate_next_step_p(positions: list, ):
-    pass
+# def calculate_next_step_p(positions: list, ):
+#     pass
 
 
 def calculate_honeycomb_size(honeycomb_width) -> int:
