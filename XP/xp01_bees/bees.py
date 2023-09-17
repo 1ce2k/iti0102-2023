@@ -155,7 +155,7 @@ def calculate_step(positions, pattern, who) -> int:
 if __name__ == "__main__":
     # print(do_bees_meet(50, "1,2,3,4,5", "1,2,4,8,16"))
     # print(do_bees_meet(3, '1,2,4,8', '1,2,4,8'))
-    print(do_bees_meet(3, '-1,2,-4,8', '-1,-2,-4,-7'))
+    print(do_bees_meet(3, '-1,-2,-3,-4', '-1,-2,-3,-4'))
     # print(do_bees_meet(3, '-1,-2,-3,-4', '1,2,3,4'))
 # print(calculate_honeycomb_size(5))
 # print(calculate_honeycomb_size(23))
