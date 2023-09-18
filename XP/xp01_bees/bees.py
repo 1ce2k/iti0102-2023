@@ -90,7 +90,7 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
                 if p_pos < 0:
                     p_pos = p_pos % honey_comb_size
 
-            print(h_pos, p_pos)
+            # print(h_pos, p_pos)
     return False
 
 
@@ -159,7 +159,7 @@ if __name__ == "__main__":
     print(do_bees_meet(400, '1,3,7,15', '1,3,7,15'))    # True
     # print(do_bees_meet(300, '1,2,4,7', '1,2,4,7'))          # True
     # print(do_bees_meet(3, '-1,-2,-3,-4', '1,2,3,4'))        # True
-    # sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
-    # sequence_2 = ",".join(
-    # str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
-    # print(do_bees_meet(300, sequence_1, sequence_2))
+    sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
+    sequence_2 = ",".join(
+    str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
+    print(do_bees_meet(300, sequence_1, sequence_2))
