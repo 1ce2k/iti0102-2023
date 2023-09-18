@@ -42,7 +42,7 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     for i in range(1, honey_comb_size):
         h_pos = calculate_next_step_h(honeycomb_width, h_pattern, h_pos, honey_step)
         p_pos = calculate_next_step_p(honeycomb_width, p_pattern, p_pos, pollen_step)
-        print(h_pos,p_pos)
+        # print(h_pos, p_pos)
         if h_pos == p_pos:
             # calculate next pos for honey hopper
             # if h_pattern == 0:
@@ -104,7 +104,7 @@ def calculate_next_step_h(hex_width, pattern, pos, step) -> int:
             elif honey_step < 0:
                 position = position + honey_step
                 if position <= 0:
-                    pos = hex_size + pos
+                    position = hex_size + position
         elif pattern == 2:
             position = position * honey_step
             if position > hex_size:
@@ -123,27 +123,27 @@ def calculate_next_step_h(hex_width, pattern, pos, step) -> int:
 def calculate_next_step_p(hex_width, pattern, pos, step) -> int:
     """Return pollen paddle pos."""
     hex_size = calculate_honeycomb_size(hex_width)
-    p_pos = pos
+    position = pos
     pollen_step = step
     for i in range(1, hex_size):
         if pattern == 0:
-            p_pos = p_pos + pollen_step
-            if p_pos < 0:
-                p_pos = hex_size + p_pos
+            position = position + pollen_step
+            if position < 0:
+                position = hex_size + position
         elif pattern == 2:
-            step = step ** (i - 1)
-            p_pos = p_pos - pollen_step
-            if p_pos < 0:
-                temp = abs(p_pos) // hex_size
+            pollen_step = pollen_step ** (i - 1)
+            position = position - pollen_step
+            if position < 0:
+                temp = abs(position) // hex_size
                 if temp == 0:
-                    p_pos = hex_size % abs(p_pos)
+                    position = hex_size % abs(position)
                 else:
-                    p_pos = hex_size - (abs(p_pos) % hex_size)
+                    position = hex_size - (abs(position) % hex_size)
         elif pattern == 4:
-            p_pos = p_pos + pollen_step * i
-            if p_pos < 0:
-                p_pos = p_pos % hex_size
-    return p_pos
+            position = position + pollen_step * i
+            if position < 0:
+                position = position % hex_size
+    return position
 
 
 def calculate_honeycomb_size(honeycomb_width) -> int:
@@ -205,7 +205,8 @@ def calculate_step(positions, pattern, who) -> int:
 
 
 if __name__ == "__main__":
-    print(do_bees_meet(3, "1,2,3,4", "1,2,3,4"))
+    # print(do_bees_meet(3, "1,2,4,8", "1,2,4,8"))
+    print(do_bees_meet(150, "1,2,3,4", "1,2,3,4"))
     # print(do_bees_meet(3, '1,2,4,8', '1,2,4,8'))
     # print(do_bees_meet(3, '-1,-2,-3,-4', '-1,-2,-3,-4'))
     # print(do_bees_meet(50, '1,2,4,7', '1,2,4,7'))
