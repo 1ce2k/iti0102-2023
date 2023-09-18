@@ -36,10 +36,7 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     elif pollen_paddle_positions[0] == -1:
         p_pos = abs(pollen_paddle_positions[0])
     else:
-        for i in range(honey_comb_size):
-            if i == pollen_paddle_positions[0]:
-                break
-            p_pos = honey_comb_size - i
+        p_pos = honey_comb_size - pollen_paddle_positions[0]
     print(h_pos, p_pos)
     # Check for intersection
     for i in range(1, honey_comb_size):
