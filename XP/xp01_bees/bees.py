@@ -4,7 +4,7 @@
 def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_data: str) -> bool:
     """Return whether bees meet."""
     # Validate the input
-    if not honeycomb_width >= 3 or len(honey_hopper_data.split(',')) < 4 or len(pollen_paddle_data.split(',')) < 4:
+    if honeycomb_width < 0 or len(honey_hopper_data.split(',')) < 4 or len(pollen_paddle_data.split(',')) < 4:
         raise ValueError("Insufficient data for sequence identification")
 
     # Parse input
