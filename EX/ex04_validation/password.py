@@ -78,25 +78,27 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     :param new_pass: The new password
     :return: True if the new password is different enough, False otherwise
     """
-    if old_pass == new_pass or new_pass == old_pass[::-1]:
+    old = old_pass.lower()
+    new = new_pass.lower()
+    if old == new or new == old[::-1]:
         return False
     repeated_part = ""
     repeated_parts = []
 
-    for i in range(len(old_pass)):
-        for j in range(i, len(old_pass)):
-            substring = old_pass[i:j]
-            if substring in new_pass and len(substring) > len(repeated_part):
+    for i in range(len(old)):
+        for j in range(i, len(old)):
+            substring = old[i:j]
+            if substring in new and len(substring) > len(repeated_part):
                 repeated_part = substring
 
             if repeated_part != '':
                 repeated_parts.append(repeated_part)
                 repeated_part = ''
 
-    new_password = new_pass[::-1]
-    for i in range(len(old_pass)):
-        for j in range(i, len(old_pass)):
-            substring = old_pass[i:j]
+    new_password = new[::-1]
+    for i in range(len(old)):
+        for j in range(i, len(old)):
+            substring = old[i:j]
             if substring in new_password and len(substring) > len(repeated_part):
                 repeated_part = substring
             if repeated_part != '':
@@ -109,39 +111,6 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     if len(ret) / len(new_password) * 100 < 50:
         return True
     return False
-    # index = len(new_pass) // 2
-    # old_pass = old_pass.lower()
-    # new_pass_part1 = new_pass[:index].lower()
-    # new_pass_part2 = new_pass[:index].lower()
-    # new_pass_part3 = new_pass[index::-1].lower()
-    # new_pass_part4 = new_pass[:index:-1].lower()
-    # min_len = min(len(old_pass), len(new_pass_part1), len(new_pass_part2), len(new_pass_part3), len(new_pass_part4))
-    # match_1 = 0
-    # match_2 = 0
-    # match_3 = 0
-    # match_4 = 0
-    # for i in range(min_len):
-    #     if old_pass[i] == new_pass_part1[i]:
-    #         match_1 += 1
-    #
-    #     if old_pass[i] == new_pass_part2[i]:
-    #         match_2 += 1
-    #
-    #     if old_pass[i] == new_pass_part3[i]:
-    #
-    #         match_3 += 1
-    #     if old_pass[i] == new_pass_part4[i]:
-    #         match_4 += 1
-
-    # total_overlap = match_1 + match_2 + match_3 + match_4
-
-    # if old_pass == new_pass or old_pass == new_pass[::-1]:
-    #     return False
-    # total_overlap = sum(1 for a, b in zip(old_pass, new_pass) if a == b)
-    # return total_overlap <= len(new_pass) * 0.5
-
-
-
 
 
 def is_name_in_password(password: str, name: str) -> bool:
