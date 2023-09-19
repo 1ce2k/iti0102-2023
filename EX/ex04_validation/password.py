@@ -119,7 +119,13 @@ def is_birthday_in_password(password: str, birthdate: str) -> bool:
     :param birthdate: Birthday of the account owner, format is dd.mm.yyyy
     :return: True if the birthday is present in the password, False otherwise
     """
-    pass
+    date = birthdate.split('.')
+    for i in range(3):
+        if date[i] in password:
+            return True
+    if date[2][-2::] in password:
+        return True
+    return False
 
 
 def is_password_valid(new_password: str, old_password: str, name: str, birthdate: str) -> bool:
