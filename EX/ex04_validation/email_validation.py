@@ -55,6 +55,9 @@ def is_valid_email_address(email: str) -> bool:
 
 
 def create_email_address(domain: str, username) -> str:
+    if '@' in username or '@' in domain:
+        raise 'Cannot create a valid email address using the given parametrs!'
+
     email = username + "@" + domain
     return email
 
