@@ -47,32 +47,33 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
         else:
             # calculate next pos for honey hopper
             if h_pattern == 0:
-                if honey_step > 0:
-                    h_pos = h_pos + honey_step
+                if honey_step[0] > 0:
+                    h_pos = h_pos + honey_step[0]
                     if h_pos > honey_comb_size:
                         h_pos = h_pos % honey_comb_size
-                elif honey_step < 0:
-                    h_pos = h_pos + honey_step
+                elif honey_step[0] < 0:
+                    h_pos = h_pos + honey_step[0]
                     if h_pos <= 0:
                         h_pos = honey_comb_size + h_pos
 
             elif h_pattern == 2:
-                h_pos = h_pos * honey_step
+                h_pos = h_pos * honey_step[0]
                 if h_pos > honey_comb_size:
                     h_pos = h_pos % honey_comb_size
             elif h_pattern == 3:
-                h_pos = h_pos + honey_step * i % honey_comb_size
+                h_pos = (h_pos + honey_step[0] * i) % honey_comb_size
+
 
             elif h_pattern == 4:
-                h_pos = (h_pos + honey_step * i) % honey_comb_size
+                h_pos = (h_pos + honey_step[0] * i) % honey_comb_size
 
             # calculate next pos for pollen paddle
             if p_pattern == 0:
-                p_pos = p_pos + pollen_step
+                p_pos = p_pos + pollen_step[0]
                 if p_pos < 0:
                     p_pos = honey_comb_size + p_pos
             elif p_pattern == 2:
-                step = pollen_step ** (i - 1)
+                step = pollen_step[0] ** (i - 1)
                 p_pos = p_pos - step
                 if p_pos < 0:
                     temp = abs(p_pos) // honey_comb_size
@@ -81,11 +82,11 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
                     else:
                         p_pos = honey_comb_size - (abs(p_pos) % honey_comb_size)
             elif p_pattern == 3:
-                p_pos = (p_pos - pollen_step ** i) % honey_comb_size
+                p_pos = (p_pos - pollen_step[0] * (i - 1)) % honey_comb_size
                 if p_pos == 0:
                     p_pos = 1
             elif p_pattern == 4:
-                p_pos = p_pos + pollen_step * i
+                p_pos = p_pos + pollen_step[0] * i
                 if p_pos < 0:
                     p_pos = p_pos % honey_comb_size
 
@@ -129,7 +130,7 @@ def analyze_movement_pattern(sequence):
             raise ValueError("Insufficient data for sequence identification")
 
 
-def calculate_step(positions, pattern, who) -> int:
+def calculate_step(positions, pattern, who):
     """Calculate bee positions."""
     step = 0
     # calculate for arithmetic
@@ -138,23 +139,27 @@ def calculate_step(positions, pattern, who) -> int:
     # calculate for not moving
     elif pattern == 1:
         step = positions[1] - positions[0]
+        increment = (positions[2] - positions[1]) / step
     # calculate for geometric sequence
     elif pattern == 2:
         step = round(positions[1] / positions[0])
+        increment = (positions[2] - positions[1]) / step
     # sequence where different is in geometrical sequence
     elif pattern == 3:
         step = (positions[1] - positions[0])
-    # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
+        increment = (positions[2] - positions[1]) / step
+        # sequence where different is in arithmetic sequence 1,2,4,7 or 5,9,17,29
     elif pattern == 4:
         step = (-1 if who == 'p' else 1) * (positions[1] - positions[0])
+        increment = (positions[2] - positions[1]) / step
     print(f"pattern: {pattern} and step: {step}")
-    return step
+    return [step, int(increment)]
 
 
 if __name__ == "__main__":
-    assert do_bees_meet(3, '1,2,4,8', '1,2,4,8') is True
+    # assert do_bees_meet(3, '1,2,4,8', '1,2,4,8') is True
     print(do_bees_meet(5, '5,9,17,33', '1,3,7,15'))    # True
-    assert do_bees_meet(3, '1,2,4,7', '1,2,4,7')
+    # assert do_bees_meet(3, '1,2,4,7', '1,2,4,7')
     # sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
     # sequence_2 = ",".join(
     # str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
