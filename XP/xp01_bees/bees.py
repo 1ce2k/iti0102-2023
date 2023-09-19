@@ -4,7 +4,7 @@
 def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_data: str) -> bool:
     """Return whether bees meet."""
     # Validate the input
-    if not honeycomb_width >= 3 or len(honey_hopper_data.split(',')) < 4 or len(pollen_paddle_data.split(',')) < 4:
+    if not honeycomb_width >= 1 or len(honey_hopper_data.split(',')) < 4 or len(pollen_paddle_data.split(',')) < 4:
         raise ValueError("Insufficient data for sequence identification")
 
     # Parse input
@@ -205,7 +205,9 @@ def calculate_step(positions, pattern, who) -> int:
 
 
 if __name__ == "__main__":
-    print(do_bees_meet(3, "1,2,3,4", "1,2,3,4"))
+    assert do_bees_meet(5, "1,2,4,7", "2,4,8,14") is True
+    # print(do_bees_meet(3, "1,2,3,4", "5,9,13,17"))
+    # print(do_bees_meet(3, "1,2,4,8", "1,2,4,8"))
     # print(do_bees_meet(3, '1,2,4,8', '1,2,4,8'))
     # print(do_bees_meet(3, '-1,-2,-3,-4', '-1,-2,-3,-4'))
     # print(do_bees_meet(50, '1,2,4,7', '1,2,4,7'))
