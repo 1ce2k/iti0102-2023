@@ -133,6 +133,7 @@ def analyze_movement_pattern(sequence):
 def calculate_step(positions, pattern, who):
     """Calculate bee positions."""
     step = 0
+    increment = 1
     # calculate for arithmetic
     if pattern == 0:
         step = (-1 if who == 'p' else 1) * (positions[1] - positions[0])
