@@ -102,6 +102,22 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     for i in parts_len:
         if i >= len(new_pass) / 2:
             return False
+    parts = []
+    part = ''
+    for i in range(min(len(old_pass), len(new_pass))):
+        if old_pass[i] == new_pass[i][::-1]:
+            part += old_pass[i]
+        else:
+            if part != '':
+                parts.append(part)
+            part = ''
+    parts_len = []
+    for i in parts:
+        parts_len.append(len(i))
+
+    for i in parts_len:
+        if i >= len(new_pass) / 2:
+            return False
     return True
 
 def is_name_in_password(password: str, name: str) -> bool:
