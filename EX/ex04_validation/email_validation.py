@@ -8,6 +8,10 @@ def has_at_symbol(email: str) -> bool:
 
 
 def is_valid_username(email: str) -> bool:
+    """
+    Return True if username is valid
+    Username cannot contain any special symbols except '.'.
+    """
     allowed_chars = set('abcdefghijklmnopqrstuvwxyz0123456789.')
     username = email.split('@')
     if len(username) != 2:
@@ -19,11 +23,19 @@ def is_valid_username(email: str) -> bool:
 
 
 def find_domain(email: str) -> str:
+    """Return emails domain."""
     domain = email.split('@')[-1]
     return domain
 
 
 def is_valid_domain(email: str) -> bool:
+    """
+    Return True if domain is valid.
+    Domain has to contain only letters.
+    Domain has to contain only one '.'.
+    From @ to . has to be from 3 up to 12 elements.
+    From . to end has to be from 2 up to 5 elements.
+    """
     domain = find_domain(email)
     allowed_symbols = set('abcdefghijklmnopqrstuvwxyz.')
     if domain.count('.') != 1:
@@ -37,9 +49,6 @@ def is_valid_domain(email: str) -> bool:
     if len(parts[1]) < 2 or len(parts[1]) > 5:
         return False
     return True
-
-
-    pass
 
 
 def is_valid_email_address(email: str) -> bool:
@@ -93,6 +102,4 @@ if __name__ == '__main__':
     print("\nCreate your own email address:")
     print(create_email_address("hot.ee", "vana.ema"))  # -> vana.ema@hot.ee
     print(create_email_address("jaani.org", "lennakuurma"))  # -> lennakuurma@jaani.org
-    print(create_email_address("koobas.com",
-                               "karu&pojad"))  # -> Cannot create a valid email address using the given parameters!
-
+    print(create_email_address("koobas.com", "karu&pojad"))  # -> Cannot create a valid email address using the given parameters!
