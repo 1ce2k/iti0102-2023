@@ -140,12 +140,12 @@ def calculate_step(positions, pattern, who):
     # calculate for not moving
     elif pattern == 1:
         step = positions[1] - positions[0]
-        increment = (positions[2] - positions[1]) / step
+        increment = 1
     # calculate for geometric sequence
     elif pattern == 2:
         step = round(positions[1] / positions[0])
         increment = (positions[2] - positions[1]) / step
-    # sequence where different is in geometrical sequence
+    # sequence where different is in geometrical sequence 2, 4, 8, 16
     elif pattern == 3:
         step = (positions[1] - positions[0])
         increment = (positions[2] - positions[1]) / step
