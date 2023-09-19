@@ -78,8 +78,37 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     :param new_pass: The new password
     :return: True if the new password is different enough, False otherwise
     """
-    if old_pass == new_pass or old_pass == new_pass[::-1]:
+    if old_pass == new_pass or new_pass == old_pass[::-1]:
         return False
+    repeated_part = ""
+    repeated_parts = []
+
+    for i in range(len(old_pass)):
+        for j in range(i, len(old_pass)):
+            substring = old_pass[i:j]
+            if substring in new_pass and len(substring) > len(repeated_part):
+                repeated_part = substring
+
+            if repeated_part != '':
+                repeated_parts.append(repeated_part)
+                repeated_part = ''
+
+    new_password = new_pass[::-1]
+    for i in range(len(old_pass)):
+        for j in range(i, len(old_pass)):
+            substring = old_pass[i:j]
+            if substring in new_password and len(substring) > len(repeated_part):
+                repeated_part = substring
+            if repeated_part != '':
+                repeated_parts.append(repeated_part)
+                repeated_part = ''
+    # print(repeated_parts)
+    if len(repeated_parts) == 0:
+        return True
+    ret = max(repeated_parts, key=len)
+    if len(ret) / len(new_password) * 100 < 50:
+        return True
+    return False
     # index = len(new_pass) // 2
     # old_pass = old_pass.lower()
     # new_pass_part1 = new_pass[:index].lower()
@@ -105,8 +134,14 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     #         match_4 += 1
 
     # total_overlap = match_1 + match_2 + match_3 + match_4
-    total_overlap = sum(1 for a, b in zip(old_pass, new_pass) if a == b)
-    return total_overlap <= len(new_pass) * 0.5
+
+    # if old_pass == new_pass or old_pass == new_pass[::-1]:
+    #     return False
+    # total_overlap = sum(1 for a, b in zip(old_pass, new_pass) if a == b)
+    # return total_overlap <= len(new_pass) * 0.5
+
+
+
 
 
 def is_name_in_password(password: str, name: str) -> bool:
@@ -186,28 +221,28 @@ def is_password_valid(new_password: str, old_password: str, name: str, birthdate
 
 
 if __name__ == '__main__':
-    print("Password length validation:")
-    print(is_correct_length("kascnewi3r34t"))  # -> True
-    print(is_correct_length("%df#S1"))  # -> False
-    print(is_correct_length("kascn¤e%wi3r34tkj*bö ihvlc&?¤kfxyzsr<eq 3454566FGHJOI*UYUF& %¤##&TTRq6"))  # -> False
-
-    print("\nPassword has at least one uppercase letter validation:")
-    print(includes_uppercase("Defwefwevwe"))  # -> True
-    print(includes_uppercase("e/¤!fwe64fwevw"))  # -> False
-
-    print("\nPassword has at least one lowercase letter validation:")
-    print(includes_lowercase("dJOWE821%&/"))  # -> True
-    print(includes_lowercase("ÖJOWE821%&/"))  # -> False
-
-    print("\nPassword has at least one special character validation:")
-    print(includes_special("&smqwdp24DS"))  # -> True
-    print(includes_special("ksmqwd p24DS"))  # -> True
-    print(includes_special("ksmqwdp24DS"))  # -> False
-    print(includes_special(""))  # -> False
-
-    print("\nPassword has at least one number validation:")
-    print(includes_number("dJOWE8%&/"))  # -> True
-    print(includes_number("ÖJOWE%&/"))  # -> False
+    # print("Password length validation:")
+    # print(is_correct_length("kascnewi3r34t"))  # -> True
+    # print(is_correct_length("%df#S1"))  # -> False
+    # print(is_correct_length("kascn¤e%wi3r34tkj*bö ihvlc&?¤kfxyzsr<eq 3454566FGHJOI*UYUF& %¤##&TTRq6"))  # -> False
+    #
+    # print("\nPassword has at least one uppercase letter validation:")
+    # print(includes_uppercase("Defwefwevwe"))  # -> True
+    # print(includes_uppercase("e/¤!fwe64fwevw"))  # -> False
+    #
+    # print("\nPassword has at least one lowercase letter validation:")
+    # print(includes_lowercase("dJOWE821%&/"))  # -> True
+    # print(includes_lowercase("ÖJOWE821%&/"))  # -> False
+    #
+    # print("\nPassword has at least one special character validation:")
+    # print(includes_special("&smqwdp24DS"))  # -> True
+    # print(includes_special("ksmqwd p24DS"))  # -> True
+    # print(includes_special("ksmqwdp24DS"))  # -> False
+    # print(includes_special(""))  # -> False
+    #
+    # print("\nPassword has at least one number validation:")
+    # print(includes_number("dJOWE8%&/"))  # -> True
+    # print(includes_number("ÖJOWE%&/"))  # -> False
 
     print("\nNew password is different from the old one validation:")
     print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
@@ -217,24 +252,25 @@ if __name__ == '__main__':
     print(is_different_from_old_password("eva1970", "0791ave"))  # -> False
     print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
     print(is_different_from_old_password("123456", "654321"))  # -> False
+    print(is_different_from_old_password("1234ty", "iu4321"))  # -> False
 
-    print("\nPassword has your name:")
-    print(is_name_in_password("ddccwemelani", "Melani Mets"))  # -> True
-    print(is_name_in_password("ddccwinalemw", "Melani Mets"))  # -> True
-    print(is_name_in_password("ddccwsSTEMq", "Melani Mets"))  # -> True
-    print(is_name_in_password("ddccwinagregorq", "Karl-Gregor Mustikas"))  # -> True
-    print(is_name_in_password("ddccwinamustikas", "Karl-Gregor Mustikas"))  # -> True
+    # print("\nPassword has your name:")
+    # print(is_name_in_password("ddccwemelani", "Melani Mets"))  # -> True
+    # print(is_name_in_password("ddccwinalemw", "Melani Mets"))  # -> True
+    # print(is_name_in_password("ddccwsSTEMq", "Melani Mets"))  # -> True
+    # print(is_name_in_password("ddccwinagregorq", "Karl-Gregor Mustikas"))  # -> True
+    # print(is_name_in_password("ddccwinamustikas", "Karl-Gregor Mustikas"))  # -> True
+    #
+    # print("\nPassword has your birthdate:")
+    # print(is_birthday_in_password("dd&&ccwe30", "30.04.2023"))  # -> True
+    # print(is_birthday_in_password("dd&&ccwe03", "30.04.2023"))  # -> False
+    # print(is_birthday_in_password("ddccw%2023", "30.04.2023"))  # -> True
+    # print(is_birthday_in_password("ddccw%3202", "30.04.2023"))  # -> True
+    # print(is_birthday_in_password("04ddccw%&1", "30.04.2023"))  # -> True
+    # print(is_birthday_in_password("40ddccw%&1", "30.04.2023"))  # -> False
+    # print(is_birthday_in_password("56ddccw%&1", "30.04.2023"))  # -> False
+    # print(is_birthday_in_password("23ddccw%&1", "30.04.2023"))  # -> True
 
-    print("\nPassword has your birthdate:")
-    print(is_birthday_in_password("dd&&ccwe30", "30.04.2023"))  # -> True
-    print(is_birthday_in_password("dd&&ccwe03", "30.04.2023"))  # -> False
-    print(is_birthday_in_password("ddccw%2023", "30.04.2023"))  # -> True
-    print(is_birthday_in_password("ddccw%3202", "30.04.2023"))  # -> True
-    print(is_birthday_in_password("04ddccw%&1", "30.04.2023"))  # -> True
-    print(is_birthday_in_password("40ddccw%&1", "30.04.2023"))  # -> False
-    print(is_birthday_in_password("56ddccw%&1", "30.04.2023"))  # -> False
-    print(is_birthday_in_password("23ddccw%&1", "30.04.2023"))  # -> True
-
-    print("\nPassword is completely validated:")
-    print(is_password_valid("k45aLK%1", "SunsetBeach2022!", "Marek Põõsas", "26.06.2003"))  # -> True
-    print(is_password_valid("keramRTYUY2003RDSCF.", "PurpleDragon42*", "Marek Põõsas", "12.04.2003"))  # -> False
+    # print("\nPassword is completely validated:")
+    # print(is_password_valid("k45aLK%1", "SunsetBeach2022!", "Marek Põõsas", "26.06.2003"))  # -> True
+    # print(is_password_valid("keramRTYUY2003RDSCF.", "PurpleDragon42*", "Marek Põõsas", "12.04.2003"))  # -> False
