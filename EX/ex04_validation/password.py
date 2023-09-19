@@ -95,11 +95,11 @@ def is_name_in_password(password: str, name: str) -> bool:
     :return: True if the name is present in the password, False otherwise
     """
     name_list = name.split(' ')
-    for i in range(name_list):
+    for i in range(len(name_list)):
         if name_list[i].lower() in password.lower():
             return True
     name_list = name.split('-')
-    for i in range(name_list):
+    for i in range(len(name_list)):
         if name_list[i].lower() in password.lower():
             return True
     return False
