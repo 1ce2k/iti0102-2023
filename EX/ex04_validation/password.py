@@ -96,11 +96,11 @@ def is_name_in_password(password: str, name: str) -> bool:
     """
     name_list = name.split(' ')
     for i in range(len(name_list)):
-        if name_list[i].lower() in password.lower():
+        if name_list[i].lower() in password.lower() or name_list[i].lower()[::-1] in password.lower():
             return True
     name_list = name.split('-')
     for i in range(len(name_list)):
-        if name_list[i].lower() in password.lower():
+        if name_list[i].lower() in password.lower() or name_list[i].lower()[::-1] in password.lower():
             return True
     return False
 
