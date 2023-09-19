@@ -8,11 +8,7 @@ def has_at_symbol(email: str) -> bool:
 
 
 def is_valid_username(email: str) -> bool:
-    """
-    Return True if username is valid.
-
-    Username cannot contain any special symbols except '.'.
-    """
+    """Return True if username is valid."""
     allowed_chars = set('abcdefghijklmnopqrstuvwxyz0123456789.')
     username = email.split('@')
     if len(username) != 2:
@@ -30,14 +26,7 @@ def find_domain(email: str) -> str:
 
 
 def is_valid_domain(email: str) -> bool:
-    """
-    Return True if domain is valid.
-
-    Domain has to contain only letters.
-    Domain has to contain only one '.'.
-    From @ to . has to be from 3 up to 12 elements.
-    From . to end has to be from 2 up to 5 elements.
-    """
+    """Return True if domain is valid."""
     domain = find_domain(email)
     allowed_symbols = set('abcdefghijklmnopqrstuvwxyz.')
     if domain.count('.') != 1:
@@ -54,13 +43,7 @@ def is_valid_domain(email: str) -> bool:
 
 
 def is_valid_email_address(email: str) -> bool:
-    """
-    Return True if all conditions are met.
-
-    has_at_symbol(email) => True
-    is_valid_username(email) => True
-    is_valid_domain(email) => True
-    """
+    """Return True if all conditions are met."""
     if has_at_symbol(email) and is_valid_username(email) and is_valid_domain(email):
         return True
     return False
