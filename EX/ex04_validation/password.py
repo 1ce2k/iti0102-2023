@@ -94,9 +94,16 @@ def is_name_in_password(password: str, name: str) -> bool:
     :param name: The full name of the account owner
     :return: True if the name is present in the password, False otherwise
     """
-    if name.lower() in password and name.lower()[::-1] in password:
-        return True
+    name_list = name.split(' ')
+    for i in range(name_list):
+        if name_list[i].lower() in password.lower():
+            return True
+    name_list = name.split('-')
+    for i in range(name_list):
+        if name_list[i].lower() in password.lower():
+            return True
     return False
+
 
 def is_birthday_in_password(password: str, birthdate: str) -> bool:
     """
