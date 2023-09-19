@@ -80,20 +80,32 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     """
     if old_pass == new_pass or old_pass == new_pass[::-1]:
         return False
+    index = len(new_pass) // 2
     old_pass = old_pass.lower()
-    new_pass = new_pass.lower()
-    min_len = min(len(old_pass), len(new_pass))
-    overlap = 0
-    rev_overlap = 0
+    new_pass_part1 = new_pass[:index].lower()
+    new_pass_part2 = new_pass[:index].lower()
+    new_pass_part3 = new_pass[index::-1].lower()
+    new_pass_part4 = new_pass[:index:-1].lower()
+    min_len = min(len(old_pass), len(new_pass_part1), len(new_pass_part2), len(new_pass_part3), len(new_pass_part4))
+    match_1 = 0
+    match_2 = 0
+    match_3 = 0
+    match_4 = 0
     for i in range(min_len):
-        if old_pass[i] == new_pass[i]:
-            overlap += 1
+        if old_pass[i] == new_pass_part1[i]:
+            match_1 += 1
 
-        if old_pass[i] == new_pass[-i - 1]:
-            rev_overlap += 1
+        if old_pass[i] == new_pass_part2[i]:
+            match_2 += 1
 
-    total_overlap = overlap + rev_overlap
-    return total_overlap < len(new_pass) * 0.5
+        if old_pass[i] == new_pass_part3[i]:
+
+            match_3 += 1
+        if old_pass[i] == new_pass_part4[i]:
+            match_4 += 1
+
+    total_overlap = match_1 + match_2 + match_3 + match_4
+    return total_overlap <= len(new_pass) * 0.5
 
 def is_name_in_password(password: str, name: str) -> bool:
     """
