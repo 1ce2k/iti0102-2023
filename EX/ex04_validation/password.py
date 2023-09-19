@@ -93,7 +93,7 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
             rev_overlap += 1
 
     total_overlap = overlap + rev_overlap
-    return total_overlap < min_len * 0.5
+    return total_overlap < len(new_pass) * 0.5
 
 def is_name_in_password(password: str, name: str) -> bool:
     """
@@ -194,13 +194,13 @@ if __name__ == '__main__':
     # print(includes_number("ÖJOWE%&/"))  # -> False
 
     print("\nNew password is different from the old one validation:")
-    # print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
-    # print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
-    # print(is_different_from_old_password("seinav2rv", "seinakapp"))  # -> False
-    # print(is_different_from_old_password("merineitsi99", "mereneitsi11"))  # -> False
-    # print(is_different_from_old_password("eva1970", "0791ave"))  # -> False
-    # print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
-    # print(is_different_from_old_password("123456", "654321"))  # -> False
+    print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
+    print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
+    print(is_different_from_old_password("seinav2rv", "seinakapp"))  # -> False
+    print(is_different_from_old_password("merineitsi99", "mereneitsi11"))  # -> False
+    print(is_different_from_old_password("eva1970", "0791ave"))  # -> False
+    print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
+    print(is_different_from_old_password("123456", "654321"))  # -> False
 
     # print("\nPassword has your name:")
     # print(is_name_in_password("ddccwemelani", "Melani Mets"))  # -> True
