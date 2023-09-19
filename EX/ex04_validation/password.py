@@ -82,8 +82,28 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     new = new_pass.lower()
     if old == new or new == old[::-1]:
         return False
-    repeated_part = ""
+    part1 = find_the_longest_overlap_for_normal(old_pass, new_pass)
+    part2 = find_the_longest_overlap_for_reversed(old_pass, new_pass)
+    parts = []
+    if part1 != '':
+        parts.append(part1)
+    if part2 != '':
+        parts.append(part2)
+    # print(repeated_parts)
+    if len(parts) == 0:
+        return True
+    ret = max(parts, key=len)
+    if len(ret) / len(new) * 100 < 50:
+        return True
+    return False
+
+
+def find_the_longest_overlap_for_normal(old_pass: str, new_pass: str) -> str:
+    """Return the longest overlap match for normal."""
     repeated_parts = []
+    repeated_part = ''
+    new = new_pass.lower()
+    old = old_pass.lower()
 
     for i in range(len(old)):
         for j in range(i, len(old)):
@@ -94,34 +114,34 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
             if repeated_part != '':
                 repeated_parts.append(repeated_part)
                 repeated_part = ''
+    if len(repeated_parts) == 0:
+        return ''
+    ret = max(repeated_parts, key=len)
+    if len(ret) / len(new) * 100 < 50:
+        return ret
+    return ''
 
-    for i in range(len(new)):
-        for j in range(i, len(new)):
-            substring = old[i:j]
-            if substring in old and len(substring) > len(repeated_part):
-                repeated_part = substring
 
-            if repeated_part != '':
-                repeated_parts.append(repeated_part)
-                repeated_part = ''
-
-    new_password = new[::-1]
+def find_the_longest_overlap_for_reversed(old_pass: str, new_pass: str) -> str:
+    """Return the longest overlap match for reversed."""
+    repeated_parts = []
+    repeated_part = ''
+    new = new_pass[::-1].lower()
+    old = old_pass.lower()
     for i in range(len(old)):
         for j in range(i, len(old)):
             substring = old[i:j]
-            if substring in new_password and len(substring) > len(repeated_part):
+            if substring in new and len(substring) > len(repeated_part):
                 repeated_part = substring
             if repeated_part != '':
                 repeated_parts.append(repeated_part)
                 repeated_part = ''
-
-    # print(repeated_parts)
     if len(repeated_parts) == 0:
-        return True
+        return ''
     ret = max(repeated_parts, key=len)
-    if len(ret) / len(new_password) * 100 < 50:
-        return True
-    return False
+    if len(ret) / len(new) * 100 < 50:
+        return ret
+    return ''
 
 
 def is_name_in_password(password: str, name: str) -> bool:
