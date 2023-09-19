@@ -78,7 +78,31 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     :param new_pass: The new password
     :return: True if the new password is different enough, False otherwise
     """
-    pass
+    old_pass = old_pass.lower()
+    new_pass = new_pass.lower()
+
+    if old_pass == new_pass or old_pass[::-1] == new_pass:
+        return False
+
+    index = len(old_pass) // 2
+
+    parts = []
+    part = ''
+    for i in range(min(len(old_pass), len(new_pass))):
+        if old_pass[i] == new_pass[i]:
+            part += old_pass[i]
+        else:
+            if part != '':
+                parts.append(part)
+            part = ''
+    parts_len = []
+    for i in parts:
+        parts_len.append(len(i))
+
+    for i in parts_len:
+        if i >= len(new_pass) / 2:
+            return False
+    return True
 
 def is_name_in_password(password: str, name: str) -> bool:
     """
