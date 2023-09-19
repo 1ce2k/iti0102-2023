@@ -33,12 +33,12 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
     p_pos = 0
     if pollen_paddle_positions[0] == 1:
         p_pos = honey_comb_size
-    elif pollen_paddle_positions[0] == -1:
-        p_pos = abs(pollen_paddle_positions[0])
+    # elif pollen_paddle_positions[0] == -1:
+    #     p_pos = abs(pollen_paddle_positions[0])
     elif honey_comb_size - pollen_paddle_positions[0] == 0:
         p_pos = 1
     else:
-        p_pos = (honey_comb_size - pollen_paddle_positions[0] - 1) % honey_comb_size
+        p_pos = (honey_comb_size - (pollen_paddle_positions[0] - 1)) % honey_comb_size
     print(h_pos, p_pos)
     # Check for intersection
     for i in range(1, honey_comb_size):
@@ -157,8 +157,8 @@ def calculate_step(positions, pattern, who) -> int:
 if __name__ == "__main__":
     # print(do_bees_meet(300, "1,2,3,4,5", "1,2,3,4,5"))      # True
     # print(do_bees_meet(3, '2,4,6,8', '1,2,3,4'))              #True
-    print(do_bees_meet(3, '2,4,6,8', '19,21,23,25'))              #True
-    print(do_bees_meet(3, '2,4,6,8', '2,4,6,8'))              #True
+    # print(do_bees_meet(3, '2,4,6,8', '19,21,23,25'))              #True
+    # print(do_bees_meet(3, '2,4,6,8', '2,4,6,8'))              #True
     # assert do_bees_meet(5, "1,2,4,7", "2,4,8,14") is True
     # print(do_bees_meet(300, '1,2,4,8', '1,2,4,8'))          # True
     # print(do_bees_meet(3, '-1,-2,-3,-4', '-1,-2,-3,-4'))    # True
@@ -169,3 +169,5 @@ if __name__ == "__main__":
     # sequence_2 = ",".join(
     # str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
     # print(do_bees_meet(300, sequence_1, sequence_2))
+    assert do_bees_meet(5, "1,2,4,7", "2,4,8,14") is True
+    assert  do_bees_meet(3, '2,4,6,8', '2,4,6,8') is True
