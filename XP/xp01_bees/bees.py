@@ -35,8 +35,8 @@ def do_bees_meet(honeycomb_width: int, honey_hopper_data: str, pollen_paddle_dat
         p_pos = honey_comb_size
     elif pollen_paddle_positions[0] == -1:
         p_pos = abs(pollen_paddle_positions[0])
-    # elif honey_comb_size - pollen_paddle_positions[0] == 0:
-    #     p_pos = honey_comb_size
+    elif honey_comb_size - pollen_paddle_positions[0] == 0:
+        p_pos = 1
     else:
         p_pos = (honey_comb_size - pollen_paddle_positions[0] + 1) % honey_comb_size
     print(h_pos, p_pos)
