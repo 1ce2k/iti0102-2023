@@ -83,12 +83,16 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     if old == new or new == old[::-1]:
         return False
     if old in new or old in new[::-1]:
-        if len(old) / len(new) * 100 > 50:
+        if len(old) / len(new) * 100 >= 50:
             return False
+        else:
+            return True
 
     if new in old or new in old[::-1]:
-        if len(new) / len(old) * 100 > 50:
+        if len(new) / len(old) * 100 >= 50:
             return False
+        else:
+            return True
 
     part1 = find_the_longest_overlap_for_normal(old_pass, new_pass)
     part2 = find_the_longest_overlap_for_reversed(old_pass, new_pass)
