@@ -78,20 +78,82 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     :param new_pass: The new password
     :return: True if the new password is different enough, False otherwise
     """
-    if old_pass == new_pass or old_pass == new_pass[::-1]:
+    old = old_pass.lower()
+    new = new_pass.lower()
+    if old == new or new == old[::-1]:
         return False
-    if old_pass in new_pass or old_pass in new_pass[::-1]:
-        if len(old_pass) / len(new_pass) * 100 < 50:
-            return True
-        else:
+    if old in new or old in new[::-1]:
+        if len(old) / len(new) * 100 > 50:
             return False
-    if new_pass in old_pass or new_pass in old_pass[::-1]:
-        if len(new_pass) / len(old_pass) * 100 < 50:
-            return True
-        else:
+
+    if new in old or new in old[::-1]:
+        if len(new) / len(old) * 100 > 50:
             return False
-    total_overlap = sum(1 for a, b in zip(old_pass, new_pass) if a == b)
-    return total_overlap < len(new_pass) * 0.5
+
+    part1 = find_the_longest_overlap_for_normal(old_pass, new_pass)
+    part2 = find_the_longest_overlap_for_reversed(old_pass, new_pass)
+    parts = []
+    if part1 != '':
+        parts.append(part1)
+    if part2 != '':
+        parts.append(part2)
+    # print(repeated_parts)
+    if len(parts) == 0:
+        return True
+    ret = max(parts, key=len)
+    if len(new) > len(old):
+        if len(ret) / len(new) * 100 < 50:
+            return True
+    elif len(old) > len(new):
+        if len(ret) / len(old) * 100 < 50:
+            return True
+    return False
+
+
+def find_the_longest_overlap_for_normal(old_pass: str, new_pass: str) -> str:
+    """Return the longest overlap match for normal."""
+    repeated_parts = []
+    repeated_part = ''
+    new = new_pass.lower()
+    old = old_pass.lower()
+
+    for i in range(len(old)):
+        for j in range(i, len(old)):
+            substring = old[i:j]
+            if substring in new and len(substring) > len(repeated_part):
+                repeated_part = substring
+
+            if repeated_part != '':
+                repeated_parts.append(repeated_part)
+                repeated_part = ''
+    if len(repeated_parts) == 0:
+        return ''
+    ret = max(repeated_parts, key=len)
+    if len(ret) / len(old) * 100 < 50:
+        return ret
+    return ''
+
+
+def find_the_longest_overlap_for_reversed(old_pass: str, new_pass: str) -> str:
+    """Return the longest overlap match for reversed."""
+    repeated_parts = []
+    repeated_part = ''
+    new = new_pass[::-1].lower()
+    old = old_pass.lower()
+    for i in range(len(old)):
+        for j in range(i, len(old)):
+            substring = old[i:j]
+            if substring in new and len(substring) > len(repeated_part):
+                repeated_part = substring
+            if repeated_part != '':
+                repeated_parts.append(repeated_part)
+                repeated_part = ''
+    if len(repeated_parts) == 0:
+        return ''
+    ret = max(repeated_parts, key=len)
+    if len(ret) / len(new) * 100 < 50:
+        return ret
+    return ''
 
 
 def is_name_in_password(password: str, name: str) -> bool:
@@ -193,7 +255,7 @@ if __name__ == '__main__':
     # print("\nPassword has at least one number validation:")
     # print(includes_number("dJOWE8%&/"))  # -> True
     # print(includes_number("ÖJOWE%&/"))  # -> False
-    #
+
     print("\nNew password is different from the old one validation:")
     print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
     print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
@@ -202,8 +264,10 @@ if __name__ == '__main__':
     print(is_different_from_old_password("eva1970", "0791ave"))  # -> False
     print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
     print(is_different_from_old_password("123456", "654321"))  # -> False
-    print(is_different_from_old_password("passaa", "pas"))  # -> False
-    print(is_different_from_old_password("pas", "passaa"))  # -> False
+    print(is_different_from_old_password("1234ty", "iu4321"))  # -> False
+    print(is_different_from_old_password("pass", "passaaa"))  # -> False
+    print(is_different_from_old_password("aaapass", "pass"))  # -> False
+    print(is_different_from_old_password("ssapaaa", "pass"))  # -> False
 
     # print("\nPassword has your name:")
     # print(is_name_in_password("ddccwemelani", "Melani Mets"))  # -> True
@@ -222,6 +286,6 @@ if __name__ == '__main__':
     # print(is_birthday_in_password("56ddccw%&1", "30.04.2023"))  # -> False
     # print(is_birthday_in_password("23ddccw%&1", "30.04.2023"))  # -> True
 
-    print("\nPassword is completely validated:")
-    print(is_password_valid("k45aLK%1", "SunsetBeach2022!", "Marek Põõsas", "26.06.2003"))  # -> True
-    print(is_password_valid("keramRTYUY2003RDSCF.", "PurpleDragon42*", "Marek Põõsas", "12.04.2003"))  # -> False
+    # print("\nPassword is completely validated:")
+    # print(is_password_valid("k45aLK%1", "SunsetBeach2022!", "Marek Põõsas", "26.06.2003"))  # -> True
+    # print(is_password_valid("keramRTYUY2003RDSCF.", "PurpleDragon42*", "Marek Põõsas", "12.04.2003"))  # -> False
