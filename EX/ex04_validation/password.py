@@ -83,12 +83,14 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     if old == new or new == old[::-1]:
         return False
     if old in new or old in new[::-1]:
-        if len(old) / len(new) * 100 > 50:
-            return False
+        if len(old) / len(new) * 100 < 50:
+            return True
+        return False
 
     if new in old or new in old[::-1]:
-        if len(new) / len(old) * 100 > 50:
-            return False
+        if len(new) / len(old) * 100 < 50:
+            return True
+        return False
 
     part1 = find_the_longest_overlap_for_normal(old_pass, new_pass)
     part2 = find_the_longest_overlap_for_reversed(old_pass, new_pass)
@@ -105,7 +107,7 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
         if len(ret) / len(new) * 100 < 50:
             return True
     elif len(old) > len(new):
-        if len(ret) / len(old) * 100 < 50:
+        if len(ret) / len(new) * 100 < 50:
             return True
     return False
 
@@ -257,17 +259,19 @@ if __name__ == '__main__':
     # print(includes_number("ÖJOWE%&/"))  # -> False
 
     print("\nNew password is different from the old one validation:")
-    print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
-    print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
-    print(is_different_from_old_password("seinav2rv", "seinakapp"))  # -> False
-    print(is_different_from_old_password("merineitsi99", "mereneitsi11"))  # -> False
-    print(is_different_from_old_password("eva1970", "0791ave"))  # -> False
-    print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
-    print(is_different_from_old_password("123456", "654321"))  # -> False
-    print(is_different_from_old_password("1234ty", "iu4321"))  # -> False
-    print(is_different_from_old_password("pass", "passaaa"))  # -> False
-    print(is_different_from_old_password("aaapass", "pass"))  # -> False
-    print(is_different_from_old_password("ssapaaa", "pass"))  # -> False
+    # print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
+    # print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
+    # print(is_different_from_old_password("seinav2rv", "seinakapp"))  # -> False
+    # print(is_different_from_old_password("merineitsi99", "mereneitsi11"))  # -> False
+    # print(is_different_from_old_password("eva1970", "0791ave"))  # -> False
+    # print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
+    # print(is_different_from_old_password("123456", "654321"))  # -> False
+    # print(is_different_from_old_password("1234ty", "iu4321"))  # -> False
+    # print(is_different_from_old_password("pass", "passaaa"))  # -> False
+    # print(is_different_from_old_password("aaapass", "pass"))  # -> False
+    # print(is_different_from_old_password("ssapaaa", "pass"))  # -> False
+    print(is_different_from_old_password('danil567123', 'Danil567'))
+    print(is_different_from_old_password('Danil567123', 'xxx67123'))
 
     # print("\nPassword has your name:")
     # print(is_name_in_password("ddccwemelani", "Melani Mets"))  # -> True
