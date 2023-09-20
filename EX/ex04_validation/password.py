@@ -114,8 +114,7 @@ def find_the_longest_overlap_for_normal(old_pass: str, new_pass: str) -> str:
 
     for i in range(len(old)):
         for j in range(i, len(old)):
-            substring = old[i:j + 1
-                        ]
+            substring = old[i:j + 1]
             if substring in new and len(substring) > len(repeated_part):
                 repeated_part = substring
 
