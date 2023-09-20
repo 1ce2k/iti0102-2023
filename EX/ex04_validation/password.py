@@ -257,19 +257,20 @@ if __name__ == '__main__':
     # print(includes_number("ÖJOWE%&/"))  # -> False
 
     print("\nNew password is different from the old one validation:")
-    # print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
-    # print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
-    # print(is_different_from_old_password("seinav2rv", "seinakapp"))  # -> False
-    # print(is_different_from_old_password("merineitsi99", "mereneitsi11"))  # -> False
-    # print(is_different_from_old_password("eva1970", "0791ave"))  # -> False
-    # print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
+    print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
+    print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
+    print(is_different_from_old_password("seinav2rv", "seinakapp"))  # -> False
+    print(is_different_from_old_password("merineitsi99", "mereneitsi11"))  # -> False
+    print(is_different_from_old_password("eva1970", "0791ave"))  # -> False
+    print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
     print(is_different_from_old_password("123456", "654321"))  # -> False
     print(is_different_from_old_password("1234ty", "iu4321"))  # -> False
     print(is_different_from_old_password("pass", "passaaa"))  # -> False
+    print(is_different_from_old_password("pass", "aaapass"))  # -> False
     print(is_different_from_old_password("aaapass", "pass"))  # -> False
-    print(is_different_from_old_password("ssapaaa", "pass"))  # -> False
-    print(is_different_from_old_password('danil567123', 'Danil567'))
-    print(is_different_from_old_password('Danil567123', 'xxx67123'))
+    print(is_different_from_old_password("aaapass", "pass"))  # -> False
+    print(is_different_from_old_password('12345678', '87654321'))  # -> False
+    print(is_different_from_old_password('Danil567123', 'xxx67123'))  # -> False
 
     # print("\nPassword has your name:")
     # print(is_name_in_password("ddccwemelani", "Melani Mets"))  # -> True
