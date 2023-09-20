@@ -101,14 +101,9 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     if len(parts) == 0:
         return True
     ret = max(parts, key=len)
-    if len(new) >= len(old):
-        if len(ret) / len(new) * 100 >= 50:
-            return False
-    elif len(old) >= len(new):
-        if len(ret) / len(new) * 100 >= 50:
-            return False
+    if len(ret) / len(new) >= 0.5:
+        return False
     return True
-
 
 def find_the_longest_overlap_for_normal(old_pass: str, new_pass: str) -> str:
     """Return the longest overlap match for normal."""
@@ -119,7 +114,8 @@ def find_the_longest_overlap_for_normal(old_pass: str, new_pass: str) -> str:
 
     for i in range(len(old)):
         for j in range(i, len(old)):
-            substring = old[i:j]
+            substring = old[i:j + 1
+                        ]
             if substring in new and len(substring) > len(repeated_part):
                 repeated_part = substring
 
@@ -271,6 +267,7 @@ if __name__ == '__main__':
     print(is_different_from_old_password("aaapass", "pass"))  # -> False
     print(is_different_from_old_password('12345678', '87654321'))  # -> False
     print(is_different_from_old_password('Danil567123', 'xxx67123'))  # -> False
+    print(is_different_from_old_password('aaa123', 'bb123'))
 
     # print("\nPassword has your name:")
     # print(is_name_in_password("ddccwemelani", "Melani Mets"))  # -> True
