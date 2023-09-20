@@ -101,8 +101,12 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     if len(parts) == 0:
         return True
     ret = max(parts, key=len)
-    if len(ret) / len(new) * 100 < 50:
-        return True
+    if len(new) > len(old):
+        if len(ret) / len(new) * 100 < 50:
+            return True
+    elif len(old) > len(new):
+        if len(ret) / len(old) * 100 < 50:
+            return True
     return False
 
 
@@ -125,7 +129,7 @@ def find_the_longest_overlap_for_normal(old_pass: str, new_pass: str) -> str:
     if len(repeated_parts) == 0:
         return ''
     ret = max(repeated_parts, key=len)
-    if len(ret) / len(new) * 100 < 50:
+    if len(ret) / len(old) * 100 < 50:
         return ret
     return ''
 
@@ -253,14 +257,14 @@ if __name__ == '__main__':
     # print(includes_number("ÖJOWE%&/"))  # -> False
 
     print("\nNew password is different from the old one validation:")
-    # print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
-    # print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
-    # print(is_different_from_old_password("seinav2rv", "seinakapp"))  # -> False
-    # print(is_different_from_old_password("merineitsi99", "mereneitsi11"))  # -> False
+    print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
+    print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
+    print(is_different_from_old_password("seinav2rv", "seinakapp"))  # -> False
+    print(is_different_from_old_password("merineitsi99", "mereneitsi11"))  # -> False
     print(is_different_from_old_password("eva1970", "0791ave"))  # -> False
-    # print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
-    # print(is_different_from_old_password("123456", "654321"))  # -> False
-    # print(is_different_from_old_password("1234ty", "iu4321"))  # -> False
+    print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
+    print(is_different_from_old_password("123456", "654321"))  # -> False
+    print(is_different_from_old_password("1234ty", "iu4321"))  # -> False
     print(is_different_from_old_password("pass", "passaaa"))  # -> False
     print(is_different_from_old_password("aaapass", "pass"))  # -> False
     print(is_different_from_old_password("ssapaaa", "pass"))  # -> False
