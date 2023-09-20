@@ -105,6 +105,7 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
         return False
     return True
 
+
 def find_the_longest_overlap_for_normal(old_pass: str, new_pass: str) -> str:
     """Return the longest overlap match for normal."""
     repeated_parts = []
