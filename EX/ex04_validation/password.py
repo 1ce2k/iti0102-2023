@@ -78,34 +78,71 @@ def is_different_from_old_password(old_pass: str, new_pass: str) -> bool:
     :param new_pass: The new password
     :return: True if the new password is different enough, False otherwise
     """
-    if old_pass == new_pass or old_pass == new_pass[::-1]:
+    old = old_pass.lower()
+    new = new_pass.lower()
+    if old == new or new == old[::-1]:
         return False
-    index = len(new_pass) // 2
-    old_pass = old_pass.lower()
-    new_pass_part1 = new_pass[:index].lower()
-    new_pass_part2 = new_pass[:index].lower()
-    new_pass_part3 = new_pass[index::-1].lower()
-    new_pass_part4 = new_pass[:index:-1].lower()
-    min_len = min(len(old_pass), len(new_pass_part1), len(new_pass_part2), len(new_pass_part3), len(new_pass_part4))
-    match_1 = 0
-    match_2 = 0
-    match_3 = 0
-    match_4 = 0
-    for i in range(min_len):
-        if old_pass[i] == new_pass_part1[i]:
-            match_1 += 1
+    part1 = find_the_longest_overlap_for_normal(old_pass, new_pass)
+    part2 = find_the_longest_overlap_for_reversed(old_pass, new_pass)
+    parts = []
+    if part1 != '':
+        parts.append(part1)
+    if part2 != '':
+        parts.append(part2)
+    # print(repeated_parts)
+    if len(parts) == 0:
+        return True
+    ret = max(parts, key=len)
+    if len(ret) / len(new) * 100 < 50:
+        return True
+    return False
 
-        if old_pass[i] == new_pass_part2[i]:
-            match_2 += 1
 
-        if old_pass[i] == new_pass_part3[i]:
+def find_the_longest_overlap_for_normal(old_pass: str, new_pass: str) -> str:
+    """Return the longest overlap match for normal."""
+    repeated_parts = []
+    repeated_part = ''
+    new = new_pass.lower()
+    old = old_pass.lower()
 
-            match_3 += 1
-        if old_pass[i] == new_pass_part4[i]:
-            match_4 += 1
+    for i in range(len(old)):
+        for j in range(i, len(old)):
+            substring = old[i:j]
+            if substring in new and len(substring) > len(repeated_part):
+                repeated_part = substring
 
-    total_overlap = match_1 + match_2 + match_3 + match_4
-    return total_overlap <= len(new_pass) * 0.5
+            if repeated_part != '':
+                repeated_parts.append(repeated_part)
+                repeated_part = ''
+    if len(repeated_parts) == 0:
+        return ''
+    ret = max(repeated_parts, key=len)
+    if len(ret) / len(new) * 100 < 50:
+        return ret
+    return ''
+
+
+def find_the_longest_overlap_for_reversed(old_pass: str, new_pass: str) -> str:
+    """Return the longest overlap match for reversed."""
+    repeated_parts = []
+    repeated_part = ''
+    new = new_pass[::-1].lower()
+    old = old_pass.lower()
+    for i in range(len(old)):
+        for j in range(i, len(old)):
+            substring = old[i:j]
+            if substring in new and len(substring) > len(repeated_part):
+                repeated_part = substring
+            if repeated_part != '':
+                repeated_parts.append(repeated_part)
+                repeated_part = ''
+    if len(repeated_parts) == 0:
+        return ''
+    ret = max(repeated_parts, key=len)
+    if len(ret) / len(new) * 100 < 50:
+        return ret
+    return ''
+
 
 def is_name_in_password(password: str, name: str) -> bool:
     """
@@ -178,7 +215,9 @@ def is_password_valid(new_password: str, old_password: str, name: str, birthdate
     :param birthdate: The user's birthdate
     :return: True if the password is valid, False otherwise.
     """
-    pass
+    if is_correct_length(new_password) and includes_number(new_password) and includes_lowercase(new_password) and includes_uppercase(new_password) and includes_special(new_password) and is_different_from_old_password(old_password, new_password) and not is_name_in_password(new_password, name) and not is_birthday_in_password(new_password, birthdate):
+        return True
+    return False
 
 
 if __name__ == '__main__':
@@ -206,13 +245,17 @@ if __name__ == '__main__':
     # print(includes_number("ÖJOWE%&/"))  # -> False
 
     print("\nNew password is different from the old one validation:")
-    print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
-    print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
-    print(is_different_from_old_password("seinav2rv", "seinakapp"))  # -> False
-    print(is_different_from_old_password("merineitsi99", "mereneitsi11"))  # -> False
+    # print(is_different_from_old_password("õunamoos", "maasikamoos"))  # -> True
+    # print(is_different_from_old_password("olevsulev67", "ämblikmees18"))  # -> True
+    # print(is_different_from_old_password("seinav2rv", "seinakapp"))  # -> False
+    # print(is_different_from_old_password("merineitsi99", "mereneitsi11"))  # -> False
     print(is_different_from_old_password("eva1970", "0791ave"))  # -> False
-    print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
-    print(is_different_from_old_password("123456", "654321"))  # -> False
+    # print(is_different_from_old_password("eva1970", "0791avyryryr"))  # -> True
+    # print(is_different_from_old_password("123456", "654321"))  # -> False
+    # print(is_different_from_old_password("1234ty", "iu4321"))  # -> False
+    print(is_different_from_old_password("pass", "passaaa"))  # -> False
+    print(is_different_from_old_password("aaapass", "pass"))  # -> False
+    print(is_different_from_old_password("ssapaaa", "pass"))  # -> False
 
     # print("\nPassword has your name:")
     # print(is_name_in_password("ddccwemelani", "Melani Mets"))  # -> True
@@ -230,7 +273,7 @@ if __name__ == '__main__':
     # print(is_birthday_in_password("40ddccw%&1", "30.04.2023"))  # -> False
     # print(is_birthday_in_password("56ddccw%&1", "30.04.2023"))  # -> False
     # print(is_birthday_in_password("23ddccw%&1", "30.04.2023"))  # -> True
-    #
+
     # print("\nPassword is completely validated:")
     # print(is_password_valid("k45aLK%1", "SunsetBeach2022!", "Marek Põõsas", "26.06.2003"))  # -> True
     # print(is_password_valid("keramRTYUY2003RDSCF.", "PurpleDragon42*", "Marek Põõsas", "12.04.2003"))  # -> False
