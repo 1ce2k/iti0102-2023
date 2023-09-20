@@ -20,7 +20,7 @@ def is_valid_username(email: str) -> bool:
 
 
 def find_domain(email: str) -> str:
-    """Return emails domain."""
+    """Return email domain."""
     domain = email.split('@')[-1]
     return domain
 
