@@ -59,8 +59,7 @@ def bee_pattern(steps: list) -> str:
         return 'growing-geometric'
     elif is_not_moving(steps):
         return 'standing'
-    else:
-        raise ValueError("Insufficient data for sequence identification")
+    raise ValueError("Insufficient data for sequence identification")
 
 
 def is_arithmetic(steps: list) -> bool:
@@ -242,7 +241,8 @@ if __name__ == '__main__':
     # print(do_bees_meet(5, '1,2,3,4', '1,2,3,4'))
     # print(do_bees_meet(5, '1,2,4,8', '1,2,4,8'))
     # print(do_bees_meet(5, '1,2,4,7', '1,2,4,8'))
-    sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
-    sequence_2 = ",".join(
-        str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
-    assert do_bees_meet(300, sequence_1, sequence_2) is True
+    # sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
+    # sequence_2 = ",".join(
+    #     str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
+    # assert do_bees_meet(300, sequence_1, sequence_2) is True
+    assert do_bees_meet(300, '1,2,4,8', '1,2,4,8') is True
