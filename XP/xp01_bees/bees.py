@@ -81,6 +81,8 @@ def is_growing_arithmetic(steps: list) -> bool:
 
 def is_geometric(steps: list) -> bool:
     """Return True if sequence is geometric."""
+    if steps[0] == 0:
+        return False
     common_ratio = steps[1] / steps[0]
     for i in range(2, len(steps)):
         if steps[i] / steps[i - 1] != common_ratio:
