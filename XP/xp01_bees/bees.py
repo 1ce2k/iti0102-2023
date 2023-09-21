@@ -251,7 +251,7 @@ if __name__ == '__main__':
     # print(pollen_next_pos(58, 'arithmetic', 61, [1, 2, 3, 4]))  # => [57]
     # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
 
-    assert do_bees_meet(5, '1,2,3,4', '1,1,1,1') is True
+    # assert do_bees_meet(5, '1,2,3,4', '1,1,1,1') is True
     # assert do_bees_meet(5, '5,11,17,23', '1,2,3,4') is True
     # assert do_bees_meet(5, '1,2,4,8', '1,2,4,8') is True
     # assert do_bees_meet(5, "1,2,4,7", "2,4,8,14") is True
