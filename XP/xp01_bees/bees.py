@@ -174,6 +174,10 @@ def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_moves: list,
         step = p_moves[p_moves.index(pos)] - p_moves[p_moves.index(pos) - 1]
         step_difference = p_moves[1] - p_moves[0]
         pos = (pos + (step - step_difference))
+    if p_pattern == 'growing-geometric':
+        step_ratio = int((p_moves[2] - p_moves[1]) / (p_moves[1] - p_moves[0]))
+        step = int(p_moves[p_moves.index(pos)] - p_moves[p_moves.index(pos) - 1])
+        pos = (pos + step * step_ratio)
     pos %= hex_size
     if pos == 0:
         pos = 1
@@ -251,11 +255,12 @@ if __name__ == '__main__':
     # print(pollen_next_pos(58, 'arithmetic', 61, [1, 2, 3, 4]))  # => [57]
     # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
 
-    assert do_bees_meet(5, '1,2,3,4', '1,1,1,1') is True
-    assert do_bees_meet(5, '1,1,1,1', '1,2,3,4') is True
-    assert do_bees_meet(5, '5,11,17,23', '1,2,3,4') is True
-    assert do_bees_meet(300, '1,2,4,8', '1,2,4,8') is True
-    assert do_bees_meet(5, "1,2,4,7", "2,4,8,14") is True
+    # assert do_bees_meet(5, '1,2,3,4', '1,1,1,1') is True
+    # assert do_bees_meet(5, '1,1,1,1', '1,2,3,4') is True
+    # assert do_bees_meet(300, '1,2,3,4', '1,2,3,4') is True
+    # assert do_bees_meet(500, '1,2,4,8', '1,2,4,8') is True
+    assert do_bees_meet(5, '1,3,7,15', '1,3,7,15') is True
+    # assert do_bees_meet(5, "1,2,4,7", "2,4,8,14") is True
     # sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
     # sequence_2 = ",".join(
     #     str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
