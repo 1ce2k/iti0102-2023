@@ -128,18 +128,18 @@ def honey_next_pos(position: int, h_pattern: str, hex_size: int, h_steps: list) 
     if h_pattern == 'standing':
         pos = h_steps[0]
     elif h_pattern == 'arithmetic':
-        pos = (pos + (h_steps[1] - h_steps[0])) % hex_size
+        pos = (pos + (h_steps[1] - h_steps[0]))
         if pos == 0:
             pos = 1
     elif h_pattern == 'geometric':
-        pos = (pos * int(h_steps[1] / h_steps[0])) % hex_size
+        pos = (pos * int(h_steps[1] / h_steps[0]))
     elif h_pattern == 'growing-arithmetic':
         step = h_steps[1] - h_steps[0]
         step_increment = h_steps[h_steps.index(pos)] - h_steps[h_steps.index(pos) - 1]
         if h_steps.index(pos) == 0:
             pos += step
         else:
-            pos = (pos + step + step_increment) % hex_size
+            pos = (pos + step + step_increment)
     elif h_pattern == 'growing-geometric':
         step_ratio = int((h_steps[2] - h_steps[1]) / (h_steps[1] - h_steps[0]))
         step = int(h_steps[h_steps.index(pos)] - h_steps[h_steps.index(pos) - 1])
@@ -147,8 +147,10 @@ def honey_next_pos(position: int, h_pattern: str, hex_size: int, h_steps: list) 
         if h_steps.index(pos) == 0:
             pos += step1
         else:
-            pos = (pos + step * step_ratio) % hex_size
-    h_steps.append(pos)
+            pos = (pos + step * step_ratio)
+    pos %= hex_size
+    if pos not in h_steps:
+        h_steps.append(pos)
     return h_steps
 
 
@@ -158,16 +160,17 @@ def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_moves: list,
     if p_pattern == 'standing':
         pos = position
     if p_pattern == 'arithmetic':
-        pos = (pos - (p_steps[1] - p_steps[0])) % hex_size
+        pos = (pos - (p_steps[1] - p_steps[0]))
     if p_pattern == 'geometric':
         multiplier = int(p_steps[1] / p_steps[0])
         step = p_moves[p_moves.index(pos)] - p_moves[p_moves.index(pos) - 1]
         if position == p_moves[0]:
             pos = p_moves[1]
         else:
-            pos = (pos + step * multiplier) % hex_size
+            pos = (pos + step * multiplier)
+    pos %= hex_size
     if pos == 0:
-        pos %= hex_size
+        pos = hex_size
     if pos not in p_moves:
         p_moves.append(pos)
     return p_moves
@@ -193,16 +196,16 @@ if __name__ == '__main__':
     # print(cells_count(4))  # => 37
     # print(cells_count(3))  # => 19
 
-    print('\nFind bee pattern:')
-    print(bee_pattern([1, 2, 3, 4]))
-    print(bee_pattern([5, 11, 17, 23]))
-    print(bee_pattern([1, 2, 4, 7]))
-    print(bee_pattern([5, 9, 17, 29]))
-    print(bee_pattern([1, 2, 4, 8]))
-    print(bee_pattern([2, 6, 18, 54]))
-    print(bee_pattern([1, 3, 7, 15, 31]))
-    print(bee_pattern([5, 9, 17, 33]))
-    print(bee_pattern([5, 9, 19, 33]))
+    # print('\nFind bee pattern:')
+    # print(bee_pattern([1, 2, 3, 4]))
+    # print(bee_pattern([5, 11, 17, 23]))
+    # print(bee_pattern([1, 2, 4, 7]))
+    # print(bee_pattern([5, 9, 17, 29]))
+    # print(bee_pattern([1, 2, 4, 8]))
+    # print(bee_pattern([2, 6, 18, 54]))
+    # print(bee_pattern([1, 3, 7, 15, 31]))
+    # print(bee_pattern([5, 9, 17, 33]))
+    # print(bee_pattern([5, 9, 19, 33]))
 
     # print('\nFind honey bee start pos:')
     # print(honey_start_pos(1, 61))  # => 1
@@ -241,11 +244,10 @@ if __name__ == '__main__':
 
     # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
 
-    # print(do_bees_meet(5, '1,2,3,4', '1,2,3,4'))
-    # print(do_bees_meet(5, '1,2,4,8', '1,2,4,8'))
-    # print(do_bees_meet(5, '1,2,4,7', '1,2,4,8'))
+    # assert do_bees_meet(5, '1,2,3,4', '1,2,3,4') is True
+    assert do_bees_meet(5, '1,2,4,8', '1,2,4,8') is True
+    # assert do_bees_meet(5, '1,2,4,7', '1,2,4,8') is True
     # sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
     # sequence_2 = ",".join(
     #     str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
     # assert do_bees_meet(300, sequence_1, sequence_2) is True
-    # assert do_bees_meet(300, '1,2,4,8', '1,2,4,8') is True
