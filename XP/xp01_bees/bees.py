@@ -121,7 +121,7 @@ def pollen_start_pos(step: int, hex_size: int) -> int:
     return hex_size - step % hex_size + 1
 
 
-def honey_next_pos(position: int, h_pattern: str, hex_size: int, h_steps: list) -> int:
+def honey_next_pos(position: int, h_pattern: str, hex_size: int, h_steps: list) -> list:
     """Return next pos for honey bee."""
     pos = position
     if h_pattern == 'standing':
