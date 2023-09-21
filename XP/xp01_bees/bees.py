@@ -18,7 +18,8 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
     h_moves = honey_first_steps(h_steps, hex_size)
     p_moves = pollen_first_steps(p_steps, hex_size)
     if h_pattern == p_pattern == 'standing':
-        return False
+        if h_moves[0] != p_moves:
+            return False
     count = 1
     index1 = 1
     index2 = 1
@@ -244,10 +245,10 @@ if __name__ == '__main__':
 
     # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
 
-    # assert do_bees_meet(5, '1,2,3,4', '1,2,3,4') is True
+    assert do_bees_meet(5, '1,2,3,4', '1,2,3,4') is True
     assert do_bees_meet(5, '1,2,4,8', '1,2,4,8') is True
-    # assert do_bees_meet(5, '1,2,4,7', '1,2,4,8') is True
-    # sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
-    # sequence_2 = ",".join(
-    #     str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
-    # assert do_bees_meet(300, sequence_1, sequence_2) is True
+    assert do_bees_meet(5, '1,2,4,7', '1,2,4,8') is True
+    sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
+    sequence_2 = ",".join(
+        str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
+    assert do_bees_meet(300, sequence_1, sequence_2) is True
