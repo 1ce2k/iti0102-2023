@@ -198,7 +198,7 @@ def pollen_first_steps(steps: list, cells: int) -> list:
     return moves
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # print('Calculate hex_size:')
     # print(cells_count(5))  # => 61
     # print(cells_count(4))  # => 37
