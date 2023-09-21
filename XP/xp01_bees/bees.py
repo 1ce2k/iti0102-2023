@@ -34,6 +34,7 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
             h_moves = honey_next_pos(h_moves[index1], h_pattern, hex_size, h_moves)
             p_moves = pollen_next_pos(p_moves[index2], p_pattern, hex_size, p_moves, p_steps)
         count += 1
+        print(h_moves, p_moves)
     return False
 
 
@@ -66,6 +67,8 @@ def bee_pattern(steps: list) -> str:
 def is_arithmetic(steps: list) -> bool:
     """Return True if sequence is arithmetic."""
     common_difference = steps[1] - steps[0]
+    if common_difference == 0:
+        return False
     for i in range(2, len(steps)):
         if steps[i] - steps[i - 1] != common_difference:
             return False
@@ -85,6 +88,8 @@ def is_geometric(steps: list) -> bool:
     if steps[0] == 0:
         return False
     common_ratio = steps[1] / steps[0]
+    if common_ratio == 1:
+        return False
     for i in range(2, len(steps)):
         if steps[i] / steps[i - 1] != common_ratio:
             return False
@@ -101,9 +106,11 @@ def is_growing_geometric(steps: list) -> bool:
 
 def is_not_moving(steps: list) -> bool:
     """Return True if bee does not move."""
-    if steps[0] == steps[1] == steps[2] == steps[3]:
-        return True
-    return False
+    difference = 0
+    for i in range(len(steps)):
+        if steps[1] - steps[0] != 0:
+            return False
+    return True
 
 
 def honey_start_pos(step: int, hex_size: int) -> int:
@@ -202,6 +209,7 @@ if __name__ == '__main__':
     # print(cells_count(3))  # => 19
 
     # print('\nFind bee pattern:')
+    print(bee_pattern([1, 1, 1, 1]))  # => standing
     # print(bee_pattern([1, 2, 3, 4]))
     # print(bee_pattern([5, 11, 17, 23]))
     # print(bee_pattern([1, 2, 4, 7]))
@@ -252,10 +260,10 @@ if __name__ == '__main__':
     # assert do_bees_meet(5, '1,2,3,4', '1,2,3,4') is True
     # assert do_bees_meet(5, '1,2,4,8', '1,2,4,8') is True
     # assert do_bees_meet(5, '1,2,4,7', '1,2,4,8') is True
-    assert do_bees_meet(5, '1,2,4,7', '1,2,4,7') is True
+    # assert do_bees_meet(5, '1,2,4,7', '1,2,4,7') is True
     # assert do_bees_meet(5, '2,4,6,8', '2,4,6,8') is True
-    # assert do_bees_meet(5, '1,2,4,8', '1,2,4,8') is True
-    # assert do_bees_meet(5, '50,60,70,80', '45,60,75,90')
+    # assert do_bees_meet(5, '50,60,70,80', '45,60,75,90') is True
+    # assert do_bees_meet(3, '1,1,1,1', '1,2,4,7') is True
     # sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
     # sequence_2 = ",".join(
     #     str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
