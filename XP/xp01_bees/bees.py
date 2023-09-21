@@ -24,7 +24,7 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
     index2 = 1
     if h_moves[0] == p_moves[0]:
         return True
-    while count < hex_size:
+    while count <= hex_size:
         if h_moves[index1] == p_moves[index2]:
             return True
         else:
