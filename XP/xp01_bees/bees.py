@@ -7,8 +7,8 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
         raise ValueError("Insufficient data for sequence identification")
 
     hex_size = cells_count(honeycomb_width)
-    h_steps = list(map(int, honeyhopper_data.split(',')))
-    p_steps = list(map(int, pollenpadle_data.split(',')))
+    h_steps = [int(x) for x in honeyhopper_data.split(',')]
+    p_steps = [int(x) for x in pollenpadle_data.split(',')]
     h_pattern = bee_pattern(h_steps)
     p_pattern = bee_pattern(p_steps)
     h_moves = honey_first_steps(h_steps, hex_size)
@@ -170,6 +170,10 @@ def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_moves: list,
             pos = p_moves[1]
         else:
             pos = (pos + step * multiplier)
+    if p_pattern == 'growing-arithmetic':
+        step = p_moves[p_moves.index(pos)] - p_moves[p_moves.index(pos) - 1]
+        step_difference = p_moves[1] - p_moves[0]
+        pos = (pos + (step - step_difference))
     pos %= hex_size
     if pos == 0:
         pos = 1
@@ -248,9 +252,10 @@ if __name__ == '__main__':
     # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
 
     assert do_bees_meet(5, '1,2,3,4', '1,1,1,1') is True
+    assert do_bees_meet(5, '1,1,1,1', '1,2,3,4') is True
     assert do_bees_meet(5, '5,11,17,23', '1,2,3,4') is True
     assert do_bees_meet(300, '1,2,4,8', '1,2,4,8') is True
-    # assert do_bees_meet(5, "1,2,4,7", "2,4,8,14") is True
+    assert do_bees_meet(5, "1,2,4,7", "2,4,8,14") is True
     # sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
     # sequence_2 = ",".join(
     #     str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
