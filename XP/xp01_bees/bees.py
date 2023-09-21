@@ -17,8 +17,7 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
         # 'standing' and
         if h_moves[0] != p_moves[0]:
             return False
-        else:
-            return True
+
     count = 1
     index1 = 1
     index2 = 1
