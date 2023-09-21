@@ -74,7 +74,7 @@ def is_arithmetic(steps: list) -> bool:
 def is_growing_arithmetic(steps: list) -> bool:
     """Return True if sequence is growing arithmetic."""
     differences = []
-    for i in range(2, len(steps)):
+    for i in range(1, len(steps)):
         differences.append(steps[i] - steps[i - 1])
     return is_arithmetic(differences)
 
@@ -91,8 +91,8 @@ def is_geometric(steps: list) -> bool:
 def is_growing_geometric(steps: list) -> bool:
     """Return True if sequence is growing arithmetic."""
     differences = []
-    for i in range(2, len(steps)):
-        differences.append(steps[i] / steps[i - 1])
+    for i in range(1, len(steps)):
+        differences.append(steps[i] - steps[i - 1])
     return is_geometric(differences)
 
 
@@ -191,15 +191,16 @@ if __name__ == '__main__':
     # print(cells_count(4))  # => 37
     # print(cells_count(3))  # => 19
 
-    # print('\nFind bee pattern:')
-    # print(bee_pattern([1, 2, 3, 4]))
-    # print(bee_pattern([5, 11, 17, 23]))
-    # print(bee_pattern([1, 2, 4, 7]))
-    # print(bee_pattern([5, 9, 17, 29]))
-    # print(bee_pattern([1, 2, 4, 8]))
-    # print(bee_pattern([2, 6, 18, 54]))
-    # print(bee_pattern([1, 3, 7, 15]))
-    # print(bee_pattern([5, 9, 17, 33]))
+    print('\nFind bee pattern:')
+    print(bee_pattern([1, 2, 3, 4]))
+    print(bee_pattern([5, 11, 17, 23]))
+    print(bee_pattern([1, 2, 4, 7]))
+    print(bee_pattern([5, 9, 17, 29]))
+    print(bee_pattern([1, 2, 4, 8]))
+    print(bee_pattern([2, 6, 18, 54]))
+    print(bee_pattern([1, 3, 7, 15, 31]))
+    print(bee_pattern([5, 9, 17, 33]))
+    print(bee_pattern([5, 9, 19, 33]))
 
     # print('\nFind honey bee start pos:')
     # print(honey_start_pos(1, 61))  # => 1
@@ -245,4 +246,4 @@ if __name__ == '__main__':
     # sequence_2 = ",".join(
     #     str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
     # assert do_bees_meet(300, sequence_1, sequence_2) is True
-    assert do_bees_meet(300, '1,2,4,8', '1,2,4,8') is True
+    # assert do_bees_meet(300, '1,2,4,8', '1,2,4,8') is True
