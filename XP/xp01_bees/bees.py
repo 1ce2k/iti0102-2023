@@ -19,12 +19,20 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
     p_moves = pollen_first_steps(p_steps, hex_size)
     if h_pattern == p_pattern == 'standing':
         return False
-    for i in range(hex_size):
-        if h_moves[i] == p_moves[i]:
+    count = 1
+    index1 = 1
+    index2 = 1
+    if h_moves[0] == p_moves[0]:
+        return True
+    while count < hex_size:
+        if h_moves[index1] == p_moves[index2]:
             return True
         else:
-            h_moves = honey_next_pos(h_moves[i], h_pattern, hex_size, h_moves)
-            p_moves = pollen_next_pos(p_moves[i], p_pattern, hex_size, p_moves, p_steps)
+            index1 = (index1 + 1) % len(h_moves)
+            index2 = (index2 + 1) % len(p_moves)
+            h_moves = honey_next_pos(h_moves[index1], h_pattern, hex_size, h_moves)
+            p_moves = pollen_next_pos(p_moves[index2], p_pattern, hex_size, p_moves, p_steps)
+        count += 1
     return False
 
 
@@ -231,6 +239,10 @@ if __name__ == '__main__':
 
     # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
 
-    print(do_bees_meet(5, '1,2,3,4', '1,2,3,4'))
-    print(do_bees_meet(5, '1,2,4,8', '1,2,4,8'))
-    print(do_bees_meet(5, '1,2,4,7', '1,2,4,8'))
+    # print(do_bees_meet(5, '1,2,3,4', '1,2,3,4'))
+    # print(do_bees_meet(5, '1,2,4,8', '1,2,4,8'))
+    # print(do_bees_meet(5, '1,2,4,7', '1,2,4,8'))
+    sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
+    sequence_2 = ",".join(
+        str(2 ** x) for x in range(30, 45))  # Geometric sequence with a ratio of 2, but starting from a larger power
+    assert do_bees_meet(300, sequence_1, sequence_2) is True
