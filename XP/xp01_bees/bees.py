@@ -3,6 +3,9 @@
 
 def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: str) -> bool:
     """Return whether bees meet."""
+    if not honeycomb_width > 0 and not len(honeyhopper_data) >= 4 and not len(pollenpadle_data) >=4:
+        raise ValueError("Insufficient data for sequence identification")
+
     hex_size = cells_count(honeycomb_width)
     h_steps = list(map(int, honeyhopper_data.split(',')))
     p_steps = list(map(int, pollenpadle_data.split(',')))
@@ -61,7 +64,7 @@ def is_arithmetic(steps: list) -> bool:
 
 
 def is_growing_arithmetic(steps: list) -> bool:
-    """Return True if sequence is growing arithmetic"""
+    """Return True if sequence is growing arithmetic."""
     differences = []
     for i in range(2, len(steps)):
         differences.append(steps[i] - steps[i - 1])
@@ -78,7 +81,7 @@ def is_geometric(steps: list) -> bool:
 
 
 def is_growing_geometric(steps: list) -> bool:
-    """Return True if sequence is growing arithmetic"""
+    """Return True if sequence is growing arithmetic."""
     differences = []
     for i in range(2, len(steps)):
         differences.append(steps[i] / steps[i - 1])
@@ -86,7 +89,7 @@ def is_growing_geometric(steps: list) -> bool:
 
 
 def is_not_moving(steps: list) -> bool:
-    """Return True if bee does not move"""
+    """Return True if bee does not move."""
     if steps[0] == steps[1] == steps[2] == steps[3]:
         return True
     return False
@@ -139,6 +142,7 @@ def honey_next_pos(position: int, h_pattern: str, hex_size: int, h_steps: list) 
 
 
 def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_steps: list, grade: int) -> int:
+    """Find pollen bee next position."""
     pos = position
     if p_pattern == 'standing':
         pos = position
