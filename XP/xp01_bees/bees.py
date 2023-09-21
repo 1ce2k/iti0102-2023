@@ -1,4 +1,4 @@
-"""Whether bees meet"""
+"""Whether bees meet."""
 
 
 def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: str) -> bool:
@@ -11,19 +11,20 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
     p_steps = list(map(int, pollenpadle_data.split(',')))
     h_pattern = bee_pattern(h_steps)
     p_pattern = bee_pattern(p_steps)
-    h_start_pos = honey_start_pos(h_steps, hex_size)
-    p_start_pos = pollen_start_pos(p_steps, hex_size)
-    h_pos = h_start_pos
-    p_pos = p_start_pos
-    count = 0
-    while count < hex_size:
-        if h_pos == p_pos:
+    # h_start_pos = honey_start_pos(h_steps[0], hex_size)
+    # p_start_pos = pollen_start_pos(p_steps[0], hex_size)
+    # h_pos = h_start_pos
+    # p_pos = p_start_pos
+    h_moves = honey_first_steps(h_steps, hex_size)
+    p_moves = pollen_first_steps(p_steps, hex_size)
+    if h_pattern == p_pattern == 'standing':
+        return False
+    for i in range(hex_size):
+        if h_moves[i] == p_moves[i]:
             return True
         else:
-            h_pos = honey_next_pos(h_pos, h_pattern, hex_size, h_steps)
-            p_pos = pollen_next_pos(p_pos, p_pattern, hex_size, p_steps, count)
-        print(h_pos, p_pos)
-        count += 1
+            h_moves = honey_next_pos(h_moves[i], h_pattern, hex_size, h_moves)
+            p_moves = pollen_next_pos(p_moves[i], p_pattern, hex_size, p_moves, p_steps)
     return False
 
 
@@ -95,21 +96,21 @@ def is_not_moving(steps: list) -> bool:
     return False
 
 
-def honey_start_pos(steps: list, hex_size: int) -> int:
+def honey_start_pos(step: int, hex_size: int) -> int:
     """Find honey bee first pos."""
-    pos = steps[0] % hex_size
+    pos = step % hex_size
     if pos == 0:
         pos = hex_size
     return pos
 
 
-def pollen_start_pos(steps: list, hex_size: int) -> int:
+def pollen_start_pos(step: int, hex_size: int) -> int:
     """Find pollen bee first pos."""
-    if steps[0] == 1:
+    if step == 1:
         return hex_size
-    if steps[0] % hex_size == 0:
+    if step % hex_size == 0:
         return 1
-    return hex_size - steps[0] % hex_size + 1
+    return hex_size - step % hex_size + 1
 
 
 def honey_next_pos(position: int, h_pattern: str, hex_size: int, h_steps: list) -> int:
@@ -138,10 +139,11 @@ def honey_next_pos(position: int, h_pattern: str, hex_size: int, h_steps: list) 
             pos += step1
         else:
             pos = (pos + step * step_ratio) % hex_size
-    return pos
+    h_steps.append(pos)
+    return h_steps
 
 
-def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_steps: list, grade: int) -> int:
+def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_moves: list, p_steps: list) -> list:
     """Find pollen bee next position."""
     pos = position
     if p_pattern == 'standing':
@@ -149,14 +151,34 @@ def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_steps: list,
     if p_pattern == 'arithmetic':
         pos = (pos - (p_steps[1] - p_steps[0])) % hex_size
     if p_pattern == 'geometric':
-        step = p_steps[1] / p_steps[0]
-        pos = int(pos - step ** grade) % hex_size
+        multiplier = int(p_steps[1] / p_steps[0])
+        step = p_moves[p_moves.index(pos)] - p_moves[p_moves.index(pos) - 1]
+        if position == p_moves[0]:
+            pos = p_moves[1]
+        else:
+            pos = (pos + step * multiplier) % hex_size
     if pos == 0:
         pos %= hex_size
-    return pos
+    if pos not in p_moves:
+        p_moves.append(pos)
+    return p_moves
 
 
-# if __name__ == '__main__':
+def honey_first_steps(steps: list, cells: int) -> list:
+    moves = []
+    for i in steps:
+        moves.append(honey_start_pos(i, cells))
+    return moves
+
+
+def pollen_first_steps(steps: list, cells: int) -> list:
+    moves = []
+    for i in steps:
+        moves.append(pollen_start_pos(i, cells))
+    return moves
+
+
+if __name__ == '__main__':
     # print('Calculate hex_size:')
     # print(cells_count(5))  # => 61
     # print(cells_count(4))  # => 37
@@ -173,16 +195,19 @@ def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_steps: list,
     # print(bee_pattern([5, 9, 17, 33]))
 
     # print('\nFind honey bee start pos:')
-    # print(honey_start_pos([1, 2, 3, 4], 61))  # => 1
-    # print(honey_start_pos([61, 62, 63, 64], 61))  # => 2
-    # print(honey_start_pos([63, 64, 65, 66], 61))  # => 1
+    # print(honey_start_pos(1, 61))  # => 1
+    # print(honey_start_pos(2, 61))  # => 2
+    # print(honey_start_pos(63, 61))  # => 2
 
     # print('\nFind pollen bee start pos:')
-    # print(pollen_start_pos([1, 2, 3, 4], 61))  # => 61
-    # print(pollen_start_pos([61, 62, 63, 64], 61))  # => 1
-    # print(pollen_start_pos([63, 64, 65, 66], 61))  # => 60
-    # print(pollen_start_pos([4, 5, 6, 7], 61))  # => 58
-    # print(pollen_start_pos([60, 61, 62, 63], 61))  # => 2
+    # print(pollen_start_pos(1, 61))  # => 61
+    # print(pollen_start_pos(61, 61))  # => 1
+    # print(pollen_start_pos(63, 61))  # => 60
+    # print(pollen_start_pos(4, 61))  # => 58
+    # print(pollen_start_pos(60, 61))  # => 2
+
+    # print(honey_first_steps([69, 70, 71, 72], 61))  # => [8, 9, 10, 11]
+    # print(pollen_first_steps([1, 2, 3, 4], 61))  # => [61, 60, 59, 58]
 
     # print('\nFind next honey bee position:')
     # print(honey_next_pos(1, 'standing', 61, [1, 1, 1, 1]))  # => 1
@@ -204,5 +229,8 @@ def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_steps: list,
     # print(pollen_next_pos(61, 'arithmetic', 61, [1, 2, 3, 4]))  # => [60]
     # print(pollen_next_pos(58, 'arithmetic', 61, [1, 2, 3, 4]))  # => [57]
 
-    # print(do_bees_meet(5, '1,2,3,4', '1,2,3,4'))
-    # print(do_bees_meet(5, '1,2,4,8', '1,2,4,8'))
+    # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
+
+    print(do_bees_meet(5, '1,2,3,4', '1,2,3,4'))
+    print(do_bees_meet(5, '1,2,4,8', '1,2,4,8'))
+    print(do_bees_meet(5, '1,2,4,7', '1,2,4,8'))
