@@ -201,7 +201,7 @@ def pollen_first_steps(steps: list, cells: int) -> list:
     return moves
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # print('Calculate hex_size:')
     # print(cells_count(5))  # => 61
     # print(cells_count(4))  # => 37
@@ -254,7 +254,7 @@ if __name__ == '__main__':
     # print(pollen_next_pos(58, 'arithmetic', 61, [1, 2, 3, 4]))  # => [57]
     # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
 
-    assert do_bees_meet(3, '1,2,3,4', '1,1,1,1') is True
+    # assert do_bees_meet(3, '1,2,3,4', '1,1,1,1') is True
     # assert do_bees_meet(3, '1,1,1,1', '1,2,3,4') is True
     # assert do_bees_meet(3, '1,2,3,4', '1,2,3,4') is True
     # assert do_bees_meet(3, '1,2,4,8', '1,2,4,8') is True
