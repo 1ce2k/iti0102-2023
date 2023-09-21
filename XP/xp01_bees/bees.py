@@ -7,14 +7,10 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
         raise ValueError("Insufficient data for sequence identification")
 
     hex_size = cells_count(honeycomb_width)
-    h_steps = [int(x) for x in honeyhopper_data.split(',')]
-    p_steps = [int(x) for x in pollenpadle_data.split(',')]
+    h_steps = list(map(int, honeyhopper_data.split(',')))
+    p_steps = list(map(int, pollenpadle_data.split(',')))
     h_pattern = bee_pattern(h_steps)
     p_pattern = bee_pattern(p_steps)
-    # h_start_pos = honey_start_pos(h_steps[0], hex_size)
-    # p_start_pos = pollen_start_pos(p_steps[0], hex_size)
-    # h_pos = h_start_pos
-    # p_pos = p_start_pos
     h_moves = honey_first_steps(h_steps, hex_size)
     p_moves = pollen_first_steps(p_steps, hex_size)
     if h_pattern == p_pattern == 'standing':
@@ -34,7 +30,7 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
             h_moves = honey_next_pos(h_moves[index1], h_pattern, hex_size, h_moves)
             p_moves = pollen_next_pos(p_moves[index2], p_pattern, hex_size, p_moves, p_steps)
         count += 1
-        print(h_moves, p_moves)
+        # print(h_moves, p_moves)
     return False
 
 
@@ -198,7 +194,7 @@ def pollen_first_steps(steps: list, cells: int) -> list:
     return moves
 
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
     # print('Calculate hex_size:')
     # print(cells_count(5))  # => 61
     # print(cells_count(4))  # => 37
@@ -251,9 +247,9 @@ def pollen_first_steps(steps: list, cells: int) -> list:
     # print(pollen_next_pos(58, 'arithmetic', 61, [1, 2, 3, 4]))  # => [57]
     # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
 
-    # assert do_bees_meet(5, '1,2,3,4', '1,1,1,1') is True
-    # assert do_bees_meet(5, '5,11,17,23', '1,2,3,4') is True
-    # assert do_bees_meet(5, '1,2,4,8', '1,2,4,8') is True
+    assert do_bees_meet(5, '1,2,3,4', '1,1,1,1') is True
+    assert do_bees_meet(5, '5,11,17,23', '1,2,3,4') is True
+    assert do_bees_meet(300, '1,2,4,8', '1,2,4,8') is True
     # assert do_bees_meet(5, "1,2,4,7", "2,4,8,14") is True
     # sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
     # sequence_2 = ",".join(
