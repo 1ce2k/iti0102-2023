@@ -3,7 +3,7 @@
 
 def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: str) -> bool:
     """Return whether bees meet."""
-    if not honeycomb_width > 0 and not len(honeyhopper_data) >= 4 and not len(pollenpadle_data) >=4:
+    if honeycomb_width < 0 or len(honeyhopper_data.split(',')) < 4 or len(pollenpaddle_data.split(',')) < 4:
         raise ValueError("Insufficient data for sequence identification")
 
     hex_size = cells_count(honeycomb_width)
