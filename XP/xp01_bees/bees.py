@@ -26,7 +26,7 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
         else:
             h_pos = honey_next_pos(h_pos, h_pattern, hex_size, h_steps, i)
             p_pos = pollen_next_pos(p_pos, p_pattern, hex_size, p_steps, i)
-        print(h_pos,p_pos)
+        print(h_pos, p_pos)
     return False
 
 
