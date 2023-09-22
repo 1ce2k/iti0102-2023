@@ -11,33 +11,26 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
     p_steps = [int(x) for x in pollenpadle_data.split(',')]
     h_pattern = bee_pattern(h_steps)
     p_pattern = bee_pattern(p_steps)
-    print(h_pattern, p_pattern)
     if h_pattern == p_pattern == 'standing':
         # 'standing' and
         if h_steps[0] != p_steps[0]:
             return False
 
-    # start pos of each bee
     h_pos = honey_start_pos(h_steps[0], hex_size)
     p_pos = pollen_start_pos(p_steps[0], hex_size)
     h_temp = 0
     p_temp = 0
-    x = 0
-    while True:
+    for i in range(1, hex_size + 1):
         if h_pos == p_pos:
             return True
         else:
-            # save old pos
             h_temp = h_pos
             p_temp = p_pos
-
-            # find new pos
-            h_pos = honey_next_pos(h_pos, h_pattern, hex_size, h_steps, x)
-            p_pos = pollen_next_pos(p_pos, p_pattern, hex_size, p_steps, x)
-        print(h_pos, p_pos)
+            h_pos = honey_next_pos(h_pos, h_pattern, hex_size, h_steps, i)
+            p_pos = pollen_next_pos(p_pos, p_pattern, hex_size, p_steps, i)
+        # print(h_pos, p_pos)
         if h_pos == h_temp and p_pos == p_temp:
             return False
-        x += 1
     return False
 
 
@@ -92,7 +85,7 @@ def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_steps: list,
     if p_pattern == 'growing-arithmetic':
         step_difference = (p_steps[2] - p_steps[1]) - (p_steps[1] - p_steps[0])
         step = p_steps[1] - p_steps[0]
-        pos = (position - (step + i * step_difference)) % hex_size
+        pos = (position + (step + step_difference * i)) % hex_size
         if pos == 0:
             pos = hex_size
         return pos
@@ -270,5 +263,5 @@ if __name__ == '__main__':
     print(do_bees_meet(7, "2,6,12,20", "1,3,6,10"))
     # print(do_bees_meet(11, "1,2,3,4,5", "5,11,17,23,29"))
     # print(do_bees_meet(6, "1,2,4,7,11", "5,9,17,29,45"))
-    # print(do_bees_meet(15, "1,3,7,15,31", "5,7,13,31,85"))
+    print(do_bees_meet(15, "1,3,7,15,31", "5,7,13,31,85"))
     # print(do_bees_meet(10, "10,19,27,34,40", "50,47,44,41,38"))
