@@ -51,7 +51,7 @@ def honey_next_pos(position: int, h_pattern: str, hex_size: int, h_steps: list, 
         return pos
     elif h_pattern == 'growing-arithmetic':
         step = h_steps[1] - h_steps[0]
-        step_increment = h_steps[-1] - h_steps[-2]
+        step_increment = h_steps[2] - h_steps[1]
         pos = (position + step + step_increment) % hex_size
         if pos == 0:
             pos = hex_size
@@ -261,8 +261,8 @@ if __name__ == '__main__':
     # assert do_bees_meet(300, sequence_1, sequence_2) is True
     # assert do_bees_meet(140, "1,2,4,8,16", "2,6,18,54,162") is True
     print(do_bees_meet(7, "2,6,12,20", "1,3,6,10"))
-    # print(do_bees_meet(11, "1,2,3,4,5", "5,11,17,23,29"))
+    print(do_bees_meet(11, "1,2,3,4,5", "5,11,17,23,29"))
     print(do_bees_meet(6, "1,2,4,7,11", "5,9,17,29,45"))
     # print(do_bees_meet(140, "1,2,4,8,16", "2,6,18,54,162"))
     print(do_bees_meet(15, "1,3,7,15,31", "5,7,13,31,85"))
-    # print(do_bees_meet(10, "10,19,27,34,40", "50,47,44,41,38"))
+    print(do_bees_meet(10, "10,19,27,34,40", "50,47,44,41,38"))
