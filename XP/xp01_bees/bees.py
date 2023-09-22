@@ -28,7 +28,7 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
             p_temp = p_pos
             h_pos = honey_next_pos(h_pos, h_pattern, hex_size, h_steps, i)
             p_pos = pollen_next_pos(p_pos, p_pattern, hex_size, p_steps, i)
-        # print(h_pos, p_pos)
+        print(h_pos, p_pos)
         if h_pos == h_temp and p_pos == p_temp:
             return False
     return False
@@ -92,7 +92,7 @@ def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_steps: list,
     if p_pattern == 'growing-geometric':
         step_ratio = int((p_steps[2] - p_steps[1]) / (p_steps[1] - p_steps[0]))
         step = p_steps[1] - p_steps[0]
-        pos = (position + step * step_ratio ** i) % hex_size
+        pos = (position - step * step_ratio ** i) % hex_size
         if pos == 0:
             pos = hex_size
         return pos
@@ -182,7 +182,7 @@ def pollen_start_pos(step: int, hex_size: int) -> int:
     if step == 1:
         return hex_size
     if step % hex_size == 0:
-        return 1
+        return hex_size - step
     return hex_size - step % hex_size + 1
 
 
@@ -263,5 +263,6 @@ if __name__ == '__main__':
     # print(do_bees_meet(7, "2,6,12,20", "1,3,6,10"))
     # print(do_bees_meet(11, "1,2,3,4,5", "5,11,17,23,29"))
     # print(do_bees_meet(6, "1,2,4,7,11", "5,9,17,29,45"))
+    print(cells_count(15))
     print(do_bees_meet(15, "1,3,7,15,31", "5,7,13,31,85"))
     # print(do_bees_meet(10, "10,19,27,34,40", "50,47,44,41,38"))
