@@ -20,14 +20,13 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
 
     h_pos = honey_start_pos(h_steps[0], hex_size)
     p_pos = pollen_start_pos(p_steps[0], hex_size)
-    if h_pos == p_pos:
-        return True
-    else:
-        for i in range(1, hex_size):
+    for i in range(1, hex_size + 1):
+        if h_pos == p_pos:
+            return True
+        else:
             h_pos = honey_next_pos(h_pos, h_pattern, hex_size, h_steps, i)
-            print(h_pos)
-            # p_pos = pollen_next_pos(p_pos, p_pattern, hex_size, p_steps)
-    # print(h_moves, p_moves)
+            p_pos = pollen_next_pos(p_pos, p_pattern, hex_size, p_steps, i)
+        print(h_pos,p_pos)
     return False
 
 
@@ -47,10 +46,7 @@ def honey_next_pos(position: int, h_pattern: str, hex_size: int, h_steps: list, 
     elif h_pattern == 'growing-arithmetic':
         step = h_steps[1] - h_steps[0]
         step_increment = h_steps[-1] - h_steps[-2]
-        if h_steps.index(position) == 0:
-            pos = (position + step) % hex_size
-        else:
-            pos = (position + step + step_increment) % hex_size
+        pos = (position + step + step_increment) % hex_size
     elif h_pattern == 'growing-geometric':
         step = h_steps[1] - h_steps[0]
         step_ratio = int((h_steps[2] - h_steps[1]) / (h_steps[1] - h_steps[0]))
@@ -77,15 +73,20 @@ def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_steps: list,
         if pos == 0:
             pos = hex_size
         return pos
-    # if p_pattern == 'growing-arithmetic':
-    #     step = p_moves[p_moves.index(pos)] - p_moves[p_moves.index(pos) - 1]
-    #     step_difference = p_moves[1] - p_moves[0]
-    #     pos = (pos + (step - step_difference))
-    # if p_pattern == 'growing-geometric':
-    #     step_ratio = int((p_moves[2] - p_moves[1]) / (p_moves[1] - p_moves[0]))
-    #     step = int(p_moves[p_moves.index(pos)] - p_moves[p_moves.index(pos) - 1])
-    #     pos = (pos + step * step_ratio)
-    # return pos
+    if p_pattern == 'growing-arithmetic':
+        step = (p_steps[2] - p_steps[1]) - (p_steps[1] - p_steps[0])
+        step_difference = p_steps[1] - p_steps[0]
+        pos = (position - (step + i * step_difference)) % hex_size
+        if pos == 0:
+            pos = hex_size
+        return pos
+    if p_pattern == 'growing-geometric':
+        step_ratio = int((p_steps[2] - p_steps[1]) / (p_steps[1] - p_steps[0]))
+        step = p_steps[1] - p_steps[0]
+        pos = (position + step * step_ratio ** i) % hex_size
+        if pos == 0:
+            pos = hex_size
+        return pos
 
 
 def cells_count(honeycomb_width: int) -> int:
@@ -97,6 +98,8 @@ def cells_count(honeycomb_width: int) -> int:
         hex_size += honeycomb_width + i
     hex_size = hex_size * 2 - (2 * honeycomb_width - 1)
     return hex_size
+
+
 def bee_pattern(steps: list) -> str:
     """Find what movement pattern has the bee."""
     if is_arithmetic(steps):
@@ -110,6 +113,8 @@ def bee_pattern(steps: list) -> str:
     elif is_not_moving(steps):
         return 'standing'
     raise ValueError("Insufficient data for sequence identification")
+
+
 def is_arithmetic(steps: list) -> bool:
     """Return True if sequence is arithmetic."""
     common_difference = steps[1] - steps[0]
@@ -119,12 +124,16 @@ def is_arithmetic(steps: list) -> bool:
         if steps[i] - steps[i - 1] != common_difference:
             return False
     return True
+
+
 def is_growing_arithmetic(steps: list) -> bool:
     """Return True if sequence is growing arithmetic."""
     differences = []
     for i in range(1, len(steps)):
         differences.append(steps[i] - steps[i - 1])
     return is_arithmetic(differences)
+
+
 def is_geometric(steps: list) -> bool:
     """Return True if sequence is geometric."""
     if steps[0] == 0 or steps[1] / steps[0] == 1:
@@ -134,23 +143,31 @@ def is_geometric(steps: list) -> bool:
         if steps[i] / steps[i - 1] != common_ratio:
             return False
     return True
+
+
 def is_growing_geometric(steps: list) -> bool:
     """Return True if sequence is growing arithmetic."""
     differences = []
     for i in range(1, len(steps)):
         differences.append(steps[i] - steps[i - 1])
     return is_geometric(differences)
+
+
 def is_not_moving(steps: list) -> bool:
     """Return True if bee does not move."""
     if steps[0] == steps[1] == steps[2] == steps[3]:
         return True
     return False
+
+
 def honey_start_pos(step: int, hex_size: int) -> int:
     """Find honey bee first pos."""
     pos = step % hex_size
     if pos == 0:
         pos = hex_size
     return pos
+
+
 def pollen_start_pos(step: int, hex_size: int) -> int:
     """Find pollen bee first pos."""
     if step == 1:
@@ -158,18 +175,23 @@ def pollen_start_pos(step: int, hex_size: int) -> int:
     if step % hex_size == 0:
         return 1
     return hex_size - step % hex_size + 1
+
+
 def honey_first_steps(steps: list, cells: int) -> list:
     """Return the honey start positions."""
     moves = []
     for i in steps:
         moves.append(honey_start_pos(i, cells))
     return moves
+
+
 def pollen_first_steps(steps: list, cells: int) -> list:
     """Return the pollen start positions."""
     moves = []
     for i in steps:
         moves.append(pollen_start_pos(i, cells))
     return moves
+
 
 if __name__ == '__main__':
     # print('Calculate hex_size:')
@@ -204,38 +226,41 @@ if __name__ == '__main__':
     # print(pollen_first_steps([1, 2, 3, 4], 61))  # => [61, 60, 59, 58]
 
     # print('\nFind next honey bee position:')
-    print(honey_next_pos(1, 'standing', 61, [1, 1, 1, 1], 1))  # => 1
-    print(honey_next_pos(1, 'arithmetic', 61, [1, 4, 7, 11], 1))  # => 4
-    print(honey_next_pos(2, 'arithmetic', 61, [2, 4, 6, 8], 1))  # => 4
-    print(honey_next_pos(8, 'arithmetic', 61, [2, 4, 6, 8], 1))  # => 10
-    print(honey_next_pos(7, 'growing-arithmetic', 61, [1, 2, 4, 7], 1))  # => 11
-    print(honey_next_pos(11, 'growing-arithmetic', 61, [1, 2, 4, 7, 11], 1))  # => 16
-    print(honey_next_pos(45, 'growing-arithmetic', 61, [5, 9, 17, 29, 45], 1))  # => 4
-    print(honey_next_pos(2, 'geometric', 61, [1, 2, 4, 8], 1))  # => 4
-    print(honey_next_pos(8, 'geometric', 61, [1, 2, 4, 8], 1))  # => 16
-    print(honey_next_pos(1, 'growing-geometric', 61, [1, 3, 7, 15], 1))  # => 3
-    print(honey_next_pos(15, 'growing-geometric', 61, [1, 3, 7, 15], 4))  # => 31
-    print(honey_next_pos(5, 'growing-geometric', 61, [5, 9, 17, 33], 1))  # => 9
-    print(honey_next_pos(33, 'growing-geometric', 61, [5, 9, 17, 33], 4))  # => 4
+    # print(honey_next_pos(1, 'standing', 61, [1, 1, 1, 1], 1))  # => 1
+    # print(honey_next_pos(1, 'arithmetic', 61, [1, 4, 7, 11], 1))  # => 4
+    # print(honey_next_pos(2, 'arithmetic', 61, [2, 4, 6, 8], 1))  # => 4
+    # print(honey_next_pos(8, 'arithmetic', 61, [2, 4, 6, 8], 1))  # => 10
+    # print(honey_next_pos(7, 'growing-arithmetic', 61, [1, 2, 4, 7], 1))  # => 11
+    # print(honey_next_pos(11, 'growing-arithmetic', 61, [1, 2, 4, 7, 11], 1))  # => 16
+    # print(honey_next_pos(45, 'growing-arithmetic', 61, [5, 9, 17, 29, 45], 1))  # => 4
+    # print(honey_next_pos(2, 'geometric', 61, [1, 2, 4, 8], 1))  # => 4
+    # print(honey_next_pos(8, 'geometric', 61, [1, 2, 4, 8], 1))  # => 16
+    # print(honey_next_pos(1, 'growing-geometric', 61, [1, 3, 7, 15], 1))  # => 3
+    # print(honey_next_pos(15, 'growing-geometric', 61, [1, 3, 7, 15], 4))  # => 31
+    # print(honey_next_pos(5, 'growing-geometric', 61, [5, 9, 17, 33], 1))  # => 9
+    # print(honey_next_pos(33, 'growing-geometric', 61, [5, 9, 17, 33], 4))  # => 4
 
     # print('\nFind next pollen bee position:')
-    print(pollen_next_pos(61, 'standing', 61, [1, 1, 1, 1], 1))  # => 61
-    print(pollen_next_pos(61, 'arithmetic', 61, [1, 2, 3, 4], 1))  # => 1
-    print(pollen_next_pos(1, 'arithmetic', 61, [1, 2, 3, 4], 1))  # => 61
-    print(pollen_next_pos(1, 'arithmetic', 61, [7, 14, 21, 28], 1))  # => 55
-    print(pollen_next_pos(61, 'geometric', 61, [1, 2, 4, 8],0))  # => 60
-    print(pollen_next_pos(60, 'geometric', 61, [1, 2, 4, 8],1))  # => 58
-    # print(pollen_next_pos(61, 'arithmetic', 61, [1, 2, 3, 4]))  # => [60]
-    # print(pollen_next_pos(58, 'arithmetic', 61, [1, 2, 3, 4]))  # => [57]
-    # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
+    # print(pollen_next_pos(61, 'standing', 61, [1, 1, 1, 1], 1))  # => 61
+    # print(pollen_next_pos(61, 'arithmetic', 61, [1, 2, 3, 4], 1))  # => 60
+    # print(pollen_next_pos(1, 'arithmetic', 61, [1, 2, 3, 4], 1))  # => 61
+    # print(pollen_next_pos(1, 'arithmetic', 61, [7, 14, 21, 28], 1))  # => 55
+    # print(pollen_next_pos(61, 'geometric', 61, [1, 2, 4, 8], 0))  # => 60
+    # print(pollen_next_pos(60, 'geometric', 61, [1, 2, 4, 8], 1))  # => 58
+    # print(pollen_next_pos(61, 'growing-arithmetic', 61, [1, 2, 3, 4], 1))  # => 60
+    # print(pollen_next_pos(1, 'growing-arithmetic', 61, [1, 2, 3, 4], 1))  # => [57]
+    # print(pollen_next_pos(58, 'growing-arithmetic', 61, [1, 2, 3, 4], 1))  # => [57]
+    # print(pollen_next_pos(60, 'growing-geometric', 61, [1, 2, 4, 8], 1))  # => 58
+    # print(pollen_next_pos(60, 'growing-geometric', 61, [1, 2, 4, 8], 1))  # => 58
+    # print(pollen_next_pos(60, 'growing-geometric', 61, [1, 2, 4, 8], 1))  # => 58
 
     # print(do_bees_meet(3, '1,3,7,15', '1,1,1,1'))
-    # assert do_bees_meet(50, '1,1,1,1', '1,1,1,1') is False
-    # assert do_bees_meet(20, '1,1,1,1', '7,7,7,7') is False
-    # assert do_bees_meet(50, '1,1,1,1', '1,2,3,4') is True
-    # assert do_bees_meet(500, '1,2,4,8', '1,2,4,8') is True
+    # assert do_bees_meet(5, '1,1,1,1', '1,1,1,1') is False
+    # assert do_bees_meet(5, '1,1,1,1', '7,7,7,7') is False
+    # assert do_bees_meet(5, '1,1,1,1', '1,2,3,4') is True
+    # assert do_bees_meet(5, '1,2,4,8', '1,2,4,8') is True
     # assert do_bees_meet(5, '1,3,7,15', '1,3,7,15') is True
-    # assert do_bees_meet(2, "1,2,4,7", "2,4,8,14") is True
+    assert do_bees_meet(5, "1,2,4,7", "2,4,8,14") is True
     # sequence_1 = ",".join(str(x) for x in range(50000, 200001, 10000))  # Arithmetic sequence with a large difference
     # assert do_bees_meet(2, sequence_1, sequence_1) is True
     # sequence_2 = ",".join(
