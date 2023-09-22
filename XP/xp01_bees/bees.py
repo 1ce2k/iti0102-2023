@@ -83,8 +83,8 @@ def pollen_next_pos(position: int, p_pattern: str, hex_size: int, p_steps: list,
             pos = hex_size
         return pos
     if p_pattern == 'growing-arithmetic':
-        step = (p_steps[2] - p_steps[1]) - (p_steps[1] - p_steps[0])
-        step_difference = p_steps[1] - p_steps[0]
+        step_difference = (p_steps[2] - p_steps[1]) - (p_steps[1] - p_steps[0])
+        step = p_steps[1] - p_steps[0]
         pos = (position - (step + i * step_difference)) % hex_size
         if pos == 0:
             pos = hex_size
