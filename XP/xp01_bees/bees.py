@@ -227,19 +227,19 @@ if __name__ == '__main__':
     # print(pollen_first_steps([1, 2, 3, 4], 61))  # => [61, 60, 59, 58]
 
     # print('\nFind next honey bee position:')
-    # print(honey_next_pos(1, 'standing', 61, [1, 1, 1, 1]))  # => 1
-    # print(honey_next_pos(1, 'arithmetic', 61, [1, 4, 7, 11]))  # => 4
-    # print(honey_next_pos(2, 'arithmetic', 61, [2, 4, 6, 8]))  # => 4
-    # print(honey_next_pos(8, 'arithmetic', 61, [2, 4, 6, 8]))  # => 10
-    # print(honey_next_pos(7, 'growing-arithmetic', 61, [1, 2, 4, 7]))  # => 11
-    # print(honey_next_pos(11, 'growing-arithmetic', 61, [1, 2, 4, 7, 11]))  # => 16
-    # print(honey_next_pos(45, 'growing-arithmetic', 61, [5, 9, 17, 29, 45]))  # => 4
-    # print(honey_next_pos(2, 'geometric', 61, [1, 2, 4, 8]))  # => 4
-    # print(honey_next_pos(8, 'geometric', 61, [1, 2, 4, 8]))  # => 16
-    # print(honey_next_pos(1, 'growing-geometric', 61, [1, 3, 7, 15], 1))  # => 3
-    # print(honey_next_pos(15, 'growing-geometric', 61, [1, 3, 7, 15], 4))  # => 31
-    # print(honey_next_pos(5, 'growing-geometric', 61, [5, 9, 17, 33], 1))  # => 9
-    # print(honey_next_pos(33, 'growing-geometric', 61, [5, 9, 17, 33], 4))  # => 4
+    print(honey_next_pos(1, 'standing', 61, [1, 1, 1, 1], 1))  # => 1
+    print(honey_next_pos(1, 'arithmetic', 61, [1, 4, 7, 11], 1))  # => 4
+    print(honey_next_pos(2, 'arithmetic', 61, [2, 4, 6, 8], 1))  # => 4
+    print(honey_next_pos(8, 'arithmetic', 61, [2, 4, 6, 8], 1))  # => 10
+    print(honey_next_pos(7, 'growing-arithmetic', 61, [1, 2, 4, 7], 1))  # => 11
+    print(honey_next_pos(11, 'growing-arithmetic', 61, [1, 2, 4, 7, 11], 1))  # => 16
+    print(honey_next_pos(45, 'growing-arithmetic', 61, [5, 9, 17, 29, 45], 1))  # => 4
+    print(honey_next_pos(2, 'geometric', 61, [1, 2, 4, 8], 1))  # => 4
+    print(honey_next_pos(8, 'geometric', 61, [1, 2, 4, 8], 1))  # => 16
+    print(honey_next_pos(1, 'growing-geometric', 61, [1, 3, 7, 15], 1))  # => 3
+    print(honey_next_pos(15, 'growing-geometric', 61, [1, 3, 7, 15], 4))  # => 31
+    print(honey_next_pos(5, 'growing-geometric', 61, [5, 9, 17, 33], 1))  # => 9
+    print(honey_next_pos(33, 'growing-geometric', 61, [5, 9, 17, 33], 4))  # => 4
 
     # print('\nFind next pollen bee position:')
     # print(pollen_next_pos(61, 'standing', 61, [1, 1, 1, 1]))
@@ -247,7 +247,7 @@ if __name__ == '__main__':
     # print(pollen_next_pos(58, 'arithmetic', 61, [1, 2, 3, 4]))  # => [57]
     # print(pollen_next_pos(30, 'geometric', 61, [61, 60, 58, 54, 46, 30], [1, 2, 4, 8]))
 
-    print(do_bees_meet(3, '1,3,7,15', '1,1,1,1'))
+    # print(do_bees_meet(3, '1,3,7,15', '1,1,1,1'))
     # assert do_bees_meet(50, '1,1,1,1', '1,1,1,1') is False
     # assert do_bees_meet(20, '1,1,1,1', '7,7,7,7') is False
     # assert do_bees_meet(50, '1,1,1,1', '1,2,3,4') is True
