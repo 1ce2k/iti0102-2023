@@ -38,11 +38,11 @@ def honey_next_pos(position: int, h_pattern: str, hex_size: int, h_steps: list, 
     elif h_pattern == 'arithmetic':
         pos = (position + (h_steps[1] - h_steps[0])) % hex_size
         if pos == 0:
-            pos = 1
+            pos = hex_size
     elif h_pattern == 'geometric':
         pos = (position * int(h_steps[1] / h_steps[0])) % hex_size
         if pos == 0:
-            pos = 1
+            pos = hex_size
     elif h_pattern == 'growing-arithmetic':
         step = h_steps[1] - h_steps[0]
         step_increment = h_steps[-1] - h_steps[-2]
