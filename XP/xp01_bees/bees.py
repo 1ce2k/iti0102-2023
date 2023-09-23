@@ -7,7 +7,6 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
         raise ValueError("Insufficient data for sequence identification")
 
     hex_size = cells_count(honeycomb_width)
-    print(hex_size)
     h_steps = [int(x) for x in honeyhopper_data.split(',')]
     p_steps = [int(x) for x in pollenpadle_data.split(',')]
     h_pattern = bee_pattern(h_steps)
@@ -29,7 +28,6 @@ def do_bees_meet(honeycomb_width: int, honeyhopper_data: str, pollenpadle_data: 
             p_temp = p_pos
             h_pos = honey_next_pos(h_pos, h_pattern, hex_size, h_steps, i)
             p_pos = pollen_next_pos(p_pos, p_pattern, hex_size, p_steps, i)
-        print(h_pos, p_pos)
         if h_pos == h_temp and p_pos == p_temp:
             return False
     return False
