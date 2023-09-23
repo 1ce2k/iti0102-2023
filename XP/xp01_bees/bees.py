@@ -112,7 +112,7 @@ def cells_count(honeycomb_width: int) -> int:
 
 
 def bee_pattern(steps: list) -> str:
-    """Find what movement pattern has the bee."""
+    """Find what movement pattern the bee has."""
     if is_arithmetic(steps):
         return 'arithmetic'
     elif is_geometric(steps):
