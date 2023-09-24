@@ -225,9 +225,7 @@ def find_letter_probability(word_dict: dict, guessed_letters: list) -> dict:
     for word, count in word_dict.items():
         for letter in word:
             if letter not in guessed_letters:
-                for letter in word:
-                    if letter not in guessed_letters:
-                        frequency[letter] = frequency.get(letter, 0) + 1
+                frequency[letter] = frequency.get(letter, 0) + 1
     probabilities = {}
     total_letters = 0
     for value in word_dict.values():
