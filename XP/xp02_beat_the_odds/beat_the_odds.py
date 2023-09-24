@@ -151,9 +151,7 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict):
     words = sentence.split(' ')
 
     # find all possible words to sentence part
-    possible_words_to_part = []
-    for word in words:
-        possible_words_to_part.append(filter_words_by_pattern(word, guessed_letters, word_dict))
+    possible_words_to_part = [filter_words_by_pattern(word, guessed_letters, word_dict) for word in words]
 
     # Find best letters for each sentence part
     best_letters_list = []
