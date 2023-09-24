@@ -194,7 +194,9 @@ def find_letter_probability(word_dict: dict, guessed_letters: list) -> dict:
                 frequency[letter] = frequency.get(letter, 0) + count
 
     probabilities = {}
-    total_letters = len(list_of_words)
+    total_letters = 0
+    for value in word_dict.values():
+        total_letters += value
     if frequency:
         for key in frequency.keys():
             probabilities[key] = int(frequency[key] / total_letters * 100)
