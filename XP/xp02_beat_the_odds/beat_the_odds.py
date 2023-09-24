@@ -1,5 +1,35 @@
-"""Beat the odds."""
+"""Play best the odds game."""
+
+
 import collections
+import random
+from heapq import nlargest
+
+
+def the_game(filename, word_count):
+    """Play the game."""
+    d = read_words(filename)
+    c = collections.Counter(d)
+    dictionary_size = sum(c.values())
+    correct_sentence = " ".join([x for _, x in nlargest(word_count, ((random.random(), x) for x in c.elements()))])
+    sentence = "".join([x if x == ' ' else '_' for x in correct_sentence])
+    guessed_letters = []
+    print("Correct sentence: " + correct_sentence)
+    print(sentence)
+    cnt = 0
+    while True:
+        guessed_letter = guess(sentence, guessed_letters, d)
+        if guessed_letter is None or guessed_letter in guessed_letters:
+            print("Nothing to guess any more, breaking.")
+            break
+        print('guessed:' + guessed_letter)
+        guessed_letters.append(guessed_letter)
+        sentence = "".join([c if c == guessed_letter else sentence[i] for i, c in enumerate(correct_sentence)])
+        print("Sentence: " + sentence)
+        cnt += 1
+        if '_' not in sentence:
+            print("Congrats! Number of guesses:" + str(cnt))
+            break
 
 
 def read_words(filename: str) -> dict:
@@ -187,17 +217,21 @@ def filter_words_by_pattern(pattern: str, letters_to_keep: list, word_dict: dict
 
 def find_letter_probability(word_dict: dict, guessed_letters: list) -> dict:
     """Return best letter for sentence part."""
-    list_of_words = []
-    for key in word_dict.keys():
-        for i in range(word_dict[key]):
-            list_of_words.append(key)
+    # list_of_words = []
+    # for key in word_dict.keys():
+    #     for i in range(word_dict[key]):
+    #         list_of_words.append(key)
     frequency = {}
-    for word in list_of_words:
+    for word, count in word_dict.items():
         for letter in word:
             if letter not in guessed_letters:
-                frequency[letter] = frequency.get(letter, 0) + 1
+                for letter in word:
+                    if letter not in guessed_letters:
+                        frequency[letter] = frequency.get(letter, 0) + 1
     probabilities = {}
-    total_letters = len(list_of_words)
+    total_letters = 0
+    for value in word_dict.values():
+        total_letters += value
     if frequency:
         for key in frequency.keys():
             probabilities[key] = int(frequency[key] / total_letters * 100)
