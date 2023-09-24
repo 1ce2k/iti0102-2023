@@ -177,31 +177,10 @@ def filter_words_by_pattern(pattern: str, letters_to_keep: list, word_dict: dict
     """Find all possible words for the guess from dictionary."""
     filtered_dict = {}
     for word, count in word_dict.items():
-        word_set = set(word)
         if len(word) == len(pattern):
-            # if all((p == '_' or p == w) for p, w in zip(pattern, word)):
-            #     if all((letter in word or letter == '_') for letter in pattern):
-            #         if all(word.count(let) == pattern.count(let) for let in letters_to_keep):
-            #             filtered_dict[word] = count
-
-            match_pattern = True
-            match_letters = True
-            for p, w in zip(pattern, word):
-                if not (p == '_' or p == w):
-                    match_pattern = False
-                    break
-            if match_pattern:
-                for letter in pattern:
-                    if not (letter in word or letter == '_'):
-                        match_letters = False
-                        break
-                if match_letters:
-                    letter_count_match = True
-                    for let in letters_to_keep:
-                        if not (word.count(let) == pattern.count(let)):
-                            letter_count_match == False
-                            break
-                    if letter_count_match:
+            if all((p == '_' or p == w) for p, w in zip(pattern, word)):
+                if all((letter in word or letter == '_') for letter in pattern):
+                    if all(word.count(let) == pattern.count(let) for let in letters_to_keep):
                         filtered_dict[word] = count
     return filtered_dict
 
