@@ -200,8 +200,6 @@ def find_letter_probability(word_dict: dict, guessed_letters: list) -> dict:
     if probabilities:
         for key in frequency.keys():
             probabilities[key] = int(frequency[key] / total_letters * 100)
-    else:
-        return {}
     max_value = max(probabilities.values())
     max_key = [key for key, value in probabilities.items() if value == max_value][0]
     best_letter = {max_key: max_value}
