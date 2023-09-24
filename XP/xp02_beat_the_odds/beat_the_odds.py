@@ -149,14 +149,24 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict):
     """
     # split the sentence to parts
     words = sentence.split(' ')
-    possible_words_to_part = [filter_words_by_pattern(word, guessed_letters, word_dict) for word in words]
-    best_letters_dict = {}
 
-    for i, word in enumerate(words):
+    # find all possible words to sentence part
+    possible_words_to_part = []
+    for word in words:
+        possible_words_to_part.append(filter_words_by_pattern(word, guessed_letters, word_dict))
+
+    # Find best letters for each sentence part
+    best_letters_list = []
+    for i in range(len(words)):
         letter = find_letter_probability(possible_words_to_part[i], guessed_letters)
-        if letter:
-            best_letters_dict[letter] = max(letter, best_letters_dict.get(letter, 0))
+        best_letters_list.append(letter)
 
+    # Merge best letter to one dict using the max value
+    best_letters_dict = {}
+    for d in best_letters_list:
+        for key, value in d.items():
+            if key not in best_letters_dict or value > best_letters_dict[key]:
+                best_letters_dict[key] = value
     if best_letters_dict:
         best_letter = max(best_letters_dict, key=best_letters_dict.get)
         return best_letter
@@ -167,23 +177,51 @@ def filter_words_by_pattern(pattern: str, letters_to_keep: list, word_dict: dict
     """Find all possible words for the guess from dictionary."""
     filtered_dict = {}
     for word, count in word_dict.items():
-        if len(word) == len(pattern) and all((p == '_' or p == w) for p, w in zip(pattern, word)):
-            if all(letter in word or letter == '_' for letter in pattern) and all(
-                    word.count(let) == pattern.count(let) for let in letters_to_keep):
-                filtered_dict[word] = count
+        if len(word) == len(pattern):
+            if all((p == '_' or p == w) for p, w in zip(pattern, word)):
+                if all((letter in word or letter == '_') for letter in pattern):
+                    if all(word.count(let) == pattern.count(let) for let in letters_to_keep):
+                        filtered_dict[word] = count
     return filtered_dict
 
 
 def find_letter_probability(word_dict: dict, guessed_letters: list) -> dict:
     """Return best letter for sentence part."""
-    letter_count = collections.Counter()
-    total_words = sum(word_dict.values())
-
-    for word, count in word_dict.items():
+    list_of_words = []
+    for key in word_dict.keys():
+        for i in range(word_dict[key]):
+            list_of_words.append(key)
+    frequency = {}
+    for word in list_of_words:
         for letter in word:
             if letter not in guessed_letters:
-                letter_count[letter] += count
+                frequency[letter] = frequency.get(letter, 0) + 1
+    probabilities = {}
+    total_letters = len(list_of_words)
+    if frequency:
+        for key in frequency.keys():
+            probabilities[key] = int(frequency[key] / total_letters * 100)
+    if probabilities:
+        max_value = max(probabilities.values())
+        max_key = [key for key, value in probabilities.items() if value == max_value][0]
+        best_letter = {max_key: max_value}
+        return best_letter
+    return {}
 
-    probabilities = {letter: count / total_words * 100 for letter, count in letter_count.items()}
-    return probabilities
 
+if __name__ == "__main__":
+    # print(filter_words_by_pattern('h_', ['h'], {'hi': 1}))  # => {'hi': 1}
+    # print(filter_words_by_pattern('__', [], {'hi': 1, 'he': 1}))  # => {'hi': 1, 'he: 1}
+    # print(filter_words_by_pattern('_e', [], {'hi': 1, 'he': 1}))  # => {'he': 1}
+    # print(filter_words_by_pattern('__', [], {'hi': 1, 'he': 1, 'so': 1, 'hello': 1}))  # => {'hi': 1, 'he': 1, 'so': 1}
+    # print(filter_words_by_pattern('__', [], {'hi': 1, 'he': 3, 'so': 1}))  # => {'hi': 1, 'he': 3, 'so': 1}
+    # print(filter_words_by_pattern('__', [], {'this': 2, 'is': 2, 'he': 3, 'so': 1, 'fun': 1, 'sun': 2, 'far': 1}))  # => {'is': 2, 'he': 3, 'so': 1}
+    # print(filter_words_by_pattern('___', [], {'this': 2, 'is': 2, 'he': 3, 'so': 1, 'fun': 1, 'sun': 2, 'far': 1}))  # => {'fun': 1, 'sun': 2, 'far': 1}
+    # print(filter_words_by_pattern('t___', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))  # => {'term': 3, 'thin': 2, 'tide': 2}
+    # print(filter_words_by_pattern('__', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))  # => {'is': 1, 'of': 1}
+    # print(filter_words_by_pattern('t__t', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))  # => {'that': 4, 'test': 5}
+    print(guess('__', [], {"hi": 1}))
+    print(guess('__', [], {"hi": 1, 'he': 1}))
+    print(guess('__ ___', [], {'this': 2, 'is': 2, 'he': 3, 'so': 1, 'fun': 1, 'sun': 2, 'far': 1}))
+    print(guess('t___ __ t__t', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))
+    print(guess('t___ __ t__t', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))
