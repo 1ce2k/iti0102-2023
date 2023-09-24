@@ -189,17 +189,21 @@ def filter_words_by_pattern(pattern: str, letters_to_keep: list, word_dict: dict
 
 def find_letter_probability(parts: dict, guessed_letters: list) -> dict:
     """Return best letter for sentence part."""
+    list_of_words = []
+    #find
+    for key in parts.keys():
+        for i in range(parts[key]):
+            list_of_words.append(key)
+    print(list_of_words)
     frequency = {}
-    for word in parts.keys():
+    for word in list_of_words:
         for letter in word:
             if letter not in guessed_letters:
                 frequency[letter] = frequency.get(letter, 0) + 1
     print(frequency)
     print(parts)
     probabilities = {}
-    total_letters = 0
-    for value in parts.values():
-        total_letters += value
+    total_letters = len(list_of_words)
     if frequency:
         for key in frequency.keys():
             probabilities[key] = int(frequency[key] / total_letters * 100)
