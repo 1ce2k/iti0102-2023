@@ -207,21 +207,3 @@ def find_letter_probability(word_dict: dict, guessed_letters: list) -> dict:
         best_letter = {max_key: max_value}
         return best_letter
     return {}
-
-
-if __name__ == "__main__":
-    # print(filter_words_by_pattern('h_', ['h'], {'hi': 1}))  # => {'hi': 1}
-    # print(filter_words_by_pattern('__', [], {'hi': 1, 'he': 1}))  # => {'hi': 1, 'he: 1}
-    # print(filter_words_by_pattern('_e', [], {'hi': 1, 'he': 1}))  # => {'he': 1}
-    # print(filter_words_by_pattern('__', [], {'hi': 1, 'he': 1, 'so': 1, 'hello': 1}))  # => {'hi': 1, 'he': 1, 'so': 1}
-    # print(filter_words_by_pattern('__', [], {'hi': 1, 'he': 3, 'so': 1}))  # => {'hi': 1, 'he': 3, 'so': 1}
-    # print(filter_words_by_pattern('__', [], {'this': 2, 'is': 2, 'he': 3, 'so': 1, 'fun': 1, 'sun': 2, 'far': 1}))  # => {'is': 2, 'he': 3, 'so': 1}
-    # print(filter_words_by_pattern('___', [], {'this': 2, 'is': 2, 'he': 3, 'so': 1, 'fun': 1, 'sun': 2, 'far': 1}))  # => {'fun': 1, 'sun': 2, 'far': 1}
-    # print(filter_words_by_pattern('t___', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))  # => {'term': 3, 'thin': 2, 'tide': 2}
-    # print(filter_words_by_pattern('__', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))  # => {'is': 1, 'of': 1}
-    # print(filter_words_by_pattern('t__t', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))  # => {'that': 4, 'test': 5}
-    print(guess('__', [], {"hi": 1}))
-    print(guess('__', [], {"hi": 1, 'he': 1}))
-    print(guess('__ ___', [], {'this': 2, 'is': 2, 'he': 3, 'so': 1, 'fun': 1, 'sun': 2, 'far': 1}))
-    print(guess('t___ __ t__t', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))
-    print(guess('t___ __ t__t', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))
