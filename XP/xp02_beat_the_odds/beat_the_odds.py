@@ -167,9 +167,12 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict):
         for key, value in d.items():
             if key not in best_letters_dict or value > best_letters_dict[key]:
                 best_letters_dict[key] = value
-
-    best_letter = max(best_letters_dict, key=best_letters_dict.get)
-    return best_letter
+    if best_letters_dict:
+        best_letter = max(best_letters_dict, key=best_letters_dict.get)
+        return best_letter
+    for word in word_dict.keys():
+        for i in word:
+            return i
 
 
 def filter_words_by_pattern(pattern: str, letters_to_keep: list, word_dict: dict) -> dict:
