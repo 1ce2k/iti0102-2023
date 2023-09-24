@@ -179,7 +179,8 @@ def filter_words_by_pattern(pattern: str, letters_to_keep: list, word_dict: dict
     for word, count in word_dict.items():
         if len(word) == len(pattern):
             if all((p == '_' or p == w) for p, w in zip(pattern, word)):
-                if all((letter in word or letter == '_') for letter in pattern):
+                word_set = set(word)
+                if all((letter in word_set or letter == '_') for letter in pattern):
                     if all(word.count(let) == pattern.count(let) for let in letters_to_keep):
                         filtered_dict[word] = count
     return filtered_dict
