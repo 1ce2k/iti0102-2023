@@ -155,18 +155,20 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict):
     for word in words:
         possible_words_to_part.append(filter_words_by_pattern(word, guessed_letters, word_dict))
 
-    # Find best letters for each sentence part
+    # find best letters for each sentence part
     best_letters_list = []
     for i in range(len(words)):
         letter = find_letter_probability(possible_words_to_part[i], guessed_letters)
         best_letters_list.append(letter)
 
-    # Merge best letter to one dict using the max value
+    # merge list of best letters to one dict using the max value
     best_letters_dict = {}
     for d in best_letters_list:
         for key, value in d.items():
             if key not in best_letters_dict or value > best_letters_dict[key]:
                 best_letters_dict[key] = value
+
+    # find the best letter for the guess
     if best_letters_dict:
         best_letter = max(best_letters_dict, key=best_letters_dict.get)
         return best_letter
@@ -185,19 +187,19 @@ def filter_words_by_pattern(pattern: str, letters_to_keep: list, word_dict: dict
     return filtered_dict
 
 
-def find_letter_probability(word_dict: dict, guessed_letters: list) -> dict:
+def find_letter_probability(parts: dict, guessed_letters: list) -> dict:
     """Return best letter for sentence part."""
-    list_of_words = []
-    for key in word_dict.keys():
-        for i in range(word_dict[key]):
-            list_of_words.append(key)
     frequency = {}
-    for word in list_of_words:
+    for word in parts.keys():
         for letter in word:
             if letter not in guessed_letters:
                 frequency[letter] = frequency.get(letter, 0) + 1
+    print(frequency)
+    print(parts)
     probabilities = {}
-    total_letters = len(list_of_words)
+    total_letters = 0
+    for value in parts.values():
+        total_letters += value
     if frequency:
         for key in frequency.keys():
             probabilities[key] = int(frequency[key] / total_letters * 100)
@@ -207,3 +209,6 @@ def find_letter_probability(word_dict: dict, guessed_letters: list) -> dict:
         best_letter = {max_key: max_value}
         return best_letter
     return {}
+
+
+print(guess('__', [], {'he': 2}))
