@@ -1,6 +1,5 @@
 """Beat the odds."""
 import collections
-import re
 
 
 def read_words(filename: str) -> dict:
@@ -174,6 +173,7 @@ def guess(sentence: str, guessed_letters: list, word_dict: dict):
 
 
 def filter_words_by_pattern(pattern: str, letters_to_keep: list, word_dict: dict) -> dict:
+    """Find all possible words for the guess from dictionary."""
     filtered_dict = {}
     for word, count in word_dict.items():
         if len(word) == len(pattern):
@@ -185,6 +185,7 @@ def filter_words_by_pattern(pattern: str, letters_to_keep: list, word_dict: dict
 
 
 def find_letter_probability(word_dict: dict, guessed_letters: list) -> dict:
+    """Return best letter for sentence part."""
     list_of_words = []
     for key in word_dict.keys():
         for i in range(word_dict[key]):
@@ -216,6 +217,6 @@ if __name__ == "__main__":
     # print(filter_words_by_pattern('__', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))  # => {'is': 1, 'of': 1}
     # print(filter_words_by_pattern('t__t', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))  # => {'that': 4, 'test': 5}
     print(guess('__', [], {"hi": 1}))
-    print(guess('__', [], {"hi":1, 'he': 1}))
+    print(guess('__', [], {"hi": 1, 'he': 1}))
     print(guess('__ ___', [], {'this': 2, 'is': 2, 'he': 3, 'so': 1, 'fun': 1, 'sun': 2, 'far': 1}))
     print(guess('t___ __ t__t', ['t'], {'term': 3, 'is': 1, 'of': 1, 'that': 4, 'test': 5, 'thin': 2, 'tide': 2}))
