@@ -1,4 +1,4 @@
-"""Play best the odds game."""
+"""Beat the odds."""
 import collections
 
 
@@ -187,19 +187,17 @@ def filter_words_by_pattern(pattern: str, letters_to_keep: list, word_dict: dict
 
 def find_letter_probability(word_dict: dict, guessed_letters: list) -> dict:
     """Return best letter for sentence part."""
-    # list_of_words = []
-    # for key in word_dict.keys():
-    #     for i in range(word_dict[key]):
-    #         list_of_words.append(key)
+    list_of_words = []
+    for key in word_dict.keys():
+        for i in range(word_dict[key]):
+            list_of_words.append(key)
     frequency = {}
     for word, count in word_dict.items():
         for letter in word:
             if letter not in guessed_letters:
                 frequency[letter] = frequency.get(letter, 0) + 1
     probabilities = {}
-    total_letters = 0
-    for value in word_dict.values():
-        total_letters += value
+    total_letters = len(list_of_words)
     if frequency:
         for key in frequency.keys():
             probabilities[key] = int(frequency[key] / total_letters * 100)
