@@ -59,7 +59,7 @@ def search_by_brand(all_phones: str, phone_brand: str) -> list:
     for phone in phones:
         brand = phone.split(' ')
         if brand[0].lower() == phone_brand.lower():
-            ret.append(brand)
+            ret.append(phone)
     return ret
 
 
