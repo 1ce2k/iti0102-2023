@@ -206,7 +206,7 @@ def find_composites_in_range(biggest_number: int) -> list:
     """
     primes = find_primes_in_range(biggest_number)
     composites = []
-    for i in range(biggest_number + 1):
+    for i in range(2, biggest_number + 1):
         if i not in primes:
             composites.append(i)
     return composites
