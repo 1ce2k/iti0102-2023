@@ -69,7 +69,7 @@ def search_by_model(all_phones: str, phone_model: str) -> list:
     if phone_model == '':
         return []
     search = phone_model.split(' ')
-    if len(search) == 2:
+    if len(search) > 1:
         return []
     ret = []
     phones = all_phones.split(',')
