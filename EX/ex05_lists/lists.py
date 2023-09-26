@@ -71,8 +71,10 @@ def search_by_model(all_phones: str, phone_model: str) -> list:
     ret = []
     phones = all_phones.split(',')
     for phone in phones:
-        if phone_model.lower() in phone.lower():
-            ret.append(phone)
+        name = phone.split(' ')
+        for i in range(len(name)):
+            if phone_model.lower() == name[i].lower():
+                ret.append(phone)
     return ret
 
 
@@ -83,4 +85,4 @@ if __name__ == '__main__':
     print(phone_brands("Google Pixel,Google Pixel,Google Pixel,Google Pixel"))  # ['Google']
     print(phone_brands(""))  # []
     print(phone_models("IPhone 14,Google Pixel,Honor Magic5,IPhone 14"))  # ['14', 'Pixel', 'Magic5']
-    print(search_by_model('Google Pixel 2021,Google Pixel2,Samsa PIXEL,Google Pixel 2022', 'Pixel'))
+    print(search_by_model("IPhone X,IPhone 12 Pro,IPhone 14 pro Max", 'ma'))
