@@ -54,23 +54,10 @@ def add_phones(phone_list: list, all_phones: str) -> list:
 
     [['IPhone', ['11', '12']], ['Google', ['Pixel']], ['Samsung', ['Galaxy S22']]]
     """
-    ret = phone_list
-    list1 = []
-    phones = all_phones.split(',')
-    for x in ret:
-        for phone in phones:
-            brand = phone.split(' ')[0]
-            model = phone.replace(brand + ' ', '')
-            if brand in x[0]:
-                if model not in x[1]:
-                    x[1].append(model)
-            else:
-                list1.append(brand)
-                list1.append([model])
-                ret.append(list1)
-                list1 = []
-        break
+    str = phone_list_as_string(phone_list) + ',' + all_phones
+    ret = phone_brand_and_models(str)
     return ret
+
 
 
 def number_of_phones(all_phones: str) -> list:
