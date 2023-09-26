@@ -26,6 +26,7 @@ class Student:
         f"Possible answers are {sorted_list_of_possible_answers_in_growing_sequence)}." if there are multiple possibilities
         f"The number I needed to guess was {final_answer}." if the result is certain
         """
+
         pass
 
     def intersect_possible_answers(self, update: list):
@@ -154,6 +155,7 @@ def normalize_quadratic_equation(equation: str) -> str:
     https://en.wikipedia.org/wiki/Quadratic_formula
     :return: normalized equation
     """
+
     pass
 
 
@@ -169,7 +171,8 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     if there are 2 solutions, return them in a tuple, where smaller is first
     all numbers are returned as floats.
     """
-    pass
+
+    return None
 
 
 def find_primes_in_range(biggest_number: int) -> list:
@@ -180,7 +183,17 @@ def find_primes_in_range(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
     :return: list of primes
     """
-    pass
+    prime = [True for _ in range(biggest_number + 1)]
+    p = 2
+    while p * p <= biggest_number:
+        if prime[p]:
+            for i in range(p * p, biggest_number + 1, p):
+                prime[i] = False
+        p += 1
+
+    # Create a list of prime numbers
+    primes = [p for p in range(2, biggest_number + 1) if prime[p]]
+    return primes
 
 
 def find_composites_in_range(biggest_number: int) -> list:
@@ -191,7 +204,12 @@ def find_composites_in_range(biggest_number: int) -> list:
     :return: list of composites
     :param biggest_number: all composites in range of biggest_number(included)
     """
-    pass
+    primes = find_primes_in_range(biggest_number)
+    composites = []
+    for i in range(biggest_number + 1):
+        if i not in primes:
+            composites.append(i)
+    return composites
 
 
 def find_fibonacci_numbers(biggest_number: int) -> list:
