@@ -64,7 +64,7 @@ def search_by_brand(all_phones: str, phone_brand: str) -> list:
     return ret
 
 
-def search_by_mode(all_phones: str, phone_model: str) -> list:
+def search_by_model(all_phones: str, phone_model: str) -> list:
     """Return list of phones of same model."""
     ret = []
     phones = all_phones.split(',')
