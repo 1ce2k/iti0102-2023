@@ -26,7 +26,8 @@ def phone_brand_and_models(all_phones: str):
             model = phone.replace(phone.split(' ')[0] + ' ', '')
             if brand in phone:
                 models.append(model)
-        ret.append([brand, models])
+        ret.append(brand)
+        ret.append(models)
         models = []
     return ret
 
