@@ -68,17 +68,15 @@ def search_by_model(all_phones: str, phone_model: str) -> list:
     """Return list of phones of same model."""
     if phone_model == '':
         return []
-    search = phone_model.split(' ')
-    if len(search) > 1:
-        return []
     ret = []
     phones = all_phones.split(',')
+    search = (phone_model.lower().split(' '))
     if len(phones) == 2:
         return []
     for phone in phones:
-        name = phone.split(' ')
-        for i in range(len(name)):
-            if phone_model.lower() == name[i].lower():
+        spec = phone.split(' ')
+        for i in spec:
+            if i.lower() in search:
                 ret.append(phone)
     return ret
 
