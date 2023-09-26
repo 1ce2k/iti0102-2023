@@ -54,12 +54,24 @@ def phone_models(all_phones: str) -> list:
 
 
 def search_by_brand(all_phones: str, phone_brand: str) -> list:
+    """Return list of phones from one brand."""
     phones = all_phones.split(',')
     ret = []
     for phone in phones:
         brand = phone.split(' ')
         if brand[0].lower() == phone_brand.lower():
             ret.append(phone)
+    return ret
+
+
+def search_by_mode(all_phones: str, phone_model: str) -> list:
+    """Return list of phones of same model."""
+    ret = []
+    phones = all_phones.split(',')
+    for phone in phones:
+        if phone_model.lower() in phone.lower():
+            if phone not in ret:
+                ret.append(phone)
     return ret
 
 
