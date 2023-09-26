@@ -1,3 +1,6 @@
+"""OP exercises"""
+
+
 def phone_brand_and_models(all_phones: str):
     """
     Create a list of structured information about brands and models.
@@ -61,7 +64,6 @@ def add_phones(phone_list: list, all_phones: str) -> list:
     return ret
 
 
-
 def number_of_phones(all_phones: str) -> list:
     """
     Create a list of tuples with brand quantities.
@@ -94,15 +96,8 @@ def phone_list_as_string(phone_list: list) -> str:
     [['IPhone', ['11']], ['Google', ['Pixel']]] =>
     "IPhone 11,Google Pixel"
     """
-    str = ''
+    phones_str = ''
     for brand in phone_list:
         for model in brand[1]:
-           str += brand[0] + ' ' + model + ','
-    return str[:-1]
-
-
-if __name__ == "__main__":
-    # print(phone_brand_and_models("Honor Magic5,IPhone 11,IPhone 12,Google Pixel,Samsung Galaxy S22,IPhone 13,IPhone 13,Google Pixel2"))
-    print(add_phones([['IPhone', ['11']], ['Google', ['Pixel']]], "IPhone 12,Samsung S22"))
-    # print(number_of_phones('Iphone 12,samsung 9,huawei honor,Iphone 13'))
-    # print(phone_list_as_string([['IPhone', ['11', '12']], ['Google', ['Pixel']]]))
+           phones_str += brand[0] + ' ' + model + ','
+    return phones_str[:-1]
