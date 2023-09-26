@@ -70,14 +70,14 @@ def search_by_model(all_phones: str, phone_model: str) -> list:
     phones = all_phones.split(',')
     for phone in phones:
         if phone_model.lower() in phone.lower():
-            if phone not in ret:
-                ret.append(phone)
+            ret.append(phone)
     return ret
 
 
 if __name__ == '__main__':
     print(list_of_phones("Google Pixel,Honor Magic5,Google Pixel"))  # ["Google Pixel', 'Honor Magic5', 'Google Pixel"]
-    print(phone_brands("Google Pixel,Honor Magic5,Google Pix,Honor Magic6,IPhone 12,Samsung S10,Honor Magic,IPhone 11"))  # ['Google', 'Honor', 'IPhone', 'Samsung']
+    print(phone_brands(
+        "Google Pixel,Honor Magic5,Google Pix,Honor Magic6,IPhone 12,Samsung S10,Honor Magic,IPhone 11"))  # ['Google', 'Honor', 'IPhone', 'Samsung']
     print(phone_brands("Google Pixel,Google Pixel,Google Pixel,Google Pixel"))  # ['Google']
     print(phone_brands(""))  # []
     print(phone_models("IPhone 14,Google Pixel,Honor Magic5,IPhone 14"))  # ['14', 'Pixel', 'Magic5']
