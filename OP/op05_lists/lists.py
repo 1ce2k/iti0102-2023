@@ -1,4 +1,4 @@
-"""OP exercises"""
+"""OP exercises."""
 
 
 def phone_brand_and_models(all_phones: str):
@@ -99,5 +99,5 @@ def phone_list_as_string(phone_list: list) -> str:
     phones_str = ''
     for brand in phone_list:
         for model in brand[1]:
-           phones_str += brand[0] + ' ' + model + ','
+            phones_str += brand[0] + ' ' + model + ','
     return phones_str[:-1]
