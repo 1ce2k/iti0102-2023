@@ -6,6 +6,8 @@ def number_of_phones(all_phones: str) -> list:
     Each tuple is in the form: (brand_name: str, quantity: int).
     The order of the tuples (brands) is the same as the first appearance in the list.
     """
+    if all_phones == '':
+        return []
     phones = all_phones.split(',')
     brands = []
     ret = []
