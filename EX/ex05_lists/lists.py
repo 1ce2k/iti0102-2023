@@ -25,8 +25,8 @@ def phone_brands(all_phones: str) -> list:
     brands = []
     for phone in phones:
         brand = phone.split(' ')
-        if brand not in brands:
-            brands.append(brand)
+        if brand[0] not in brands:
+            brands.append(brand[0])
     return brands
 
 
@@ -42,6 +42,14 @@ def phone_models(all_phones: str) -> list:
     models = []
     for phone in phones:
         model = phone.split(' ')
-        if model not in models:
-            models.append(model)
+        if model[1] not in models:
+            models.append(model[1])
     return models
+
+
+if __name__ == '__main__':
+    print(list_of_phones("Google Pixel,Honor Magic5,Google Pixel"))  # ["Google Pixel', 'Honor Magic5', 'Google Pixel"]
+    print(phone_brands("Google Pixel,Honor Magic5,Google Pix,Honor Magic6,IPhone 12,Samsung S10,Honor Magic,IPhone 11"))  # ['Google', 'Honor', 'IPhone', 'Samsung']
+    print(phone_brands("Google Pixel,Google Pixel,Google Pixel,Google Pixel"))  # ['Google']
+    print(phone_brands(""))  # []
+    print(phone_models("IPhone 14,Google Pixel,Honor Magic5,IPhone 14"))  # ['14', 'Pixel', 'Magic5']
