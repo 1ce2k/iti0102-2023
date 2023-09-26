@@ -21,7 +21,6 @@ def phone_brands(all_phones: str) -> list:
 
     "Google Pixel,Honor Magic5,Google Pixel" => ["Google", "Honor"]
     """
-    ret = []
     phones = all_phones.split(',')
     brands = []
     for phone in phones:
@@ -39,4 +38,10 @@ def phone_models(all_phones: str) -> list:
 
     "Honor Magic5,Google Pixel,Honor Magic4" => ['Magic5', 'Pixel', 'Magic4']
     """
-    return []
+    phones = all_phones.split(',')
+    models = []
+    for phone in phones:
+        model = phone.split(' ')
+        if model not in models:
+            models.append(model)
+    return models
