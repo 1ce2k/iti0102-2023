@@ -13,6 +13,8 @@ def phone_brand_and_models(all_phones: str):
     "Honor Magic5,IPhone 11,IPhone 12,Google Pixel,Samsung Galaxy S22,IPhone 13,IPhone 13,Google Pixel2" =>
     [['Honor', ['Magic5']], ['IPhone', ['11', '12', '13']], ['Google', ['Pixel', 'Pixel2']], ['Samsung', ['Galaxy S22']]]
     """
+    if all_phones == '':
+        return []
     ret = []
     phones = all_phones.split(',')
     brands = []
