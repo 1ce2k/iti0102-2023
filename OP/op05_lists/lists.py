@@ -54,6 +54,8 @@ def add_phones(phone_list: list, all_phones: str) -> list:
 
     [['IPhone', ['11', '12']], ['Google', ['Pixel']], ['Samsung', ['Galaxy S22']]]
     """
+    if len(phone_list) == 0:
+        return phone_brand_and_models(all_phones)
     str = phone_list_as_string(phone_list) + ',' + all_phones
     ret = phone_brand_and_models(str)
     return ret
