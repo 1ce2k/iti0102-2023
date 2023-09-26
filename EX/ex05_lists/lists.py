@@ -10,6 +10,8 @@ def list_of_phones(all_phones: str) -> list:
 
     "Google Pixel,Honor Magic5,Google Pixel" => ["Google Pixel', 'Honor Magic5', 'Google Pixel"]
     """
+    if len(all_phones) == 0:
+        return []
     return all_phones.split(',')
 
 
@@ -21,6 +23,8 @@ def phone_brands(all_phones: str) -> list:
 
     "Google Pixel,Honor Magic5,Google Pixel" => ["Google", "Honor"]
     """
+    if len(all_phones) == 0:
+        return []
     phones = all_phones.split(',')
     brands = []
     for phone in phones:
@@ -38,6 +42,8 @@ def phone_models(all_phones: str) -> list:
 
     "Honor Magic5,Google Pixel,Honor Magic4" => ['Magic5', 'Pixel', 'Magic4']
     """
+    if len(all_phones) == 0:
+        return []
     phones = all_phones.split(',')
     models = []
     for phone in phones:
