@@ -69,19 +69,22 @@ def search_by_model(all_phones: str, phone_model: str) -> list:
     phones = all_phones.split(',')
     ret = []
     for phone in phones:
-        model = phone.replace(phone.split(' ')[0], '')
+        model = phone.replace(phone.split(' ')[0] + ' ', '')
         model_part = model.split(' ')
+        print(model, model_part)
         for i in range(len(model_part)):
-                if phone_model == model_part[i].lower():
-                    ret.append(phone)
+            if phone_model.lower() == model_part[i].lower():
+                ret.append(phone)
     return ret
 
 
 if __name__ == '__main__':
-    print(list_of_phones("Google Pixel,Honor Magic5,Google Pixel"))  # ["Google Pixel', 'Honor Magic5', 'Google Pixel"]
-    print(phone_brands(
-        "Google Pixel,Honor Magic5,Google Pix,Honor Magic6,IPhone 12,Samsung S10,Honor Magic,IPhone 11"))  # ['Google', 'Honor', 'IPhone', 'Samsung']
-    print(phone_brands("Google Pixel,Google Pixel,Google Pixel,Google Pixel"))  # ['Google']
-    print(phone_brands(""))  # []
-    print(phone_models("IPhone 14,Google Pixel,Honor Magic5,IPhone 14"))  # ['14', 'Pixel', 'Magic5']
-    print(search_by_model("IPhone X,IPhone 12 Pro,IPhone 14 pro Max", 'max'))
+    # print(list_of_phones("Google Pixel,Honor Magic5,Google Pixel"))  # ["Google Pixel', 'Honor Magic5', 'Google Pixel"]
+    # print(phone_brands(
+    #     "Google Pixel,Honor Magic5,Google Pix,Honor Magic6,IPhone 12,Samsung S10,Honor Magic,IPhone 11"))  # ['Google', 'Honor', 'IPhone', 'Samsung']
+    # print(phone_brands("Google Pixel,Google Pixel,Google Pixel,Google Pixel"))  # ['Google']
+    # print(phone_brands(""))  # []
+    # print(phone_models("IPhone 14,Google Pixel,Honor Magic5,IPhone 14"))  # ['14', 'Pixel', 'Magic5']
+    # print(search_by_model("IPhone X,IPhone 12 Pro,IPhone 14 pro Max", 'max'))
+    # print(search_by_model("IPhone X,IPhone 12 Pro,IPhone 14 pro Max", '1'))
+    print(search_by_model("Google Pixel 2021,Google Pixel 2022", 'Pixel'))
