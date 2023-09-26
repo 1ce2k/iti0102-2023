@@ -66,11 +66,18 @@ def search_by_brand(all_phones: str, phone_brand: str) -> list:
 
 def search_by_model(all_phones: str, phone_model: str) -> list:
     """Return list of phones of same model."""
+    search_words = phone_model.split(' ')
     ret = []
     phones = all_phones.split(',')
+    model_spec = []
     for phone in phones:
-        if phone_model.lower() in phone.lower():
-            ret.append(phone)
+        spec = phone.split(' ')
+        if len(spec) == 2:
+            for i in range(1, len(spec)):
+                model_spec.append(spec[i])
+        for x, search in zip(model_spec, search_words):
+            if not x.lower() == search.lower():
+                ret.append(phone)
     return ret
 
 
@@ -81,3 +88,4 @@ if __name__ == '__main__':
     print(phone_brands("Google Pixel,Google Pixel,Google Pixel,Google Pixel"))  # ['Google']
     print(phone_brands(""))  # []
     print(phone_models("IPhone 14,Google Pixel,Honor Magic5,IPhone 14"))  # ['14', 'Pixel', 'Magic5']
+    print(search_by_model('Google Pixel 2021,Google Pixel2,Samsa PIXEL,Google Pixel 2022', 'Pixel'))
