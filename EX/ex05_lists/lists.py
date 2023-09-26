@@ -70,6 +70,8 @@ def search_by_model(all_phones: str, phone_model: str) -> list:
         return []
     ret = []
     phones = all_phones.split(',')
+    if len(phones) == 2:
+        return []
     for phone in phones:
         name = phone.split(' ')
         for i in range(len(name)):
