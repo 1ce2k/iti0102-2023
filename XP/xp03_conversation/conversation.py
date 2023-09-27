@@ -238,4 +238,8 @@ def find_catalan_numbers(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Catalan_number
     :return: list of catalan numbers
     """
-    pass
+    catalan_numbers = [1]
+    for i in range(1, biggest_number + 1):
+        number = int(((2 * (2 * i - 1)) / (i + 1)) * catalan_numbers[i - 1])
+        catalan_numbers.append(number)
+    return catalan_numbers
