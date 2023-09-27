@@ -284,7 +284,7 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
                 ret = (x2, x1)
             else:
                 ret = (x1, x2)
-    return ret
+                return ret
 
 
 def find_primes_in_range(biggest_number: int) -> list:
