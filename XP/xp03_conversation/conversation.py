@@ -25,7 +25,6 @@ class Student:
         f"Possible answers are {sorted_list_of_possible_answers_in_growing_sequence)}." if there are multiple possibilities
         f"The number I needed to guess was {final_answer}." if the result is certain
         """
-
         pass
 
     def intersect_possible_answers(self, update: list):
@@ -167,7 +166,7 @@ def normalize_quadratic_equation(equation: str) -> str:
     rhs_terms = re.split(r'([-+])', rhs)
 
     def process_term(term, sign):
-        """Update coefficients by term"""
+        """Update coefficients by term."""
         nonlocal a, b, c
         if 'x2' in term:
             a += sign * (1 if term == 'x2' else int(term.replace('x2', '')))
@@ -206,7 +205,7 @@ def normalize_quadratic_equation(equation: str) -> str:
     normalized_equation = ''
     if a != 0:
         if abs(a) == 1:
-            normalized_equation += f'x2'
+            normalized_equation += 'x2'
         else:
             normalized_equation += f'{a}x2'
     if b != 0:
@@ -236,7 +235,6 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     if there are 2 solutions, return them in a tuple, where smaller is first
     all numbers are returned as floats.
     """
-
     return None
 
 
