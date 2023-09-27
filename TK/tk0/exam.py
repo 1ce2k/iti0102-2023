@@ -88,6 +88,12 @@ def last_indices_elements_sum(nums: list) -> int:
     return nums[index1] + nums[index2]
 
 
+# print(last_indices_elements_sum([0, 1, 2, 0]))
+# print(last_indices_elements_sum([0, 1, 1, 7]))
+# print(last_indices_elements_sum([0, 1, 7, 2]))
+# print(last_indices_elements_sum([0, 1, 7, 8]))
+
+
 def divisions(numbers: list) -> int:
     """
     You are given a list of unique integers.
@@ -108,4 +114,12 @@ def divisions(numbers: list) -> int:
     :param numbers: List of integers
     :return: Amount of pairs
     """
-    return 0
+    pairs = 0
+    sorted_list = sorted(numbers)[::-1]
+    # print(sorted_list)
+    for i in range(len(sorted_list)):
+        for x in range(1, len(sorted_list)):
+            if sorted_list[i] != sorted_list[x]:
+                if sorted_list[i] % sorted_list[x] == 0:
+                    pairs += 1
+    return pairs
