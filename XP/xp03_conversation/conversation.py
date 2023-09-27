@@ -1,5 +1,6 @@
 """Conversation."""
-import re, math
+import re
+import math
 
 
 class Student:
@@ -272,6 +273,8 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
                     return c / b
 
     ret = ()
+    x1 = 0
+    x2 = 0
     if a != 0:
         if d < 0:
             return None
@@ -280,10 +283,10 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
         if d > 0:
             x1 = (-b + math.sqrt(d)) / (2 * a)
             x2 = (-b - math.sqrt(d)) / (2 * a)
-            if x1 > x2:
-                ret = (x2, x1)
-            else:
-                ret = (x1, x2)
+    if x1 > x2:
+        ret = (x2, x1)
+    else:
+        ret = (x1, x2)
     return ret
 
 
