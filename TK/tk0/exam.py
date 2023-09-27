@@ -25,13 +25,6 @@ def workday_count(days: int) -> int:
     return work_days
 
 
-print(workday_count(9))  # => 7
-print(workday_count(3))  # => 3
-print(workday_count(7))  # => 5
-print(workday_count(15))  # => 11
-print(workday_count(30))  # => 11
-
-
 def sorta_sum(a: int, b: int) -> int:
     """
     Given 2 ints, a and b, return their sum.
@@ -87,22 +80,17 @@ def last_indices_elements_sum(nums: list) -> int:
     :param nums: List of non-negative integers.
     :return: Sum of elements at indices of last two elements.
     """
-    index1 = 0
-    index2 = 0
-    if len(nums) >= 2:
-        index1 = nums[-1]
-        index2 = nums[-2]
-    if index1 > len(nums) - 1:
-        index1 = 0
-    if index2 > len(nums) - 1:
-        index2 = 0
-    return nums[index1] + nums[index2]
+    index1 = nums[-1]
+    index2 = nums[-2]
+    first_value = nums[index1] if index1 < len(nums) else 0
+    second_value = nums[index2] if index2 < len(nums) else 0
+    return first_value + second_value
 
 
-# print(last_indices_elements_sum([0, 1, 2, 0]))
-# print(last_indices_elements_sum([0, 1, 1, 7]))
-# print(last_indices_elements_sum([0, 1, 7, 2]))
-# print(last_indices_elements_sum([0, 1, 7, 8]))
+print(last_indices_elements_sum([0, 1, 2, 0]))
+print(last_indices_elements_sum([0, 1, 1, 7]))
+print(last_indices_elements_sum([0, 1, 7, 2]))
+print(last_indices_elements_sum([0, 1, 7, 8]))
 
 
 def divisions(numbers: list) -> int:
