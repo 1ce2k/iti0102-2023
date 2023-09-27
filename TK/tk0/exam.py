@@ -18,6 +18,8 @@ def workday_count(days: int) -> int:
     :return: workdays in given days
     """
     ret = 0
+    weeks = days // 7
+    ret = days % 7 + weeks * 5
     return ret
 
 
