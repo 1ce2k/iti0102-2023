@@ -198,9 +198,10 @@ def normalize_quadratic_equation(equation: str) -> str:
     # if there is need to multiply by -1
     if a != 0 and a < 0:
         a, b, c = -a, -b, -c
-    elif a == 0 and b != 0:
+    elif a == 0 and b < 0:
         b, c = -b, -c
-
+    elif a == 0 and b == 0 and c < 0:
+        c = -c
     # create normalized equation
     normalized_equation = ''
     if a != 0:
