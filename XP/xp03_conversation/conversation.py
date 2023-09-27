@@ -268,18 +268,20 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
                     return (-c) / b
                 if terms[terms.index(term) - 1] == '+':
                     return c / b
-    if d < 0:
-        return None
-    if d == 0:
-        return -b / (2 * a)
+
     ret = ()
-    if d > 0:
-        x1 = (-b + math.sqrt(d)) / (2 * a)
-        x2 = (-b - math.sqrt(d)) / (2 * a)
-        if x1 > x2:
-            ret = (x2, x1)
-        else:
-            ret = (x1, x2)
+    if a != 0:
+        if d < 0:
+            return None
+        if d == 0:
+            return -b / (2 * a)
+        if d > 0:
+            x1 = (-b + math.sqrt(d)) / (2 * a)
+            x2 = (-b - math.sqrt(d)) / (2 * a)
+            if x1 > x2:
+                ret = (x2, x1)
+            else:
+                ret = (x1, x2)
     return ret
 
 
