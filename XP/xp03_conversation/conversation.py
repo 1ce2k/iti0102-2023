@@ -205,7 +205,7 @@ def normalize_quadratic_equation(equation: str) -> str:
     # create normalized equation
     normalized_equation = ''
     if a == 0 and b == 0:
-        return '1 == 0'
+        return f'{c} = 0'
     if a != 0:
         if abs(a) == 1:
             normalized_equation += 'x2'
