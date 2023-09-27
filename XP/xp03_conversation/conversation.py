@@ -240,6 +240,8 @@ def find_catalan_numbers(biggest_number: int) -> list:
     """
     catalan_numbers = [1]
     for i in range(1, biggest_number + 1):
-        number = ((2 * (2 * i - 1)) // (i + 1)) * catalan_numbers[i - 1]
+        number = 0
+        for j in range(i):
+            number += catalan_numbers[j] * catalan_numbers[i - 1 - j]
         catalan_numbers.append(number)
     return catalan_numbers
