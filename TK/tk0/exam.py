@@ -53,7 +53,7 @@ def extra_end(s: str) -> str:
     :param s: Input string
     :return: 3 copies of last 2 chars.
     """
-    pass
+    return s[-2:] * 3
 
 
 def last_indices_elements_sum(nums: list) -> int:
