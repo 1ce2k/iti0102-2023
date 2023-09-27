@@ -17,10 +17,19 @@ def workday_count(days: int) -> int:
     :param days: given number of days
     :return: workdays in given days
     """
-    ret = 0
-    weeks = days // 7
-    ret = days % 7 + weeks * 5
-    return ret
+    days_of_week = [0, 1, 2, 3, 4, 5, 6]
+    work_days = 0
+    for day in range(days):
+        if days_of_week[day % 7] < 5:
+            work_days += 1
+    return work_days
+
+
+print(workday_count(9))  # => 7
+print(workday_count(3))  # => 3
+print(workday_count(7))  # => 5
+print(workday_count(15))  # => 11
+print(workday_count(30))  # => 11
 
 
 def sorta_sum(a: int, b: int) -> int:
