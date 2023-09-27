@@ -262,6 +262,12 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
                 d = b ** 2 - 4 * a * c
             elif terms[terms.index(term) - 1] == '-':
                 d = b ** 2 + 4 * a * c
+        if a == 0:
+            if term == str(c):
+                if terms[terms.index(term) - 1] == '+':
+                    return (-c) / b
+                if terms[terms.index(term) - 1] == '+':
+                    return c / b
     if d < 0:
         return None
     if d == 0:
