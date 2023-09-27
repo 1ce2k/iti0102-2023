@@ -65,6 +65,7 @@ def add_phones(phone_list: list, all_phones: str) -> list:
                 if model not in x[1]:
                     x[1].append(model)
             else:
+
                 list1.append(brand)
                 list1.append([model])
                 ret.append(list1)
