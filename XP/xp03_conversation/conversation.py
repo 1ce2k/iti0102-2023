@@ -1,6 +1,5 @@
 """Conversation."""
 import re
-import math
 
 
 class Student:
@@ -94,7 +93,7 @@ class Student:
         """
         Filter possible answers to remove all numbers that doesn't have the decimal_value in them.
 
-        :param decimal_value: hex value within the number like e in fe2
+        :param hex_value: hex value within the number like e in fe2
         """
         pass
 
@@ -156,53 +155,71 @@ def normalize_quadratic_equation(equation: str) -> str:
     :return: normalized equation
     """
     # split equation to left and right parts
+    equation = equation.replace('x1', 'x')
+    equation = equation.replace(' ', '')
     lhs, rhs = equation.split('=')
 
-    # move all term to left and simplify
-    lhs = lhs.replace(' ', '')
-    rhs = rhs.replace(' ', '')
-    lhs_term = re.split(r'([-+])', lhs)
-    rhs_term = re.split(r'([-+])', rhs)
-
-    # calculate all coefficients
+    # init coefficient
     a, b, c = 0, 0, 0
-    for term in lhs_term:
-        if 'x2' in term:
-            a += int(term.replace('x2', ''))
-        elif 'x' in term:
-            if term == 'x':
-                b += 1
-            elif term == '-x':
-                b -= 1
-            else:
-                b = int(term.replace('x', ''))
-        elif term.isdigit():
-            c += int(term)
-    for term in rhs_term:
-        if 'x2' in term:
-            a -= int(term.replace('x2', ''))
-        elif 'x' in term:
-            if term == 'x':
-                b -= 1
-            elif term == '-x':
-                b += 1
-            else:
-                b -= int(term.replace('x', ''))
-        elif term.isdigit():
-            c -= int(term)
 
-    # create new equation using calculated coefficients
+    # split left and right parts to terms
+    lhs_terms = re.split(r'([-+])', lhs)
+    rhs_terms = re.split(r'([-+])', rhs)
+
+    def process_term(term, sign):
+        """Update coefficients by term"""
+        nonlocal a, b, c
+        if 'x2' in term:
+            a += sign * (1 if term == 'x2' else int(term.replace('x2', '')))
+        elif 'x' in term or 'x1' in term:
+            b += sign * (1 if term in {'x'} else int(term.replace('x', '')))
+        elif term.isdigit():
+            c += sign * int(term)
+
+    # left part
+    sign = 1
+    for term in lhs_terms:
+        if term == '-':
+            sign = -1
+        elif term == '+':
+            sign = 1
+        else:
+            process_term(term, sign)
+
+    # right part
+    sign = -1
+    for term in rhs_terms:
+        if term == '-':
+            sign = 1
+        elif term == '+':
+            sign = -1
+        else:
+            process_term(term, sign)
+
+    # if there is need to multiply by -1
+    if a != 0 and a < 0:
+        a, b, c = -a, -b, -c
+    elif a == 0 and b != 0:
+        b, c = -b, -c
+
+    # create normalized equation
     normalized_equation = ''
     if a != 0:
-        normalized_equation += f"{a}x2"
+        if abs(a) == 1:
+            normalized_equation += f'x2'
+        else:
+            normalized_equation += f'{a}x2'
     if b != 0:
         if a != 0:
-            normalized_equation += ' + ' if b > 0 else ' - '
-        normalized_equation += f"{abs(b)}x"
+            if abs(b) == 1:
+                normalized_equation += f' {"+" if b >= 0 else "-"} x'
+            else:
+                normalized_equation += f' {"+" if b >= 0 else "-"} {abs(b)}x'
+        else:
+            normalized_equation += f"{abs(b)}x"
     if c != 0:
         if a != 0 or b != 0:
-            normalized_equation += ' + ' if c > 0 else ' - '
-        normalized_equation += f"{abs(c)}"
+            normalized_equation += f' {"+" if c >= 0 else "-"} {abs(c)}'
     normalized_equation += ' = 0'
     return normalized_equation
 
@@ -211,7 +228,7 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     """
     Solve the normalized quadratic equation.
 
-    :param str: quadratic equation
+    :param equation: quadratic equation
     https://en.wikipedia.org/wiki/Quadratic_formula
     :return:
     if there are no solutions, return None.
