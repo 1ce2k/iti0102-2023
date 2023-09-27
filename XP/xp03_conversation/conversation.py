@@ -155,8 +155,56 @@ def normalize_quadratic_equation(equation: str) -> str:
     https://en.wikipedia.org/wiki/Quadratic_formula
     :return: normalized equation
     """
+    # split equation to left and right parts
+    lhs, rhs = equation.split('=')
 
-    pass
+    # move all term to left and simplify
+    lhs = lhs.replace(' ', '')
+    rhs = rhs.replace(' ', '')
+    lhs_term = re.split(r'([-+])', lhs)
+    rhs_term = re.split(r'([-+])', rhs)
+
+    # calculate all coefficients
+    a, b, c = 0, 0, 0
+    for term in lhs_term:
+        if 'x2' in term:
+            a += int(term.replace('x2', ''))
+        elif 'x' in term:
+            if term == 'x':
+                b += 1
+            elif term == '-x':
+                b -= 1
+            else:
+                b = int(term.replace('x', ''))
+        elif term.isdigit():
+            c += int(term)
+    for term in rhs_term:
+        if 'x2' in term:
+            a -= int(term.replace('x2', ''))
+        elif 'x' in term:
+            if term == 'x':
+                b -= 1
+            elif term == '-x':
+                b += 1
+            else:
+                b -= int(term.replace('x', ''))
+        elif term.isdigit():
+            c -= int(term)
+
+    # create new equation using calculated coefficients
+    normalized_equation = ''
+    if a != 0:
+        normalized_equation += f"{a}x2"
+    if b != 0:
+        if a != 0:
+            normalized_equation += ' + ' if b > 0 else ' - '
+        normalized_equation += f"{abs(b)}x"
+    if c != 0:
+        if a != 0 or b != 0:
+            normalized_equation += ' + ' if c > 0 else ' - '
+        normalized_equation += f"{abs(c)}"
+    normalized_equation += ' = 0'
+    return normalized_equation
 
 
 def quadratic_equation_solver(equation: str) -> None or float or tuple:
