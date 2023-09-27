@@ -1,5 +1,5 @@
 """Conversation."""
-import re
+import re, math
 
 
 class Student:
@@ -236,7 +236,42 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     if there are 2 solutions, return them in a tuple, where smaller is first
     all numbers are returned as floats.
     """
-    return None
+    equation = normalize_quadratic_equation(equation)
+    equation = equation.replace(' ', '')
+    equation = equation.replace(' ', '')
+    terms = re.split('([-+=])', equation)
+    a, b, c, d = 0, 0, 0, 0
+    for term in terms:
+        if 'x2' in term:
+            if term == 'x2':
+                a = 1
+            else:
+                a = int(term.replace('x2', ''))
+        elif 'x' in term:
+            if term == 'x':
+                b = 1
+            else:
+                b = int(term.replace('x', ''))
+        elif term.isdigit() and term != '0':
+            c = int(term)
+        if term == str(c):
+            if terms[terms.index(term) - 1] == '+':
+                d = b ** 2 - 4 * a * c
+            elif terms[terms.index(term) - 1] == '-':
+                d = b ** 2 + 4 * a * c
+    if d < 0:
+        return None
+    if d == 0:
+        return -b / (2 * a)
+    ret = ()
+    if d > 0:
+        x1 = (-b + math.sqrt(d)) / (2 * a)
+        x2 = (-b - math.sqrt(d)) / (2 * a)
+        if x1 > x2:
+            ret = (x2, x1)
+        else:
+            ret = (x1, x2)
+    return ret
 
 
 def find_primes_in_range(biggest_number: int) -> list:
