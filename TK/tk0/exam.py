@@ -76,7 +76,13 @@ def last_indices_elements_sum(nums: list) -> int:
     :param nums: List of non-negative integers.
     :return: Sum of elements at indices of last two elements.
     """
-    pass
+    index1 = nums[-1]
+    index2 = nums[-2]
+    if index1 > len(nums):
+        index1 = 0
+    if index2 > len(nums):
+        index2 = 0
+    return nums[index1] + nums[index2]
 
 
 def divisions(numbers: list) -> int:
