@@ -91,9 +91,13 @@ class Student:
         """
         if is_composite:
             composites = find_composites_in_range(self.n)
+            composites.insert(0, 0)
+            composites.insert(1, 1)
             self.intersect_possible_answers(composites)
         else:
             primes = find_primes_in_range(self.n)
+            primes.insert(0, 0)
+            primes.insert(1, 1)
             self.intersect_possible_answers(primes)
 
     def deal_with_dec_value(self, decimal_value: str):
