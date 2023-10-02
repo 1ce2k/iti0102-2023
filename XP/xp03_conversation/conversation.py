@@ -78,7 +78,9 @@ class Student:
         if is_prime:
             primes = find_primes_in_range(self.n)
             self.intersect_possible_answers(primes)
-
+        else:
+            composites = find_composites_in_range(self.n)
+            self.intersect_possible_answers(composites)
 
     def deal_with_composites(self, is_composite: bool):
         """
@@ -90,6 +92,9 @@ class Student:
         if is_composite:
             composites = find_composites_in_range(self.n)
             self.intersect_possible_answers(composites)
+        else:
+            primes = find_primes_in_range(self.n)
+            self.intersect_possible_answers(primes)
 
     def deal_with_dec_value(self, decimal_value: str):
         """
@@ -97,7 +102,7 @@ class Student:
 
         :param decimal_value: decimal value within the number like 9 in 192
         """
-        pass
+        self.intersect_possible_answers([x for x in self.possible_answers if decimal_value in str(x)])
 
     def deal_with_hex_value(self, hex_value: str):
         """
@@ -105,7 +110,7 @@ class Student:
 
         :param hex_value: hex value within the number like e in fe2
         """
-        pass
+        self.intersect_possible_answers([x for x in self.possible_answers if hex_value in hex(x)])
 
     def deal_with_quadratic_equation(self, equation: str, to_multiply: bool, multiplicative: float, is_bigger: bool):
         """
@@ -119,7 +124,21 @@ class Student:
         :param multiplicative: the multiplicative to multiply or divide with
         :param is_bigger: to use the bigger or smaller result of the quadratic equation(min or max from [x1, x2])
         """
-        pass
+        normalize_equation = normalize_quadratic_equation(equation)
+        solutions = quadratic_equation_solver(normalize_equation)
+        if solutions is None:
+            return
+        elif isinstance(solutions, float):
+            if is_bigger:
+                self.intersect_possible_answers([x for x in self.possible_answers if x > solutions])
+            else:
+                self.intersect_possible_answers([x for x in self.possible_answers if x < solutions])
+        elif isinstance(solutions, tuple):
+            smaller, larger = solutions
+            if is_bigger:
+                self.intersect_possible_answers([x for x in self.possible_answers if x > larger])
+            else:
+                self.intersect_possible_answers([x for x in self.possible_answers if x < smaller])
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
@@ -128,7 +147,11 @@ class Student:
         Call find_fibonacci_numbers to get all fibonacci numbers in range.
         :param is_in: boolean whether the number is in fibonacci sequence or not
         """
-        pass
+        fibonacci_nums = find_fibonacci_numbers(self.n)
+        if is_in:
+            self.intersect_possible_answers(fibonacci_nums)
+        else:
+            self.exclude_possible_answers(fibonacci_nums)
 
     def deal_with_catalan_sequence(self, is_in: bool):
         """
@@ -137,7 +160,11 @@ class Student:
         Call find_catalan_numbers to get all catalan numbers in range.
         :param is_in: boolean whether the number is in catalan sequence or not
         """
-        pass
+        catalan_nums = find_catalan_numbers(self.n)
+        if is_in:
+            self.intersect_possible_answers(catalan_nums)
+        else:
+            self.exclude_possible_answers(catalan_nums)
 
     def deal_with_number_order(self, increasing: bool, to_be: bool):
         """
@@ -146,7 +173,18 @@ class Student:
         :param increasing: boolean whether to check is in increasing or decreasing order
         :param to_be: boolean whether the number is indeed in that order
         """
-        pass
+        sorted_answers = sorted(self.possible_answers)
+        if increasing:
+            if to_be:
+                self.intersect_possible_answers(sorted_answers)
+            else:
+                self.exclude_possible_answers(sorted_answers)
+        else:
+            reversed_answers = sorted_answers[::-1]
+            if to_be:
+                self.intersect_possible_answers(reversed_answers)
+            else:
+                self.exclude_possible_answers(reversed_answers)
 
 
 def normalize_quadratic_equation(equation: str) -> str:
