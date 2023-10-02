@@ -162,7 +162,7 @@ def normalize_quadratic_equation(equation: str) -> str:
     pass
 
 
-def quadratic_equation_solver(equation: str) -> None | float | tuple:
+def quadratic_equation_solver(equation: str) -> None or float or tuple:
     """
     Solve the normalized quadratic equation.
 
@@ -208,7 +208,12 @@ def find_fibonacci_numbers(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Fibonacci_number
     :return: list of fibonacci numbers
     """
-    pass
+    fibonacci_sequence = []
+    a, b = 0, 1
+    while a <= biggest_number:
+        fibonacci_sequence.append(a)
+        a, b = b, a + b
+    return fibonacci_sequence
 
 
 def find_catalan_numbers(biggest_number: int) -> list:
