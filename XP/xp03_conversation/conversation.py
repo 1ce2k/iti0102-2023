@@ -15,6 +15,7 @@ class Student:
         :param biggest_number: biggest possible number(inclusive) to guess
         NB: calculating using sets is much faster compared to lists
         """
+        self.biggest_num = biggest_number
         self.possible_answers = set([all_possible_answers for all_possible_answers in range(biggest_number + 1)])
 
     def decision_branch(self, sentence: str):
@@ -244,50 +245,34 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     """
     equation = normalize_quadratic_equation(equation)
     equation = equation.replace(' ', '')
-    equation = equation.replace(' ', '')
     terms = re.split('([-+=])', equation)
-    a, b, c, d = 0, 0, 0, 0
-    for term in terms:
+    a, b, c = 0, 0, 0
+    for i in range(0, len(terms), 2):
+        term = terms[i]
+        coefficient = 1 if i == 0 or terms[i - 1] == '+' else -1
         if 'x2' in term:
-            if term == 'x2':
-                a = 1
-            else:
-                a = int(term.replace('x2', ''))
+            a += coefficient
         elif 'x' in term:
-            if term == 'x':
-                b = 1
-            else:
-                b = int(term.replace('x', ''))
+            b += coefficient
         elif term.isdigit() and term != '0':
-            c = int(term)
-        if term == str(c):
-            if terms[terms.index(term) - 1] == '+':
-                d = b ** 2 - 4 * a * c
-            elif terms[terms.index(term) - 1] == '-':
-                d = b ** 2 + 4 * a * c
-        if a == 0:
-            if term == str(c):
-                if terms[terms.index(term) - 1] == '+':
-                    return (-c) / b
-                if terms[terms.index(term) - 1] == '+':
-                    return c / b
-
-    ret = ()
-    x1 = 0
-    x2 = 0
-    if a != 0:
-        if d < 0:
-            return None
-        if d == 0:
-            return float(-b / (2 * a))
-        if d > 0:
-            x1 = (-b + math.sqrt(d)) / (2 * a)
-            x2 = (-b - math.sqrt(d)) / (2 * a)
-    if x1 > x2:
-        ret = (float(x2), float(x1))
+            c += coefficient * int(term)
+    discriminant = b ** 2 - 4 * a * c
+    if a == 0:
+        if b == 0:
+            return None  # No solutions
+        else:
+            return float(-c / b)  # One solution
+    if discriminant < 0:
+        return None  # No real solutions
+    elif discriminant == 0:
+        return float(-b / (2 * a))  # One real solution
     else:
-        ret = (float(x1), float(x2))
-    return ret
+        x1 = (-b + math.sqrt(discriminant)) / (2 * a)
+        x2 = (-b - math.sqrt(discriminant)) / (2 * a)
+        if x1 > x2:
+            return float(x2), float(x1)  # Two real solutions as a tuple
+        else:
+            return float(x1), float(x2)  # Two real solutions as a tuple
 
 
 def find_primes_in_range(biggest_number: int) -> list:
