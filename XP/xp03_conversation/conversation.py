@@ -19,6 +19,7 @@ class Student:
         :param biggest_number: biggest possible number(inclusive) to guess
         NB: calculating using sets is much faster compared to lists
         """
+        n = biggest_number
         self.possible_answers = set([all_possible_answers for all_possible_answers in range(biggest_number + 1)])
 
     def decision_branch(self, sentence: str):
@@ -30,7 +31,15 @@ class Student:
         f"Possible answers are {sorted_list_of_possible_answers_in_growing_sequence)}." if there are multiple possibilities
         f"The number I needed to guess was {final_answer}." if the result is certain
         """
-        pass
+        result = None
+        if re.search(r'^Possible answers are \[.*\]\.$', sentence):
+            possible_answers_str = re.search(r'\[(.*?)\]', sentence).group(1)
+            possible_answers_list = [int(x.strip()) for x in possible_answers_str.split(',')]
+            result = f"Possible answers are {sorted(possible_answers_list)}."
+        elif re.search(r'^The number I needed to guess was \d+\.$', sentence):
+            final_answer = int(re.search(r'\d+', sentence).group())
+            result = f"The number I needed to guess was {final_answer}."
+        return result
 
     def intersect_possible_answers(self, update: list):
         """
