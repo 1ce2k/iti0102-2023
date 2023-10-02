@@ -377,8 +377,6 @@ def find_composites_in_range(biggest_number: int) -> list:
     for i in range(2, biggest_number + 1):
         if i not in primes:
             composites.append(i)
-    composites.insert(0, 0)
-    composites.insert(1, 1)
     return composites
 
 
