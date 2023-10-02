@@ -270,9 +270,9 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
         x1 = (-b + math.sqrt(discriminant)) / (2 * a)
         x2 = (-b - math.sqrt(discriminant)) / (2 * a)
         if x1 > x2:
-            return float(x2), float(x1)  # Two real solutions as a tuple
+            return float(x1), float(x2)
         else:
-            return float(x1), float(x2)  # Two real solutions as a tuple
+            return float(x2), float(x1)
 
 
 def find_primes_in_range(biggest_number: int) -> list:
