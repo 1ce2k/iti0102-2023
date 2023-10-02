@@ -20,7 +20,7 @@ class Student:
         NB: calculating using sets is much faster compared to lists
         """
         n = biggest_number
-        self.possible_answers = set([all_possible_answers for all_possible_answers in range(biggest_number + 1)])
+        self.possible_answers = self.possible_answers = set(range(biggest_number + 1))
 
     def decision_branch(self, sentence: str):
         """
