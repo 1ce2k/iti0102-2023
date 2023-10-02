@@ -119,7 +119,16 @@ class Student:
         Call find_fibonacci_numbers to get all fibonacci numbers in range.
         :param is_in: boolean whether the number is in fibonacci sequence or not
         """
-        pass
+        fibonacci_nums = find_fibonacci_numbers(self.biggest_num)
+        list_of_nums = []
+        for i in self.possible_answers:
+            if is_in:
+                if i in fibonacci_nums:
+                    list_of_nums.append(i)
+            else:
+                if i not in fibonacci_nums:
+                    list_of_nums.append(i)
+        return list_of_nums
 
     def deal_with_catalan_sequence(self, is_in: bool):
         """
