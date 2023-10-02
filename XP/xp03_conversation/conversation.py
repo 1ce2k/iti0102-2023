@@ -49,7 +49,7 @@ class Student:
         conjunction between self.possible_answers and update
         https://en.wikipedia.org/wiki/Logical_conjunction
         """
-        pass
+        self.possible_answers &= set(update)
 
     def exclude_possible_answers(self, update: list):
         """
@@ -58,7 +58,7 @@ class Student:
         :param update: new list to be excluded from self.possible_answers
         update excluded from self.possible_answers
         """
-        pass
+        self.possible_answers -= set(update)
 
     def deal_with_number_of_zeroes(self, amount_of_zeroes: int):
         """
