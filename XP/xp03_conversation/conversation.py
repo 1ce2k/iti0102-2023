@@ -264,7 +264,8 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
             c = int(term)
 
     if a == 0 and b == 0:
-        return None
+        if c == 0:
+            return c
 
     if a == 0 and b != 0:
         return float(-c / b)
@@ -273,10 +274,15 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     if a != 0:
         if b != 0:
             d = b ** 2 - 4 * a * c
-    x1 = float((-b + math.sqrt(d)) / (2 * a))
-    x2 = float((-b - math.sqrt(d)) / (2 * a))
+    if d < 0:
+        return None
     if d == 0:
-        return x1
+        return float(-b / (2 * a))
+    x1 = 0
+    x2 = 0
+    if d != 0:
+        x1 = float((-b + math.sqrt(d)) / (2 * a))
+        x2 = float((-b - math.sqrt(d)) / (2 * a))
     if x1 > x2:
         return x2, x1
     return x1, x2
