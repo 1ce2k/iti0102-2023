@@ -7,7 +7,6 @@ regex_b = '.'
 regex_c = '.'
 
 
-
 class Student:
     """Student class which interacts with the server."""
 
@@ -98,7 +97,7 @@ class Student:
         """
         Filter possible answers to remove all numbers that doesn't have the decimal_value in them.
 
-        :param decimal_value: hex value within the number like e in fe2
+        :param hex_value: hex value within the number like e in fe2
         """
         pass
 
@@ -159,14 +158,87 @@ def normalize_quadratic_equation(equation: str) -> str:
     https://en.wikipedia.org/wiki/Quadratic_formula
     :return: normalized equation
     """
-    pass
+    # split equation to left and right parts
+    equation = equation.replace('x1', 'x')
+    equation = equation.replace(' ', '')
+    lhs, rhs = equation.split('=')
+
+    # init coefficient
+    a, b, c = 0, 0, 0
+
+    # split left and right parts to terms
+    lhs_terms = re.split(r'([-+])', lhs)
+    rhs_terms = re.split(r'([-+])', rhs)
+
+    def process_term(term, sign):
+        """Update coefficients by term."""
+        nonlocal a, b, c
+        if 'x2' in term:
+            a += sign * (1 if term == 'x2' else int(term.replace('x2', '')))
+        elif 'x' in term or 'x1' in term:
+            b += sign * (1 if term in {'x'} else int(term.replace('x', '')))
+        elif term.isdigit():
+            c += sign * int(term)
+
+    # left part
+    sign = 1
+    for term in lhs_terms:
+        if term == '-':
+            sign = -1
+        elif term == '+':
+            sign = 1
+        else:
+            process_term(term, sign)
+
+    # right part
+    sign = -1
+    for term in rhs_terms:
+        if term == '-':
+            sign = 1
+        elif term == '+':
+            sign = -1
+        else:
+            process_term(term, sign)
+
+    # if there is need to multiply by -1
+    if a != 0 and a < 0:
+        a, b, c = -a, -b, -c
+    elif a == 0 and b < 0:
+        b, c = -b, -c
+    elif a == 0 and b == 0 and c < 0:
+        c = -c
+    # create normalized equation
+    normalized_equation = ''
+    if a == 0 and b == 0:
+        return f'{c} = 0'
+    if a != 0:
+        if abs(a) == 1:
+            normalized_equation += 'x2'
+        else:
+            normalized_equation += f'{a}x2'
+    if b != 0:
+        if a != 0:
+            if abs(b) == 1:
+                normalized_equation += f' {"+" if b >= 0 else "-"} x'
+            else:
+                normalized_equation += f' {"+" if b >= 0 else "-"} {abs(b)}x'
+        else:
+            if abs(b) == 1:
+                normalized_equation += 'x'
+            else:
+                normalized_equation += f"{b}x"
+    if c != 0:
+        if a != 0 or b != 0:
+            normalized_equation += f' {"+" if c >= 0 else "-"} {abs(c)}'
+    normalized_equation += ' = 0'
+    return normalized_equation
 
 
 def quadratic_equation_solver(equation: str) -> None or float or tuple:
     """
     Solve the normalized quadratic equation.
 
-    :param str: quadratic equation
+    :param equation: quadratic equation
     https://en.wikipedia.org/wiki/Quadratic_formula
     :return:
     if there are no solutions, return None.
@@ -174,7 +246,40 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     if there are 2 solutions, return them in a tuple, where smaller is first
     all numbers are returned as floats.
     """
-    pass
+    equation = normalize_quadratic_equation(equation).replace(' ', '')
+    terms = re.split('([-+=])', equation)
+    a, b, c = 0, 0, 0
+    for term in terms:
+        if 'x2' in term:
+            if term == 'x2':
+                a = 1
+            else:
+                a = int(term.replace('x2', ''))
+        elif 'x' in term:
+            if term == 'x':
+                b = 1
+            else:
+                b = int(term.replace('x', ''))
+        elif term.isdigit() and term != '0':
+            c = int(term)
+
+    if a == 0 and b == 0:
+        return None
+
+    if a == 0 and b != 0:
+        return float(-c / b)
+
+    d = 0
+    if a != 0:
+        if b != 0:
+            d = b ** 2 - 4 * a * c
+    x1 = float((-b + math.sqrt(d)) / (2 * a))
+    x2 = float((-b - math.sqrt(d)) / (2 * a))
+    if d == 0:
+        return x1
+    if x1 > x2:
+        return x2, x1
+    return x1, x2
 
 
 def find_primes_in_range(biggest_number: int) -> list:
@@ -256,12 +361,11 @@ if __name__ == '__main__':
     print(print_regex_results(regex_b, f))  # - 4
     print(print_regex_results(regex_c, f))  # 1
 
-    # f2 = "3x2 + 4x + 5 - 2x2 - 7x + 4"
-    #
-    # print("x2")
-    # print_regex_results(regex_a, f2)  # 3, - 2
-    # print("x")
-    # print_regex_results(regex_b, f2)  # 4, - 7
-    # print("c")
-    # print_regex_results(regex_c, f2)  # 5, 4
+    f2 = "3x2 + 4x + 5 - 2x2 - 7x + 4"
 
+    print("x2")
+    print_regex_results(regex_a, f2)  # 3, - 2
+    print("x")
+    print_regex_results(regex_b, f2)  # 4, - 7
+    print("c")
+    print_regex_results(regex_c, f2)  # 5, 4
