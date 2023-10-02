@@ -260,23 +260,26 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
                 a = int(term.replace('x2', ''))
         elif 'x' in term:
             if term == 'x':
-                b = 1
+                if terms[terms.index(term) - 1] == '+':
+                    if term == 'x':
+                        b = 1
+                    else:
+                        b = int(term.replace('x', ''))
+                elif terms[terms.index(term) - 1] == '-':
+                    if term == 'x':
+                        b = -1
+                    else:
+                        b = -int(term.replace('x', ''))
             else:
                 b = int(term.replace('x', ''))
         elif term.isdigit() and term != '0':
-            c = int(term)
-        if term == str(c):
             if terms[terms.index(term) - 1] == '+':
-                d = b ** 2 - 4 * a * c
+                c = int(term)
             elif terms[terms.index(term) - 1] == '-':
-                d = b ** 2 + 4 * a * c
-        if a == 0:
-            if term == str(c):
-                if terms[terms.index(term) - 1] == '+':
-                    return (-c) / b
-                if terms[terms.index(term) - 1] == '+':
-                    return c / b
+                c = -int(term)
 
+    if a != 0 and b != 0:
+        d = b ** 2 - 4 * a * c
     ret = ()
     x1 = 0
     x2 = 0
