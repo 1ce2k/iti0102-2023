@@ -2,6 +2,11 @@
 import re
 import math
 
+regex_a = '.'
+regex_b = '.'
+regex_c = '.'
+
+
 
 class Student:
     """Student class which interacts with the server."""
@@ -15,7 +20,6 @@ class Student:
         :param biggest_number: biggest possible number(inclusive) to guess
         NB: calculating using sets is much faster compared to lists
         """
-        self.biggest_num = biggest_number
         self.possible_answers = set([all_possible_answers for all_possible_answers in range(biggest_number + 1)])
 
     def decision_branch(self, sentence: str):
@@ -94,7 +98,7 @@ class Student:
         """
         Filter possible answers to remove all numbers that doesn't have the decimal_value in them.
 
-        :param hex_value: hex value within the number like e in fe2
+        :param decimal_value: hex value within the number like e in fe2
         """
         pass
 
@@ -119,17 +123,7 @@ class Student:
         Call find_fibonacci_numbers to get all fibonacci numbers in range.
         :param is_in: boolean whether the number is in fibonacci sequence or not
         """
-        # fibonacci_nums = find_fibonacci_numbers(self.biggest_num)
-        # list_of_nums = []
-        # for i in self.possible_answers:
-        #     if is_in:
-        #         if i in fibonacci_nums:
-        #             list_of_nums.append(i)
-        #     else:
-        #         if i not in fibonacci_nums:
-        #             list_of_nums.append(i)
-        # return list_of_nums
-        return True
+        pass
 
     def deal_with_catalan_sequence(self, is_in: bool):
         """
@@ -165,87 +159,14 @@ def normalize_quadratic_equation(equation: str) -> str:
     https://en.wikipedia.org/wiki/Quadratic_formula
     :return: normalized equation
     """
-    # split equation to left and right parts
-    equation = equation.replace('x1', 'x')
-    equation = equation.replace(' ', '')
-    lhs, rhs = equation.split('=')
-
-    # init coefficient
-    a, b, c = 0, 0, 0
-
-    # split left and right parts to terms
-    lhs_terms = re.split(r'([-+])', lhs)
-    rhs_terms = re.split(r'([-+])', rhs)
-
-    def process_term(term, sign):
-        """Update coefficients by term."""
-        nonlocal a, b, c
-        if 'x2' in term:
-            a += sign * (1 if term == 'x2' else int(term.replace('x2', '')))
-        elif 'x' in term or 'x1' in term:
-            b += sign * (1 if term in {'x'} else int(term.replace('x', '')))
-        elif term.isdigit():
-            c += sign * int(term)
-
-    # left part
-    sign = 1
-    for term in lhs_terms:
-        if term == '-':
-            sign = -1
-        elif term == '+':
-            sign = 1
-        else:
-            process_term(term, sign)
-
-    # right part
-    sign = -1
-    for term in rhs_terms:
-        if term == '-':
-            sign = 1
-        elif term == '+':
-            sign = -1
-        else:
-            process_term(term, sign)
-
-    # if there is need to multiply by -1
-    if a != 0 and a < 0:
-        a, b, c = -a, -b, -c
-    elif a == 0 and b < 0:
-        b, c = -b, -c
-    elif a == 0 and b == 0 and c < 0:
-        c = -c
-    # create normalized equation
-    normalized_equation = ''
-    if a == 0 and b == 0:
-        return f'{c} = 0'
-    if a != 0:
-        if abs(a) == 1:
-            normalized_equation += 'x2'
-        else:
-            normalized_equation += f'{a}x2'
-    if b != 0:
-        if a != 0:
-            if abs(b) == 1:
-                normalized_equation += f' {"+" if b >= 0 else "-"} x'
-            else:
-                normalized_equation += f' {"+" if b >= 0 else "-"} {abs(b)}x'
-        else:
-            if abs(b) == 1:
-                normalized_equation += 'x'
-            else:
-                normalized_equation += f"{b}x"
-    if c != 0:
-        if a != 0 or b != 0:
-            normalized_equation += f' {"+" if c >= 0 else "-"} {abs(c)}'
-    normalized_equation += ' = 0'
-    return normalized_equation
+    pass
 
 
-def quadratic_equation_solver(equation: str) -> None or float or tuple:
+def quadratic_equation_solver(equation: str) -> None | float | tuple:
     """
     Solve the normalized quadratic equation.
 
-    :param equation: quadratic equation
+    :param str: quadratic equation
     https://en.wikipedia.org/wiki/Quadratic_formula
     :return:
     if there are no solutions, return None.
@@ -253,37 +174,7 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     if there are 2 solutions, return them in a tuple, where smaller is first
     all numbers are returned as floats.
     """
-    equation = normalize_quadratic_equation(equation)
-    equation = equation.replace(' ', '')
-    terms = re.split('([-+=])', equation)
-    a, b, c = 0, 0, 0
-    for i in range(0, len(terms), 2):
-        term = terms[i]
-        coefficient = 1 if i == 0 or terms[i - 1] == '+' else -1
-        if 'x2' in term:
-            a += coefficient
-        elif 'x' in term:
-            b += coefficient
-        elif term.isdigit() and term != '0':
-            c += coefficient * int(term)
-    discriminant = b ** 2 - 4 * a * c
-    if a == 0:
-        if b == 0:
-            return None  # No solutions
-        else:
-            return float(-c / b)  # One solution
-    x1 = 0
-    x2 = 0
-    if discriminant < 0:
-        return None  # No real solutions
-    elif discriminant == 0:
-        return float(-b / (2 * a))  # One real solution
-    else:
-        x1 = (-b + math.sqrt(discriminant)) / (2 * a)
-        x2 = (-b - math.sqrt(discriminant)) / (2 * a)
-    if x1 > x2:
-        return float(x2), float(x1)
-    return float(x1), float(x2)
+    pass
 
 
 def find_primes_in_range(biggest_number: int) -> list:
@@ -294,17 +185,7 @@ def find_primes_in_range(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
     :return: list of primes
     """
-    prime = [True for _ in range(biggest_number + 1)]
-    p = 2
-    while p * p <= biggest_number:
-        if prime[p]:
-            for i in range(p * p, biggest_number + 1, p):
-                prime[i] = False
-        p += 1
-
-    # Create a list of prime numbers
-    primes = [p for p in range(2, biggest_number + 1) if prime[p]]
-    return primes
+    pass
 
 
 def find_composites_in_range(biggest_number: int) -> list:
@@ -315,12 +196,7 @@ def find_composites_in_range(biggest_number: int) -> list:
     :return: list of composites
     :param biggest_number: all composites in range of biggest_number(included)
     """
-    primes = find_primes_in_range(biggest_number)
-    composites = []
-    for i in range(2, biggest_number + 1):
-        if i not in primes:
-            composites.append(i)
-    return composites
+    pass
 
 
 def find_fibonacci_numbers(biggest_number: int) -> list:
@@ -332,12 +208,7 @@ def find_fibonacci_numbers(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Fibonacci_number
     :return: list of fibonacci numbers
     """
-    fibonacci_sequence = []
-    a, b = 0, 1
-    while a <= biggest_number:
-        fibonacci_sequence.append(a)
-        a, b = b, a + b
-    return fibonacci_sequence
+    pass
 
 
 def find_catalan_numbers(biggest_number: int) -> list:
@@ -349,8 +220,28 @@ def find_catalan_numbers(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Catalan_number
     :return: list of catalan numbers
     """
-    catalan_numbers = [0] * (biggest_number + 1)
-    catalan_numbers[0] = 1
-    for n in range(1, biggest_number + 1):
-        catalan_numbers[n] = (2 * (2 * n - 1) * catalan_numbers[n - 1]) // (n + 1)
-    return catalan_numbers
+    pass
+
+
+if __name__ == '__main__':
+
+    def print_regex_results(regex, f):
+        for match in re.finditer(regex, f):
+            print(match.group(0))
+
+
+    f = "3x2 - 4x + 1"
+
+    print(print_regex_results(regex_a, f))  # 3
+    print(print_regex_results(regex_b, f))  # - 4
+    print(print_regex_results(regex_c, f))  # 1
+
+    # f2 = "3x2 + 4x + 5 - 2x2 - 7x + 4"
+    #
+    # print("x2")
+    # print_regex_results(regex_a, f2)  # 3, - 2
+    # print("x")
+    # print_regex_results(regex_b, f2)  # 4, - 7
+    # print("c")
+    # print_regex_results(regex_c, f2)  # 5, 4
+
