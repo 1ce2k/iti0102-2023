@@ -259,25 +259,27 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
             else:
                 a = int(term.replace('x2', ''))
         elif 'x' in term:
-            if term == 'x':
-                if terms[terms.index(term) - 1] == '+':
-                    if term == 'x':
-                        b = 1
-                    else:
-                        b = int(term.replace('x', ''))
-                elif terms[terms.index(term) - 1] == '-':
-                    if term == 'x':
-                        b = -1
-                    else:
-                        b = -int(term.replace('x', ''))
-            else:
-                b = int(term.replace('x', ''))
+            if terms[terms.index(term) - 1] == '+' or terms.index(term) == 0:
+                if term == 'x':
+                    b = 1
+                else:
+                    b = int(term.replace('x', ''))
+            elif terms[terms.index(term) - 1] == '-':
+                if term == 'x':
+                    b = -1
+                else:
+                    b = -int(term.replace('x', ''))
         elif term.isdigit() and term != '0':
             if terms[terms.index(term) - 1] == '+':
                 c = int(term)
             elif terms[terms.index(term) - 1] == '-':
                 c = -int(term)
 
+    if a == 0 and b != 0:
+        if b > 0:
+            return -c
+        else:
+            return c
     if a != 0 and b != 0:
         d = b ** 2 - 4 * a * c
     ret = ()
@@ -289,9 +291,9 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
         if d == 0:
             x1 = - b / (2 * a)
             return str(x1)
-        if d > 0:
-            x1 = (-b + math.sqrt(d)) / (2 * a)
-            x2 = (-b - math.sqrt(d)) / (2 * a)
+    if d > 0:
+        x1 = (-b + math.sqrt(d)) / (2 * a)
+        x2 = (-b - math.sqrt(d)) / (2 * a)
     if x1 == x2:
         return x1
     res = [x1, x2]
