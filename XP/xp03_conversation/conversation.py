@@ -19,8 +19,8 @@ class Student:
         :param biggest_number: biggest possible number(inclusive) to guess
         NB: calculating using sets is much faster compared to lists
         """
-        n = biggest_number
-        self.possible_answers = self.possible_answers = set(range(biggest_number + 1))
+        self.n = biggest_number
+        self.possible_answers = set([all_possible_answers for all_possible_answers in range(biggest_number + 1)])
 
     def decision_branch(self, sentence: str):
         """
@@ -31,15 +31,7 @@ class Student:
         f"Possible answers are {sorted_list_of_possible_answers_in_growing_sequence)}." if there are multiple possibilities
         f"The number I needed to guess was {final_answer}." if the result is certain
         """
-        result = None
-        if re.search(r'^Possible answers are \[.*]\.$', sentence):
-            possible_answers_str = re.search(r'\[(.*?)]', sentence).group(1)
-            possible_answers_list = [int(x.strip()) for x in possible_answers_str.split(',')]
-            result = f"Possible answers are {sorted(possible_answers_list)}."
-        elif re.search(r'^The number I needed to guess was \d+\.$', sentence):
-            final_answer = int(re.search(r'\d+', sentence).group())
-            result = f"The number I needed to guess was {final_answer}."
-        return result
+        pass
 
     def intersect_possible_answers(self, update: list):
         """
@@ -66,9 +58,7 @@ class Student:
 
         :param amount_of_zeroes: number of zeroes in the correct number's binary form
         """
-        binary_length = int(math.log2(max(self.possible_answers))) + 1
-        zero_mask = int('1' * (binary_length - amount_of_zeroes), 2)
-        self.intersect_possible_answers([x for x in self.possible_answers if (x & zero_mask) == x])
+        pass
 
     def deal_with_number_of_ones(self, amount_of_ones: int):
         """
@@ -85,7 +75,10 @@ class Student:
         Call find_primes_in_range to get all composite numbers in range.
         :param is_prime: boolean whether the number is prime or not
         """
-        pass
+        if is_prime:
+            primes = find_primes_in_range(self.n)
+            self.intersect_possible_answers(primes)
+
 
     def deal_with_composites(self, is_composite: bool):
         """
@@ -94,7 +87,9 @@ class Student:
         Call find_composites_in_range to get all composite numbers in range.
         :param is_composite: boolean whether the number is composite or not
         """
-        pass
+        if is_composite:
+            composites = find_composites_in_range(self.n)
+            self.intersect_possible_answers(composites)
 
     def deal_with_dec_value(self, decimal_value: str):
         """
@@ -270,29 +265,25 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
             else:
                 a = int(term.replace('x2', ''))
         elif 'x' in term:
-            if terms[terms.index(term) - 1] == '+' or terms.index(term) == 0:
-                if term == 'x':
-                    b = 1
-                else:
-                    b = int(term.replace('x', ''))
-            elif terms[terms.index(term) - 1] == '-':
-                if term == 'x':
-                    b = -1
-                else:
-                    b = -int(term.replace('x', ''))
+            if term == 'x':
+                b = 1
+            else:
+                b = int(term.replace('x', ''))
         elif term.isdigit() and term != '0':
+            c = int(term)
+        if term == str(c):
             if terms[terms.index(term) - 1] == '+':
-                c = int(term)
+                d = b ** 2 - 4 * a * c
             elif terms[terms.index(term) - 1] == '-':
-                c = -int(term)
+                d = b ** 2 + 4 * a * c
+        if a == 0:
+            if term == str(c):
+                if terms[terms.index(term) - 1] == '+':
+                    return (-c) / b
+                if terms[terms.index(term) - 1] == '+':
+                    return c / b
 
-    if a == 0 and b != 0:
-        if b > 0:
-            return -c
-        else:
-            return c
-    if a != 0 and b != 0:
-        d = b ** 2 - 4 * a * c
+    ret = ()
     x1 = 0
     x2 = 0
     if a != 0:
@@ -301,9 +292,9 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
         if d == 0:
             x1 = - b / (2 * a)
             return str(x1)
-    if d > 0:
-        x1 = (-b + math.sqrt(d)) / (2 * a)
-        x2 = (-b - math.sqrt(d)) / (2 * a)
+        if d > 0:
+            x1 = (-b + math.sqrt(d)) / (2 * a)
+            x2 = (-b - math.sqrt(d)) / (2 * a)
     if x1 == x2:
         return x1
     res = [x1, x2]
@@ -381,6 +372,7 @@ if __name__ == '__main__':
     def print_regex_results(regex, f):
         for match in re.finditer(regex, f):
             print(match.group(0))
+
 
     f = "3x2 - 4x + 1"
 
