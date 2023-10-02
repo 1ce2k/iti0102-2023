@@ -32,8 +32,8 @@ class Student:
         f"The number I needed to guess was {final_answer}." if the result is certain
         """
         result = None
-        if re.search(r'^Possible answers are \[.*\]\.$', sentence):
-            possible_answers_str = re.search(r'\[(.*?)\]', sentence).group(1)
+        if re.search(r'^Possible answers are \[.*]\.$', sentence):
+            possible_answers_str = re.search(r'\[(.*?)]', sentence).group(1)
             possible_answers_list = [int(x.strip()) for x in possible_answers_str.split(',')]
             result = f"Possible answers are {sorted(possible_answers_list)}."
         elif re.search(r'^The number I needed to guess was \d+\.$', sentence):
