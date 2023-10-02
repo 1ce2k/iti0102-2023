@@ -289,6 +289,8 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
         if d > 0:
             x1 = (-b + math.sqrt(d)) / (2 * a)
             x2 = (-b - math.sqrt(d)) / (2 * a)
+    if x1 == x2:
+        return x1
     if x1 > x2:
         ret = (float(x2), float(x1))
     else:
