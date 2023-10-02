@@ -66,7 +66,9 @@ class Student:
 
         :param amount_of_zeroes: number of zeroes in the correct number's binary form
         """
-        pass
+        binary_length = int(math.log2(max(self.possible_answers))) + 1
+        zero_mask = int('1' * (binary_length - amount_of_zeroes), 2)
+        self.intersect_possible_answers([x for x in self.possible_answers if (x & zero_mask) == x])
 
     def deal_with_number_of_ones(self, amount_of_ones: int):
         """
