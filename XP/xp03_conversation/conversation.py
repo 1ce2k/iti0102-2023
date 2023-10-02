@@ -248,7 +248,10 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     """
     equation = normalize_quadratic_equation(equation).replace(' ', '')
     terms = re.split('([-+=])', equation)
-    a, b, c = 0, 0, 0
+    equation = normalize_quadratic_equation(equation)
+    equation = equation.replace(' ', '')
+    terms = re.split('([-+=])', equation)
+    a, b, c, d = 0, 0, 0, 0
     for term in terms:
         if 'x2' in term:
             if term == 'x2':
@@ -262,30 +265,34 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
                 b = int(term.replace('x', ''))
         elif term.isdigit() and term != '0':
             c = int(term)
+        if term == str(c):
+            if terms[terms.index(term) - 1] == '+':
+                d = b ** 2 - 4 * a * c
+            elif terms[terms.index(term) - 1] == '-':
+                d = b ** 2 + 4 * a * c
+        if a == 0:
+            if term == str(c):
+                if terms[terms.index(term) - 1] == '+':
+                    return (-c) / b
+                if terms[terms.index(term) - 1] == '+':
+                    return c / b
 
-    if a == 0 and b == 0:
-        if c == 0:
-            return c
-
-    if a == 0 and b != 0:
-        return float(-c / b)
-
-    d = 0
-    if a != 0:
-        if b != 0:
-            d = b ** 2 - 4 * a * c
-    if d < 0:
-        return None
-    if d == 0:
-        return float(-b / (2 * a))
+    ret = ()
     x1 = 0
     x2 = 0
-    if d != 0:
-        x1 = float((-b + math.sqrt(d)) / (2 * a))
-        x2 = float((-b - math.sqrt(d)) / (2 * a))
+    if a != 0:
+        if d < 0:
+            return None
+        if d == 0:
+            return float(-b / (2 * a))
+        if d > 0:
+            x1 = (-b + math.sqrt(d)) / (2 * a)
+            x2 = (-b - math.sqrt(d)) / (2 * a)
     if x1 > x2:
-        return x2, x1
-    return x1, x2
+        ret = (float(x2), float(x1))
+    else:
+        ret = (float(x1), float(x2))
+    return ret
 
 
 def find_primes_in_range(biggest_number: int) -> list:
