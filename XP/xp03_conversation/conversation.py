@@ -282,7 +282,6 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
             return c
     if a != 0 and b != 0:
         d = b ** 2 - 4 * a * c
-    ret = ()
     x1 = 0
     x2 = 0
     if a != 0:
@@ -371,7 +370,6 @@ if __name__ == '__main__':
     def print_regex_results(regex, f):
         for match in re.finditer(regex, f):
             print(match.group(0))
-
 
     f = "3x2 - 4x + 1"
 
