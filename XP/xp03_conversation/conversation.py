@@ -231,33 +231,29 @@ def find_fibonacci_numbers(biggest_number: int) -> list:
     return fibonacci_sequence
 
 
-def find_catalan_numbers(biggest_number: int, memo={}) -> list:
+def find_catalan_numbers(biggest_number: int) -> list:
     """
     Find all Catalan numbers in range(end inclusive).
 
     Can be solved using recursion.
-    :param memo:
     :param biggest_number: all catalan numbers in range of biggest_number(included)
     https://en.wikipedia.org/wiki/Catalan_number
     :return: list of catalan numbers
     """
     if biggest_number < 0:
         return []
+
     if biggest_number == 0:
         return [1]
 
-    if biggest_number in memo:
-        return memo[biggest_number]
-
-    catalan_numbers = [0] * (biggest_number + 1)
-    catalan_numbers[0] = 1
+    catalan = [0] * (biggest_number + 1)
+    catalan[0] = 1
 
     for i in range(1, biggest_number + 1):
         for j in range(i):
-            catalan_numbers[i] += catalan_numbers[j] * catalan_numbers[i - j - 1]
+            catalan[i] += catalan[j] * catalan[i - 1 - j]
 
-    memo[biggest_number] = catalan_numbers
-    return catalan_numbers
+    return catalan
 
 
 if __name__ == '__main__':
