@@ -185,7 +185,17 @@ def find_primes_in_range(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
     :return: list of primes
     """
-    pass
+    prime = [True for _ in range(biggest_number + 1)]
+    p = 2
+    while p * p <= biggest_number:
+        if prime[p]:
+            for i in range(p * p, biggest_number + 1, p):
+                prime[i] = False
+        p += 1
+
+    # Create a list of prime numbers
+    primes = [p for p in range(2, biggest_number + 1) if prime[p]]
+    return primes
 
 
 def find_composites_in_range(biggest_number: int) -> list:
@@ -196,7 +206,12 @@ def find_composites_in_range(biggest_number: int) -> list:
     :return: list of composites
     :param biggest_number: all composites in range of biggest_number(included)
     """
-    pass
+    primes = find_primes_in_range(biggest_number)
+    composites = []
+    for i in range(2, biggest_number + 1):
+        if i not in primes:
+            composites.append(i)
+    return composites
 
 
 def find_fibonacci_numbers(biggest_number: int) -> list:
