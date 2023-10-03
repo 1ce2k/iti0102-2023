@@ -201,7 +201,7 @@ class Student:
                 self.intersect_possible_answers([x for x in self.possible_answers if x <= self.biggest_number])
                 # self.possible_answers = '3'
             else:
-                self.intersect_possible_answers([x for x in self.possible_answers if x > self.biggest_number])
+                self.intersect_possible_answers([x for x in self.possible_answers if x <= self.biggest_number])
                 # self.possible_answers = '4'
 
 
