@@ -194,7 +194,7 @@ class Student:
                 # self.intersect_possible_answers(reversed_answers)
                 self.possible_answers = '3'
             else:
-                self.exclude_possible_answers(reversed_answers)
+                self.intersect_possible_answers(reversed_answers)
                 # self.possible_answers = '4'
 
 
