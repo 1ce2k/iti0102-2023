@@ -85,7 +85,7 @@ class Student:
         primes = find_primes_in_range(self.biggest_number)
         composites = find_composites_in_range(self.biggest_number)
         if is_prime:
-            self.intersect_possible_answers(composites)
+            self.intersect_possible_answers(primes)
         else:
             self.exclude_possible_answers(composites)
 
