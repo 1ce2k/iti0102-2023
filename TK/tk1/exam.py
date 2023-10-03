@@ -26,7 +26,10 @@ def format_time(minutes: int) -> str:
     if hours == 0:
         ret = f'{minutes}min'
     if minutes == 0:
-        ret = f'{hours}h'
+        if hours == 0:
+            ret = '0min'
+        else:
+            ret = f'{hours}h'
     if minutes != 0 and hours != 0:
         ret = f'{hours}h {minutes}min'
     return ret
