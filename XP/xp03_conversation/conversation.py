@@ -1,4 +1,4 @@
-"""Conversation."""
+"""conversation."""
 import re
 import math
 
@@ -7,44 +7,44 @@ regex_b = '.x'
 regex_c = '.'
 
 
-class Student:
-    """Student class which interacts with the server."""
+class student:
+    """student class which interacts with the server."""
 
     def __init__(self, biggest_number: int):
         """
-        Initialize Student object.
+        initialize student object.
 
-        Save the biggest number into a variable that is attainable later on.
-        Create a collection of all possible results [possible_answers] <- dont rename that (can be a list or a set)
+        save the biggest number into a variable that is attainable later on.
+        create a collection of all possible results [possible_answers] <- dont rename that (can be a list or a set)
         :param biggest_number: biggest possible number(inclusive) to guess
-        NB: calculating using sets is much faster compared to lists
+        nb: calculating using sets is much faster compared to lists
         """
         self.biggest_number = biggest_number
         self.possible_answers = set([all_possible_answers for all_possible_answers in range(biggest_number + 1)])
 
     def decision_branch(self, sentence: str):
         """
-        Regex can and should be used here.
+        regex can and should be used here.
 
         :param sentence: sentence to solve
         call one of the functions bellow (within this class) and return either one of the following strings:
-        f"Possible answers are {sorted_list_of_possible_answers_in_growing_sequence)}." if there are multiple possibilities
-        f"The number I needed to guess was {final_answer}." if the result is certain
+        f"possible answers are {sorted_list_of_possible_answers_in_growing_sequence)}." if there are multiple possibilities
+        f"the number i needed to guess was {final_answer}." if the result is certain
         """
 
     def intersect_possible_answers(self, update: list):
         """
-        Logical AND between two sets.
+        logical and between two sets.
 
         :param update: new list to be put into conjunction with self.possible_answers
         conjunction between self.possible_answers and update
-        https://en.wikipedia.org/wiki/Logical_conjunction
+        https://en.wikipedia.org/wiki/logical_conjunction
         """
         self.possible_answers &= set(update)
 
     def exclude_possible_answers(self, update: list):
         """
-        Logical SUBTRACTION between two sets.
+        logical subtraction between two sets.
 
         :param update: new list to be excluded from self.possible_answers
         update excluded from self.possible_answers
@@ -53,7 +53,7 @@ class Student:
 
     def deal_with_number_of_zeroes(self, amount_of_zeroes: int):
         """
-        Filter possible_answers to match the amount of zeroes in its binary form.
+        filter possible_answers to match the amount of zeroes in its binary form.
 
         :param amount_of_zeroes: number of zeroes in the correct number's binary form
         """
@@ -65,7 +65,7 @@ class Student:
 
     def deal_with_number_of_ones(self, amount_of_ones: int):
         """
-        Filter possible answers to match the amount of ones in its binary form.
+        filter possible answers to match the amount of ones in its binary form.
 
         :param amount_of_ones: number of zeroes in the correct number's binary form
         """
@@ -77,9 +77,9 @@ class Student:
 
     def deal_with_primes(self, is_prime: bool):
         """
-        Filter possible answers to either keep or remove all primes.
+        filter possible answers to either keep or remove all primes.
 
-        Call find_primes_in_range to get all composite numbers in range.
+        call find_primes_in_range to get all composite numbers in range.
         :param is_prime: boolean whether the number is prime or not
         """
         primes = find_primes_in_range(self.biggest_number)
@@ -88,13 +88,13 @@ class Student:
             # self.intersect_possible_answers(primes)
             self.possible_answers = '1'
         else:
-            # self.exclude_possible_answers(composites)
-            self.possible_answers = '2'
+            self.exclude_possible_answers(composites)
+
     def deal_with_composites(self, is_composite: bool):
         """
-        Filter possible answers to either keep or remove all composites.
+        filter possible answers to either keep or remove all composites.
 
-        Call find_composites_in_range to get all composite numbers in range.
+        call find_composites_in_range to get all composite numbers in range.
         :param is_composite: boolean whether the number is composite or not
         """
         if is_composite:
@@ -106,7 +106,7 @@ class Student:
 
     def deal_with_dec_value(self, decimal_value: str):
         """
-        Filter possible answers to remove all numbers that doesn't have the decimal_value in them.
+        filter possible answers to remove all numbers that doesn't have the decimal_value in them.
 
         :param decimal_value: decimal value within the number like 9 in 192
         """
@@ -114,7 +114,7 @@ class Student:
 
     def deal_with_hex_value(self, hex_value: str):
         """
-        Filter possible answers to remove all numbers that doesn't have the decimal_value in them.
+        filter possible answers to remove all numbers that doesn't have the decimal_value in them.
 
         :param hex_value: hex value within the number like e in fe2
         """
@@ -122,10 +122,10 @@ class Student:
 
     def deal_with_quadratic_equation(self, equation: str, to_multiply: bool, multiplicative: float, is_bigger: bool):
         """
-        Filter possible answers to remove all numbers that doesn't have the decimal_value in them.
+        filter possible answers to remove all numbers that doesn't have the decimal_value in them.
 
-        Regex can be used here.
-        Call quadratic_equation_solver with variables a, b, c.
+        regex can be used here.
+        call quadratic_equation_solver with variables a, b, c.
         deal_with_dec_value should be called.
         :param equation: the quadratic equation
         :param to_multiply: whether it is necessary to multiply or divide with a given multiplicative
@@ -134,7 +134,7 @@ class Student:
         """
         normalize_equation = normalize_quadratic_equation(equation)
         solutions = quadratic_equation_solver(normalize_equation)
-        if solutions is None:
+        if solutions is none:
             return
         elif isinstance(solutions, float):
             if is_bigger:
@@ -150,9 +150,9 @@ class Student:
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
-        Filter possible answers to either keep or remove all fibonacci numbers.
+        filter possible answers to either keep or remove all fibonacci numbers.
 
-        Call find_fibonacci_numbers to get all fibonacci numbers in range.
+        call find_fibonacci_numbers to get all fibonacci numbers in range.
         :param is_in: boolean whether the number is in fibonacci sequence or not
         """
         fibonacci_nums = find_fibonacci_numbers(self.biggest_number)
@@ -163,9 +163,9 @@ class Student:
 
     def deal_with_catalan_sequence(self, is_in: bool):
         """
-        Filter possible answers to either keep or remove all catalan numbers.
+        filter possible answers to either keep or remove all catalan numbers.
 
-        Call find_catalan_numbers to get all catalan numbers in range.
+        call find_catalan_numbers to get all catalan numbers in range.
         :param is_in: boolean whether the number is in catalan sequence or not
         """
         catalan_nums = find_catalan_numbers(self.biggest_number)
@@ -176,7 +176,7 @@ class Student:
 
     def deal_with_number_order(self, increasing: bool, to_be: bool):
         """
-        Filter possible answers to either keep or remove all numbers with wrong order.
+        filter possible answers to either keep or remove all numbers with wrong order.
 
         :param increasing: boolean whether to check is in increasing or decreasing order
         :param to_be: boolean whether the number is indeed in that order
@@ -195,14 +195,14 @@ class Student:
                 self.exclude_possible_answers(reversed_answers)
 
 
-def quadratic_equation_solver(equation: str) -> None or float or tuple:
+def quadratic_equation_solver(equation: str) -> none or float or tuple:
     """
-    Solve the normalized quadratic equation.
+    solve the normalized quadratic equation.
 
     :param equation: quadratic equation
-    https://en.wikipedia.org/wiki/Quadratic_formula
+    https://en.wikipedia.org/wiki/quadratic_formula
     :return:
-    if there are no solutions, return None.
+    if there are no solutions, return none.
     if there is exactly 1 solution, return it.
     if there are 2 solutions, return them in a tuple, where smaller is first
     all numbers are returned as floats.
@@ -237,7 +237,7 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     x1 = 0
     x2 = 0
     if d < 0:
-        return None
+        return none
     if d == 0:
         if a != 0:
             x1 = - b / (2 * a)
@@ -254,7 +254,7 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
 
 def normalize_quadratic_equation(equation: str) -> str:
     """
-    Normalize the quadratic equation.
+    normalize the quadratic equation.
 
     normalize_quadratic_equation("x2 + 2x = 3") => "x2 + 2x - 3 = 0"
     normalize_quadratic_equation("0 = 3 + 1x2") => "x2 + 3 = 0"
@@ -264,7 +264,7 @@ def normalize_quadratic_equation(equation: str) -> str:
     normalize_quadratic_equation("2x2 + 3x - 4 + 0x2 - x1 + 0x1 + 12 - 12x2 = 4x2 + x1 - 2") => "14x2 - x - 10 = 0"
 
     :param equation: quadratic equation to be normalized
-    https://en.wikipedia.org/wiki/Quadratic_formula
+    https://en.wikipedia.org/wiki/quadratic_formula
     :return: normalized equation
     """
     # split equation to left and right parts
@@ -280,7 +280,7 @@ def normalize_quadratic_equation(equation: str) -> str:
     rhs_terms = re.split(r'([-+])', rhs)
 
     def process_term(term, sign):
-        """Update coefficients by term."""
+        """update coefficients by term."""
         nonlocal a, b, c
         if 'x2' in term:
             a += sign * (1 if term == 'x2' else int(term.replace('x2', '')))
@@ -344,37 +344,37 @@ def normalize_quadratic_equation(equation: str) -> str:
 
 
 def find_coefficients_for_solver(equation: str) -> tuple:
-    """Return coefficients for normalized equation."""
+    """return coefficients for normalized equation."""
     ret = ()
     return ret
 
 
 def find_primes_in_range(biggest_number: int) -> list:
     """
-    Find all primes in range(end inclusive).
+    find all primes in range(end inclusive).
 
     :param biggest_number: all primes in range of biggest_number(included)
-    https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+    https://en.wikipedia.org/wiki/sieve_of_eratosthenes
     :return: list of primes
     """
-    prime = [True for _ in range(biggest_number + 1)]
+    prime = [true for _ in range(biggest_number + 1)]
     p = 2
     while p * p <= biggest_number:
         if prime[p]:
             for i in range(p * p, biggest_number + 1, p):
-                prime[i] = False
+                prime[i] = false
         p += 1
 
-    # Create a list of prime numbers
+    # create a list of prime numbers
     primes = [p for p in range(2, biggest_number + 1) if prime[p]]
     return primes
 
 
 def find_composites_in_range(biggest_number: int) -> list:
     """
-    Find all composites in range(end inclusive).
+    find all composites in range(end inclusive).
 
-    Call find_primes_in_range from this method to get all composites
+    call find_primes_in_range from this method to get all composites
     :return: list of composites
     :param biggest_number: all composites in range of biggest_number(included)
     """
@@ -388,11 +388,11 @@ def find_composites_in_range(biggest_number: int) -> list:
 
 def find_fibonacci_numbers(biggest_number: int) -> list:
     """
-    Find all Fibonacci numbers in range(end inclusive).
+    find all fibonacci numbers in range(end inclusive).
 
-    Can be solved using recursion.
+    can be solved using recursion.
     :param biggest_number: all fibonacci numbers in range of biggest_number(included)
-    https://en.wikipedia.org/wiki/Fibonacci_number
+    https://en.wikipedia.org/wiki/fibonacci_number
     :return: list of fibonacci numbers
     """
     fibonacci_sequence = []
@@ -405,11 +405,11 @@ def find_fibonacci_numbers(biggest_number: int) -> list:
 
 def find_catalan_numbers(biggest_number: int) -> list:
     """
-    Find all Catalan numbers in range(end inclusive).
+    find all catalan numbers in range(end inclusive).
 
-    Can be solved using recursion.
+    can be solved using recursion.
     :param biggest_number: all catalan numbers in range of biggest_number(included)
-    https://en.wikipedia.org/wiki/Catalan_number
+    https://en.wikipedia.org/wiki/catalan_number
     :return: list of catalan numbers
     """
     return [math.comb(2 * i, i) // (i + 1) for i in range(biggest_number + 1)]
@@ -418,7 +418,7 @@ def find_catalan_numbers(biggest_number: int) -> list:
 if __name__ == '__main__':
 
     def print_regex_results(regex, f):
-        """Return smth."""
+        """return smth."""
         for match in re.finditer(regex, f):
             print(match.group(0))
 
