@@ -113,7 +113,7 @@ class Student:
         for i in self.possible_answers:
             if hex_value in hex(i):
                 hex_values.append(i)
-        self.intersect_possible_answers(hex_values)
+        self.exclude_possible_answers(hex_values)
 
     def deal_with_quadratic_equation(self, equation: str, to_multiply: bool, multiplicative: float, is_bigger: bool):
         """
