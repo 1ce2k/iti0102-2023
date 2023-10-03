@@ -117,7 +117,13 @@ class Student:
 
         :param hex_value: hex value within the number like e in fe2
         """
-        self.intersect_possible_answers([x for x in self.possible_answers if hex_value in str(hex(x))])
+        # self.intersect_possible_answers([x for x in self.possible_answers if hex_value in str(hex(x))])
+        filtered = []
+        pattern = r'[0-9a-fA-F]*' + hex_value + r'[0-9a-fA-F]*'
+        for num in self.possible_answers:
+            if re.match(pattern, bin(num)):
+               filtered.append(num)
+        self.intersect_possible_answers(filtered)
 
     def deal_with_quadratic_equation(self, equation: str, to_multiply: bool, multiplicative: float, is_bigger: bool):
         """
