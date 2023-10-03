@@ -99,16 +99,18 @@ def num_as_index(nums: list) -> int:
     :param nums: list of non-negative integers.
     :return: element value in the specific index.
     """
-    index = min(nums)
-    if index <= len(nums):
-        return nums[index]
-    return nums[nums.index(min(nums))]
+    min_num = min(nums)
+    index = nums.index(min_num)
+    if min_num <= len(nums):
+        return nums[min_num]
+    return nums[index]
 
 
 print(num_as_index([1,  2, 3]))
 print(num_as_index([4, 5, 6]))
 print(num_as_index([0, 1, 0]))
 print(num_as_index([3, 5, 6, 1, 1]))
+print(num_as_index([9, 7, 3, 5]))
 
 
 def remove_in_middle(text: str, to_remove: str) -> str:
