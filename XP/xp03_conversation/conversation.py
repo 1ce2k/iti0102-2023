@@ -190,16 +190,16 @@ class Student:
         if increasing:
             sorted_answers = sorted(self.possible_answers)
             if to_be:
-                # self.intersect_possible_answers([x for x in self.possible_answers if x >= sorted_answers[0]])
-                self.possible_answers = '1'
+                self.intersect_possible_answers([x for x in self.possible_answers if x >= sorted_answers[0]])
+                # self.possible_answers = '1'
             else:
-                # self.exclude_possible_answers([x for x in self.possible_answers if x < sorted_answers[0]])
-                self.possible_answers = '2'
+                self.exclude_possible_answers([x for x in self.possible_answers if x < sorted_answers[0]])
+                # self.possible_answers = '2'
         else:
             reversed_answers = sorted(self.possible_answers, reverse=True)
             if to_be:
-                # self.intersect_possible_answers([x for x in self.possible_answers if x >= reversed_answers[0]])
-                self.possible_answers = '3'
+                self.intersect_possible_answers([x for x in self.possible_answers if x >= reversed_answers[0]])
+                # self.possible_answers = '3'
             else:
                 self.exclude_possible_answers([x for x in self.possible_answers if x > reversed_answers[0]])
                 # self.possible_answers = '4'
