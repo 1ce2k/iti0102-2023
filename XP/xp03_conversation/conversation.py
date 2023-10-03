@@ -69,7 +69,11 @@ class Student:
 
         :param amount_of_ones: number of zeroes in the correct number's binary form
         """
-        pass
+        list = []
+        for i in self.possible_answers:
+            if bin(i).count('1') - 1 == amount_of_ones:
+                list.append(i)
+        self.exclude_possible_answers(list)
 
     def deal_with_primes(self, is_prime: bool):
         """
