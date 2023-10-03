@@ -57,7 +57,11 @@ class Student:
 
         :param amount_of_zeroes: number of zeroes in the correct number's binary form
         """
-        pass
+        list = []
+        for i in self.possible_answers:
+            if str(bin(i)).count('0') == amount_of_zeroes:
+                list.append(i)
+        self.intersect_possible_answers(list)
 
     def deal_with_number_of_ones(self, amount_of_ones: int):
         """
