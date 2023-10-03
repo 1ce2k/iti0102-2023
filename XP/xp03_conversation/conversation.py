@@ -73,7 +73,7 @@ class Student:
         for i in self.possible_answers:
             if bin(i).count('1') != amount_of_ones:
                 list.append(i)
-        self.intersect_possible_answers(list)
+        self.exclude_possible_answers(list)
 
     def deal_with_primes(self, is_prime: bool):
         """
