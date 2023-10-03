@@ -101,16 +101,9 @@ def num_as_index(nums: list) -> int:
     """
     new_list = [nums[0], nums[-1]]
     index = min(new_list)
-    if index - 1 >= len(nums):
+    if index - 1 == len(nums):
         return index
     return nums[index]
-
-
-print(num_as_index([1, 2, 3]))
-print(num_as_index([4, 5, 6]))
-print(num_as_index([0, 1, 0]))
-print(num_as_index([3, 5, 6, 1, 1]))
-print(num_as_index([9, 7, 3, 5]))
 
 
 def remove_in_middle(text: str, to_remove: str) -> str:
@@ -128,10 +121,21 @@ def remove_in_middle(text: str, to_remove: str) -> str:
     :param to_remove: substring to be removed.
     :return: string with middle substrings removed.
     """
-    pass
+    if to_remove not in text:
+        return text
+    first_part = text.find(to_remove)
+    last_part = text.rfind(to_remove)
+    if last_part == first_part:
+        return text
+    length = len(to_remove)
+    middle = text[(first_part + length):last_part].replace(to_remove, '')
+    return text[:first_part + length] + middle + text[last_part:]
 
-# print(remove_in_middle('abc', 'def'))
-# print(remove_in_middle('abcd', 'abc'))
-# print(remove_in_middle("abcdabceabcabc", "abc"))
-# print(remove_in_middle("abcdabc", "abc"))
-# print(remove_in_middle('ABCAaaaAA', 'a'))
+
+
+print(remove_in_middle("abc", "def"))  # => "abc"
+print(remove_in_middle("abcabcabc", "abc"))  # => "abcabc"
+print(remove_in_middle("abcdabceabcabc", "abc"))  # => "abcdeabc"
+print(remove_in_middle("abcd", "abc"))  # => "abcd"
+print(remove_in_middle("abcdabc", "abc"))  # => "abcdabc"
+print(remove_in_middle("ABCAaaaAA", "a"))  # => "ABCAaaAA
