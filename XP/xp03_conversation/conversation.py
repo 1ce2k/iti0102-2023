@@ -425,7 +425,8 @@ if __name__ == '__main__':
 
     def print_regex_results(regex, f):
         """Return smth."""
-        for match in re.finditer(regex, f):
+        normalized = normalize_quadratic_equation(f)
+        for match in re.finditer(regex, normalized):
             print(match.group(0))
 
     # f = "3x2 - 4x + 1"
