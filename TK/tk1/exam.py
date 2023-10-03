@@ -81,7 +81,7 @@ def first_half(text: str) -> str:
     first_half('HelloThere') => 'Hello'
     first_half('abcdef') => 'abc'
     """
-    index = len(text) // 2
+    index = len(text) // 2 + 1
     return text[:index + 1]
 
 
