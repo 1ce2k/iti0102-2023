@@ -81,8 +81,13 @@ def first_half(text: str) -> str:
     first_half('HelloThere') => 'Hello'
     first_half('abcdef') => 'abc'
     """
-    index = len(text) // 2 + 1
-    return text[:index + 1]
+    index = len(text) // 2
+    return text[:index]
+
+
+print(first_half('HaaHoo'))
+print(first_half('HelloThere'))
+print(first_half('abcdef'))
 
 
 def num_as_index(nums: list) -> int:
@@ -121,3 +126,9 @@ def remove_in_middle(text: str, to_remove: str) -> str:
     :return: string with middle substrings removed.
     """
     pass
+
+# print(remove_in_middle('abc', 'def'))
+# print(remove_in_middle('abcd', 'abc'))
+# print(remove_in_middle("abcdabceabcabc", "abc"))
+# print(remove_in_middle("abcdabc", "abc"))
+# print(remove_in_middle('ABCAaaaAA', 'a'))
