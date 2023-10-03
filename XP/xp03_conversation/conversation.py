@@ -187,32 +187,21 @@ class Student:
         :param increasing: boolean whether to check is in increasing or decreasing order
         :param to_be: boolean whether the number is indeed in that order
         """
-        filtered = set()
-        if increasing and to_be:
-            prev_num = None
-            for num in sorted(self.possible_answers):
-                if prev_num is None or num >= prev_num:
-                    filtered.add(num)
-                prev_num = num
-        elif increasing and not to_be:
-            prev_num = None
-            for num in sorted(self.possible_answers):
-                if prev_num is None or num < prev_num:
-                    filtered.add(num)
-                prev_num = num
-        elif not increasing and to_be:
-            prev_num = None
-            for num in sorted(self.possible_answers, reverse=True):
-                if prev_num is None or num >= prev_num:
-                    filtered.add(num)
-                prev_num = num
-        elif not increasing and not to_be:
-            prev_num = None
-            for num in sorted(self.possible_answers, reverse=True):
-                if prev_num is None or num < prev_num:
-                    filtered.add(num)
-                prev_num = num
-        self.intersect_possible_answers(list(filtered))
+        filtered_numbers = []
+        for num in self.possible_answers:
+            # Convert the number to a string to check its order
+            num_str = str(num)
+            is_increasing = num_str == ''.join(sorted(num_str))
+            is_decreasing = num_str == ''.join(sorted(num_str, reverse=True))
+
+            if (increasing and to_be and is_increasing) or (not increasing and to_be and is_decreasing):
+                filtered_numbers.append(num)
+            elif (increasing and not to_be and not is_increasing) or (
+                    not increasing and not to_be and not is_decreasing):
+                filtered_numbers.append(num)
+        self.intersect_possible_answers(filtered_numbers)
+
+
 
         # self.intersect_possible_answers([x for x in self.possible_answers if x >= sorted_answers[0]])
         # self.possible_answers = '1'
