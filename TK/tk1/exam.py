@@ -99,14 +99,14 @@ def num_as_index(nums: list) -> int:
     :param nums: list of non-negative integers.
     :return: element value in the specific index.
     """
-    min_num = min(nums)
-    index = nums.index(min_num)
-    if min_num <= len(nums):
-        return nums[min_num]
+    new_list = [nums[0], nums[-1]]
+    index = min(new_list)
+    if index - 1 == len(nums):
+        return index
     return nums[index]
 
 
-print(num_as_index([1,  2, 3]))
+print(num_as_index([1, 2, 3]))
 print(num_as_index([4, 5, 6]))
 print(num_as_index([0, 1, 0]))
 print(num_as_index([3, 5, 6, 1, 1]))
