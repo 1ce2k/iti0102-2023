@@ -187,8 +187,8 @@ class Student:
         :param increasing: boolean whether to check is in increasing or decreasing order
         :param to_be: boolean whether the number is indeed in that order
         """
-        sorted_answers = sorted(self.possible_answers)
         if increasing:
+            sorted_answers = sorted(self.possible_answers)
             if to_be:
                 # self.intersect_possible_answers([x for x in self.possible_answers if x >= sorted_answers[0]])
                 self.possible_answers = '1'
