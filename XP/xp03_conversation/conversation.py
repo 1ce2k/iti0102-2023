@@ -85,10 +85,10 @@ class Student:
         :param is_prime: boolean whether the number is prime or not
         """
         primes = find_primes_in_range(self.biggest_number)
-        composites = find_composites_in_range(self.biggest_number)
+        # composites = find_composites_in_range(self.biggest_number)
         if is_prime:
-            # self.intersect_possible_answers(primes)
-            self.possible_answers = '1'
+            self.intersect_possible_answers(primes)
+            # self.possible_answers = '1'
         else:
             self.exclude_possible_answers(primes)
             # self.possible_answers = '2'
