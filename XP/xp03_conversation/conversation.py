@@ -82,10 +82,11 @@ class Student:
         Call find_primes_in_range to get all composite numbers in range.
         :param is_prime: boolean whether the number is prime or not
         """
+        primes = find_primes_in_range(self.biggest_number)
         if is_prime:
-            primes = find_primes_in_range(self.biggest_number)
-            # primes = zip(primes, [0, 1])
             self.exclude_possible_answers(primes)
+        else:
+            self.intersect_possible_answers(primes)
 
     def deal_with_composites(self, is_composite: bool):
         """
