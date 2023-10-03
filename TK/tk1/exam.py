@@ -35,10 +35,6 @@ def format_time(minutes: int) -> str:
     return ret
 
 
-print(format_time(112))
-print(format_time(23))
-print(format_time(180))
-
 def caught_speeding(speed: int, is_birthday: bool) -> int:
     """
     Return which category speeding ticket you would get.
@@ -59,7 +55,20 @@ def caught_speeding(speed: int, is_birthday: bool) -> int:
     :param is_birthday: Whether it is your birthday (boolean).
     :return: Which category speeding ticket you would get (0, 1, 2).
     """
-    pass
+    if is_birthday:
+        if speed <= 65:
+            return 0
+        elif 65 < speed <= 85:
+            return 1
+        elif 85 < speed:
+            return 2
+    else:
+        if speed <= 60:
+            return 0
+        elif 61 <= speed <= 80:
+            return 1
+        elif 81 <= speed:
+            return 2
 
 
 def first_half(text: str) -> str:
