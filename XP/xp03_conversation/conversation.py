@@ -119,7 +119,6 @@ class Student:
         """
         # self.intersect_possible_answers([x for x in self.possible_answers if hex_value in str(hex(x))])
         filtered = []
-        pattern = r'[0-9a-fA-F]*' + hex_value + r'[0-9a-fA-F]*'
         for num in self.possible_answers:
             hex_presentation = hex(num)[2:]
             if hex_value in hex_presentation:
@@ -428,7 +427,6 @@ if __name__ == '__main__':
         """Return smth."""
         for match in re.finditer(regex, f):
             print(match.group(0))
-
 
     # f = "3x2 - 4x + 1"
 
