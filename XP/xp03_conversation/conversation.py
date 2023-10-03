@@ -187,7 +187,6 @@ class Student:
 
 
 def quadratic_equation_solver(equation: str) -> None or float or tuple:
-
     """
     Solve the normalized quadratic equation.
 
@@ -241,6 +240,7 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
         return x1
     res = [x1, x2]
     return min(res), max(res)
+
 
 def normalize_quadratic_equation(equation: str) -> str:
     """
@@ -337,6 +337,7 @@ def find_coefficients_for_solver(equation: str) -> tuple:
     """Return coefficients for normalized equation."""
     ret = ()
     return ret
+
 
 def find_primes_in_range(biggest_number: int) -> list:
     """
