@@ -212,22 +212,21 @@ class Student:
                 if prev_num is None or num < prev_num:
                     filtered.add(num)
                 prev_num = num
-        self.exclude_possible_answers(list(filtered))
+        self.intersect_possible_answers(list(filtered))
 
-
-                # self.intersect_possible_answers([x for x in self.possible_answers if x >= sorted_answers[0]])
-                # self.possible_answers = '1'
-            # else:
-            #     self.exclude_possible_answers([x for x in self.possible_answers if x < sorted_answers[0]])
-                # self.possible_answers = '2'
+        # self.intersect_possible_answers([x for x in self.possible_answers if x >= sorted_answers[0]])
+        # self.possible_answers = '1'
+        # else:
+        #     self.exclude_possible_answers([x for x in self.possible_answers if x < sorted_answers[0]])
+        # self.possible_answers = '2'
         # else:
         #     reversed_answers = sorted(self.possible_answers, reverse=True)
         #     if to_be:
         #         self.intersect_possible_answers([x for x in self.possible_answers if x <= self.biggest_number])
         #         self.possible_answers = '3'
-            # else:
-            #     self.intersect_possible_answers([x for x in self.possible_answers if x <= self.biggest_number])
-                # self.possible_answers = '4'
+        # else:
+        #     self.intersect_possible_answers([x for x in self.possible_answers if x <= self.biggest_number])
+        # self.possible_answers = '4'
 
 
 def quadratic_equation_solver(equation: str) -> None or float or tuple:
@@ -456,6 +455,7 @@ if __name__ == '__main__':
         """Return smth."""
         for match in re.finditer(regex, f):
             print(match.group(0))
+
 
     # f = "3x2 - 4x + 1"
 
