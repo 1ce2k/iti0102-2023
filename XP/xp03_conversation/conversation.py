@@ -76,13 +76,9 @@ class Student:
         """
         if is_prime:
             primes = find_primes_in_range(self.n)
-            primes.append(0)
-            primes.append(1)
             self.intersect_possible_answers(primes)
         else:
             composites = find_composites_in_range(self.n)
-            composites.append(0)
-            composites.append(1)
             self.intersect_possible_answers(composites)
 
     def deal_with_composites(self, is_composite: bool):
