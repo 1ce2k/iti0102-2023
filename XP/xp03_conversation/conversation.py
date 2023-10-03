@@ -186,6 +186,62 @@ class Student:
                 self.exclude_possible_answers(reversed_answers)
 
 
+def quadratic_equation_solver(equation: str) -> None or float or tuple:
+
+    """
+    Solve the normalized quadratic equation.
+
+    :param equation: quadratic equation
+    https://en.wikipedia.org/wiki/Quadratic_formula
+    :return:
+    if there are no solutions, return None.
+    if there is exactly 1 solution, return it.
+    if there are 2 solutions, return them in a tuple, where smaller is first
+    all numbers are returned as floats.
+    """
+    equation = equation.replace(' ', '')
+    terms = re.split('([-+=])', equation)
+    a, b, c, d = 0, 0, 0, 0
+    for term in terms:
+        if 'x2' in term:
+            if term == 'x2':
+                a = 1
+            else:
+                a = int(term.replace('x2', ''))
+        elif 'x' in term:
+            if terms[terms.index(term) - 1] == '+':
+                if term == 'x':
+                    b = 1
+                else:
+                    b = int(term.replace('x', ''))
+            elif terms[terms.index(term) - 1] == '-':
+                if term == 'x':
+                    b = -1
+                else:
+                    b = -int(term.replace('x', ''))
+        elif term.isdigit() and term != '0':
+            if terms[terms.index(term) - 1] == '-':
+                c = -int(term)
+            elif terms[terms.index(term) - 1] == '+':
+                c = int(term)
+    if a != 0:
+        d = b ** 2 - 4 * a * c
+    x1 = 0
+    x2 = 0
+    if d < 0:
+        return None
+    if d == 0:
+        x1 = - b / (2 * a)
+        return str(x1)
+    if d > 0:
+        x1 = (-b + math.sqrt(d)) / (2 * a)
+        x2 = (-b - math.sqrt(d)) / (2 * a)
+
+    if x1 == x2:
+        return x1
+    res = [x1, x2]
+    return min(res), max(res)
+
 def normalize_quadratic_equation(equation: str) -> str:
     """
     Normalize the quadratic equation.
@@ -277,65 +333,10 @@ def normalize_quadratic_equation(equation: str) -> str:
     return normalized_equation
 
 
-def quadratic_equation_solver(equation: str) -> None or float or tuple:
-    """
-    Solve the normalized quadratic equation.
-
-    :param equation: quadratic equation
-    https://en.wikipedia.org/wiki/Quadratic_formula
-    :return:
-    if there are no solutions, return None.
-    if there is exactly 1 solution, return it.
-    if there are 2 solutions, return them in a tuple, where smaller is first
-    all numbers are returned as floats.
-    """
-    equation = normalize_quadratic_equation(equation).replace(' ', '')
-    terms = re.split('([-+=])', equation)
-    equation = normalize_quadratic_equation(equation)
-    equation = equation.replace(' ', '')
-    terms = re.split('([-+=])', equation)
-    a, b, c, d = 0, 0, 0, 0
-    for term in terms:
-        if 'x2' in term:
-            if term == 'x2':
-                a = 1
-            else:
-                a = int(term.replace('x2', ''))
-        elif 'x' in term:
-            if term == 'x':
-                b = 1
-            else:
-                b = int(term.replace('x', ''))
-        elif term.isdigit() and term != '0':
-            c = int(term)
-        if term == str(c):
-            if terms[terms.index(term) - 1] == '+':
-                d = b ** 2 - 4 * a * c
-            elif terms[terms.index(term) - 1] == '-':
-                d = b ** 2 + 4 * a * c
-        if a == 0:
-            if term == str(c):
-                if terms[terms.index(term) - 1] == '+':
-                    return (-c) / b
-                if terms[terms.index(term) - 1] == '+':
-                    return c / b
-
-    x1 = 0
-    x2 = 0
-    if a != 0:
-        if d < 0:
-            return None
-        if d == 0:
-            x1 = - b / (2 * a)
-            return str(x1)
-        if d > 0:
-            x1 = (-b + math.sqrt(d)) / (2 * a)
-            x2 = (-b - math.sqrt(d)) / (2 * a)
-    if x1 == x2:
-        return x1
-    res = [x1, x2]
-    return min(res), max(res)
-
+def find_coefficients_for_solver(equation: str) -> tuple:
+    """Return coefficients for normalized equation."""
+    ret = ()
+    return ret
 
 def find_primes_in_range(biggest_number: int) -> list:
     """
