@@ -2,8 +2,8 @@
 import re
 import math
 
-regex_a = '.x2'
-regex_b = '.x'
+regex_a = '.'
+regex_b = '.'
 regex_c = '.'
 
 
