@@ -90,7 +90,7 @@ class Student:
             # self.intersect_possible_answers(primes)
             self.possible_answers = '1'
         else:
-            self.exclude_possible_answers(composites)
+            self.exclude_possible_answers(primes)
             # self.possible_answers = '2'
 
     def deal_with_composites(self, is_composite: bool):
