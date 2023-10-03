@@ -190,19 +190,19 @@ class Student:
         sorted_answers = sorted(self.possible_answers)
         if increasing:
             if to_be:
-                self.intersect_possible_answers([x for x in self.possible_answers if x >= sorted_answers[0]])
-                # self.possible_answers = '1'
+                # self.intersect_possible_answers([x for x in self.possible_answers if x >= sorted_answers[0]])
+                self.possible_answers = '1'
             else:
-                self.exclude_possible_answers([x for x in self.possible_answers if x < sorted_answers[0]])
-                # self.possible_answers = '2'
+                # self.exclude_possible_answers([x for x in self.possible_answers if x < sorted_answers[0]])
+                self.possible_answers = '2'
         else:
             reversed_answers = sorted_answers[::-1]
             if to_be:
-                self.intersect_possible_answers([x for x in self.possible_answers if x >= reversed_answers[0]])
-                # self.possible_answers = '3'
+                # self.intersect_possible_answers([x for x in self.possible_answers if x >= reversed_answers[0]])
+                self.possible_answers = '3'
             else:
-                self.exclude_possible_answers([x for x in self.possible_answers if x < reversed_answers[0]])
-                # self.possible_answers = '4'
+                # self.exclude_possible_answers([x for x in self.possible_answers if x < reversed_answers[0]])
+                self.possible_answers = '4'
 
 
 def quadratic_equation_solver(equation: str) -> None or float or tuple:
