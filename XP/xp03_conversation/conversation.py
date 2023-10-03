@@ -187,21 +187,46 @@ class Student:
         :param increasing: boolean whether to check is in increasing or decreasing order
         :param to_be: boolean whether the number is indeed in that order
         """
-        if increasing:
-            sorted_answers = sorted(self.possible_answers)
-            if to_be:
-                self.intersect_possible_answers([x for x in self.possible_answers if x >= sorted_answers[0]])
+        filtered = set()
+        if increasing and to_be:
+            prev_num = None
+            for num in sorted(self.possible_answers):
+                if prev_num is None or num >= prev_num:
+                    filtered.add(num)
+                prev_num = num
+        elif increasing and not to_be:
+            prev_num = None
+            for num in sorted(self.possible_answers):
+                if prev_num is None or num < prev_num:
+                    filtered.add(num)
+                prev_num = num
+        elif not increasing and to_be:
+            prev_num = None
+            for num in sorted(self.possible_answers, reverse=True):
+                if prev_num is None or num >= prev_num:
+                    filtered.add(num)
+                prev_num = num
+        elif not increasing and not to_be:
+            prev_num = None
+            for num in sorted(self.possible_answers, reverse=True):
+                if prev_num is None or num < prev_num:
+                    filtered.add(num)
+                prev_num = num
+        self.exclude_possible_answers(list(filtered))
+
+
+                # self.intersect_possible_answers([x for x in self.possible_answers if x >= sorted_answers[0]])
                 # self.possible_answers = '1'
-            else:
-                self.exclude_possible_answers([x for x in self.possible_answers if x < sorted_answers[0]])
+            # else:
+            #     self.exclude_possible_answers([x for x in self.possible_answers if x < sorted_answers[0]])
                 # self.possible_answers = '2'
-        else:
-            reversed_answers = sorted(self.possible_answers, reverse=True)
-            if to_be:
-                self.intersect_possible_answers([x for x in self.possible_answers if x <= self.biggest_number])
-                # self.possible_answers = '3'
-            else:
-                self.intersect_possible_answers([x for x in self.possible_answers if x <= self.biggest_number])
+        # else:
+        #     reversed_answers = sorted(self.possible_answers, reverse=True)
+        #     if to_be:
+        #         self.intersect_possible_answers([x for x in self.possible_answers if x <= self.biggest_number])
+        #         self.possible_answers = '3'
+            # else:
+            #     self.intersect_possible_answers([x for x in self.possible_answers if x <= self.biggest_number])
                 # self.possible_answers = '4'
 
 
