@@ -101,7 +101,7 @@ def num_as_index(nums: list) -> int:
     """
     new_list = [nums[0], nums[-1]]
     index = min(new_list)
-    if index - 1 == len(nums):
+    if index - 1 >= len(nums):
         return index
     return nums[index]
 
