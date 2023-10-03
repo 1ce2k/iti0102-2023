@@ -101,7 +101,7 @@ def num_as_index(nums: list) -> int:
     """
     new_list = [nums[0], nums[-1]]
     index = min(new_list)
-    if index - 1 == len(nums):
+    if index - 1 >= len(nums):
         return index
     return nums[index]
 
@@ -139,3 +139,5 @@ print(remove_in_middle("abcdabceabcabc", "abc"))  # => "abcdeabc"
 print(remove_in_middle("abcd", "abc"))  # => "abcd"
 print(remove_in_middle("abcdabc", "abc"))  # => "abcdabc"
 print(remove_in_middle("ABCAaaaAA", "a"))  # => "ABCAaaAA
+print(remove_in_middle("", "a"))  # => "ABCAaaAA
+
