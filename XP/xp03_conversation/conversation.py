@@ -201,7 +201,7 @@ class Student:
                 # self.intersect_possible_answers([x for x in self.possible_answers if x >= reversed_answers[0]])
                 self.possible_answers = '3'
             else:
-                self.exclude_possible_answers([x for x in self.possible_answers if x >= reversed_answers[0]])
+                self.intersect_possible_answers([x for x in self.possible_answers if x >= reversed_answers[0]])
                 # self.possible_answers = '4'
 
 
