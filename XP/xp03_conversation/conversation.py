@@ -19,7 +19,7 @@ class Student:
         :param biggest_number: biggest possible number(inclusive) to guess
         NB: calculating using sets is much faster compared to lists
         """
-        self.n = biggest_number
+        self.biggest_number = biggest_number
         self.possible_answers = set([all_possible_answers for all_possible_answers in range(biggest_number + 1)])
 
     def decision_branch(self, sentence: str):
@@ -75,10 +75,10 @@ class Student:
         :param is_prime: boolean whether the number is prime or not
         """
         if is_prime:
-            primes = find_primes_in_range(self.n)
+            primes = find_primes_in_range(self.biggest_number)
             self.intersect_possible_answers(primes)
         else:
-            composites = find_composites_in_range(self.n)
+            composites = find_composites_in_range(self.biggest_number)
             self.intersect_possible_answers(composites)
 
     def deal_with_composites(self, is_composite: bool):
@@ -89,10 +89,10 @@ class Student:
         :param is_composite: boolean whether the number is composite or not
         """
         if is_composite:
-            composites = find_composites_in_range(self.n)
+            composites = find_composites_in_range(self.biggest_number)
             self.intersect_possible_answers(composites)
         else:
-            primes = find_primes_in_range(self.n)
+            primes = find_primes_in_range(self.biggest_number)
             self.intersect_possible_answers(primes)
 
     def deal_with_dec_value(self, decimal_value: str):
@@ -146,7 +146,7 @@ class Student:
         Call find_fibonacci_numbers to get all fibonacci numbers in range.
         :param is_in: boolean whether the number is in fibonacci sequence or not
         """
-        fibonacci_nums = find_fibonacci_numbers(self.n)
+        fibonacci_nums = find_fibonacci_numbers(self.biggest_number)
         if is_in:
             self.intersect_possible_answers(fibonacci_nums)
         else:
@@ -159,7 +159,7 @@ class Student:
         Call find_catalan_numbers to get all catalan numbers in range.
         :param is_in: boolean whether the number is in catalan sequence or not
         """
-        catalan_nums = find_catalan_numbers(self.n)
+        catalan_nums = find_catalan_numbers(self.biggest_number)
         if is_in:
             self.intersect_possible_answers(catalan_nums)
         else:
