@@ -99,7 +99,10 @@ def num_as_index(nums: list) -> int:
     :param nums: list of non-negative integers.
     :return: element value in the specific index.
     """
-    pass
+    index = min(nums)
+    if index == len(nums) + 1:
+        return nums[index]
+    return nums[nums.index(index)]
 
 
 def remove_in_middle(text: str, to_remove: str) -> str:
