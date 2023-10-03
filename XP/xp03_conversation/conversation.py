@@ -32,7 +32,6 @@ class Student:
         f"The number I needed to guess was {final_answer}." if the result is certain
         """
 
-
     def intersect_possible_answers(self, update: list):
         """
         Logical AND between two sets.
