@@ -87,7 +87,7 @@ class Student:
         if is_prime:
             self.exclude_possible_answers(composites)
         else:
-            self.possible_answers = 'a'
+            self.intersect_possible_answers(composites)
 
     def deal_with_composites(self, is_composite: bool):
         """
