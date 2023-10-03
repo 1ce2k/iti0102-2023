@@ -121,8 +121,9 @@ class Student:
         filtered = []
         pattern = r'[0-9a-fA-F]*' + hex_value + r'[0-9a-fA-F]*'
         for num in self.possible_answers:
-            if re.match(pattern, bin(num)):
-               filtered.append(num)
+            hex_presentation = hex(num)[2:]
+            if hex_value in hex_presentation:
+                filtered.append(num)
         self.intersect_possible_answers(filtered)
 
     def deal_with_quadratic_equation(self, equation: str, to_multiply: bool, multiplicative: float, is_bigger: bool):
