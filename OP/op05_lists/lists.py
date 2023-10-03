@@ -19,7 +19,7 @@ def phone_brand_and_models(all_phones: str):
     if all_phones == '':
         return []
     ret = []
-    ret1 = []
+    brand_and_models = []
     phones = all_phones.split(',')
     brands = []
     models = []
@@ -33,10 +33,10 @@ def phone_brand_and_models(all_phones: str):
             if brand in phone:
                 if model not in models:
                     models.append(model)
-        ret1.append(brand)
-        ret1.append(models)
-        ret.append(ret1)
-        ret1 = []
+        brand_and_models.append(brand)
+        brand_and_models.append(models)
+        ret.append(brand_and_models)
+        brand_and_models = []
         models = []
     return ret
 
