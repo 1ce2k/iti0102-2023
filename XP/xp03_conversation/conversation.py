@@ -2,8 +2,8 @@
 import re
 import math
 
-regex_a = '.'
-regex_b = '.'
+regex_a = '.x2'
+regex_b = '.x'
 regex_c = '.'
 
 
@@ -31,7 +31,7 @@ class Student:
         f"Possible answers are {sorted_list_of_possible_answers_in_growing_sequence)}." if there are multiple possibilities
         f"The number I needed to guess was {final_answer}." if the result is certain
         """
-        pass
+
 
     def intersect_possible_answers(self, update: list):
         """
@@ -325,7 +325,6 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
                 if terms[terms.index(term) - 1] == '+':
                     return c / b
 
-    ret = ()
     x1 = 0
     x2 = 0
     if a != 0:
@@ -412,15 +411,15 @@ def find_catalan_numbers(biggest_number: int) -> list:
 if __name__ == '__main__':
 
     def print_regex_results(regex, f):
+        """Return smth."""
         for match in re.finditer(regex, f):
             print(match.group(0))
 
+    # f = "3x2 - 4x + 1"
 
-    f = "3x2 - 4x + 1"
-
-    print(print_regex_results(regex_a, f))  # 3
-    print(print_regex_results(regex_b, f))  # - 4
-    print(print_regex_results(regex_c, f))  # 1
+    # print(print_regex_results(regex_a, f))  # 3
+    # print(print_regex_results(regex_b, f))  # - 4
+    # print(print_regex_results(regex_c, f))  # 1
 
     f2 = "3x2 + 4x + 5 - 2x2 - 7x + 4"
 
