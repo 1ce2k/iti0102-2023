@@ -85,10 +85,11 @@ class Student:
         primes = find_primes_in_range(self.biggest_number)
         composites = find_composites_in_range(self.biggest_number)
         if is_prime:
-            self.intersect_possible_answers(primes)
+            # self.intersect_possible_answers(primes)
+            self.possible_answers = '1'
         else:
-            self.exclude_possible_answers(composites)
-
+            # self.exclude_possible_answers(composites)
+            self.possible_answers = '2'
     def deal_with_composites(self, is_composite: bool):
         """
         Filter possible answers to either keep or remove all composites.
