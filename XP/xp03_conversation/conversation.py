@@ -109,7 +109,7 @@ class Student:
 
         :param hex_value: hex value within the number like e in fe2
         """
-        self.intersect_possible_answers([x for x in self.possible_answers if hex_value in x])
+        self.intersect_possible_answers([x for x in self.possible_answers if str(int('0x' + hex_value)) in str(x)])
 
     def deal_with_quadratic_equation(self, equation: str, to_multiply: bool, multiplicative: float, is_bigger: bool):
         """
