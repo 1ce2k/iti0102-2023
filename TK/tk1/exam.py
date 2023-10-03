@@ -132,7 +132,6 @@ def remove_in_middle(text: str, to_remove: str) -> str:
     return text[:first_part + length] + middle + text[last_part:]
 
 
-
 print(remove_in_middle("abc", "def"))  # => "abc"
 print(remove_in_middle("abcabcabc", "abc"))  # => "abcabc"
 print(remove_in_middle("abcdabceabcabc", "abc"))  # => "abcdeabc"
@@ -140,4 +139,3 @@ print(remove_in_middle("abcd", "abc"))  # => "abcd"
 print(remove_in_middle("abcdabc", "abc"))  # => "abcdabc"
 print(remove_in_middle("ABCAaaaAA", "a"))  # => "ABCAaaAA
 print(remove_in_middle("", "a"))  # => "ABCAaaAA
-
