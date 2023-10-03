@@ -90,8 +90,8 @@ class Student:
             # self.intersect_possible_answers(primes)
             self.possible_answers = '1'
         else:
-            # self.exclude_possible_answers(composites)
-            self.possible_answers = '2'
+            self.exclude_possible_answers(composites)
+            # self.possible_answers = '2'
 
     def deal_with_composites(self, is_composite: bool):
         """
@@ -424,7 +424,6 @@ if __name__ == '__main__':
         """Return smth."""
         for match in re.finditer(regex, f):
             print(match.group(0))
-
 
     # f = "3x2 - 4x + 1"
 
