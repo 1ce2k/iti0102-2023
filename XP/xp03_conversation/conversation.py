@@ -134,7 +134,7 @@ class student:
         """
         normalize_equation = normalize_quadratic_equation(equation)
         solutions = quadratic_equation_solver(normalize_equation)
-        if solutions is none:
+        if solutions is None:
             return
         elif isinstance(solutions, float):
             if is_bigger:
@@ -195,7 +195,7 @@ class student:
                 self.exclude_possible_answers(reversed_answers)
 
 
-def quadratic_equation_solver(equation: str) -> none or float or tuple:
+def quadratic_equation_solver(equation: str) -> None or float or tuple:
     """
     solve the normalized quadratic equation.
 
@@ -237,7 +237,7 @@ def quadratic_equation_solver(equation: str) -> none or float or tuple:
     x1 = 0
     x2 = 0
     if d < 0:
-        return none
+        return None
     if d == 0:
         if a != 0:
             x1 = - b / (2 * a)
@@ -357,12 +357,12 @@ def find_primes_in_range(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/sieve_of_eratosthenes
     :return: list of primes
     """
-    prime = [true for _ in range(biggest_number + 1)]
+    prime = [True for _ in range(biggest_number + 1)]
     p = 2
     while p * p <= biggest_number:
         if prime[p]:
             for i in range(p * p, biggest_number + 1, p):
-                prime[i] = false
+                prime[i] = False
         p += 1
 
     # create a list of prime numbers
