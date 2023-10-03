@@ -85,11 +85,6 @@ def first_half(text: str) -> str:
     return text[:index]
 
 
-print(first_half('HaaHoo'))
-print(first_half('HelloThere'))
-print(first_half('abcdef'))
-
-
 def num_as_index(nums: list) -> int:
     """
     Return element which index is the value of the smaller of the first and the last element.
@@ -105,9 +100,15 @@ def num_as_index(nums: list) -> int:
     :return: element value in the specific index.
     """
     index = min(nums)
-    if index == len(nums) + 1:
+    if index <= len(nums):
         return nums[index]
-    return nums[nums.index(index)]
+    return nums[nums.index(min(nums))]
+
+
+print(num_as_index([1,  2, 3]))
+print(num_as_index([4, 5, 6]))
+print(num_as_index([0, 1, 0]))
+print(num_as_index([3, 5, 6, 1, 1]))
 
 
 def remove_in_middle(text: str, to_remove: str) -> str:
