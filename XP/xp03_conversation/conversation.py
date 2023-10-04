@@ -2,9 +2,9 @@
 import re
 import math
 
-regex_a = r'(- ?\d+)x2|(\d+)x2'
-regex_b = r'(- ?\d+)x|(\d+)x'
-regex_c = r'(- ?\d+)|(\d+)'
+regex_a = r'(-?\s*\d+)\s*x2'
+regex_b = r'(?<!x2)(-?\s*\d+)\s*x(?!2)'
+regex_c = r'(?<!x)(?<!x2)(-?\s*\d+)\b'
 
 
 class Student:
@@ -425,10 +425,9 @@ def find_catalan_numbers(biggest_number: int) -> list:
 if __name__ == '__main__':
 
     def print_regex_results(regex, f):
-        """Return smth."""
-        for match in re.finditer(regex, f):
-            num = match.group(1) or match.group(2)
-            print(num)
+        matches = re.findall(regex, f)
+        for match in matches:
+            print(match.strip())
 
     # f = "3x2 - 4x + 1"
 
@@ -436,7 +435,7 @@ if __name__ == '__main__':
     # print(print_regex_results(regex_b, f))  # - 4
     # print(print_regex_results(regex_c, f))  # 1
 
-    f2 = "3x2 + 4x + 5 - 2x2 - 7x + 4"
+    f2 = "x"
 
     print("x2")
     print_regex_results(regex_a, f2)  # 3, - 2
