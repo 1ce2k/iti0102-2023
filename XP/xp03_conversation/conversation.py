@@ -3,8 +3,8 @@ import re
 import math
 
 regex_a = r'(\d+)x2'
-regex_b = r'(\d+).x'
-regex_c = ''
+regex_b = r'(\d+)x'
+regex_c = r'(\d+)'
 
 
 class Student:
@@ -435,15 +435,15 @@ if __name__ == '__main__':
     # print(print_regex_results(regex_b, f))  # - 4
     # print(print_regex_results(regex_c, f))  # 1
 
-    # f2 = "3x2 + 4x + 5 - 2x2 - 7x + 4"
+    f2 = "3x2 + 4x + 5 - 2x2 - 7x + 4"
 
-    # print("x2")
-    # print_regex_results(regex_a, f2)  # 3, - 2
-    # print("x")
-    # print_regex_results(regex_b, f2)  # 4, - 7
-    # print("c")
+    print("x2")
+    print_regex_results(regex_a, f2)  # 3, - 2
+    print("x")
+    print_regex_results(regex_b, f2)  # 4, - 7
+    print("c")
     # print_regex_results(regex_c, f2)  # 5, 4
 
-    f3 = '3x'
-    print('x')
-    print_regex_results(regex_b, f3)
+    # f3 = '3x'
+    # print('x')
+    # print_regex_results(regex_b, f3)
