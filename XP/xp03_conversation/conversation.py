@@ -2,9 +2,9 @@
 import re
 import math
 
-regex_a = r'(\d+)x2'
-regex_b = r'(\d+)x'
-regex_c = r'(\d+)'
+regex_a = r'(- ?\d+)x2|(\d+)x2'
+regex_b = r'(- ?\d+)x|(\d+)x'
+regex_c = r'(- ?\d+)|(\d+)'
 
 
 class Student:
