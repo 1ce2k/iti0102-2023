@@ -2,9 +2,9 @@
 import re
 import math
 
-regex_a = '(.x2)'
-regex_b = '(x2.x)'
-regex_c = '(x.)'
+regex_a = '.x2'
+regex_b = '.x'
+regex_c = 'x.'
 
 
 class Student:
