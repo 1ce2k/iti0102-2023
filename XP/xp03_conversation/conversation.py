@@ -2,9 +2,9 @@
 import re
 import math
 
-regex_a = '.x2'
-regex_b = '.x'
-regex_c = '.'
+regex_a = '(.x2)'
+regex_b = '(.x)'
+regex_c = '(.)'
 
 
 class Student:
@@ -180,18 +180,34 @@ class Student:
         :param increasing: boolean whether to check is in increasing or decreasing order
         :param to_be: boolean whether the number is indeed in that order
         """
-        sorted_answers = sorted(self.possible_answers)
-        if increasing:
-            if to_be:
-                self.intersect_possible_answers(sorted_answers)
-            else:
-                self.exclude_possible_answers(sorted_answers)
-        else:
-            reversed_answers = sorted_answers[::-1]
-            if to_be:
-                self.intersect_possible_answers(reversed_answers)
-            else:
-                self.exclude_possible_answers(reversed_answers)
+        filtered_numbers = set()
+
+        if increasing and to_be:
+            prev_num = None
+            for num in sorted(self.possible_answers):
+                if prev_num is None or num >= prev_num:
+                    filtered_numbers.add(num)
+                    prev_num = num
+        elif increasing and not to_be:
+            prev_num = None
+            for num in sorted(self.possible_answers):
+                if prev_num is not None and num < prev_num:
+                    filtered_numbers.add(num)
+                prev_num = num
+        elif not increasing and to_be:
+            prev_num = None
+            for num in sorted(self.possible_answers, reverse=True):
+                if prev_num is None or num >= prev_num:
+                    filtered_numbers.add(num)
+                    prev_num = num
+        elif not increasing and not to_be:
+            prev_num = None
+            for num in sorted(self.possible_answers, reverse=True):
+                if prev_num is not None and num > prev_num:
+                    filtered_numbers.add(num)
+                prev_num = num
+
+        self.intersect_possible_answers(list(filtered_numbers))
 
 
 def quadratic_equation_solver(equation: str) -> None or float or tuple:
