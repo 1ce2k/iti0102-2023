@@ -2,9 +2,9 @@
 import re
 import math
 
-regex_a = ' .x2'
-regex_b = r'().x'
-regex_c = r'.()'
+regex_a = r'(\d+)x2'
+regex_b = r'(\d+).x'
+regex_c = ''
 
 
 class Student:
@@ -276,7 +276,8 @@ def normalize_quadratic_equation(equation: str) -> str:
     # split equation to left and right parts
     equation = equation.replace('x1', 'x')
     equation = equation.replace(' ', '')
-    lhs, rhs = equation.split('=')
+    parts = equation.split('=')
+    lhs, rhs = parts[0], parts[1]
 
     # init coefficient
     a, b, c = 0, 0, 0
@@ -425,9 +426,8 @@ if __name__ == '__main__':
 
     def print_regex_results(regex, f):
         """Return smth."""
-        normalized = normalize_quadratic_equation(f)
-        for match in re.finditer(regex, normalized):
-            print(match.group(0))
+        for match in re.finditer(regex, f):
+            print(match.group(1))
 
     # f = "3x2 - 4x + 1"
 
@@ -435,11 +435,15 @@ if __name__ == '__main__':
     # print(print_regex_results(regex_b, f))  # - 4
     # print(print_regex_results(regex_c, f))  # 1
 
-    f2 = "3x2 + 4x + 5 - 2x2 - 7x + 4"
+    # f2 = "3x2 + 4x + 5 - 2x2 - 7x + 4"
 
-    print("x2")
-    print_regex_results(regex_a, f2)  # 3, - 2
-    print("x")
-    print_regex_results(regex_b, f2)  # 4, - 7
-    print("c")
-    print_regex_results(regex_c, f2)  # 5, 4
+    # print("x2")
+    # print_regex_results(regex_a, f2)  # 3, - 2
+    # print("x")
+    # print_regex_results(regex_b, f2)  # 4, - 7
+    # print("c")
+    # print_regex_results(regex_c, f2)  # 5, 4
+
+    f3 = '3x'
+    print('x')
+    print_regex_results(regex_b, f3)
