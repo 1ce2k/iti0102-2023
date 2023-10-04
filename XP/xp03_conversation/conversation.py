@@ -427,6 +427,9 @@ if __name__ == '__main__':
     def print_regex_results(regex, f):
         matches = re.findall(regex, f)
         for match in matches:
+            if match == '':
+                print('- ')
+                break
             print(match.strip())
 
     # f = "3x2 - 4x + 1"
