@@ -2,7 +2,7 @@
 import re
 import math
 
-regex_a = r'(-?\s*\d+|\s*-)\s*x2'
+regex_a = r'(-?\s*\d*|-)\s*x2'
 regex_b = r'(?<!x2)(-?\s*\d+|\s*-)\s*x(?!2)'
 regex_c = r'(?<!x)(?<!x2)(-?\s*\d+)(?=\s|$)'
 
