@@ -2,9 +2,9 @@
 import re
 import math
 
-regex_a = '(.x2)'
-regex_b = '(.x)'
-regex_c = '(.)'
+regex_a = '.x2'
+regex_b = 'x2.x'
+regex_c = 'x.'
 
 
 class Student:
@@ -117,7 +117,13 @@ class Student:
 
         :param hex_value: hex value within the number like e in fe2
         """
-        self.intersect_possible_answers([x for x in self.possible_answers if hex_value in str(hex(x))])
+        # self.intersect_possible_answers([x for x in self.possible_answers if hex_value in str(hex(x))])
+        filtered = []
+        for num in self.possible_answers:
+            hex_presentation = hex(num)[2:]
+            if hex_value in hex_presentation:
+                filtered.append(num)
+        self.intersect_possible_answers(filtered)
 
     def deal_with_quadratic_equation(self, equation: str, to_multiply: bool, multiplicative: float, is_bigger: bool):
         """
@@ -180,34 +186,19 @@ class Student:
         :param increasing: boolean whether to check is in increasing or decreasing order
         :param to_be: boolean whether the number is indeed in that order
         """
-        filtered_numbers = set()
+        filtered_numbers = []
+        for num in self.possible_answers:
+            # Convert the number to a string to check its order
+            num_str = str(num)
+            is_increasing = num_str == ''.join(sorted(num_str))
+            is_decreasing = num_str == ''.join(sorted(num_str, reverse=True))
 
-        if increasing and to_be:
-            prev_num = None
-            for num in sorted(self.possible_answers):
-                if prev_num is None or num >= prev_num:
-                    filtered_numbers.add(num)
-                    prev_num = num
-        elif increasing and not to_be:
-            prev_num = None
-            for num in sorted(self.possible_answers):
-                if prev_num is not None and num < prev_num:
-                    filtered_numbers.add(num)
-                prev_num = num
-        elif not increasing and to_be:
-            prev_num = None
-            for num in sorted(self.possible_answers, reverse=True):
-                if prev_num is None or num >= prev_num:
-                    filtered_numbers.add(num)
-                    prev_num = num
-        elif not increasing and not to_be:
-            prev_num = None
-            for num in sorted(self.possible_answers, reverse=True):
-                if prev_num is not None and num > prev_num:
-                    filtered_numbers.add(num)
-                prev_num = num
-
-        self.intersect_possible_answers(list(filtered_numbers))
+            if (increasing and to_be and is_increasing) or (not increasing and to_be and is_decreasing):
+                filtered_numbers.append(num)
+            elif (increasing and not to_be and not is_increasing) or (
+                    not increasing and not to_be and not is_decreasing):
+                filtered_numbers.append(num)
+        self.intersect_possible_answers(filtered_numbers)
 
 
 def quadratic_equation_solver(equation: str) -> None or float or tuple:
@@ -434,7 +425,8 @@ if __name__ == '__main__':
 
     def print_regex_results(regex, f):
         """Return smth."""
-        for match in re.finditer(regex, f):
+        normalized = normalize_quadratic_equation(f)
+        for match in re.finditer(regex, normalized):
             print(match.group(0))
 
     # f = "3x2 - 4x + 1"
