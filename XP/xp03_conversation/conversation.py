@@ -3,8 +3,8 @@ import re
 import math
 
 regex_a = ' .x2'
-regex_b = r'x2.[-+]().x'
-regex_c = r'x.([-+])()'
+regex_b = r'().x'
+regex_c = r'.()'
 
 
 class Student:
