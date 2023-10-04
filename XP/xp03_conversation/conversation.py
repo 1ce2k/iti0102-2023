@@ -427,7 +427,8 @@ if __name__ == '__main__':
     def print_regex_results(regex, f):
         """Return smth."""
         for match in re.finditer(regex, f):
-            print(match.group(1))
+            num = match.group(1) or match.group(2)
+            print(num)
 
     # f = "3x2 - 4x + 1"
 
