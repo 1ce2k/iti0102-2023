@@ -2,11 +2,6 @@
 import re
 import math
 
-regex_a = r'(-?\s*\d*|-)\s*x2(?!2)'
-regex_b = r'(?<!x[12])(-?\s*\d*|-)\s*x(?!2)'
-regex_c = r'(?<!x)(?<!x2)(-?\s*\d+)(?=\s|$)'
-
-
 class Student:
     """Student class which interacts with the server."""
 
@@ -422,30 +417,36 @@ def find_catalan_numbers(biggest_number: int) -> list:
     return [math.comb(2 * i, i) // (i + 1) for i in range(biggest_number + 1)]
 
 
+regex_a = r'(-?\s*\d*|-)\s*x2(?!2)'
+regex_b = r'(?<!x[12])(-?\s*\d*|-)\s*x(?!2)'
+regex_c = r'(?<!x)(?<!x2)(-?\s*\d+)(?=\s|$)'
+
+
 if __name__ == '__main__':
 
     def print_regex_results(regex, f):
-        matches = re.findall(regex, f)
+        matches = re.finditer(regex, f)
         for match in matches:
-            if match == '':
-                print('- ')
-                break
-            print(match.strip())
+            if match.group(1).strip() == '':
+                result = '-'
+            else:
+                result = match.group(1)
+            print(result.strip())
 
-    # f = "3x2 - 4x + 1"
+    f = "3x2 - 4x + 1"
 
-    # print(print_regex_results(regex_a, f))  # 3
-    # print(print_regex_results(regex_b, f))  # - 4
-    # print(print_regex_results(regex_c, f))  # 1
+    print_regex_results(regex_a, f)  # 3
+    print_regex_results(regex_b, f)  # - 4
+    print_regex_results(regex_c, f)  # 1
 
-    f2 = "x"
+    f2 = "3x2 + 4x + 4 + 5 - 2x2 - 7x"
 
     print("x2")
     print_regex_results(regex_a, f2)  # 3, - 2
     print("x")
     print_regex_results(regex_b, f2)  # 4, - 7
     print("c")
-    # print_regex_results(regex_c, f2)  # 5, 4
+    print_regex_results(regex_c, f2)  # 5, 4
 
     # f3 = '3x'
     # print('x')
