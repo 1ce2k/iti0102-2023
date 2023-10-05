@@ -418,7 +418,7 @@ def find_catalan_numbers(biggest_number: int) -> list:
     return [math.comb(2 * i, i) // (i + 1) for i in range(biggest_number + 1)]
 
 
-regex_a = r'\s*(-?\s*\d*|-)\s*x2(?!2)'
+regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-1,3-9])'
 regex_b = r'(?<!x[12])\s*(-?\s*\d*|-)\s*x(?![2-9,0])'
 regex_c = r'(?<!x)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
 
