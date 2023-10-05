@@ -420,7 +420,7 @@ def find_catalan_numbers(biggest_number: int) -> list:
 
 regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
 regex_b = r'(?<!x[1])\s*(-?\s*\d*|-)\s*x(?![2-9,0])'
-regex_c = r'(?<!x)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
+regex_c = r'(?<!x[0-9])\s*(-?\s*\d+)(?=\s|$)'
 
 
 if __name__ == "__main__":
