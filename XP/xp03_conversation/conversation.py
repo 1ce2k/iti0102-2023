@@ -418,12 +418,11 @@ def find_catalan_numbers(biggest_number: int) -> list:
 
 
 regex_a = r'(-?\s*\d*|-)\s*x2(?!2)'
-regex_b = r'(?<!x[12])(-?\s*\d*|-)\s*x(?!2)'
-regex_c = r'(?<!x)(?<!x2)(-?\s*\d+)(?=\s|$)'
+regex_b = r'(?<!x[1])(-?\s*\d*|-)\s*x(?!2)'
+regex_c = r'(?<!x[1])(?<!x2)(-?\s*\d+)(?=\s|$)'
 
 
-if __name__ == '__main__':
-
+if __name__ == "__main__":
     def print_regex_results(regex, f):
         matches = re.finditer(regex, f)
         for match in matches:
@@ -448,6 +447,6 @@ if __name__ == '__main__':
     print("c")
     print_regex_results(regex_c, f2)  # 5, 4
 
-    # f3 = '3x'
-    # print('x')
-    # print_regex_results(regex_b, f3)
+    print('x2')
+    f3 = '3x4'
+    print_regex_results(regex_a, f3)
