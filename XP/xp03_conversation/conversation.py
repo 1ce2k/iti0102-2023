@@ -2,6 +2,7 @@
 import re
 import math
 
+
 class Student:
     """Student class which interacts with the server."""
 
@@ -417,8 +418,8 @@ def find_catalan_numbers(biggest_number: int) -> list:
     return [math.comb(2 * i, i) // (i + 1) for i in range(biggest_number + 1)]
 
 
-regex_a = r'(-?\s*\d*|-)\s*x2(?!2)'
-regex_b = r'(?<!x[12])(-?\s*\d*|-)\s*x(?!2)|(?<!x1[12])(-?\s*\d*|-)\s*x1(?!2)'
+regex_a = r'(-?\d*|-)\s*x2(?!\d)'
+regex_b = r'(-?\d*|-)\s*x(?![2-9,0])'
 regex_c = r'(?<!x)(?<!x2)(-?\s*\d+)(?=\s|$)'
 
 
@@ -426,10 +427,9 @@ if __name__ == "__main__":
     def print_regex_results(regex, f):
         matches = re.finditer(regex, f)
         for match in matches:
-            if match.group(1).strip() == '':
-                result = '-'
-            else:
-                result = match.group(1)
+            result = match.group(1)
+            if result.strip() == '':
+                result = '1'
             print(result.strip())
 
     f = "3x2 - 4x1 + 1"
