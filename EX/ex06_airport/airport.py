@@ -28,6 +28,7 @@ def destinations_and_times(flights: list) -> dict:
             ret[destination] = [departure_time]
     return ret
 
+
 def sort_dict_values(dictionary: dict) -> dict:
     """
     Sort dictionary values in ascending order.
@@ -37,7 +38,10 @@ def sort_dict_values(dictionary: dict) -> dict:
     Return a dictionary where all the values are in ascending order.
     The order of the keys is not important.
     """
-    pass
+    ret = {}
+    for key, value in dictionary.items():
+        ret[key] = sorted(value)
+    return ret
 
 
 def flights_to_destination(flights: list, destination: str) -> list:
