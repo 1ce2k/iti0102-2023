@@ -41,16 +41,18 @@ def lucky_guess(n: int) -> bool:
     """
     if n in {1, 3, 7}:
         return True
-    elif -6 <= n <= 121 and n % 13 == 0:
+    elif -6 <= n <= 121 and n // 13 == 0:
         return True
     elif 0 < n and '5' not in str(n) and '6' not in str(n):
         return True
     return False
 
 
-# print(lucky_guess(7))
-# print(lucky_guess(-6))
-# print(lucky_guess(-35))
+print(lucky_guess(1))
+print(lucky_guess(3))
+print(lucky_guess(7))
+print(lucky_guess(121))
+print(lucky_guess(-35))
 
 def without_end(s: str) -> str:
     """
