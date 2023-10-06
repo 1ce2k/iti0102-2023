@@ -48,13 +48,6 @@ def lucky_guess(n: int) -> bool:
     return False
 
 
-print(lucky_guess(1))
-print(lucky_guess(3))
-print(lucky_guess(7))
-print(lucky_guess(121))
-print(lucky_guess(-6))
-
-
 def without_end(s: str) -> str:
     """
     Given a string, return a version without the first and last char, so "Hello" yields "ell".
