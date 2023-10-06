@@ -65,7 +65,9 @@ def without_end(s: str) -> str:
     :param s: String
     :return: String without first and last char.
     """
-    pass
+    if len(s) < 2:
+        return ''
+    return s[1:-1]
 
 
 def non_decreasing_list(nums: list) -> bool:
