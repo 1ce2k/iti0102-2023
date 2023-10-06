@@ -415,8 +415,19 @@ def find_catalan_numbers(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Catalan_number
     :return: list of catalan numbers
     """
-    catalan_numbers = [math.comb(2 * n, n) // (n + 1) for n in range(biggest_number + 1)]
-    return catalan_numbers
+    catalan_nunbers = [1]
+    for n in range(1, biggest_number + 1):
+        next = (4 * n - 2) * catalan_nunbers[-1] // (n + 1)
+        catalan_nunbers.append(next)
+    return catalan_nunbers
+
+
+# def binomial_coefficient(n, k):
+#     """Calculate binomial coefficient."""
+#     res = 1
+#     for i in range(1, k + 1):
+#         res = res * (n - i + 1) // i
+#     return res
 
 
 regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
