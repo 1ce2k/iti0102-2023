@@ -146,11 +146,11 @@ class Student:
                 new_solution.add(x)
         if is_bigger:
             max_solution = max(new_solution)
-            # self.deal_with_dec_value(max_solution)
+            self.deal_with_dec_value(str(max_solution))
             return max_solution
         else:
             min_solution = min(new_solution)
-            # self.deal_with_dec_value(min_solution)
+            self.deal_with_dec_value(str(min_solution))
             return min_solution
 
 
