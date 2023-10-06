@@ -93,7 +93,11 @@ def destinations_list(schedule: dict) -> list:
     :param schedule: Dictionary containing the flight schedule (the result of flights_schedule function).
     :return: Alphabetically sorted list of unique destinations.
     """
-    pass
+    ret = []
+    for value in schedule.values():
+        if value[0] not in ret:
+            ret.append(value[0])
+    return sorted(ret)
 
 
 def airlines_operating_today(schedule: dict, airline_names: dict) -> set:
