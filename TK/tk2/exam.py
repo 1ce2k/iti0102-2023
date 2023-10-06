@@ -41,9 +41,8 @@ def lucky_guess(n: int) -> bool:
     """
     if n in {1, 3, 7}:
         return True
-    elif -6 <= n <= 121:
-        if n % 13 == 0:
-            return True
+    elif -6 <= n <= 121 and n % 13 == 0:
+        return True
     elif 0 > n and '5' not in str(n) and '6' not in str(n):
         return True
     return False
