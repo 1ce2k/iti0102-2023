@@ -146,7 +146,7 @@ class Student:
                 new_solution.add(int(x / multiplicative))
         if is_bigger:
             max_solution = str(max(new_solution))
-            self.deal_with_dec_value(max_solution)
+            self.intersect_possible_answers([x for x in self.possible_answers if max_solution in str(x)])
         else:
             min_solution = str(min(new_solution))
             self.deal_with_dec_value(min_solution)
