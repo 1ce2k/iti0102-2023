@@ -29,6 +29,39 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
+        if re.match(r"The number I needed to guess was \d+", sentence):
+            # Extract the final answer from the sentence and update possible_answers
+            final_answer = int(re.search(r"\d+", sentence).group())
+            self.deal_with_dec_value(str(final_answer))
+            return f"The number I needed to guess was {final_answer}."
+
+        elif re.match(r"Filter out numbers with \d+ zeroes", sentence):
+            # Extract the number of zeroes and update possible_answers
+            amount_of_zeroes = int(re.search(r"\d+", sentence).group())
+            self.deal_with_number_of_zeroes(amount_of_zeroes)
+            return f"Filtered out numbers with {amount_of_zeroes} zeroes."
+
+        elif re.match(r"Filter out numbers with \d+ ones", sentence):
+            # Extract the number of ones and update possible_answers
+            amount_of_ones = int(re.search(r"\d+", sentence).group())
+            self.deal_with_number_of_ones(amount_of_ones)
+            return f"Filtered out numbers with {amount_of_ones} ones."
+
+        elif re.match(r"Filter out prime numbers", sentence):
+            # Update possible_answers to exclude prime numbers
+            self.deal_with_primes(False)
+            return "Filtered out prime numbers."
+
+        elif re.match(r"Filter out composite numbers", sentence):
+            # Update possible_answers to exclude composite numbers
+            self.deal_with_composites(False)
+            return "Filtered out composite numbers."
+
+            # Add more conditions for other sentence patterns as needed...
+
+        else:
+            return "I couldn't understand the sentence."
+
 
     def intersect_possible_answers(self, update: list):
         """
