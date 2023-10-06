@@ -59,6 +59,8 @@ def flights_to_destination(flights: list, destination: str) -> list:
     :return: list of departures (sorted in ascending order) for that destination.
     """
     dict = sort_dict_values(destinations_and_times(flights))
+    if destination not in dict:
+        return []
     return dict[destination]
 
 
