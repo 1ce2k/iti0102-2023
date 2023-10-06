@@ -15,7 +15,11 @@ def middle_value(a: int, b: int, c: int) -> int:
     middle_value(2, 6, 2) => 2
     middle_value(88, 88, 88) => 88
     """
-    pass
+    if (b <= a <= c) or (c <= a <= b):
+        return a
+    elif (a <= b <= c) or (c <= b <= a):
+        return b
+    return c
 
 
 def lucky_guess(n: int) -> bool:
