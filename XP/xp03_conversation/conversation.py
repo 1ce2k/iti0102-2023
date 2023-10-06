@@ -143,7 +143,7 @@ class Student:
             if to_multiply:
                 new_solution.add(x * multiplicative)
             else:
-                new_solution.add(x)
+                new_solution.add(x / multiplicative)
         if is_bigger:
             max_solution = str(max(new_solution))
             self.deal_with_dec_value(max_solution)
