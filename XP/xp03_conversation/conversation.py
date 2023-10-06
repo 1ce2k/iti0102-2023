@@ -145,11 +145,11 @@ class Student:
             else:
                 new_solution.add(x)
         if is_bigger:
-            max_solution = max(new_solution)
-            self.deal_with_dec_value(str(int(max_solution)))
+            max_solution = str(max(new_solution))
+            self.deal_with_dec_value(max_solution)
         else:
-            min_solution = min(new_solution)
-            self.deal_with_dec_value(str(int(min_solution)))
+            min_solution = str(min(new_solution))
+            self.deal_with_dec_value(min_solution)
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
