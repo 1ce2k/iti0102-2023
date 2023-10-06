@@ -77,7 +77,11 @@ def flights_schedule(flights: list) -> dict:
     :return: dictionary where the keys are departure times and values are tuples containing the destination and
     flight number.
     """
-    pass
+    ret = {}
+    for line in flights:
+        destination, departure_time, flight_num = line.split(',')[0], line.split(',')[1], line.split(',')[3]
+        ret[departure_time] = (destination, flight_num)
+    return ret
 
 
 def destinations_list(schedule: dict) -> list:
