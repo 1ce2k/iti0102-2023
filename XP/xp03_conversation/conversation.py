@@ -141,9 +141,9 @@ class Student:
         new_solution = set()
         for x in solution:
             if to_multiply:
-                new_solution.add(x * multiplicative)
+                new_solution.add(int(x * multiplicative))
             else:
-                new_solution.add(x / multiplicative)
+                new_solution.add(int(x / multiplicative))
         if is_bigger:
             max_solution = str(max(new_solution))
             self.deal_with_dec_value(max_solution)
