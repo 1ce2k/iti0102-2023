@@ -39,7 +39,7 @@ def lucky_guess(n: int) -> bool:
     :param n: given number
     :return: boolean - points or no points
     """
-    if n not in {1, 3, 7}:
+    if n in {1, 3, 7}:
         return True
     elif -6 <= n <= 121 and n % 13 == 0:
         return True
