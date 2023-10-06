@@ -106,4 +106,19 @@ def max_duplicate(nums: list) -> int or None:
     :param nums: List of integers
     :return: Maximum element with duplicate. None if no duplicate found.
     """
-    pass
+    freq_dict = {}
+    for num in nums:
+        if num in freq_dict:
+            freq_dict[num] += 1
+        else:
+            freq_dict[num] = 1
+    max_element = None
+    max_freq = 0
+
+    for num, freq in freq_dict.items():
+        if freq > 1 and (max_element is None or num > max_element):
+            max_element = num
+            max_freq = freq
+    if max_element is not None:
+        return max_element
+    return None
