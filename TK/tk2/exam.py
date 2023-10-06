@@ -39,11 +39,11 @@ def lucky_guess(n: int) -> bool:
     :param n: given number
     :return: boolean - points or no points
     """
-    if n in {1, 3, 7}:
+    if n not in {1, 3, 7}:
         return True
-    if -6 <= n <= 121 and n % 13 == 0:
+    elif -6 <= n <= 121 and n % 13 == 0:
         return True
-    if 0 < n and '5' not in str(n) and '6' not in str(n):
+    elif 0 < n and '5' not in str(n) and '6' not in str(n):
         return True
     return False
 
