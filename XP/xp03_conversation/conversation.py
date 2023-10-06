@@ -149,7 +149,7 @@ class Student:
             self.intersect_possible_answers([x for x in self.possible_answers if max_solution in str(x)])
         else:
             min_solution = str(min(new_solution))
-            self.deal_with_dec_value(min_solution)
+            self.intersect_possible_answers([x for x in self.possible_answers if min_solution in str(x)])
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
