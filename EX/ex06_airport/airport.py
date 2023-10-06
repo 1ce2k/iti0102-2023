@@ -140,47 +140,55 @@ def destinations_by_airline(schedule: dict, airline_names: dict) -> dict:
     :param airline_names: Dictionary containing mapping of airline codes to airline names.
     :return: Dictionary of airline names to sets of destinations.
     """
-    ret = {}
-    code_list = {}
-    for value in schedule.values():
-        if value[1][:3] not in code_list:
-            code_list[value[1][:3]] = value[0]
-    # print(code_list)
-    # print(airline_names)
-    for code in code_list.keys():
-        if code in airline_names.keys():
-            ret[airline_names[code]] = code_list[code]
-    return ret
+    destinations_dict = {}
+    for flight_time, (destination, flight_code) in schedule.items():
+        airline_code = flight_code[:3]
+        airline_name = airline_names[airline_code]
+        if airline_name in destinations_dict:
+            destinations_dict[airline_name].add(destination)
+        else:
+            destinations_dict[airline_name] = {destination}
+    return destinations_dict
 
 
 if __name__ == '__main__':
-    flights = [
-        "Tallinn,08:00,01h30m,OWL1234",
-        "Helsinki,10:35,01h00m,BHM5678",
-        "Tallinn,09:00,01h30m,OWL1235",
-    ]
+    # flights = [
+    #     "Tallinn,08:00,01h30m,OWL1234",
+    #     "Helsinki,10:35,01h00m,BHM5678",
+    #     "Tallinn,09:00,01h30m,OWL1235",
+    # ]
 
-    print(destinations_and_times(flights))
+    # print(destinations_and_times(flights))
     # {'Tallinn': ['08:00', '09:00'], 'Helsinki': ['10:35']}
 
-    flights_dict = {'Tallinn': ['10:00', '09:00'], 'Helsinki': ['10:35']}
-    print(sort_dict_values(flights_dict))
+    # flights_dict = {'Tallinn': ['10:00', '09:00'], 'Helsinki': ['10:35']}
+    # print(sort_dict_values(flights_dict))
     # {'Tallinn': ['09:00', '10:00'], 'Helsinki': ['10:35']}
 
-    print(flights_to_destination(flights, "Tallinn"))
+    # print(flights_to_destination(flights, "Tallinn"))
     # ['08:00', '09:00']
 
-    print(flights_schedule(flights))
+    # print(flights_schedule(flights))
     # {'08:00': ('Tallinn', 'OWL1234'), '10:35': ('Helsinki', 'BHM5678'), '09:00': ('Tallinn', 'OWL1235')}
 
-    schedule = {'08:00': ('Tallinn', 'OWL1234'), '10:35': ('Helsinki', 'BHM5678'), '09:00': ('Tallinn', 'OWL1235')}
-    print(destinations_list(schedule))
+    # schedule = {'08:00': ('Tallinn', 'OWL1234'), '10:35': ('Helsinki', 'BHM5678'), '09:00': ('Tallinn', 'OWL1235')}
+    # print(destinations_list(schedule))
     # ['Helsinki', 'Tallinn']
 
-    airlines = {"OWL": "Owlbear Airlines", "BHM": "Beholder's Majesty Airlines"}
+    airlines = {
+        "OWL": "Owlbear Airlines",
+        "BHM": "Beholder's Majesty Airlines"
+    }
 
-    print(airlines_operating_today(schedule, airlines))
+    # print(airlines_operating_today(schedule, airlines))
     # {'Owlbear Airlines', "Beholder's Majesty Airlines"}
 
-    print(destinations_by_airline(schedule, airlines))
+    # print(destinations_by_airline(schedule, airlines))
     # {'Owlbear Airlines': {'Tallinn'}, "Beholder's Majesty Airlines": {'Helsinki'}}
+
+    schedule = {
+        '08:00': ('Tallinn', 'OWL1234'),
+        '10:35': ('Helsinki', 'BHM5678'),
+        '09:00': ('Tallinn', 'OWL1235')
+    }
+    print(destinations_by_airline(schedule, airlines))
