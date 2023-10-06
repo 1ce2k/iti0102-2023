@@ -140,7 +140,17 @@ def destinations_by_airline(schedule: dict, airline_names: dict) -> dict:
     :param airline_names: Dictionary containing mapping of airline codes to airline names.
     :return: Dictionary of airline names to sets of destinations.
     """
-    pass
+    ret = {}
+    code_list = {}
+    for value in schedule.values():
+        if value[1][:3] not in code_list:
+            code_list[value[1][:3]] = value[0]
+    # print(code_list)
+    # print(airline_names)
+    for code in code_list.keys():
+        if code in airline_names.keys():
+            ret[airline_names[code]] = code_list[code]
+    return ret
 
 
 if __name__ == '__main__':
