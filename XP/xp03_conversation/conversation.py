@@ -415,7 +415,14 @@ def find_catalan_numbers(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Catalan_number
     :return: list of catalan numbers
     """
-    return [math.comb(2 * i, i) // (i + 1) for i in range(biggest_number + 1)]
+    if biggest_number < 0:
+        return []
+    catalan_numbres = [0] * (biggest_number + 1)
+    catalan_numbres[0] = 1
+    for i in range(1, biggest_number + 1):
+        for j in range(i):
+            catalan_numbres[i] += catalan_numbres[j] * catalan_numbres[i - j - 1]
+    return catalan_numbres
 
 
 regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
