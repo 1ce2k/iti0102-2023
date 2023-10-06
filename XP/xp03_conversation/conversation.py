@@ -133,21 +133,25 @@ class Student:
         :param multiplicative: the multiplicative to multiply or divide with
         :param is_bigger: to use the bigger or smaller result of the quadratic equation(min or max from [x1, x2])
         """
-        normalize_equation = normalize_quadratic_equation(equation)
-        solutions = quadratic_equation_solver(normalize_equation)
-        if solutions is None:
-            return
-        elif isinstance(solutions, float):
-            if is_bigger:
-                self.intersect_possible_answers([x for x in self.possible_answers if x > solutions])
+        normalized_equation = normalize_quadratic_equation(equation)
+        solution = quadratic_equation_solver(normalized_equation)
+        if solution is None:
+            return None
+        new_solution = set()
+        for x in solution:
+            if to_multiply:
+                new_solution.add(x * multiplicative)
             else:
-                self.intersect_possible_answers([x for x in self.possible_answers if x < solutions])
-        elif isinstance(solutions, tuple):
-            smaller, larger = solutions
-            if is_bigger:
-                self.intersect_possible_answers([x for x in self.possible_answers if x > larger])
-            else:
-                self.intersect_possible_answers([x for x in self.possible_answers if x < smaller])
+                new_solution.add(x)
+        if is_bigger:
+            max_solution = max(new_solution)
+            self.deal_with_dec_value(max_solution)
+            return max_solution
+        else:
+            min_solution = min(new_solution)
+            self.deal_with_dec_value(min_solution)
+            return min_solution
+
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
@@ -420,14 +424,6 @@ def find_catalan_numbers(biggest_number: int) -> list:
         next = (4 * n - 2) * catalan_numbers[-1] // (n + 1)
         catalan_numbers.append(next)
     return catalan_numbers
-
-
-def binomial_coefficient(n, k):
-    """Calculate binomial coefficient."""
-    res = 1
-    for i in range(1, k + 1):
-        res = res * (n - i + 1) // i
-    return res
 
 
 regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
