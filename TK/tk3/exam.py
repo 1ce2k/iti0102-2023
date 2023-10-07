@@ -115,14 +115,13 @@ def mirror_ends(s: str) -> str:
     :param s: String
     :return: Mirror image string
     """
-    length = len(s)
-    longest_part = ''
-    for i in range(length):
-        for j in range(i + 1, length + 1):
-            substring = s[i:j]
-            if substring == substring[::-1] and len(substring) > len(longest_part):
-                longest_part = substring
-    return longest_part
+    mirror_start = ''
+    mirror_end = ''
+    for i in range(len(s)):
+        if s[:i + 1] == s[-1:-i-2:-1]:
+            mirror_end = s[:i + 1]
+            mirror_start = s[-1:-i - 2: -1]
+    return mirror_start if mirror_start == mirror_end else ""
 
 
 print(mirror_ends('abXYZba'))
