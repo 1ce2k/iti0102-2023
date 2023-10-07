@@ -118,7 +118,7 @@ def mirror_ends(s: str) -> str:
     mirror_start = ''
     mirror_end = ''
     for i in range(len(s)):
-        if s[:i + 1] == s[-1:-i-2:-1]:
+        if s[:i + 1] == s[-1:-i - 2:-1]:
             mirror_end = s[:i + 1]
             mirror_start = s[-1:-i - 2: -1]
     return mirror_start if mirror_start == mirror_end else ""
