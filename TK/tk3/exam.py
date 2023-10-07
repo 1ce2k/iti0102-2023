@@ -115,8 +115,11 @@ def mirror_ends(s: str) -> str:
     :param s: String
     :return: Mirror image string
     """
-    ret = ''
-    for i in range(len(s)):
-        if s[:i + 1] == s[i::-1]:
-            ret = s[:i + 1]
-    return ret
+    start = 0
+    end = len(s) - 1
+    while start < end and s[start] == s[end]:
+        start += 1
+        end -= 1
+    if start >= end:
+        return s[:start]
+    return ''
