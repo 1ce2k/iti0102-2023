@@ -122,8 +122,3 @@ def mirror_ends(s: str) -> str:
             mirror_end = s[:i + 1]
             mirror_start = s[-1:-i - 2: -1]
     return mirror_start if mirror_start == mirror_end else ""
-
-
-print(mirror_ends('abXYZba'))
-print(mirror_ends('abca'))
-print(mirror_ends('aba'))
