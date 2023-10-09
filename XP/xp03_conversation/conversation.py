@@ -425,7 +425,9 @@ def find_catalan_numbers(biggest_number: int) -> list:
 
 
 regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
-regex_b = r'(?<!x[0,2-9])\s*(-?\s*\d*|-)\s*x(?![2-9,0])'
+# regex_b = r'(?<!x)\s*(-?\s*\d*|-)\s*x(?![2-9,0])'
+regex_b = r'\s*(-?\s*\d*|-)\s*(x1?)(?![0-9])'
+
 regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
 
 
@@ -433,11 +435,11 @@ if __name__ == "__main__":
     def print_regex_results(regex, f):
         matches = re.finditer(regex, f)
         for match in matches:
-            if match.group(1).strip() == '':
-                result = '-'
-            else:
-                result = match.group(1)
-            print(result.strip())
+            # if match.group(1).strip() == '':
+            #     result = '-'
+            # else:
+            #     result = match.group(1)
+            print(match.group(1))
 
     f = "3x2 - 4x1 + 1"
 
@@ -445,7 +447,7 @@ if __name__ == "__main__":
     # print_regex_results(regex_b, f)  # - 4
     # print_regex_results(regex_c, f)  # 1
 
-    f2 = "3x2 + 4x11 + 4 + 5 - 2x2 - 7x"
+    f2 = "3x2 + 4x1 + 4 + 5 - 2x2 - 7x"
 
     # print("x2")
     # print_regex_results(regex_a, f2)  # 3, - 2
