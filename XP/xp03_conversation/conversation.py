@@ -424,10 +424,32 @@ def find_catalan_numbers(biggest_number: int) -> list:
     return catalan_numbers
 
 
-regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
-# regex_b = r'(?<!x)\s*(-?\s*\d*|-)\s*x(?![2-9,0])'
-regex_b = r'\s*(-?\s*\d*|-)\s*(x1?)(?![0-9])'
+def equation_coefficients(equaction: str):
+    matches_a = re.findall(regex_a, equaction)
+    matches_b = re.findall(regex_b, equaction)
+    matches_c = re.findall(regex_c, equaction)
+    ret_a = []
+    ret_c = []
+    ret_b = []
+    for match_a in matches_a:
+        ret_a.append(match_a)
+    for match_b in matches_b:
+        ret_b.append(match_b)
+    for match_c in matches_c:
+        ret_c.append(match_c)
+    a, b, c = 0, 0, 0
+    for elem_a in ret_a:
+        a += int(elem_a.replace(' ', ''))
+    for elem_b in ret_b:
+        b += int(elem_b.replace(' ', ''))
+    for elem_c in ret_c:
+        c += int(elem_c.replace(' ', ''))
+    print(ret_a, ret_b, ret_c)
+    return a, b, c
 
+
+regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
+regex_b = r'\s*(-?\s*\d*|-)\s*x1?(?![0-9])'
 regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
 
 
@@ -441,17 +463,18 @@ if __name__ == "__main__":
             #     result = match.group(1)
             print(match.group(1))
 
-    f = "3x2 - 4x1 + 1"
+    f = "3x2 - 4x1 + 1 - 4x2 - 7 + 16x1 - 9x2 + 81x2 = 0"
+    print(equation_coefficients(f))
 
     # print_regex_results(regex_a, f)  # 3
     # print_regex_results(regex_b, f)  # - 4
     # print_regex_results(regex_c, f)  # 1
 
-    f2 = "3x2 + 4x1 + 4 + 5 - 2x2 - 7x"
+    # f2 = "3x2 + 4x1 + 4 + 5 - 2x2 - 7x"
 
     # print("x2")
     # print_regex_results(regex_a, f2)  # 3, - 2
-    print("x")
-    print_regex_results(regex_b, f2)  # 4, - 7
+    # print("x")
+    # print_regex_results(regex_b, f2)  # 4, - 7
     # print("c")
     # print_regex_results(regex_c, f2)  # 5, 4
