@@ -163,7 +163,7 @@ class Student:
             elif len(solutions) == 1:
                 res = solutions / multiplicative
             self.deal_with_dec_value(str(int(res)))
-            # self.possible_answers = '4'
+            self.possible_answers = '4'
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
