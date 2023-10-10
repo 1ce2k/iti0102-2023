@@ -154,7 +154,6 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
             if x in range(start, end):
                 if x in hour_slots:
                     hour_slots[x] += 1
-                    hour_slots[start] += 1
                 else:
                     hour_slots[x] = 1
                     hour_slots[start] += 1
