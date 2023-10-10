@@ -47,11 +47,11 @@ class Student:
             self.deal_with_catalan_sequence(False)
         elif re.search(r'binary form', sentence):
             # Extract the number of zeroes and ones from the sentence using regex
-            num_zeros = int(re.search(r'(\d+) zeroes', sentence).group(1))
-            num_ones = int(re.search(r'(\d+) ones', sentence).group(1))
+            num_zeros = int(re.search(r'(\d+) zeroes', sentence).group(0))
+            num_ones = int(re.search(r'(\d+) ones', sentence).group(0))
             self.deal_with_number_of_zeroes(num_zeros)
             self.deal_with_number_of_ones(num_ones)
-        elif re.search(r'decimal value (\d+)', sentence):
+        elif re.search(r'decimal value: (\d+)', sentence):
             decimal_value = re.search(r'decimal value (\d+)', sentence).group(1)
             self.deal_with_dec_value(decimal_value)
         elif re.search(r'hex value ([0-9a-fA-F]+)', sentence):
