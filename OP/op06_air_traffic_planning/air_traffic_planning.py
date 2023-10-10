@@ -138,21 +138,7 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
              ["08:00", "15:20"]
              If the schedule is empty, returns an empty list.
     """
-    if not schedule:
-        return []
-    hour_counts = defaultdict(int)
-    for time, _ in schedule.items():
-        hour, _ = time.split(":")
-        hour_counts[hour] += 1
-    max_count = max(hour_counts.values())
-    busiest_hours = [hour for hour, count in hour_counts.items() if count == max_count]
-    ret = []
-    for time in schedule.keys():
-        for hour in busiest_hours:
-            if hour in time:
-                ret.append(time)
-    ret.sort()
-    return ret
+    pass
 
 
 def most_popular_destination(schedule: dict[str, tuple[str, str]], passenger_count: dict[str, int]) -> str:
@@ -166,7 +152,12 @@ def most_popular_destination(schedule: dict[str, tuple[str, str]], passenger_cou
                             the number of passengers as values.
     :return: A string representing the most popular destination.
     """
-    pass
+    ret = ''
+    most_passengers_fligh = max(passenger_count, key=passenger_count.get)
+    for _, (destination, flight) in schedule.items():
+        if flight == most_passengers_fligh:
+            ret = destination
+    return ret
 
 
 def least_popular_destination(schedule: dict[str, tuple[str, str]], passenger_count: dict[str, int]) -> str:
