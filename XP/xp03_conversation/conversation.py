@@ -272,85 +272,29 @@ def normalize_quadratic_equation(equation: str) -> str:
     :return: normalized equation
     """
     # split equation to left and right parts
-    equation = equation.replace('x1', 'x')
-    equation = equation.replace(' ', '')
-    parts = equation.split('=')
-    lhs, rhs = parts[0], parts[1]
 
-    # init coefficient
-    a, b, c = 0, 0, 0
+    lhs, rhs = equation.split('=')[0], equation.split('=')[1]
 
-    # split left and right parts to terms
-    lhs_terms = re.split(r'([-+])', lhs)
-    rhs_terms = re.split(r'([-+])', rhs)
-
-    def process_term(term, sign):
-        """Update coefficients by term."""
-        nonlocal a, b, c
-        if 'x2' in term:
-            a += sign * (1 if term == 'x2' else int(term.replace('x2', '')))
-        elif 'x' in term or 'x1' in term:
-            b += sign * (1 if term in {'x'} else int(term.replace('x', '')))
-        elif term.isdigit():
-            c += sign * int(term)
-
-    # left part
-    sign = 1
-    for term in lhs_terms:
-        if term == '-':
-            sign = -1
-        elif term == '+':
-            sign = 1
-        else:
-            process_term(term, sign)
-
-    # right part
-    sign = -1
-    for term in rhs_terms:
-        if term == '-':
-            sign = 1
-        elif term == '+':
-            sign = -1
-        else:
-            process_term(term, sign)
-
-    # if there is need to multiply by -1
-    if a != 0 and a < 0:
-        a, b, c = -a, -b, -c
-    elif a == 0 and b < 0:
-        b, c = -b, -c
-    elif a == 0 and b == 0 and c < 0:
-        c = -c
-    # create normalized equation
-    normalized_equation = ''
-    if a == 0 and b == 0:
-        return f'{c} = 0'
+    left_a, left_b, left_c = equation_coefficients(lhs)
+    right_a, right_b, right_c = equation_coefficients(rhs)
+    a, b, c = left_a - right_a, left_b - right_b, left_c - right_c
     if a != 0:
-        if abs(a) == 1:
-            normalized_equation += 'x2'
-        else:
-            normalized_equation += f'{a}x2'
-    if b != 0:
-        if a != 0:
-            if abs(b) == 1:
-                normalized_equation += f' {"+" if b >= 0 else "-"} x'
+        if a < 0:
+            a = -a
+            b = -b
+            c = -c
+    print(a, b, c)
+    ret = ''
+    if a != 0:
+        ret += f'{a}x2'
+        if b != 0:
+            if b == 1:
+                ret += f' {"+" if b >= 0 else "-"} x'
             else:
-                normalized_equation += f' {"+" if b >= 0 else "-"} {abs(b)}x'
-        else:
-            if abs(b) == 1:
-                normalized_equation += 'x'
-            else:
-                normalized_equation += f"{b}x"
-    if c != 0:
-        if a != 0 or b != 0:
-            normalized_equation += f' {"+" if c >= 0 else "-"} {abs(c)}'
-    normalized_equation += ' = 0'
-    return normalized_equation
-
-
-def find_coefficients_for_solver(equation: str) -> tuple:
-    """Return coefficients for normalized equation."""
-    ret = ()
+                ret += f' {"+" if b >= 0 else "-"} {abs(b)}x'
+        if c != 0:
+            ret += f'{"+" if c > 0 else "-"} {abs(c)}'
+    ret += ' = 0'
     return ret
 
 
@@ -424,10 +368,11 @@ def find_catalan_numbers(biggest_number: int) -> list:
     return catalan_numbers
 
 
-def equation_coefficients(equaction: str):
-    matches_a = re.findall(regex_a, equaction)
-    matches_b = re.findall(regex_b, equaction)
-    matches_c = re.findall(regex_c, equaction)
+def equation_coefficients(equction: str):
+    """Return equation coefficients"""
+    matches_a = re.findall(regex_a, equction)
+    matches_b = re.findall(regex_b, equction)
+    matches_c = re.findall(regex_c, equction)
     ret_a = []
     ret_c = []
     ret_b = []
@@ -444,7 +389,7 @@ def equation_coefficients(equaction: str):
         b += int(elem_b.replace(' ', ''))
     for elem_c in ret_c:
         c += int(elem_c.replace(' ', ''))
-    print(ret_a, ret_b, ret_c)
+    # print(ret_a, ret_b, ret_c)
     return a, b, c
 
 
@@ -463,9 +408,9 @@ if __name__ == "__main__":
             #     result = match.group(1)
             print(match.group(1))
 
-    f = "3x2 - 4x1 + 1 - 4x2 - 7 + 16x1 - 9x2 + 81x2 = 0"
-    print(equation_coefficients(f))
-
+    f = "3x2 - 4x1 + 1 - 4x2 = 7 + 16x1 - 9x2 - 81x2"
+    # print(equation_coefficients(f))
+    print(normalize_quadratic_equation(f))
     # print_regex_results(regex_a, f)  # 3
     # print_regex_results(regex_b, f)  # - 4
     # print_regex_results(regex_c, f)  # 1
