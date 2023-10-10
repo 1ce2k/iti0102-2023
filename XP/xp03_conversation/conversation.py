@@ -286,7 +286,10 @@ def normalize_quadratic_equation(equation: str) -> str:
     print(a, b, c)
     ret = ''
     if a != 0:
-        ret += f'{a}x2'
+        if a == 1:
+            ret += f'x2'
+        else:
+            ret += f'{a}x2'
         if b != 0:
             if b == 1:
                 ret += f' {"+" if b >= 0 else "-"} x'
