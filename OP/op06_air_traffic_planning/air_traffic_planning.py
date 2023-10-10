@@ -152,12 +152,14 @@ def most_popular_destination(schedule: dict[str, tuple[str, str]], passenger_cou
                             the number of passengers as values.
     :return: A string representing the most popular destination.
     """
-    ret = ''
-    most_passengers_fligh = max(passenger_count, key=passenger_count.get)
-    for _, (destination, flight) in schedule.items():
-        if flight == most_passengers_fligh:
-            ret = destination
-    return ret
+    destination_passengers = {}
+    for time, (destination, flight_number) in schedule.items():
+        if destination in destination_passengers:
+            destination_passengers[destination] += passenger_count[flight_number]
+        else:
+            destination_passengers[destination] = passenger_count[flight_number]
+    most_popular = max(destination_passengers, key=destination_passengers.get)
+    return most_popular
 
 
 def least_popular_destination(schedule: dict[str, tuple[str, str]], passenger_count: dict[str, int]) -> str:
