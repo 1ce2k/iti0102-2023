@@ -141,24 +141,24 @@ class Student:
             if length == 1:
                 x = str(int(solutions) * multiplicative)
             else:
-                x = str(int(max(solutions) * multiplicative))
+                x = str(int(min(solutions) * multiplicative))
             self.deal_with_dec_value(x)
         if to_multiply and not is_bigger:
             if length == 1:
                 x = str(int(solutions) / multiplicative)
             else:
-                x = str(int(min(solutions) / multiplicative))
+                x = str(int(max(solutions) / multiplicative))
             self.deal_with_dec_value(x)
         if not to_multiply and is_bigger:
             if length == 1:
                 x = str(int(solutions) / multiplicative)
             else:
-                x = str(int(max(solutions) / multiplicative))
+                x = str(int(min(solutions) / multiplicative))
         if not to_multiply and not is_bigger:
             if length == 1:
                 x = str(int(solutions) / multiplicative)
             else:
-                x = str(int(min(solutions) / multiplicative))
+                x = str(int(max(solutions) / multiplicative))
             self.deal_with_dec_value(x)
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
