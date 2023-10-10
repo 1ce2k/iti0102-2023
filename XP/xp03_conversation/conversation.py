@@ -219,7 +219,8 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     if d == 0:
         if a != 0:
             x1 = -b / (2 * a)
-            return float(x1)
+            return x1
+
     if d > 0:
         if a != 0:
             x1 = (-b + math.sqrt(d)) / (2 * a)
@@ -228,6 +229,9 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
                 return x2, x1
             elif x1 > x2:
                 return x1, x2
+        else:
+            x1 = -c / b
+            return x1
 
 
 def normalize_quadratic_equation(equation: str) -> str:
@@ -411,6 +415,10 @@ if __name__ == "__main__":
     print(equation_coefficients(f2))
     print(normalize_quadratic_equation(f2))
     print(quadratic_equation_solver(f2))
+    f3 = 'x + 2 = 0'
+    print(equation_coefficients(f3))
+    print(normalize_quadratic_equation(f3))
+    print(quadratic_equation_solver(f3))
     # print_regex_results(regex_a, f)  # 3
     # print_regex_results(regex_b, f)  # - 4
     # print_regex_results(regex_c, f)  # 1
