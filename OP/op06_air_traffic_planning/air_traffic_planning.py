@@ -1,9 +1,10 @@
 """Air traffic planning."""
 
-
 from datetime import datetime, timedelta
 
-def update_delayed_flight(schedule: dict[str, tuple[str, str]], delayed_flight_number: str, new_departure_time: str) -> dict[str, tuple[str, str]]:
+
+def update_delayed_flight(schedule: dict[str, tuple[str, str]], delayed_flight_number: str, new_departure_time: str) -> \
+dict[str, tuple[str, str]]:
     """
     Update the departure time of a delayed flight in the flight schedule.
 
@@ -71,7 +72,10 @@ def busiest_time(schedule: dict[str, tuple[str, str]]) -> list[str]:
             max_freq = count
     ret = []
     for hour, freq in hours_count.items():
-        if freq == max_freq:
+        if max_freq != 0:
+            if freq == max_freq:
+                ret.append(hour)
+        else:
             ret.append(hour)
     ret.sort()
     return ret
