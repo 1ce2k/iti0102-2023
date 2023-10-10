@@ -59,6 +59,8 @@ def busiest_time(schedule: dict[str, tuple[str, str]]) -> list[str]:
                      in the format "HH:mm" and values are tuples containing destination and flight number.
     :return: List of strings representing the busiest hour(s) in 24-hour format, such as ["08", "21"].
     """
+    if not schedule:
+        return []
     hours_count = {}
     for time in schedule.keys():
         hour = time.split(':')[0]
