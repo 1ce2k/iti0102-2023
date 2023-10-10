@@ -420,7 +420,7 @@ regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
 
 if __name__ == "__main__":
     def print_regex_results(regex, f):
-        """Example."""
+        """Test func."""
         matches = re.finditer(regex, f)
         for match in matches:
             # if match.group(1).strip() == '':
