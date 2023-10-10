@@ -36,6 +36,9 @@ class Student:
             final = next(iter(self.possible_answers))
             return f'The number I needed to guess was {final}'
 
+        sorted_res = sorted(list(self.possible_answers))
+        return f'Possible answers are {sorted_res}'
+
     def intersect_possible_answers(self, update: list):
         """
         Logical AND between two sets.
