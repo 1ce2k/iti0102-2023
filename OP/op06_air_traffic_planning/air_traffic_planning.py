@@ -2,7 +2,6 @@
 
 
 from datetime import datetime, timedelta
-from collections import defaultdict
 
 
 def update_delayed_flight(schedule: dict[str, tuple[str, str]], delayed_flight_number: str, new_departure_time: str) -> dict[str, tuple[str, str]]:
@@ -141,7 +140,7 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
     if not schedule:
         return []
     # Create a dictionary to store the count of flights for each hour slot
-    hour_slots = {}
+    hour_slots = []
     times = []
     for time in schedule:
         hour, minute = map(int, time.split(':'))
@@ -150,16 +149,20 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
     for time in times:
         start = time
         end = time + 60
+        slot = []
         for x in times:
-            if x in range(start, end):
-                if x in hour_slots:
-                    hour_slots[x] += 1
-                else:
-                    hour_slots[x] = 1
-                    hour_slots[start] += 1
-    max_count = max(hour_slots.values())
-    busiest_slots = [time for time, count in hour_slots.items() if count == max_count]
-    busiest_hours = [f'{hour // 60:02d}:{hour % 60:02d}' for hour in busiest_slots]
+            if start <= x < end:
+                if x not in slot:
+                    slot.append(x)
+        hour_slots.append(slot)
+        slot = []
+    max_count = len(max(hour_slots, key=len))
+    busiest_slots = [x for x in hour_slots if len(x) == max_count]
+    busiest_slots_start = set()
+    for i in busiest_slots:
+        busiest_slots_start.add(i[0])
+    busiest_hours = [f'{hour // 60:02d}:{hour % 60:02d}' for hour in busiest_slots_start]
+    busiest_hours.sort()
     return busiest_hours
 
 
