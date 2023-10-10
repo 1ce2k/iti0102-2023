@@ -138,7 +138,12 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
              ["08:00", "15:20"]
              If the schedule is empty, returns an empty list.
     """
-    pass
+    if not schedule:
+        return []
+    if len(schedule) == 1:
+        for time in schedule.keys():
+            return [time]
+
 
 
 def most_popular_destination(schedule: dict[str, tuple[str, str]], passenger_count: dict[str, int]) -> str:
