@@ -134,9 +134,7 @@ class Student:
         :param multiplicative: the multiplicative to multiply or divide with
         :param is_bigger: to use the bigger or smaller result of the quadratic equation(min or max from [x1, x2])
         """
-        res = 0.0
         solutions = quadratic_equation_solver(equation)
-        length = len(solutions)
         if to_multiply and is_bigger:
             x = str(int(max(solutions) * multiplicative))
             self.deal_with_dec_value(x)
@@ -144,7 +142,7 @@ class Student:
         if to_multiply and not is_bigger:
             x = str(int(min(solutions) / multiplicative))
             self.deal_with_dec_value(x)
-            self.possible_answers = 2
+            # self.possible_answers = 2
         if not to_multiply and is_bigger:
             x = str(int(max(solutions) / multiplicative))
             self.deal_with_dec_value(x)
