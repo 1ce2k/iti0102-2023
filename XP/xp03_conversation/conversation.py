@@ -300,7 +300,7 @@ def normalize_quadratic_equation(equation: str) -> str:
                 ret += f' {"+" if b > 0 else "-"} {abs(b)}x'
         else:
             if b == 1:
-                ret += f'x'
+                ret += 'x'
             else:
                 ret += f'{b}x'
     if c != 0:
@@ -396,11 +396,32 @@ def equation_coefficients(equction: str):
         ret_c.append(match_c)
     a, b, c = 0, 0, 0
     for elem_a in ret_a:
-        a += int(elem_a.replace(' ', ''))
+        elem_a = elem_a.replace(' ', '')
+        if elem_a[1:].isdigit() or elem_a.isdigit():
+            a += int(elem_a)
+        else:
+            if elem_a == '-':
+                a -= 1
+            elif not elem_a:
+                a += 1
     for elem_b in ret_b:
-        b += int(elem_b.replace(' ', ''))
+        elem_b = elem_b.replace(' ', '')
+        if elem_b[1:].isdigit() or elem_b.isdigit():
+            b += int(elem_b)
+        else:
+            if elem_b:
+                b -= 1
+            else:
+                b += 1
     for elem_c in ret_c:
-        c += int(elem_c.replace(' ', ''))
+        elem_c = elem_c.replace(' ','')
+        if elem_c[1:].isdigit() or elem_c.isdigit():
+            c += int(elem_c)
+        else:
+            if elem_c:
+                c -= 1
+            else:
+                c += 1
     # print(ret_a, ret_b, ret_c)
     return a, b, c
 
@@ -420,9 +441,12 @@ if __name__ == "__main__":
             #     result = match.group(1)
             print(match.group(1))
 
-    f = "3x2 - 4x1 + 1 - 4x2 = 7 + 16x1 - 9x2 - 81x2"
-    # print(equation_coefficients(f))
+    f = "3x2 - 4x1 + 1 - 4x2 + 7 + 16x1 - 9x2 - 81x2 = o"
+    print(equation_coefficients(f))
     print(normalize_quadratic_equation(f))
+    f2 = 'x2 - x1 - x - 1 = 0'
+    print(equation_coefficients(f2))
+    print(normalize_quadratic_equation(f2))
     # print_regex_results(regex_a, f)  # 3
     # print_regex_results(regex_b, f)  # - 4
     # print_regex_results(regex_c, f)  # 1
