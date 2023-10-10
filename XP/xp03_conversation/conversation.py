@@ -278,35 +278,34 @@ def normalize_quadratic_equation(equation: str) -> str:
     left_a, left_b, left_c = equation_coefficients(lhs)
     right_a, right_b, right_c = equation_coefficients(rhs)
     a, b, c = left_a - right_a, left_b - right_b, left_c - right_c
-    if a != 0:
-        if a < 0:
-            a = -a
-            b = -b
-            c = -c
-    print(a, b, c)
+    if a != 0 and a < 0:
+        a, b, c = -a, -b, -c
+    elif a == 0 and b < 0:
+        b, c = -b, -c
+    elif a == 0 and b == 0 and c < 0:
+        c = -c
     ret = ''
+    if a == 0 and b == 0:
+        return f'{c} = 0'
     if a != 0:
         if a == 1:
             ret += 'x2'
         else:
             ret += f'{a}x2'
-        if b != 0:
-            if b == 1 or b == -1:
-                ret += f' {"+" if b >= 0 else "-"} x'
+    if b != 0:
+        if a != 0:
+            if abs(b) == 1:
+                ret += f' {"+" if b > 0 else "-"} x'
             else:
-                ret += f' {"+" if b >= 0 else "-"} {abs(b)}x'
-        if c != 0:
-            ret += f' {"+" if c > 0 else "-"} {abs(c)}'
-    if a == 0:
-        if b != 0:
-            if b == 1 or b == -1:
-                ret += 'x'
+                ret += f' {"+" if b > 0 else "-"} {abs(b)}x'
+        else:
+            if b == 1:
+                ret += f' {"+" if b > 0 else "-"} x'
             else:
-                ret += f'{abs(b)}x'
-        if c != 0:
+                ret += f' {"+" if b > 0 else "-"} {b}x'
+    if c != 0:
+        if a != 0 or b != 0:
             ret += f' {"+" if c > 0 else "-"} {abs(c)}'
-    if a == 0 and b == 0:
-        ret += f'{abs(c)}'
     ret += ' = 0'
     return ret
 
