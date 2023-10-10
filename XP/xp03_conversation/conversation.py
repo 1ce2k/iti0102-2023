@@ -157,7 +157,7 @@ class Student:
                 res = solutions / multiplicative
             self.deal_with_dec_value(str(int(res)))
             self.possible_answers = '3'
-        elif not to_multiply and not is_bigger:
+        else:
             if len(solutions) > 1:
                 res = min(solutions) / multiplicative
             elif len(solutions) == 1:
