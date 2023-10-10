@@ -1,10 +1,11 @@
 """Air traffic planning."""
 
+
 from datetime import datetime, timedelta
+from collections import defaultdict
 
 
-def update_delayed_flight(schedule: dict[str, tuple[str, str]], delayed_flight_number: str, new_departure_time: str) -> \
-dict[str, tuple[str, str]]:
+def update_delayed_flight(schedule: dict[str, tuple[str, str]], delayed_flight_number: str, new_departure_time: str) -> dict[str, tuple[str, str]]:
     """
     Update the departure time of a delayed flight in the flight schedule.
 
@@ -59,27 +60,18 @@ def busiest_time(schedule: dict[str, tuple[str, str]]) -> list[str]:
                      in the format "HH:mm" and values are tuples containing destination and flight number.
     :return: List of strings representing the busiest hour(s) in 24-hour format, such as ["08", "21"].
     """
-    if not schedule:
-        return []
-    hours_count = {}
+    times = {}
     for time in schedule.keys():
         hour = time.split(':')[0]
-        if hour in hours_count:
-            hours_count[hour] += 1
+        if hour in times:
+            times[hour] += 1
         else:
-            hours_count[hour] = 1
-    max_freq = 0
-    for count in hours_count.values():
-        if count > max_freq:
-            max_freq = count
+            times[hour] = 1
+    max_freq = max(times.values())
     ret = []
-    for hour, freq in hours_count.items():
-        if max_freq != 0:
-            if freq == max_freq:
-                ret.append(hour)
-        else:
+    for hour, freq in times.items():
+        if freq == max_freq:
             ret.append(hour)
-    ret.sort()
     return ret
 
 
@@ -146,7 +138,21 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
              ["08:00", "15:20"]
              If the schedule is empty, returns an empty list.
     """
-    pass
+    if not schedule:
+        return []
+    hour_counts = defaultdict(int)
+    for time, _ in schedule.items():
+        hour, _ = time.split(":")
+        hour_counts[hour] += 1
+    max_count = max(hour_counts.values())
+    busiest_hours = [hour for hour, count in hour_counts.items() if count == max_count]
+    ret = []
+    for time in schedule.keys():
+        for hour in busiest_hours:
+            if hour in time:
+                ret.append(time)
+    ret.sort()
+    return ret
 
 
 def most_popular_destination(schedule: dict[str, tuple[str, str]], passenger_count: dict[str, int]) -> str:
@@ -182,7 +188,7 @@ if __name__ == '__main__':
         "06:15": ("Tallinn", "OWL6754"),
         "11:35": ("Helsinki", "BHM2345")
     }
-    new_schedule = update_delayed_flight(schedule, "OWL6754", "09:00")
+    # new_schedule = update_delayed_flight(schedule, "OWL6754", "09:00")
     # print(schedule)
     # {'06:15': ('Tallinn', 'OWL6754'), '11:35': ('Helsinki', 'BHM2345')}
     # print(new_schedule)
@@ -206,7 +212,7 @@ if __name__ == '__main__':
         "20:35": ("Helsinki", "BHM2347"),
         "22:35": ("Tallinn", "TLN1001"),
     }
-    print(busiest_time(schedule))
+    # print(busiest_time(schedule))
     # ['06', '11']
 
     # print(connecting_flights(schedule, ("04:00", "Tallinn")))
