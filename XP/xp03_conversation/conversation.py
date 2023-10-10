@@ -29,50 +29,6 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        if re.search(r'prime number', sentence):
-            self.deal_with_primes(True)
-        elif re.search(r'composite number', sentence):
-            self.deal_with_composites(True)
-        elif re.search(r'not prime', sentence):
-            self.deal_with_primes(False)
-        elif re.search(r'not composite', sentence):
-            self.deal_with_composites(False)
-        elif re.search(r'fibonacci sequence', sentence):
-            self.deal_with_fibonacci_sequence(True)
-        elif re.search(r'not fibonacci', sentence):
-            self.deal_with_fibonacci_sequence(False)
-        elif re.search(r'catalan sequence', sentence):
-            self.deal_with_catalan_sequence(True)
-        elif re.search(r'not catalan', sentence):
-            self.deal_with_catalan_sequence(False)
-        elif re.search(r'binary form', sentence):
-            # Extract the number of zeroes and ones from the sentence using regex
-            num_zeros = int(re.search(r'(\d+) zeroes', sentence).group(0))
-            num_ones = int(re.search(r'(\d+) ones', sentence).group(0))
-            self.deal_with_number_of_zeroes(num_zeros)
-            self.deal_with_number_of_ones(num_ones)
-        elif re.search(r'decimal value: (\d+)', sentence):
-            decimal_value = re.search(r'decimal value (\d+)', sentence).group(1)
-            self.deal_with_dec_value(decimal_value)
-        elif re.search(r'hex value ([d\a-fA-F]+)', sentence):
-            hex_value = re.search(r'hex value ([\da-fA-F]+)', sentence).group(1)
-            self.deal_with_hex_value(hex_value)
-        elif re.search(r'quadratic equation', sentence):
-            # Extract the equation, multiplicative, and is_bigger using regex
-            equation_match = re.search(r'quadratic equation: (.+), to (multiply|divide) with (\d+), (min|max)',
-                                       sentence)
-            equation = equation_match.group(1)
-            to_multiply = equation_match.group(2) == 'multiply'
-            multiplicative = float(equation_match.group(3))
-            is_bigger = equation_match.group(4) == 'max'
-            self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
-
-        if len(self.possible_answers) == 1:
-            final = next(iter(self.possible_answers))
-            return f'The number I needed to guess was {final}'
-
-        sorted_res = sorted(list(self.possible_answers))
-        return f'Possible answers are {sorted_res}'
 
     def intersect_possible_answers(self, update: list):
         """
@@ -181,9 +137,9 @@ class Student:
         x = ''
         if len(solutions) == 2:
             if is_bigger:
-                x = max(solutions)
-            else:
                 x = min(solutions)
+            else:
+                x = max(solutions)
         else:
             if solutions:
                 x = solutions
