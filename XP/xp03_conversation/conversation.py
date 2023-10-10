@@ -178,18 +178,22 @@ class Student:
         :param is_bigger: to use the bigger or smaller result of the quadratic equation(min or max from [x1, x2])
         """
         solutions = quadratic_equation_solver(equation)
-        if to_multiply and is_bigger:
-            x = str(int(max(solutions) * multiplicative))
-            self.deal_with_dec_value(x)
-        if to_multiply and not is_bigger:
-            x = str(int(min(solutions) * multiplicative))
-            self.deal_with_dec_value(x)
-        if not to_multiply and is_bigger:
-            x = str(int(min(solutions) / multiplicative))
-            self.deal_with_dec_value(x)
-        if not to_multiply and not is_bigger:
-            x = str(int(max(solutions) / multiplicative))
-            self.deal_with_dec_value(x)
+        x = 0
+        if len(solutions) == 2:
+            if is_bigger:
+                x = max(solutions)
+            else:
+                x = min(solutions)
+        else:
+            if solutions:
+                x = solutions
+
+        if to_multiply:
+            x *= multiplicative
+            self.deal_with_dec_value(str(x))
+        else:
+            x /= multiplicative
+            self.deal_with_dec_value(str(x))
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
