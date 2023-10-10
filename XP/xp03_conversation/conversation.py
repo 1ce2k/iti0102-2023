@@ -143,15 +143,15 @@ class Student:
         else:
             if solutions:
                 x = solutions
-
-        if to_multiply:
-            x = int(x * multiplicative)
-            self.deal_with_dec_value(str(x))
-            # self.possible_answers = x
-        else:
-            x = int(x / multiplicative)
-            self.deal_with_dec_value(str(x))
-            # self.possible_answers = x
+        if float(multiplicative) != 0.0:
+            if to_multiply:
+                x = int(x * multiplicative)
+                self.deal_with_dec_value(str(x))
+                # self.possible_answers = x
+            else:
+                x = int(x / multiplicative)
+                self.deal_with_dec_value(str(x))
+                # self.possible_answers = x
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
