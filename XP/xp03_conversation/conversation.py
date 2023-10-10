@@ -150,7 +150,7 @@ class Student:
         if not to_multiply and not is_bigger:
             x = str(int(min(solutions) / multiplicative))
             self.deal_with_dec_value(x)
-            self.possible_answers = 4
+            # self.possible_answers = 4
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
