@@ -30,7 +30,7 @@ class Student:
         f"The number I needed to guess was {final_answer}."
         """
         if re.search(r'is composite', sentence):
-            self.deal_with_composites(True)
+            self.deal_with_composites(False)
 
         if len(self.possible_answers) == 1:
             final = next(iter(self.possible_answers))
