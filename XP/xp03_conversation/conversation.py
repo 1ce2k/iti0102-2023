@@ -221,12 +221,13 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
             x1 = -b / (2 * a)
             return x1
     if d > 0:
-        x1 = (-b + math.sqrt(d)) / (2 * a)
-        x2 = (-b - math.sqrt(d)) / (2 * a)
-        if x2 < x1:
-            return x2, x1
-        elif x1 > x2:
-            return x1, x2
+        if a != 0:
+            x1 = (-b + math.sqrt(d)) / (2 * a)
+            x2 = (-b - math.sqrt(d)) / (2 * a)
+            if x2 < x1:
+                return x2, x1
+            elif x1 > x2:
+                return x1, x2
 
 
 def normalize_quadratic_equation(equation: str) -> str:
