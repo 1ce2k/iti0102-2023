@@ -178,7 +178,7 @@ class Student:
         :param is_bigger: to use the bigger or smaller result of the quadratic equation(min or max from [x1, x2])
         """
         solutions = quadratic_equation_solver(equation)
-        x = 0
+        x = ''
         if len(solutions) == 2:
             if is_bigger:
                 x = max(solutions)
