@@ -32,6 +32,10 @@ class Student:
         if re.search(r'is composite', sentence):
             self.deal_with_composites(True)
 
+        if len(self.possible_answers) == 1:
+            final = next(iter(self.possible_answers))
+            return f'The number I needed to guess was {final}'
+
     def intersect_possible_answers(self, update: list):
         """
         Logical AND between two sets.
