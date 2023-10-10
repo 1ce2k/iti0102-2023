@@ -358,15 +358,20 @@ def find_catalan_numbers(biggest_number: int) -> list:
     #     catalan_numbers.append(next)
     # return catalan_numbers
 
-    def catalan_recursive(n):
+    def catalan_recursive(n, memo):
         if n <= 1:
             return 1
+        if memo[n] != 0:
+            return memo[n]
         result = 0
         for i in range(n):
-            result += catalan_recursive(i) * catalan_recursive(n - i - 1)
+            result += catalan_recursive(i, memo) * catalan_recursive(n - i - 1, memo)
+        memo[n] = result
         return result
 
-    catalan = [catalan_recursive(i) for i in range(biggest_number + 1)]
+    memo = [0] * (biggest_number + 1)
+    memo[0] = 1
+    catalan = [catalan_recursive(i, memo) for i in range(biggest_number + 1)]
     return catalan
 
 
