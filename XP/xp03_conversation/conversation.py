@@ -15,8 +15,8 @@ class Student:
         :param biggest_number: the biggest possible number(inclusive) to guess
         NB: calculating using sets is much faster compared to lists
         """
-        self.biggest_number = biggest_number
-        self.possible_answers = set([all_possible_answers for all_possible_answers in range(biggest_number + 1)])
+        self.num = biggest_number
+        self.possible_answers = set([all_possible_answers for all_possible_answers in range(self.num + 1)])
 
     def decision_branch(self, sentence: str):
         """
@@ -124,7 +124,7 @@ class Student:
         Call find_primes_in_range to get all composite numbers in range.
         :param is_prime: boolean whether the number is prime or not
         """
-        primes = find_primes_in_range(self.biggest_number)
+        primes = find_primes_in_range(self.num)
         if is_prime:
             self.intersect_possible_answers(primes)
         else:
@@ -137,7 +137,7 @@ class Student:
         Call find_composites_in_range to get all composite numbers in range.
         :param is_composite: boolean whether the number is composite or not
         """
-        composites = find_composites_in_range(self.biggest_number)
+        composites = find_composites_in_range(self.num)
         if is_composite:
             self.intersect_possible_answers(composites)
         else:
@@ -202,7 +202,7 @@ class Student:
         Call find_fibonacci_numbers to get all fibonacci numbers in range.
         :param is_in: boolean whether the number is in fibonacci sequence or not
         """
-        fibonacci_nums = find_fibonacci_numbers(self.biggest_number)
+        fibonacci_nums = find_fibonacci_numbers(self.num)
         if is_in:
             self.intersect_possible_answers(fibonacci_nums)
         else:
@@ -215,7 +215,7 @@ class Student:
         Call find_catalan_numbers to get all catalan numbers in range.
         :param is_in: boolean whether the number is in catalan sequence or not
         """
-        catalan_nums = find_catalan_numbers(self.biggest_number)
+        catalan_nums = find_catalan_numbers(self.num)
         if is_in:
             self.intersect_possible_answers(catalan_nums)
         else:
