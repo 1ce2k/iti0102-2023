@@ -140,10 +140,27 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
     """
     if not schedule:
         return []
-    if len(schedule) == 1:
-        for time in schedule.keys():
-            return [time]
-
+    # Create a dictionary to store the count of flights for each hour slot
+    hour_slots = {}
+    times = []
+    for time in schedule:
+        hour, minute = map(int, time.split(':'))
+        total_minutes = hour * 60 + minute
+        times.append(total_minutes)
+    for time in times:
+        start = time
+        end = time + 60
+        for x in times:
+            if x in range(start, end):
+                if x in hour_slots:
+                    hour_slots[x] += 1
+                else:
+                    hour_slots[x] = 1
+                    hour_slots[start] += 1
+    max_count = max(hour_slots.values())
+    busiest_slots = [time for time, count in hour_slots.items() if count == max_count]
+    busiest_hours = [f'{hour // 60:02d}:{hour % 60:02d}' for hour in busiest_slots]
+    return busiest_hours
 
 
 def most_popular_destination(schedule: dict[str, tuple[str, str]], passenger_count: dict[str, int]) -> str:
