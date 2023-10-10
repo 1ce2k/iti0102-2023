@@ -29,8 +29,8 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        if re.search(r'prime number', sentence):
-            self.deal_with_primes(True)
+        if re.search(r'is composite', sentence):
+            self.deal_with_composites(True)
 
     def intersect_possible_answers(self, update: list):
         """
