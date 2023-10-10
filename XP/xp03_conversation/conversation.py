@@ -137,9 +137,9 @@ class Student:
         x = ''
         if len(solutions) == 2:
             if is_bigger:
-                x = min(solutions)
-            else:
                 x = max(solutions)
+            else:
+                x = min(solutions)
         else:
             if solutions:
                 x = solutions
