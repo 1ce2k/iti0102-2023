@@ -296,7 +296,7 @@ def normalize_quadratic_equation(equation: str) -> str:
             else:
                 ret += f' {"+" if b >= 0 else "-"} {abs(b)}x'
         if c != 0:
-            ret += f'{"+" if c > 0 else "-"} {abs(c)}'
+            ret += f' {"+" if c > 0 else "-"} {abs(c)}'
     ret += ' = 0'
     return ret
 
