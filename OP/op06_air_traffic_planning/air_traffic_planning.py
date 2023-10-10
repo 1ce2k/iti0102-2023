@@ -58,6 +58,8 @@ def busiest_time(schedule: dict[str, tuple[str, str]]) -> list[str]:
                      in the format "HH:mm" and values are tuples containing destination and flight number.
     :return: List of strings representing the busiest hour(s) in 24-hour format, such as ["08", "21"].
     """
+    if len(schedule) == 1:
+        return list(schedule.keys())
     times = {}
     for time in schedule.keys():
         hour = time.split(':')[0]
@@ -173,15 +175,15 @@ if __name__ == '__main__':
         "11:35": ("Helsinki", "BHM2345")
     }
     new_schedule = update_delayed_flight(schedule, "OWL6754", "09:00")
-    print(schedule)
+    # print(schedule)
     # {'06:15': ('Tallinn', 'OWL6754'), '11:35': ('Helsinki', 'BHM2345')}
-    print(new_schedule)
+    # print(new_schedule)
     # {'09:00': ('Tallinn', 'OWL6754'), '11:35': ('Helsinki', 'BHM2345')}
 
     new_schedule = cancel_flight(schedule, "OWL6754")
-    print(schedule)
+    # print(schedule)
     # {'06:15': ('Tallinn', 'OWL6754'), '11:35': ('Helsinki', 'BHM2345')}
-    print(new_schedule)
+    # print(new_schedule)
     # {'11:35': ('Helsinki', 'BHM2345')}
 
     schedule = {
@@ -199,7 +201,7 @@ if __name__ == '__main__':
     print(busiest_time(schedule))
     # ['06', '11']
 
-    print(connecting_flights(schedule, ("04:00", "Tallinn")))
+    # print(connecting_flights(schedule, ("04:00", "Tallinn")))
     # [('06:30', 'Paris'), ('07:29', 'London')]
 
     print(busiest_hour(schedule))
