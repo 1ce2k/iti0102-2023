@@ -136,35 +136,30 @@ class Student:
         """
         res = 0.0
         solutions = quadratic_equation_solver(equation)
-        if solutions:
-            if to_multiply and is_bigger:
-                if len(solutions) > 1:
-                    res = min(solutions) * multiplicative
-                elif len(solutions) == 1:
-                    res = solutions * multiplicative
-                self.deal_with_dec_value(str(int(res)))
-                self.possible_answers = '1'
-            elif to_multiply and not is_bigger:
-                if len(solutions) > 1:
-                    res = max(solutions) * multiplicative
-                elif len(solutions) == 1:
-                    res = solutions * multiplicative
-                self.deal_with_dec_value(str(int(res)))
-                self.possible_answers = '2'
-            elif not to_multiply and is_bigger:
-                if len(solutions) > 1:
-                    res = min(solutions) / multiplicative
-                elif len(solutions) == 1:
-                    res = solutions / multiplicative
-                self.deal_with_dec_value(str(int(res)))
-                self.possible_answers = '3'
+        length = len(solutions)
+        if to_multiply and is_bigger:
+            if length == 1:
+                x = str(int(solutions) * multiplicative)
             else:
-                if len(solutions) > 1:
-                    res = min(solutions) / multiplicative
-                elif len(solutions) == 1:
-                    res = solutions / multiplicative
-                self.deal_with_dec_value(str(int(res)))
-            # self.possible_answers = '4'
+                x = str(int(max(solutions) * multiplicative))
+            self.deal_with_dec_value(x)
+        if to_multiply and not is_bigger:
+            if length == 1:
+                x = str(int(solutions) / multiplicative)
+            else:
+                x = str(int(min(solutions) / multiplicative))
+            self.deal_with_dec_value(x)
+        if not to_multiply and is_bigger:
+            if length == 1:
+                x = str(int(solutions) / multiplicative)
+            else:
+                x = str(int(max(solutions) / multiplicative))
+        if not to_multiply and not is_bigger:
+            if length == 1:
+                x = str(int(solutions) / multiplicative)
+            else:
+                x = str(int(min(solutions) / multiplicative))
+            self.deal_with_dec_value(x)
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
@@ -410,7 +405,6 @@ regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
 regex_b = r'\s*(-?\s*\d*|-)\s*x1?(?![0-9])'
 regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
 
-
 if __name__ == "__main__":
     def print_regex_results(regex, f):
         """Test func."""
@@ -421,6 +415,7 @@ if __name__ == "__main__":
             # else:
             #     result = match.group(1)
             print(match.group(1))
+
 
     f = "3x2 - 4x1 + 1 - 4x2 + 7 + 16x1 - 9x2 - 81x2 = o"
     # print(equation_coefficients(f))
