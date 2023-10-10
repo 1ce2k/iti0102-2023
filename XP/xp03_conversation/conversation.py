@@ -147,9 +147,11 @@ class Student:
         if to_multiply:
             x *= multiplicative
             self.deal_with_dec_value(str(x))
+            self.possible_answers = x
         else:
             x /= multiplicative
             self.deal_with_dec_value(str(x))
+            self.possible_answers = x
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
