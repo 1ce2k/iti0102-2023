@@ -145,11 +145,11 @@ class Student:
                 x = solutions
 
         if to_multiply:
-            x *= multiplicative
+            x = int(x * multiplicative)
             self.deal_with_dec_value(str(x))
             self.possible_answers = x
         else:
-            x /= multiplicative
+            x = int(x / multiplicative)
             self.deal_with_dec_value(str(x))
             self.possible_answers = x
 
