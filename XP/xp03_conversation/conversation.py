@@ -29,7 +29,8 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        pass
+        if re.search(r'prime number', sentence):
+            self.deal_with_primes(True)
 
     def intersect_possible_answers(self, update: list):
         """
@@ -406,7 +407,6 @@ if __name__ == "__main__":
             # else:
             #     result = match.group(1)
             print(match.group(1))
-
 
     f = "3x2 - 4x1 + 1 - 4x2 + 7 + 16x1 - 9x2 - 81x2 = o"
     # print(equation_coefficients(f))
