@@ -352,27 +352,27 @@ def find_catalan_numbers(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Catalan_number
     :return: list of catalan numbers
     """
-    # catalan_numbers = [1]
-    # for n in range(1, biggest_number + 1):
-    #     next = (4 * n - 2) * catalan_numbers[-1] // (n + 1)
-    #     catalan_numbers.append(next)
-    # return catalan_numbers
+    catalan_numbers = [1]
+    for n in range(1, biggest_number + 1):
+        next = catalan_numbers[-1] * (4 * n - 2) // (n + 1)
+        catalan_numbers.append(next)
+    return catalan_numbers
 
-    def catalan_recursive(n, memo):
-        if n <= 1:
-            return 1
-        if memo[n] != 0:
-            return memo[n]
-        result = 0
-        for i in range(n):
-            result += catalan_recursive(i, memo) * catalan_recursive(n - i - 1, memo)
-        memo[n] = result
-        return result
-
-    memo = [0] * (biggest_number + 1)
-    memo[0] = 1
-    catalan = [catalan_recursive(i, memo) for i in range(biggest_number + 1)]
-    return catalan
+    # def catalan_recursive(n, memo):
+    #     if n <= 1:
+    #         return 1
+    #     if memo[n] != 0:
+    #         return memo[n]
+    #     result = 0
+    #     for i in range(n):
+    #         result += catalan_recursive(i, memo) * catalan_recursive(n - i - 1, memo)
+    #     memo[n] = result
+    #     return result
+    #
+    # memo = [0] * (biggest_number + 1)
+    # memo[0] = 1
+    # catalan = [catalan_recursive(i, memo) for i in range(biggest_number + 1)]
+    # return catalan
 
 
 def equation_coefficients(equation: str):
@@ -449,5 +449,5 @@ if __name__ == "__main__":
     # print("c")
     # print_regex_results(regex_c, f2)  # 5, 4
 
-    print(find_catalan_numbers(6))
+    print(find_catalan_numbers(10000))
     # print([1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, 208012, 742900, 2674440, 9694845])
