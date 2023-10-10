@@ -179,10 +179,10 @@ class Student:
         """
         solutions = quadratic_equation_solver(equation)
         if to_multiply and is_bigger:
-            x = str(int(min(solutions) * multiplicative))
+            x = str(int(max(solutions) * multiplicative))
             self.deal_with_dec_value(x)
         if to_multiply and not is_bigger:
-            x = str(int(max(solutions) * multiplicative))
+            x = str(int(min(solutions) * multiplicative))
             self.deal_with_dec_value(x)
         if not to_multiply and is_bigger:
             x = str(int(min(solutions) / multiplicative))
