@@ -380,49 +380,36 @@ def find_catalan_numbers(biggest_number: int) -> list:
     return catalan_numbers
 
 
-def equation_coefficients(equction: str):
-    """Return equation coefficients"""
-    matches_a = re.findall(regex_a, equction)
-    matches_b = re.findall(regex_b, equction)
-    matches_c = re.findall(regex_c, equction)
-    ret_a = []
-    ret_c = []
-    ret_b = []
-    for match_a in matches_a:
-        ret_a.append(match_a)
-    for match_b in matches_b:
-        ret_b.append(match_b)
-    for match_c in matches_c:
-        ret_c.append(match_c)
+def equation_coefficients(equation: str):
+    """Return equation coefficients."""
+    matches_a = re.findall(regex_a, equation)
+    matches_b = re.findall(regex_b, equation)
+    matches_c = re.findall(regex_c, equation)
     a, b, c = 0, 0, 0
-    for elem_a in ret_a:
-        elem_a = elem_a.replace(' ', '')
-        if elem_a[1:].isdigit() or elem_a.isdigit():
-            a += int(elem_a)
+    for match_a in matches_a:
+        match = match_a.replace(' ', '')
+        if match == '-':
+            a -= 1
+        elif not match:
+            a += 1
         else:
-            if elem_a == '-':
-                a -= 1
-            elif not elem_a:
-                a += 1
-    for elem_b in ret_b:
-        elem_b = elem_b.replace(' ', '')
-        if elem_b[1:].isdigit() or elem_b.isdigit():
-            b += int(elem_b)
+            a += int(match)
+    for match_b in matches_b:
+        match = match_b.replace(' ', '')
+        if match == '-':
+            b -= 1
+        elif not match:
+            b += 1
         else:
-            if elem_b:
-                b -= 1
-            else:
-                b += 1
-    for elem_c in ret_c:
-        elem_c = elem_c.replace(' ','')
-        if elem_c[1:].isdigit() or elem_c.isdigit():
-            c += int(elem_c)
+            b += int(match)
+    for match_c in matches_c:
+        match = match_c.replace(' ', '')
+        if match == '-':
+            c -= 1
+        elif not match:
+            c += 1
         else:
-            if elem_c:
-                c -= 1
-            else:
-                c += 1
-    # print(ret_a, ret_b, ret_c)
+            c += int(match)
     return a, b, c
 
 
@@ -433,6 +420,7 @@ regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
 
 if __name__ == "__main__":
     def print_regex_results(regex, f):
+        """Example."""
         matches = re.finditer(regex, f)
         for match in matches:
             # if match.group(1).strip() == '':
