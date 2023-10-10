@@ -213,16 +213,19 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     if there are 2 solutions, return them in a tuple, where smaller is first
     all numbers are returned as floats.
     """
+    # normalize equation
     new_equation = normalize_quadratic_equation(equation)
+    # find coefficients
     a, b, c = equation_coefficients(new_equation)
+    # calculate discriminant
     d = b ** 2 - 4 * a * c
+    # find all solutions for the equation
     if d < 0:
         return None
     if d == 0:
         if a != 0:
             x1 = -b / (2 * a)
             return x1
-
     if d > 0:
         if a != 0:
             x1 = (-b + math.sqrt(d)) / (2 * a)
