@@ -365,8 +365,7 @@ def find_catalan_numbers(biggest_number: int) -> list:
     catalan[0] = 1
 
     for i in range(1, biggest_number + 1):
-        for j in range(i):
-            catalan[i] += catalan[j] * catalan[i - j - 1]
+        catalan[i] = catalan[i - 1] * (4 * i - 2) // (i + 1)
 
     return catalan
 
@@ -445,6 +444,5 @@ if __name__ == "__main__":
     # print("c")
     # print_regex_results(regex_c, f2)  # 5, 4
 
-
-    print(find_catalan_numbers(15))
-    print([1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, 208012, 742900, 2674440, 9694845])
+    # print(find_catalan_numbers(100))
+    # print([1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, 208012, 742900, 2674440, 9694845])
