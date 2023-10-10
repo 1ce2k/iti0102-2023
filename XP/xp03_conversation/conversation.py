@@ -134,22 +134,12 @@ class Student:
         :param multiplicative: the multiplicative to multiply or divide with
         :param is_bigger: to use the bigger or smaller result of the quadratic equation(min or max from [x1, x2])
         """
-        normalized_equation = normalize_quadratic_equation(equation)
-        solution = quadratic_equation_solver(normalized_equation)
-        if solution is None:
-            return None
-        new_solution = set()
-        for x in solution:
-            if to_multiply:
-                new_solution.add(int(x * multiplicative))
-            else:
-                new_solution.add(int(x / multiplicative))
-        if is_bigger:
-            max_solution = str(max(new_solution))
-            self.intersect_possible_answers([x for x in self.possible_answers if max_solution in str(x)])
-        else:
-            min_solution = str(min(new_solution))
-            self.intersect_possible_answers([x for x in self.possible_answers if min_solution in str(x)])
+        if to_multiply and is_bigger:
+            solutions = quadratic_equation_solver(equation)
+            res = solutions
+            if len(solutions) > 1:
+                res = max(solutions) * multiplicative
+            self.deal_with_dec_value(str(int(res)))
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
@@ -408,17 +398,17 @@ if __name__ == "__main__":
             print(match.group(1))
 
     f = "3x2 - 4x1 + 1 - 4x2 + 7 + 16x1 - 9x2 - 81x2 = o"
-    print(equation_coefficients(f))
-    print(normalize_quadratic_equation(f))
-    print(quadratic_equation_solver(f))
+    # print(equation_coefficients(f))
+    # print(normalize_quadratic_equation(f))
+    # print(quadratic_equation_solver(f))
     f2 = 'x2 - x1 - x - 1 = 0'
-    print(equation_coefficients(f2))
-    print(normalize_quadratic_equation(f2))
-    print(quadratic_equation_solver(f2))
+    # print(equation_coefficients(f2))
+    # print(normalize_quadratic_equation(f2))
+    # print(quadratic_equation_solver(f2))
     f3 = 'x + 2 = 0'
-    print(equation_coefficients(f3))
-    print(normalize_quadratic_equation(f3))
-    print(quadratic_equation_solver(f3))
+    # print(equation_coefficients(f3))
+    # print(normalize_quadratic_equation(f3))
+    # print(quadratic_equation_solver(f3))
     # print_regex_results(regex_a, f)  # 3
     # print_regex_results(regex_b, f)  # - 4
     # print_regex_results(regex_c, f)  # 1
