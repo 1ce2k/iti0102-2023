@@ -142,7 +142,7 @@ class Student:
             elif len(solutions) == 1:
                 res = solutions * multiplicative
             self.deal_with_dec_value(str(int(res)))
-            self.possible_answers = '1'
+            # self.possible_answers = '1'
         elif to_multiply and not is_bigger:
             if len(solutions) > 1:
                 res = min(solutions) * multiplicative
