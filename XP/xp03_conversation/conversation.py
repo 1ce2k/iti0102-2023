@@ -54,8 +54,8 @@ class Student:
         elif re.search(r'decimal value: (\d+)', sentence):
             decimal_value = re.search(r'decimal value (\d+)', sentence).group(1)
             self.deal_with_dec_value(decimal_value)
-        elif re.search(r'hex value ([0-9a-fA-F]+)', sentence):
-            hex_value = re.search(r'hex value ([0-9a-fA-F]+)', sentence).group(1)
+        elif re.search(r'hex value ([d\a-fA-F]+)', sentence):
+            hex_value = re.search(r'hex value ([\da-fA-F]+)', sentence).group(1)
             self.deal_with_hex_value(hex_value)
         elif re.search(r'quadratic equation', sentence):
             # Extract the equation, multiplicative, and is_bigger using regex
