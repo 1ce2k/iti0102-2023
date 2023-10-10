@@ -154,6 +154,7 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
             if x in range(start, end):
                 if x in hour_slots:
                     hour_slots[x] += 1
+                    hour_slots[start] += 1
                 else:
                     hour_slots[x] = 1
                     hour_slots[start] += 1
@@ -224,9 +225,9 @@ if __name__ == '__main__':
 
     schedule = {
         "04:35": ("Maardu", "MWL6754"),
-        "06:15": ("Tallinn", "OWL6754"),
-        "06:30": ("Paris", "OWL6751"),
-        "07:29": ("London", "OWL6756"),
+        "08:15": ("Tallinn", "OWL6754"),
+        "08:30": ("Paris", "OWL6751"),
+        "08:45": ("London", "OWL6756"),
         "08:00": ("New York", "OWL6759"),
         "11:30": ("Tokyo", "OWL6752"),
         "11:35": ("Helsinki", "BHM2345"),
