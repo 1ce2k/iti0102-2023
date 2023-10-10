@@ -138,7 +138,7 @@ class Student:
         if to_multiply and is_bigger:
             x = str(int(max(solutions) * multiplicative))
             self.deal_with_dec_value(x)
-            self.possible_answers = 1
+            # self.possible_answers = 1
         if to_multiply and not is_bigger:
             x = str(int(min(solutions) / multiplicative))
             self.deal_with_dec_value(x)
