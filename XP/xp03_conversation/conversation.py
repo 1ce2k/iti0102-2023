@@ -140,6 +140,24 @@ class Student:
             if len(solutions) > 1:
                 res = max(solutions) * multiplicative
             self.deal_with_dec_value(str(int(res)))
+        elif to_multiply and not is_bigger:
+            solutions = quadratic_equation_solver(equation)
+            res = solutions
+            if len(solutions) > 1:
+                res = min(solutions) * multiplicative
+            self.deal_with_dec_value(str(int(res)))
+        elif not to_multiply and is_bigger:
+            solutions = quadratic_equation_solver(equation)
+            res = solutions
+            if len(solutions) > 1:
+                res = max(solutions) / multiplicative
+            self.deal_with_dec_value(str(int(res)))
+        elif not to_multiply and not is_bigger:
+            solutions = quadratic_equation_solver(equation)
+            res = solutions
+            if len(solutions) > 1:
+                res = min(solutions) / multiplicative
+            self.deal_with_dec_value(str(int(res)))
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
