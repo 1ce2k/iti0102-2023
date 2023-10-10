@@ -135,29 +135,26 @@ class Student:
         :param is_bigger: to use the bigger or smaller result of the quadratic equation(min or max from [x1, x2])
         """
         res = 0
+        solutions = quadratic_equation_solver(equation)
         if to_multiply and is_bigger:
-            solutions = quadratic_equation_solver(equation)
             if len(solutions) > 1:
                 res = max(solutions) * multiplicative
             elif len(solutions) == 1:
                 res = solutions * multiplicative
             self.deal_with_dec_value(str(int(res)))
         elif to_multiply and not is_bigger:
-            solutions = quadratic_equation_solver(equation)
             if len(solutions) > 1:
                 res = min(solutions) * multiplicative
             elif len(solutions) == 1:
                 res = solutions * multiplicative
             self.deal_with_dec_value(str(int(res)))
         elif not to_multiply and is_bigger:
-            solutions = quadratic_equation_solver(equation)
             if len(solutions) > 1:
                 res = max(solutions) / multiplicative
             elif len(solutions) == 1:
                 res = solutions / multiplicative
             self.deal_with_dec_value(str(int(res)))
         elif not to_multiply and not is_bigger:
-            solutions = quadratic_equation_solver(equation)
             if len(solutions) > 1:
                 res = min(solutions) / multiplicative
             elif len(solutions) == 1:
