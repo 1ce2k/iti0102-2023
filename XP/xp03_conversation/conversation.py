@@ -211,49 +211,21 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     if there are 2 solutions, return them in a tuple, where smaller is first
     all numbers are returned as floats.
     """
-    equation = equation.replace(' ', '')
-    terms = re.split('([-+=])', equation)
-    a, b, c, d = 0, 0, 0, 0
-    for term in terms:
-        if 'x2' in term:
-            if term == 'x2':
-                a = 1
-            else:
-                a = int(term.replace('x2', ''))
-        elif 'x' in term:
-            if terms[terms.index(term) - 1] == '+':
-                if term == 'x':
-                    b = 1
-                else:
-                    b = int(term.replace('x', ''))
-            elif terms[terms.index(term) - 1] == '-':
-                if term == 'x':
-                    b = -1
-                else:
-                    b = -int(term.replace('x', ''))
-        elif term.isdigit() and term != '0':
-            if terms[terms.index(term) - 1] == '-':
-                c = -int(term)
-            elif terms[terms.index(term) - 1] == '+':
-                c = int(term)
-    if a != 0:
-        d = b ** 2 - 4 * a * c
-    x1 = 0
-    x2 = 0
+    new_equation = normalize_quadratic_equation(equation)
+    a, b, c = equation_coefficients(new_equation)
+    d = b ** 2 - 4 * a * c
     if d < 0:
         return None
     if d == 0:
-        if a != 0:
-            x1 = - b / (2 * a)
-            return float(x1)
+        x1 = -b / (2 * a)
+        return x1
     if d > 0:
         x1 = (-b + math.sqrt(d)) / (2 * a)
         x2 = (-b - math.sqrt(d)) / (2 * a)
-
-    if x1 == x2:
-        return x1
-    res = [x1, x2]
-    return min(res), max(res)
+        if x2 < x1:
+            return x2, x1
+        elif x1 > x2:
+            return x1, x2
 
 
 def normalize_quadratic_equation(equation: str) -> str:
@@ -432,9 +404,11 @@ if __name__ == "__main__":
     f = "3x2 - 4x1 + 1 - 4x2 + 7 + 16x1 - 9x2 - 81x2 = o"
     print(equation_coefficients(f))
     print(normalize_quadratic_equation(f))
+    print(quadratic_equation_solver(f))
     f2 = 'x2 - x1 - x - 1 = 0'
     print(equation_coefficients(f2))
     print(normalize_quadratic_equation(f2))
+    print(quadratic_equation_solver(f2))
     # print_regex_results(regex_a, f)  # 3
     # print_regex_results(regex_b, f)  # - 4
     # print_regex_results(regex_c, f)  # 1
