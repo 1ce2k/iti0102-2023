@@ -252,24 +252,22 @@ def normalize_quadratic_equation(equation: str) -> str:
     :return: normalized equation
     """
     # split equation to left and right parts
-
     lhs, rhs = equation.split('=')
-
+    # calculate coefficients
     left_a, left_b, left_c = equation_coefficients(lhs)
     right_a, right_b, right_c = equation_coefficients(rhs)
     a, b, c = left_a - right_a, left_b - right_b, left_c - right_c
+    # if it is needed then multiply by -1
     if a < 0:
         a, b, c = -a, -b, -c
     elif a == 0 and b < 0:
         b, c = -b, -c
     elif a == 0 and b == 0 and c < 0:
         c = -c
-
+    # create new equation
     ret = ''
-
     if a == 0 and b == 0:
         return f'{c} = 0'
-
     if a != 0:
         ret += 'x2' if a == 1 else f'{a}x2'
     if b != 0 and a != 0:
@@ -297,7 +295,6 @@ def find_primes_in_range(biggest_number: int) -> list:
             for i in range(p * p, biggest_number + 1, p):
                 prime[i] = False
         p += 1
-
     # Create a list of prime numbers
     primes = [p for p in range(2, biggest_number + 1) if prime[p]]
     return primes
@@ -347,8 +344,8 @@ def find_catalan_numbers(biggest_number: int) -> list:
     """
     catalan_numbers = [1]
     for n in range(1, biggest_number + 1):
-        next = (4 * n - 2) * catalan_numbers[-1] // (n + 1)
-        catalan_numbers.append(next)
+        next_num = (4 * n - 2) * catalan_numbers[-1] // (n + 1)
+        catalan_numbers.append(next_num)
     return catalan_numbers
 
 
@@ -388,39 +385,3 @@ def equation_coefficients(equation: str):
 regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
 regex_b = r'\s*(-?\s*\d*|-)\s*x1?(?![0-9])'
 regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
-
-if __name__ == "__main__":
-    def print_regex_results(regex, f):
-        """Test func."""
-        matches = re.finditer(regex, f)
-        for match in matches:
-            # if match.group(1).strip() == '':
-            #     result = '-'
-            # else:
-            #     result = match.group(1)
-            print(match.group(1))
-
-    f = "3x2 - 4x1 + 1 - 4x2 + 7 + 16x1 - 9x2 - 81x2 = o"
-    # print(equation_coefficients(f))
-    # print(normalize_quadratic_equation(f))
-    # print(quadratic_equation_solver(f))
-    f2 = 'x2 - x1 - x - 1 = 0'
-    # print(equation_coefficients(f2))
-    # print(normalize_quadratic_equation(f2))
-    # print(quadratic_equation_solver(f2))
-    f3 = 'x + 2 = 0'
-    # print(equation_coefficients(f3))
-    # print(normalize_quadratic_equation(f3))
-    # print(quadratic_equation_solver(f3))
-    # print_regex_results(regex_a, f)  # 3
-    # print_regex_results(regex_b, f)  # - 4
-    # print_regex_results(regex_c, f)  # 1
-
-    # f2 = "3x2 + 4x1 + 4 + 5 - 2x2 - 7x"
-
-    # print("x2")
-    # print_regex_results(regex_a, f2)  # 3, - 2
-    # print("x")
-    # print_regex_results(regex_b, f2)  # 4, - 7
-    # print("c")
-    # print_regex_results(regex_c, f2)  # 5, 4
