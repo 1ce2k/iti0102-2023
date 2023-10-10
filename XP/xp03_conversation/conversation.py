@@ -300,7 +300,7 @@ def normalize_quadratic_equation(equation: str) -> str:
     if a == 0:
         if b != 0:
             if b == 1:
-                ret += f'x'
+                ret += 'x'
             else:
                 ret += f'{abs(b)}x'
         if c != 0:
