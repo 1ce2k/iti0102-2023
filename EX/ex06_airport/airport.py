@@ -117,9 +117,9 @@ def airlines_operating_today(schedule: dict, airline_names: dict) -> set:
     """
     ret = set()
     code_list = []
-    for value in schedule.values():
-        if value[1][:3] not in code_list:
-            code_list.append(value[1][:3])
+    for (_, num) in schedule.values():
+        if num[:3] not in code_list:
+            code_list.append(num[:3])
     for code in code_list:
         if code in airline_names.keys():
             ret.add(airline_names[code])
