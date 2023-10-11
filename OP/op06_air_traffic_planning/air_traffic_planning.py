@@ -139,7 +139,6 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
     """
     if not schedule:
         return []
-    # Create a dictionary to store the count of flights for each hour slot
     hour_slots = []
     times = []
     for time in schedule:
@@ -155,7 +154,6 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
                 if x not in slot:
                     slot.append(x)
         hour_slots.append(slot)
-        slot = []
     max_count = len(max(hour_slots, key=len))
     busiest_slots = [x for x in hour_slots if len(x) == max_count]
     busiest_slots_start = set()
