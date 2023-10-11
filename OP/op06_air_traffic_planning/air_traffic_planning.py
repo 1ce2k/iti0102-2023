@@ -159,7 +159,7 @@ def busiest_hour(schedule: dict[str, tuple[str, str]]) -> list[str]:
     busiest_slots_start = set()
     for i in busiest_slots:
         busiest_slots_start.add(i[0])
-    busiest_hours = [f'{hour // 60:02d}:{hour % 60:02d}' for hour in busiest_slots_start]
+    busiest_hours = [f'{minute // 60:02d}:{minute % 60:02d}' for minute in busiest_slots_start]
     busiest_hours.sort()
     return busiest_hours
 
