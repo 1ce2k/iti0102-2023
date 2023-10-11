@@ -94,9 +94,9 @@ def destinations_list(schedule: dict) -> list:
     :return: Alphabetically sorted list of unique destinations.
     """
     ret = []
-    for value in schedule.values():
-        if value[0] not in ret:
-            ret.append(value[0])
+    for (value, _) in schedule.values():
+        if value not in ret:
+            ret.append(value)
     return sorted(ret)
 
 
