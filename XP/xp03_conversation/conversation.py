@@ -29,6 +29,16 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
+        if re.search(r'happen to be prime|occur to be prime', sentence):
+            self.deal_with_primes(True)
+        elif re.search(r"doesn't occur to be prime", sentence):
+            self.deal_with_primes(False)
+
+        if len(self.possible_answers) == 1:
+            final = next(iter(self.possible_answers))
+            return f"The num I needed to guess was {final}"
+        sorted_res = sorted(self.possible_answers)
+        return f"Possible answers are {sorted_res}"
 
     def intersect_possible_answers(self, update: list):
         """
