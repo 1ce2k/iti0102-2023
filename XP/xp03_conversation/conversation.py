@@ -29,10 +29,11 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        if re.search(r'happen to be prime|occur to be prime', sentence):
-            self.deal_with_primes(True)
-        elif re.search(r"doesn't occur to be prime", sentence):
+        if any(word in sentence for word in
+               ['happen not to be prime', 'is not prime', "doesn't occur to be prime", 'does not occur to be prime']):
             self.deal_with_primes(False)
+        elif any(word in sentence for word in ['happen to be prime', 'is prime', 'occur to be prime']):
+            self.deal_with_primes(True)
 
         if len(self.possible_answers) == 1:
             final = next(iter(self.possible_answers))
