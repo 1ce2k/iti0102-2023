@@ -30,7 +30,7 @@ class Student:
         f"The number I needed to guess was {final_answer}."
         """
         if any(word in sentence for word in
-               ['happen not to be prime', 'is not prime', "doesn't occur to be prime", 'does not occur to be prime']):
+               ["doesn't happen to be prime", 'is not prime', "doesn't occur to be prime", 'does not occur to be prime']):
             self.deal_with_primes(False)
         elif any(word in sentence for word in ['happen to be prime', 'is prime', 'occur to be prime']):
             self.deal_with_primes(True)
