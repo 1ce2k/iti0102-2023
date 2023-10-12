@@ -29,17 +29,12 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        if any(word in sentence for word in
-               ["doesn't happen to be prime", 'is not prime', "doesn't occur to be prime", 'does not occur to be prime']):
-            self.deal_with_primes(True)
-        elif any(word in sentence for word in ['happen to be prime', 'is prime', 'occur to be prime']):
-            self.deal_with_primes(False)
-
-        if len(self.possible_answers) == 1:
-            final = next(iter(self.possible_answers))
-            return f"The num I needed to guess was {final}"
-        sorted_res = sorted(self.possible_answers)
-        return f"Possible answers are {sorted_res}"
+        pass
+        # if len(self.possible_answers) == 1:
+        #     final = next(iter(self.possible_answers))
+        #     return f"The num I needed to guess was {final}"
+        # sorted_res = sorted(self.possible_answers)
+        # return f"Possible answers are {sorted_res}"
 
     def intersect_possible_answers(self, update: list):
         """
