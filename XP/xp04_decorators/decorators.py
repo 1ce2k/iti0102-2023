@@ -58,12 +58,13 @@ def memoize(func):
     """
     cache = {}
 
-    def inner(x):
-        if x not in cache:
-            result = func(x)
-            cache[x] = result
-        return cache[x]
-    return inner
+    def memoized_func(*args):
+        if args in cache:
+            return cache[args]
+        result = func(*args)
+        cache[args] = result
+        return result
+    return memoized_func
 
 
 def read_data(func):
