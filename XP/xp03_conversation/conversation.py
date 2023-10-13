@@ -342,25 +342,6 @@ def find_fibonacci_numbers(biggest_number: int) -> list:
     return fibonacci_sequence
 
 
-def memoize(func):
-    """
-    Cache the return value of a function.
-
-    :param func: The decorated function.
-    :return: Inner function.
-    """
-    cache = {}
-
-    def memoized_func(*args):
-        if args in cache:
-            return cache[args]
-        result = func(*args)
-        cache[args] = result
-        return result
-    return memoized_func
-
-
-@memoize
 def find_catalan_numbers(biggest_number: int) -> list:
     """
     Find all Catalan numbers in range(end inclusive).
@@ -370,15 +351,17 @@ def find_catalan_numbers(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Catalan_number
     :return: list of catalan numbers
     """
-    catalan_numbers = [0] * (biggest_number + 1)
-    catalan_numbers[0] = 1
-    if biggest_number > 0:
-        catalan_numbers[1] = 1
-    for i in range(2, biggest_number + 1):
-        for j in range(i):
-            catalan_numbers[i] += catalan_numbers[j] * catalan_numbers[i - j - 1]
-    return catalan_numbers[:-1]
 
+    def calculate_catalan_number(n):
+        if n <= 1:
+            return 1
+        catalan = 0
+        for i in range(n):
+            catalan += calculate_catalan_number(i) * calculate_catalan_number(n - i - 1)
+        return catalan
+
+    catalan_numbers = [calculate_catalan_number(i) for i in range(biggest_number + 1)]
+    return catalan_numbers
 
 def equation_coefficients(equation: str):
     """Return equation coefficients."""
