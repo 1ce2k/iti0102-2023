@@ -77,7 +77,7 @@ def read_data(func):
     """
     def inner(*args, **kwargs):
         with open('data.txt', 'r') as file:
-            data = file.readlines()
+            data = [line.strip() for line in file.readlines()]
         return func(data, *args, **kwargs)
     return inner
 
