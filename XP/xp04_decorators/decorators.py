@@ -98,7 +98,7 @@ def catch(*error_classes):
     :return: Inner function.
     """
 
-    def decorator(func):
+    def foo(func):
         def wrapper(*args, **kwargs):
             try:
                 result = func(*args, **kwargs)
@@ -106,7 +106,7 @@ def catch(*error_classes):
             except error_classes as error:
                 return 1, type(error)
         return wrapper
-    return decorator if error_classes else decorator()
+    return foo if error_classes else foo()
 
 
 def enforce_types(func):
@@ -163,7 +163,6 @@ def enforce_types(func):
                 f"Argument '{param_name}' must be of type {valid_type_str}, but was '{param_value}' of type {type(param_value).__name__}"
             )
 
-
     def wrapper(*args, **kwargs):
         bound_args = sig.bind(*args, **kwargs)
         bound_args.apply_defaults()
@@ -217,7 +216,7 @@ def process_file_contents(data: list, prefix: str = ""):
 
 
 @enforce_types
-def no_more_duck_typing(num: int | float, g: None) -> str:
+def no_more_duck_typing(num: int | float | bool | str, g: None) -> str:
     """Test function for @enforce_types."""
     return str(num)
 
@@ -262,6 +261,12 @@ if __name__ == '__main__':
 
     try:
         print(no_more_duck_typing(5.0, 2))
+        print("TypeError should be thrown, but wasn't.")
+    except TypeError as e:
+        print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
+
+    try:
+        print(no_more_duck_typing(True, None))
         print("TypeError should be thrown, but wasn't.")
     except TypeError as e:
         print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
