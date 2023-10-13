@@ -12,10 +12,11 @@ def double(func):
     """
 
     def wrapper(*args, **kwargs):
-        # siia saab kirjutada koodi, mis käivitub enne funktsiooni
-        result = func(*args, **kwargs)  # siin käivitatakse dekoreeritav funktsioon
-        # siia saab kirjutada koodi, mis käivitub pärast funktsiooni
+        # return value from func()
+        result = func(*args, **kwargs)
+        # return value * 2
         return result * 2
+
     return wrapper
 
 
@@ -30,6 +31,7 @@ def stopwatch(func):
     :param func: The decorated function.
     :return: Inner function.
     """
+
     def wrapper(*args, **kwargs):
         start_time = time.time()
         result = func(*args, **kwargs)
@@ -38,6 +40,7 @@ def stopwatch(func):
         function_name = func.__name__
         print(f"It took {elapsed_time} seconds for {function_name} to run")
         return result
+
     return wrapper
 
 
@@ -53,7 +56,15 @@ def memoize(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    pass
+    cache = {}
+
+    def inner(x):
+        if x not in cache:
+            result = func(x)
+            cache[x] = result
+        return cache[x]
+
+    return inner
 
 
 def read_data(func):
@@ -83,7 +94,18 @@ def catch(*error_classes):
     :param error_classes: The exceptions to catch.
     :return: Inner function.
     """
-    pass
+
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            try:
+                result = func(*args, **kwargs)
+                return (0, result)
+            except error_classes as error:
+                return (1, type(error))
+
+        return wrapper
+
+    return decorator if error_classes else decorator()
 
 
 def enforce_types(func):
@@ -138,10 +160,10 @@ def fibonacci(n: int):
     return fibonacci(n - 2) + fibonacci(n - 1)
 
 
-# @catch(KeyError, ZeroDivisionError)
-# def error_func(iterable):
-#     """Test function for @catch."""
-#     return iterable[2]
+@catch(KeyError, ZeroDivisionError)
+def error_func(iterable):
+    """Test function for @catch."""
+    return iterable[2]
 
 
 @read_data
@@ -169,22 +191,22 @@ if __name__ == '__main__':
     # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
     print()
 
-    # print(error_func("Hello"))  # (0, 'l')
-    # print(error_func([5, 6, 7]))  # (0, 7)
-    # print(error_func({}))  # (1, <class 'KeyError'>)
-    #
-    # try:
-    #     print(error_func([]))
-    #     print("IndexError should not be caught at this situation.")
-    # except IndexError:
-    #     print("IndexError was thrown (as it should).")
+    print(error_func("Hello"))  # (0, 'l')
+    print(error_func([5, 6, 7]))  # (0, 7)
+    print(error_func({}))  # (1, <class 'KeyError'>)
+
+    try:
+        print(error_func([]))
+        print("IndexError should not be caught at this situation.")
+    except IndexError:
+        print("IndexError was thrown (as it should).")
 
     print()
 
-    # print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
-    # # contents in a list with "hi" in front of each line like ["hiLine 1", "hiLine 2", ...].
-    # print(process_file_contents())  # This should just print out the file contents in a list.
-    # print()
+    print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
+    # contents in a list with "hi" in front of each line like ["hiLine 1", "hiLine 2", ...].
+    print(process_file_contents())  # This should just print out the file contents in a list.
+    print()
 
     print(no_more_duck_typing(5, None))  # 5
 
