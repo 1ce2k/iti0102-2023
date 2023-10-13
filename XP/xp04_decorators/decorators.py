@@ -98,17 +98,14 @@ def catch(*error_classes):
     :return: Inner function.
     """
 
-    def foo(func):
+    def decorator(func):
         def wrapper(*args, **kwargs):
             try:
-                result = func(*args, **kwargs)
-                return 0, result
-            except Exception as error:
-                if not error_classes or any(isinstance(error, exc) for exc in error_classes):
-                    return 1, type(error)
-                raise
+                return 0, func(*args, **kwargs)
+            except error_classes as e:
+                return 1, type(e)
         return wrapper
-    return foo if error_classes else foo()
+    return decorator
 
 
 def enforce_types(func):
