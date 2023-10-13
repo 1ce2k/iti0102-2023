@@ -105,6 +105,8 @@ def catch(*error_classes):
                 return 0, result
             except error_classes as error:
                 return 1, type(error)
+            except Exception as error:
+                return 1, type(error)
         return wrapper
     return foo if error_classes else foo()
 
