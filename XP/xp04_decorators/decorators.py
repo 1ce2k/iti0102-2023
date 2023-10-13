@@ -132,49 +132,7 @@ def enforce_types(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    sig = inspect.signature(func)
-
-    def check_type(param_name, param_value, param_type):
-        # print(param_type is inspect.Parameter.empty)
-        if param_type is inspect.Parameter.empty:
-            return  # No type annotation, so no check is needed
-        # If the parameter type is a class (e.g., int, float, str), check if the value is an instance of that class
-        possible_types = []
-        if "|" in str(param_type):
-            possible_types = str(param_type).split(' | ')
-        elif not param_type:
-            possible_types = ["None"]
-        else:
-            possible_types = [str(param_type.__name__)]
-        actual_type = str(type(param_value).__name__)
-
-
-        if actual_type == 'NoneType':
-            actual_type = actual_type.replace('Type', '')
-        if actual_type not in possible_types:
-            valid_type_str = ''
-            if len(possible_types) > 1:
-                valid_type_str = ' or '.join(possible_types)
-                if valid_type_str == 'None':
-                    valid_type_str += 'Type'
-            elif len(possible_types) == 1:
-                valid_type_str = possible_types[0]
-            raise TypeError(
-                f"Argument '{param_name}' must be of type {valid_type_str}, but was '{param_value}' of type {type(param_value).__name__}"
-            )
-
-    def wrapper(*args, **kwargs):
-        bound_args = sig.bind(*args, **kwargs)
-        bound_args.apply_defaults()
-        for param_name, param_value in bound_args.arguments.items():
-            param_type = sig.parameters[param_name].annotation
-            check_type(param_name, param_value, param_type)
-        result = func(*args, **kwargs)
-        return_type = sig.return_annotation
-        check_type('return value', result, return_type)
-        return result
-
-    return wrapper
+    pass
 
 
 #  Everything below is just for testing purposes, tester does not care what you do with them.
@@ -191,7 +149,8 @@ def double_me(element):
 @stopwatch
 def measure_me():
     """Test function for @stopwatch."""
-    time.sleep(0.21)
+    # time.sleep(0.21)
+    fibonacci(35)
     return 5
 
 
@@ -201,6 +160,13 @@ def fibonacci(n: int):
     if n in (0, 1):
         return n
     return fibonacci(n - 2) + fibonacci(n - 1)
+
+
+@memoize
+def factorial(n: int):
+    if n == 0:
+        return 1
+    return n * factorial(n - 1)
 
 
 @catch(KeyError, ZeroDivisionError)
@@ -226,23 +192,23 @@ if __name__ == '__main__':
     # print(double_me("Hello"))  # HelloHello
     # print()
     #
-    # print(measure_me())  # It took 0.21... seconds for measure_me to run
+    print(measure_me())  # It took 0.21... seconds for measure_me to run
     # # 5
     # print()
     #
-    # print(fibonacci(35))  # 9227465
-    # # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
-    # print()
+    print(fibonacci(35))  # 9227465
+    # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
+    print(factorial(50))  # 3628800
     #
-    print(error_func("Hello"))  # (0, 'l')
-    print(error_func([5, 6, 7]))  # (0, 7)
-    print(error_func({}))  # (1, <class 'KeyError'>)
-
-    try:
-        print(error_func([]))
-        print("IndexError should not be caught at this situation.")
-    except IndexError:
-        print("IndexError was thrown (as it should).")
+    # print(error_func("Hello"))  # (0, 'l')
+    # print(error_func([5, 6, 7]))  # (0, 7)
+    # print(error_func({}))  # (1, <class 'KeyError'>)
+    #
+    # try:
+    #     print(error_func([]))
+    #     print("IndexError should not be caught at this situation.")
+    # except IndexError:
+    #     print("IndexError was thrown (as it should).")
     #
     # print()
     #
