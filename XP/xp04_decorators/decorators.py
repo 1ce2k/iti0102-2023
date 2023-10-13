@@ -132,10 +132,9 @@ def enforce_types(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    def check_type(arg_name, expected_types, actual_value):
-        if not isinstance(actual_value, expected_types):
-            expected_type_str = ' or '.join(map(lambda t: t.__name__, expected_types))
-            raise TypeError(f"Argument '{arg_name}' must be of type {expected_type_str}, but was {actual_value} of type {type(actual_value).__name__}]")
+    def check_type(arg_name, expected_type, actual_value):
+        if not isinstance(actual_value, expected_type):
+            raise TypeError(f"Argument '{arg_name}' must be of type {expected_type.__name__}, but was {actual_value} of type {type(actual_value).__name__}]")
 
     def wrapper(*args, **kwargs):
         signature = inspect.signature(func)
