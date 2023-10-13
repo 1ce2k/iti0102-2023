@@ -342,6 +342,25 @@ def find_fibonacci_numbers(biggest_number: int) -> list:
     return fibonacci_sequence
 
 
+def memoize(func):
+    """
+    Cache the return value of a function.
+
+    :param func: The decorated function.
+    :return: Inner function.
+    """
+    cache = {}
+
+    def memoized_func(*args):
+        if args in cache:
+            return cache[args]
+        result = func(*args)
+        cache[args] = result
+        return result
+    return memoized_func
+
+
+@memoize
 def find_catalan_numbers(biggest_number: int) -> list:
     """
     Find all Catalan numbers in range(end inclusive).
