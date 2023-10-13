@@ -98,17 +98,16 @@ def catch(*error_classes):
     :return: Inner function.
     """
 
-    def foo(func):
+    def decorator(func):
         def wrapper(*args, **kwargs):
             try:
-                result = func(*args, **kwargs)
-                return 0, result
-            except Exception as error:
-                if not error_classes or any(isinstance(error, exc) for exc in error_classes):
-                    return 1, type(error)
-                raise
+                return 0, func(*args, *kwargs)
+            except error_classes as e:
+                return 1, type(e)
+            except Exception as a:
+                return 1, type(a)
         return wrapper
-    return foo if error_classes else foo()
+    return decorator
 
 
 def enforce_types(func):
@@ -205,6 +204,12 @@ def fibonacci(n: int):
     return fibonacci(n - 2) + fibonacci(n - 1)
 
 
+@catch()
+def test(iterable):
+    """test func fot empty @catch"""
+    return iterable[2]
+
+
 @catch(KeyError, ZeroDivisionError)
 def error_func(iterable):
     """Test function for @catch."""
@@ -239,12 +244,25 @@ if __name__ == '__main__':
     print(error_func("Hello"))  # (0, 'l')
     print(error_func([5, 6, 7]))  # (0, 7)
     print(error_func({}))  # (1, <class 'KeyError'>)
+    print(error_func([]))
 
     try:
         print(error_func([]))
         print("IndexError should not be caught at this situation.")
     except IndexError:
         print("IndexError was thrown (as it should).")
+
+    print(test("There"))  # (0, 'l')
+    print(test([5, 6, 9]))  # (0, 7)
+    print(test({2:1}))  # (1, <class 'KeyError'>)
+
+    try:
+        print(test([]))
+        print("IndexError should not be caught at this situation.")
+    except IndexError:
+        print("IndexError was thrown (as it should).")
+
+
     #
     # print()
     #
