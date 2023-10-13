@@ -1,6 +1,5 @@
 """XP - decorators."""
 import inspect
-from typing import Type, Union
 import time
 
 
@@ -140,24 +139,30 @@ def enforce_types(func):
         if param_type is inspect.Parameter.empty:
             return  # No type annotation, so no check is needed
         # If the parameter type is a class (e.g., int, float, str), check if the value is an instance of that class
-        possible_types = str(param_type).split(' | ')
+        possible_types = []
+        if "|" in str(param_type):
+            possible_types = str(param_type).split(' | ')
+        elif not param_type:
+            possible_types = ["None"]
+        else:
+            possible_types = [str(param_type.__name__)]
         actual_type = str(type(param_value).__name__)
+
 
         if actual_type == 'NoneType':
             actual_type = actual_type.replace('Type', '')
         if actual_type not in possible_types:
-            if len(possible_types) == 1:
-                valid_type_str = ', '.join(possible_types)
+            valid_type_str = ''
+            if len(possible_types) > 1:
+                valid_type_str = ' or '.join(possible_types)
                 if valid_type_str == 'None':
                     valid_type_str += 'Type'
-                raise TypeError(
-                    f"Argument '{param_name}' must be of type {valid_type_str}, but was '{param_value}' of type {type(param_value).__name__}"
-                )
-            else:
+            elif len(possible_types) == 1:
                 valid_type_str = possible_types[0]
-                raise TypeError(
-                    f"Argument '{param_name}' must be of types {valid_type_str}, but was '{param_value}' of type {type(param_value).__name__}"
-                )
+            raise TypeError(
+                f"Argument '{param_name}' must be of type {valid_type_str}, but was '{param_value}' of type {type(param_value).__name__}"
+            )
+
 
     def wrapper(*args, **kwargs):
         bound_args = sig.bind(*args, **kwargs)
