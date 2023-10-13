@@ -351,22 +351,14 @@ def find_catalan_numbers(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Catalan_number
     :return: list of catalan numbers
     """
-    memo = [0] * (biggest_number + 1)
-    catalan_numbers = [calculate_catalan_number(i, memo) for i in range(biggest_number + 1)]
-    return catalan_numbers
+    ret = []
+    for i in range(biggest_number):
+        # print(math.factorial(2 * i))
+        # print(math.factorial(i) * math.factorial(i + 1))
+        next = int(math.factorial(2 * i) // (math.factorial(i) * math.factorial(i + 1)))
+        ret.append(next)
+    return ret
 
-
-def calculate_catalan_number(n, memo):
-    if n <= 1:
-        return 1
-    if memo[n] != 0:
-        return memo[n]
-
-    catalan = 0
-    for i in range(n):
-        catalan += calculate_catalan_number(i, memo) * calculate_catalan_number(n - i - 1, memo)
-    memo[n] = catalan
-    return catalan
 
 
 def equation_coefficients(equation: str):
