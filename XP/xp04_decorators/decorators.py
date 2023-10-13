@@ -63,7 +63,6 @@ def memoize(func):
             result = func(x)
             cache[x] = result
         return cache[x]
-
     return inner
 
 
@@ -76,7 +75,11 @@ def read_data(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    pass
+    def inner(*args, **kwargs):
+        with open('data.txt', 'r') as file:
+            data = file.readlines()
+        return func(data, *args, **kwargs)
+    return inner
 
 
 def catch(*error_classes):
@@ -99,12 +102,10 @@ def catch(*error_classes):
         def wrapper(*args, **kwargs):
             try:
                 result = func(*args, **kwargs)
-                return (0, result)
+                return 0, result
             except error_classes as error:
-                return (1, type(error))
-
+                return 1, type(error)
         return wrapper
-
     return decorator if error_classes else decorator()
 
 
