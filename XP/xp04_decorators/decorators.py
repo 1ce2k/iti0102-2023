@@ -1,16 +1,23 @@
 """XP - decorators"""
 
-
 import time
 
 
 def double(func):
     """
     Double the return value of a function.
+
     :param func: The decorated function.
     :return: Inner function.
     """
-    return 2 * func()
+
+    def wrapper(*args, **kwargs):
+        # siia saab kirjutada koodi, mis käivitub enne funktsiooni
+        result = func(*args, **kwargs)  # siin käivitatakse dekoreeritav funktsioon
+        # siia saab kirjutada koodi, mis käivitub pärast funktsiooni
+        return result * 2
+
+    return wrapper
 
 
 def stopwatch(func):
@@ -140,7 +147,6 @@ def process_file_contents(data: list, prefix: str = ""):
 def no_more_duck_typing(num: int or float, g: None) -> str:
     """Test function for @enforce_types."""
     return str(num)
-
 
 # if __name__ == '__main__':
 #     print(double_me(5))  # 10
