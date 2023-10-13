@@ -10,7 +10,7 @@ def double(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    return 2 * func
+    return 2 * func()
 
 
 def stopwatch(func):
