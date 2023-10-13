@@ -16,7 +16,6 @@ def double(func):
         result = func(*args, **kwargs)  # siin käivitatakse dekoreeritav funktsioon
         # siia saab kirjutada koodi, mis käivitub pärast funktsiooni
         return result * 2
-
     return wrapper
 
 
@@ -31,7 +30,15 @@ def stopwatch(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    pass
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        function_name = func.__name__
+        print(f"It took {elapsed_time} seconds for {function_name} to run")
+        return result
+    return wrapper
 
 
 def memoize(func):
@@ -148,46 +155,47 @@ def no_more_duck_typing(num: int or float, g: None) -> str:
     """Test function for @enforce_types."""
     return str(num)
 
-# if __name__ == '__main__':
-#     print(double_me(5))  # 10
-#     print(double_me("Hello"))  # HelloHello
-#     print()
-#
-#     print(measure_me())  # It took 0.21... seconds for measure_me to run
-#     # 5
-#     print()
-#
-#     print(fibonacci(35))  # 9227465
-#     # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
-#     print()
-#
-#     print(error_func("Hello"))  # (0, 'l')
-#     print(error_func([5, 6, 7]))  # (0, 7)
-#     print(error_func({}))  # (1, <class 'KeyError'>)
-#
-#     try:
-#         print(error_func([]))
-#         print("IndexError should not be caught at this situation.")
-#     except IndexError:
-#         print("IndexError was thrown (as it should).")
-#
-#     print()
-#
-#     print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
-#     # contents in a list with "hi" in front of each line like ["hiLine 1", "hiLine 2", ...].
-#     print(process_file_contents())  # This should just print out the file contents in a list.
-#     print()
-#
-#     print(no_more_duck_typing(5, None))  # 5
-#
-#     try:
-#         print(no_more_duck_typing("5", None))
-#         print("TypeError should be thrown, but wasn't.")
-#     except TypeError as e:
-#         print(e)  # Argument 'num' must be of type int or float, but was '5' of type str
-#
-#     try:
-#         print(no_more_duck_typing(5.0, 2))
-#         print("TypeError should be thrown, but wasn't.")
-#     except TypeError as e:
-#         print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
+
+if __name__ == '__main__':
+    print(double_me(5))  # 10
+    print(double_me("Hello"))  # HelloHello
+    print()
+
+    print(measure_me())  # It took 0.21... seconds for measure_me to run
+    # 5
+    print()
+
+    print(fibonacci(35))  # 9227465
+    # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
+    print()
+
+    # print(error_func("Hello"))  # (0, 'l')
+    # print(error_func([5, 6, 7]))  # (0, 7)
+    # print(error_func({}))  # (1, <class 'KeyError'>)
+    #
+    # try:
+    #     print(error_func([]))
+    #     print("IndexError should not be caught at this situation.")
+    # except IndexError:
+    #     print("IndexError was thrown (as it should).")
+
+    print()
+
+    # print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
+    # # contents in a list with "hi" in front of each line like ["hiLine 1", "hiLine 2", ...].
+    # print(process_file_contents())  # This should just print out the file contents in a list.
+    # print()
+
+    print(no_more_duck_typing(5, None))  # 5
+
+    try:
+        print(no_more_duck_typing("5", None))
+        print("TypeError should be thrown, but wasn't.")
+    except TypeError as e:
+        print(e)  # Argument 'num' must be of type int or float, but was '5' of type str
+
+    try:
+        print(no_more_duck_typing(5.0, 2))
+        print("TypeError should be thrown, but wasn't.")
+    except TypeError as e:
+        print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
