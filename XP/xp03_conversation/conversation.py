@@ -352,11 +352,13 @@ def find_catalan_numbers(biggest_number: int) -> list:
     :return: list of catalan numbers
     """
     ret = []
-    for i in range(biggest_number):
-        # print(math.factorial(2 * i))
-        # print(math.factorial(i) * math.factorial(i + 1))
-        next = int(math.factorial(2 * i) // (math.factorial(i) * math.factorial(i + 1)))
-        ret.append(next)
+    for x in range(n):
+        catalan_number = math.factorial(2 * x) / (math.factorial(x) * math.factorial(x + 1))
+        print(catalan_number)
+        if catalan_number <= n:
+            ret.append(int(catalan_number))
+        else:
+            break
     return ret
 
 
