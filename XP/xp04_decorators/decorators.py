@@ -1,5 +1,6 @@
 """XP - decorators."""
 import inspect
+from typing import Type, Union
 import time
 
 
@@ -132,22 +133,43 @@ def enforce_types(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    def check_type(arg_name, expected_type, actual_value):
-        if not isinstance(actual_value, expected_type):
-            raise TypeError(f"Argument '{arg_name}' must be of type {expected_type.__name__}, but was {actual_value} of type {type(actual_value).__name__}]")
+    sig = inspect.signature(func)
+
+    def check_type(param_name, param_value, param_type):
+        # print(param_type is inspect.Parameter.empty)
+        if param_type is inspect.Parameter.empty:
+            return  # No type annotation, so no check is needed
+        # If the parameter type is a class (e.g., int, float, str), check if the value is an instance of that class
+        possible_types = str(param_type).split(' | ')
+        actual_type = str(type(param_value).__name__)
+
+        if actual_type == 'NoneType':
+            actual_type = actual_type.replace('Type', '')
+        if actual_type not in possible_types:
+            if len(possible_types) == 1:
+                valid_type_str = ', '.join(possible_types)
+                if valid_type_str == 'None':
+                    valid_type_str += 'Type'
+                raise TypeError(
+                    f"Argument '{param_name}' must be of type {valid_type_str}, but was '{param_value}' of type {type(param_value).__name__}"
+                )
+            else:
+                valid_type_str = possible_types[0]
+                raise TypeError(
+                    f"Argument '{param_name}' must be of types {valid_type_str}, but was '{param_value}' of type {type(param_value).__name__}"
+                )
 
     def wrapper(*args, **kwargs):
-        signature = inspect.signature(func)
-        parameter_annotation = signature.parameters
-        for arg_name, arg_value in zip(parameter_annotation, args):
-            expected_types = parameter_annotation[arg_name].annotation
-            if expected_types:
-                check_type(arg_name, expected_types, arg_value)
+        bound_args = sig.bind(*args, **kwargs)
+        bound_args.apply_defaults()
+        for param_name, param_value in bound_args.arguments.items():
+            param_type = sig.parameters[param_name].annotation
+            check_type(param_name, param_value, param_type)
         result = func(*args, **kwargs)
-        return_annotation = signature.return_annotation
-        if return_annotation:
-            check_type("Return", return_annotation, result)
+        return_type = sig.return_annotation
+        check_type('return value', result, return_type)
         return result
+
     return wrapper
 
 
@@ -190,42 +212,42 @@ def process_file_contents(data: list, prefix: str = ""):
 
 
 @enforce_types
-def no_more_duck_typing(num: int or float, g: None) -> str:
+def no_more_duck_typing(num: int | float, g: None) -> str:
     """Test function for @enforce_types."""
     return str(num)
 
 
 if __name__ == '__main__':
-    print(double_me(5))  # 10
-    print(double_me("Hello"))  # HelloHello
-    print()
+    # print(double_me(5))  # 10
+    # print(double_me("Hello"))  # HelloHello
+    # print()
+    #
+    # print(measure_me())  # It took 0.21... seconds for measure_me to run
+    # # 5
+    # print()
+    #
+    # print(fibonacci(35))  # 9227465
+    # # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
+    # print()
+    #
+    # print(error_func("Hello"))  # (0, 'l')
+    # print(error_func([5, 6, 7]))  # (0, 7)
+    # print(error_func({}))  # (1, <class 'KeyError'>)
+    #
+    # try:
+    #     print(error_func([]))
+    #     print("IndexError should not be caught at this situation.")
+    # except IndexError:
+    #     print("IndexError was thrown (as it should).")
+    #
+    # print()
+    #
+    # print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
+    # # contents in a list with "hi" in front of each line like ["hiLine 1", "hiLine 2", ...].
+    # print(process_file_contents())  # This should just print out the file contents in a list.
+    # print()
 
-    print(measure_me())  # It took 0.21... seconds for measure_me to run
-    # 5
-    print()
-
-    print(fibonacci(35))  # 9227465
-    # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
-    print()
-
-    print(error_func("Hello"))  # (0, 'l')
-    print(error_func([5, 6, 7]))  # (0, 7)
-    print(error_func({}))  # (1, <class 'KeyError'>)
-
-    try:
-        print(error_func([]))
-        print("IndexError should not be caught at this situation.")
-    except IndexError:
-        print("IndexError was thrown (as it should).")
-
-    print()
-
-    print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
-    # contents in a list with "hi" in front of each line like ["hiLine 1", "hiLine 2", ...].
-    print(process_file_contents())  # This should just print out the file contents in a list.
-    print()
-
-    print(no_more_duck_typing(5, None))  # 5
+    print(no_more_duck_typing(5.0, None))  # 5
 
     try:
         print(no_more_duck_typing("5", None))
