@@ -160,7 +160,7 @@ def enforce_types(func):
             elif len(possible_types) == 1:
                 valid_type_str = possible_types[0]
             raise TypeError(
-                f"Argument '{param_name}' must be of type {valid_type_str}, but was '{param_value}' of type {type(param_value).__name__}"
+                f"Argument '{param_name}' must be of type {valid_type_str}, but was {param_value} of type {type(param_value).__name__}"
             )
 
 
