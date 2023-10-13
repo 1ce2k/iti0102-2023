@@ -352,7 +352,7 @@ def find_catalan_numbers(biggest_number: int) -> list:
     :return: list of catalan numbers
     """
     catalan_numbers = [1]
-    for n in range(1, biggest_number + 1):
+    for n in range(1, biggest_number):
         next_num = (4 * n - 2) * catalan_numbers[-1] // (n + 1)
         catalan_numbers.append(next_num)
     return catalan_numbers

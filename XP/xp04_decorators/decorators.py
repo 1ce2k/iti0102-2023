@@ -198,7 +198,7 @@ if __name__ == '__main__':
     #
     print(fibonacci(35))  # 9227465
     # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
-    print(factorial(50))  # 3628800
+    print(factorial(499))  # 3628800
     #
     # print(error_func("Hello"))  # (0, 'l')
     # print(error_func([5, 6, 7]))  # (0, 7)
