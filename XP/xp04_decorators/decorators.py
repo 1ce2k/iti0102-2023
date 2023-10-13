@@ -1,4 +1,4 @@
-"""XP - decorators"""
+"""XP - decorators."""
 
 import time
 
