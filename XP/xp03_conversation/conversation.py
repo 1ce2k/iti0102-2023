@@ -146,6 +146,8 @@ class Student:
         """
         solutions = quadratic_equation_solver(equation)
         x = ''
+        if not solutions:
+            self.deal_with_dec_value('')
         if len(solutions) == 2:
             if is_bigger:
                 x = max(solutions)
