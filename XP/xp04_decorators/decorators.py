@@ -1,5 +1,5 @@
 """XP - decorators."""
-
+import inspect
 import time
 
 
@@ -132,7 +132,24 @@ def enforce_types(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    pass
+    def check_type(arg_name, expected_types, actual_value):
+        if not isinstance(actual_value, expected_types):
+            expected_type_str = ' or '.join(map(lambda t: t.__name__, expected_types))
+            raise TypeError(f"Argument '{arg_name}' must be of type {expected_type_str}, but was {actual_value} of type {type(actual_value).__name__}]")
+
+    def wrapper(*args, **kwargs):
+        signature = inspect.signature(func)
+        parameter_annotation = signature.parameters
+        for arg_name, arg_value in zip(parameter_annotation, args):
+            expected_types = parameter_annotation[arg_name].annotation
+            if expected_types:
+                check_type(arg_name, expected_types, arg_value)
+        result = func(*args, **kwargs)
+        return_annotation = signature.return_annotation
+        if return_annotation:
+            check_type("Return", return_annotation, result)
+        return result
+    return wrapper
 
 
 #  Everything below is just for testing purposes, tester does not care what you do with them.
