@@ -3,6 +3,11 @@ import re
 import math
 
 
+regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
+regex_b = r'\s*(-?\s*\d*|-)\s*x1?(?![0-9])'
+regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
+
+
 class Student:
     """Student class which interacts with the server."""
 
@@ -207,6 +212,39 @@ class Student:
         self.intersect_possible_answers(filtered_numbers)
 
 
+def equation_coefficients(equation: str):
+    """Return equation coefficients."""
+    matches_a = re.findall(regex_a, equation)
+    matches_b = re.findall(regex_b, equation)
+    matches_c = re.findall(regex_c, equation)
+    a, b, c = 0, 0, 0
+    for match_a in matches_a:
+        match = match_a.replace(' ', '')
+        if match == '-':
+            a -= 1
+        elif not match:
+            a += 1
+        else:
+            a += int(match)
+    for match_b in matches_b:
+        match = match_b.replace(' ', '')
+        if match == '-':
+            b -= 1
+        elif not match:
+            b += 1
+        else:
+            b += int(match)
+    for match_c in matches_c:
+        match = match_c.replace(' ', '')
+        if match == '-':
+            c -= 1
+        elif not match:
+            c += 1
+        else:
+            c += int(match)
+    return a, b, c
+
+
 def quadratic_equation_solver(equation: str) -> None or float or tuple:
     """
     Solve the normalized quadratic equation.
@@ -220,9 +258,9 @@ def quadratic_equation_solver(equation: str) -> None or float or tuple:
     all numbers are returned as floats.
     """
     # normalize equation
-    new_equation = normalize_quadratic_equation(equation)
+    # new_equation = normalize_quadratic_equation(equation)
     # find coefficients
-    a, b, c = equation_coefficients(new_equation)
+    a, b, c = equation_coefficients(equation)
     # calculate discriminant
     d = b ** 2 - 4 * a * c
     # find all solutions for the equation
@@ -360,41 +398,3 @@ def find_catalan_numbers(biggest_number: int) -> list:
         else:
             break
     return ret
-
-
-def equation_coefficients(equation: str):
-    """Return equation coefficients."""
-    matches_a = re.findall(regex_a, equation)
-    matches_b = re.findall(regex_b, equation)
-    matches_c = re.findall(regex_c, equation)
-    a, b, c = 0, 0, 0
-    for match_a in matches_a:
-        match = match_a.replace(' ', '')
-        if match == '-':
-            a -= 1
-        elif not match:
-            a += 1
-        else:
-            a += int(match)
-    for match_b in matches_b:
-        match = match_b.replace(' ', '')
-        if match == '-':
-            b -= 1
-        elif not match:
-            b += 1
-        else:
-            b += int(match)
-    for match_c in matches_c:
-        match = match_c.replace(' ', '')
-        if match == '-':
-            c -= 1
-        elif not match:
-            c += 1
-        else:
-            c += int(match)
-    return a, b, c
-
-
-regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
-regex_b = r'\s*(-?\s*\d*|-)\s*x1?(?![0-9])'
-regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
