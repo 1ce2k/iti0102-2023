@@ -351,11 +351,14 @@ def find_catalan_numbers(biggest_number: int) -> list:
     https://en.wikipedia.org/wiki/Catalan_number
     :return: list of catalan numbers
     """
-    catalan_numbers = [1]
-    for n in range(1, biggest_number):
-        next_num = (4 * n - 2) * catalan_numbers[-1] // (n + 1)
-        catalan_numbers.append(next_num)
-    return catalan_numbers
+    catalan_numbers = [0] * (biggest_number + 1)
+    catalan_numbers[0] = 1
+    if biggest_number > 0:
+        catalan_numbers[1] = 1
+    for i in range(2, biggest_number + 1):
+        for j in range(i):
+            catalan_numbers[i] += catalan_numbers[j] * catalan_numbers[i - j - 1]
+    return catalan_numbers[:-1]
 
 
 def equation_coefficients(equation: str):
