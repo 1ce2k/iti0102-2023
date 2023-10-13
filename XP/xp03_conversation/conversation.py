@@ -362,7 +362,6 @@ def find_catalan_numbers(biggest_number: int) -> list:
     return ret
 
 
-
 def equation_coefficients(equation: str):
     """Return equation coefficients."""
     matches_a = re.findall(regex_a, equation)
