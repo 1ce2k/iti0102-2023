@@ -103,10 +103,8 @@ def catch(*error_classes):
             try:
                 result = func(*args, **kwargs)
                 return 0, result
-            except error_classes as error:
-                return 1, type(error)
             except Exception as error:
-                if not error_classes:
+                if not error_classes or any(isinstance(error, exc) for exc in error_classes):
                     return 1, type(error)
                 raise
         return wrapper
@@ -238,15 +236,15 @@ if __name__ == '__main__':
     # # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
     # print()
     #
-    # print(error_func("Hello"))  # (0, 'l')
-    # print(error_func([5, 6, 7]))  # (0, 7)
-    # print(error_func({}))  # (1, <class 'KeyError'>)
-    #
-    # try:
-    #     print(error_func([]))
-    #     print("IndexError should not be caught at this situation.")
-    # except IndexError:
-    #     print("IndexError was thrown (as it should).")
+    print(error_func("Hello"))  # (0, 'l')
+    print(error_func([5, 6, 7]))  # (0, 7)
+    print(error_func({}))  # (1, <class 'KeyError'>)
+
+    try:
+        print(error_func([]))
+        print("IndexError should not be caught at this situation.")
+    except IndexError:
+        print("IndexError was thrown (as it should).")
     #
     # print()
     #
@@ -255,22 +253,22 @@ if __name__ == '__main__':
     # print(process_file_contents())  # This should just print out the file contents in a list.
     # print()
 
-    print(no_more_duck_typing(5.0, None))  # 5
-
-    try:
-        print(no_more_duck_typing("5", None))
-        print("TypeError should be thrown, but wasn't.")
-    except TypeError as e:
-        print(e)  # Argument 'num' must be of type int or float, but was '5' of type str
-
-    try:
-        print(no_more_duck_typing(5.0, 2))
-        print("TypeError should be thrown, but wasn't.")
-    except TypeError as e:
-        print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
-
-    try:
-        print(no_more_duck_typing(True, None))
-        print("TypeError should be thrown, but wasn't.")
-    except TypeError as e:
-        print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
+    # print(no_more_duck_typing(5.0, None))  # 5
+    #
+    # try:
+    #     print(no_more_duck_typing("5", None))
+    #     print("TypeError should be thrown, but wasn't.")
+    # except TypeError as e:
+    #     print(e)  # Argument 'num' must be of type int or float, but was '5' of type str
+    #
+    # try:
+    #     print(no_more_duck_typing(5.0, 2))
+    #     print("TypeError should be thrown, but wasn't.")
+    # except TypeError as e:
+    #     print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
+    #
+    # try:
+    #     print(no_more_duck_typing(True, None))
+    #     print("TypeError should be thrown, but wasn't.")
+    # except TypeError as e:
+    #     print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
