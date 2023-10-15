@@ -141,7 +141,9 @@ class Student:
         """
         solutions = quadratic_equation_solver(equation)
         x = ''
-        if len(solutions) == 2:
+        if not solutions:
+            x = ''
+        elif len(solutions) == 2:
             if is_bigger:
                 x = max(solutions)
             else:
@@ -352,13 +354,14 @@ def find_catalan_numbers(biggest_number: int) -> list:
     :return: list of catalan numbers
     """
     ret = []
-    for i in range(biggest_number):
-        # print(math.factorial(2 * i))
-        # print(math.factorial(i) * math.factorial(i + 1))
-        next = int(math.factorial(2 * i) // (math.factorial(i) * math.factorial(i + 1)))
-        ret.append(next)
+    for x in range(biggest_number):
+        catalan_number = math.factorial(2 * x) / (math.factorial(x) * math.factorial(x + 1))
+        print(catalan_number)
+        if catalan_number <= biggest_number:
+            ret.append(int(catalan_number))
+        else:
+            break
     return ret
-
 
 
 def equation_coefficients(equation: str):
