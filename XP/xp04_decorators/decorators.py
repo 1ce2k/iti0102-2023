@@ -107,18 +107,16 @@ def catch(*error_classes):
 
     def decorator(func):
         def inner_func(*args, **kwargs):
-            if error_classes:
-                try:
-                    result = func(*args, **kwargs)
-                    return 0, result
-                except error_classes as error:
-                    return 1, type(error)
             try:
                 result = func(*args, **kwargs)
                 return 0, result
+            except error_classes as error:
+                return 1, type(error)
             except Exception as error:
                 return 1, type(error)
+
         return inner_func
+
     return decorator
 
 
@@ -167,11 +165,15 @@ def enforce_types(func):
                     if isinstance(expected_type, types.UnionType):
                         if not is_instance_of_union(value, expected_type):
                             actual_type = type(value).__name__
-                            expected = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + expected_type.__args__[-1].__name__
-                            raise TypeError(f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
-                    elif not isinstance(expected_type, types.UnionType) and (value is not None or expected_type is not None):
+                            expected = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + \
+                                       expected_type.__args__[-1].__name__
+                            raise TypeError(
+                                f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
+                    elif not isinstance(expected_type, types.UnionType) and (
+                            value is not None or expected_type is not None):
                         actual_type = type(value).__name__
-                        raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was {value} of type {actual_type}")
+                        raise TypeError(
+                            f"Argument '{name}' must be of type {expected_type.__name__}, but was {value} of type {actual_type}")
         result = func(*args, **kwargs)
         if return_annotation is not inspect.Signature.empty:
             expected_type = return_annotation
@@ -179,7 +181,8 @@ def enforce_types(func):
             if isinstance(expected_type, types.UnionType):
                 if not is_instance_of_union(result, expected_type):
                     actual_type = type(result).__name__
-                    expected_types = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + expected_type.__args__[-1].__name__
+                    expected_types = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + \
+                                     expected_type.__args__[-1].__name__
                     raise TypeError(
                         f"Returned value must be of type {expected_types}, but was {result} of type {actual_type}")
             elif not isinstance(result, expected_type):
@@ -187,7 +190,10 @@ def enforce_types(func):
                 raise TypeError(
                     f"Returned value must be of type {expected_type}, but was {result} of type {actual_type}")
         return result
+
     return inner
+
+
 #  Everything below is just for testing purposes, tester does not care what you do with them.
 #    |           |           |           |           |           |           |           |
 #    V           V           V           V           V           V           V           V
@@ -250,7 +256,7 @@ if __name__ == '__main__':
     # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
     # print()
 
-    print(error_func(5, 0))  # (0, 'l')
+    print(error_func(5, 'p'))  # (0, 'l')
     # print(error_func([5, 6, 7]))  # (0, 7)
     # print(error_func({}))  # (1, <class 'KeyError'>)
 
