@@ -187,18 +187,18 @@ def no_more_duck_typing(num: int | float | bool | str, g: None) -> str:
     return str(num)
 
 
-if __name__ == '__main__':
-    print(double_me(5))  # 10
-    print(double_me("Hello"))  # HelloHello
-    print()
+# if __name__ == '__main__':
+#     print(double_me(5))  # 10
+    # print(double_me("Hello"))  # HelloHello
+    # print()
 
-    print(measure_me())  # It took 0.21... seconds for measure_me to run
+    # print(measure_me())  # It took 0.21... seconds for measure_me to run
     # # 5
     # print()
     #
-    print(fibonacci(35))  # 9227465
+    # print(fibonacci(35))  # 9227465
     # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
-    print(factorial(499))  # 3628800
+    # print(factorial(499))  # 3628800
     #
     # print(error_func("Hello"))  # (0, 'l')
     # print(error_func([5, 6, 7]))  # (0, 7)
