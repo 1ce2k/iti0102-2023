@@ -180,7 +180,6 @@ def enforce_types(func):
 
     return wrapper
 
-
 #  Everything below is just for testing purposes, tester does not care what you do with them.
 #    |           |           |           |           |           |           |           |
 #    V           V           V           V           V           V           V           V
