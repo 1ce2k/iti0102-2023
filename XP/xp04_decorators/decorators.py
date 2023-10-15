@@ -2,6 +2,7 @@
 
 import time
 import inspect
+import types
 
 
 def double(func):
@@ -11,6 +12,7 @@ def double(func):
     :param func: The decorated function.
     :return: Inner function.
     """
+
     def wrapper(*args, **kwargs):
         # return value from func()
         result = func(*args, **kwargs)
@@ -65,6 +67,7 @@ def memoize(func):
             return result
         else:
             return cache[arg]
+
     return inner
 
 
@@ -77,6 +80,7 @@ def read_data(func):
     :param func: The decorated function.
     :return: Inner function.
     """
+
     def inner(*args, **kwargs):
         with open('data.txt', 'r') as file:
             data = [line.strip() for line in file.readlines()]
@@ -138,48 +142,48 @@ def enforce_types(func):
     :return: Inner function.
     """
     sig = inspect.signature(func)
+    parameters = sig.parameters
+    return_annotation = sig.return_annotation
 
-    def check_type(param_name, param_value, param_type):
-        # print(param_type is inspect.Parameter.empty)
-        if param_type is inspect.Parameter.empty:
-            return  # No type annotation, so no check is needed
-        # If the parameter type is a class (e.g., int, float, str), check if the value is an instance of that class
-        possible_types = []
-        if "|" in str(param_type):
-            possible_types = str(param_type).split(' | ')
-        elif not param_type:
-            possible_types = ["None"]
-        else:
-            possible_types = [str(param_type.__name__)]
-        actual_type = str(type(param_value).__name__)
+    def is_instance_of_union(value, union_type):
+        for t in union_type.__args__:
+            if isinstance(value, t):
+                return True
+        return False
 
-        if actual_type == 'NoneType':
-            actual_type = actual_type.replace('Type', '')
-        if actual_type not in possible_types:
-            valid_type_str = ''
-            if len(possible_types) > 1:
-                valid_type_str = ' or '.join(possible_types)
-                if valid_type_str == 'None':
-                    valid_type_str += 'Type'
-            elif len(possible_types) == 1:
-                valid_type_str = possible_types[0]
-            raise TypeError(
-                f"Argument '{param_name}' must be of type {valid_type_str}, but was '{param_value}' of type {type(param_value).__name__}"
-            )
-
-    def wrapper(*args, **kwargs):
+    def inner(*args, **kwargs):
         bound_args = sig.bind(*args, **kwargs)
         bound_args.apply_defaults()
-        for param_name, param_value in bound_args.arguments.items():
-            param_type = sig.parameters[param_name].annotation
-            check_type(param_name, param_value, param_type)
+
+        for name, value in bound_args.arguments.items():
+            if name in parameters:
+                expected_type = parameters[name].annotation
+
+                if expected_type is not inspect.Parameter.empty:
+                    if isinstance(expected_type, types.UnionType):
+                        if not is_instance_of_union(value, expected_type):
+                            actual_type = type(value).__name__
+                            expected = ', '.join(t.__name__ for t in expected_type.__args__)
+                            raise TypeError(f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
+                    elif not isinstance(expected_type, types.UnionType) and (value is not None or expected_type is not None):
+                        actual_type = type(value).__name__
+                        raise TypeError(f"Argument '{name}' must be of type {expected_type}, but was {value} of type {actual_type}")
         result = func(*args, **kwargs)
-        return_type = sig.return_annotation
-        check_type('return value', result, return_type)
+        if return_annotation is not inspect.Signature.empty:
+            expected_type = return_annotation
+
+            if isinstance(expected_type, types.UnionType):
+                if not is_instance_of_union(result, expected_type):
+                    actual_type = type(result).__name__
+                    expected_types = ', '.join(t.__name__ for t in expected_type.__args__)
+                    raise TypeError(
+                        f"Returned value must be of type {expected_types}, but was {result} of type {actual_type}")
+            elif not isinstance(result, expected_type):
+                actual_type = type(result).__name__
+                raise TypeError(
+                    f"Returned value must be of type {expected_type}, but was {result} of type {actual_type}")
         return result
-
-    return wrapper
-
+    return inner
 #  Everything below is just for testing purposes, tester does not care what you do with them.
 #    |           |           |           |           |           |           |           |
 #    V           V           V           V           V           V           V           V
@@ -225,36 +229,36 @@ def no_more_duck_typing(num: int | float, g: None) -> str:
 
 
 if __name__ == '__main__':
-    print(double_me(5))  # 10
-    print(double_me("Hello"))  # HelloHello
-    print()
+    # print(double_me(5))  # 10
+    # print(double_me("Hello"))  # HelloHello
+    # print()
 
-    print(measure_me())  # It took 0.21... seconds for measure_me to run
+    # print(measure_me())  # It took 0.21... seconds for measure_me to run
     # 5
-    print()
+    # print()
 
-    print(fibonacci(35))  # 9227465
+    # print(fibonacci(35))  # 9227465
     # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
-    print()
+    # print()
 
-    print(error_func("Hello"))  # (0, 'l')
-    print(error_func([5, 6, 7]))  # (0, 7)
-    print(error_func({}))  # (1, <class 'KeyError'>)
+    # print(error_func("Hello"))  # (0, 'l')
+    # print(error_func([5, 6, 7]))  # (0, 7)
+    # print(error_func({}))  # (1, <class 'KeyError'>)
 
-    try:
-        print(error_func([]))
-        print("IndexError should not be caught at this situation.")
-    except IndexError:
-        print("IndexError was thrown (as it should).")
+    # try:
+    #     print(error_func([]))
+    #     print("IndexError should not be caught at this situation.")
+    # except IndexError:
+    #     print("IndexError was thrown (as it should).")
 
-    print()
+    # print()
 
-    print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
+    # print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
     # contents in a list with "hi" in front of each line like ["hiLine 1", "hiLine 2", ...].
-    print(process_file_contents())  # This should just print out the file contents in a list.
-    print()
+    # print(process_file_contents())  # This should just print out the file contents in a list.
+    # print()
 
-    print(no_more_duck_typing(5, None))  # 5
+    # print(no_more_duck_typing(5, None))  # 5
 
     try:
         print(no_more_duck_typing("5", None))
@@ -267,3 +271,9 @@ if __name__ == '__main__':
         print("TypeError should be thrown, but wasn't.")
     except TypeError as e:
         print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
+
+    try:
+        print(no_more_duck_typing("5", None))
+        print("TypeError should be thrown, but wasn't.")
+    except TypeError as e:
+        print(e)
