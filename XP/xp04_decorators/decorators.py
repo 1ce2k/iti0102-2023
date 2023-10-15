@@ -112,9 +112,7 @@ def catch(*error_classes):
                 return 0, result
             except error_classes as error:
                 return 1, type(error)
-
         return inner_func
-
     return decorator
 
 
@@ -165,9 +163,7 @@ def enforce_types(func):
                             actual_type = type(value).__name__
                             expected = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + expected_type.__args__[-1].__name__
                             raise TypeError(f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
-                    elif not isinstance(expected_type, types.UnionType) and (value is not None or expected_type is not None):
-                        actual_type = type(value).__name__
-                        raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was {value} of type {actual_type}")
+
         result = func(*args, **kwargs)
         if return_annotation is not inspect.Signature.empty:
             expected_type = return_annotation
@@ -228,10 +224,15 @@ def no_more_duck_typing(num: int | float, g: None) -> str | bool | float:
     return num
 
 
+@enforce_types
+def foo(a: int, b: int):
+    return a + b
+
+
 if __name__ == '__main__':
     # print(double_me(5))  # 10
     # print(double_me("Hello"))  # HelloHello
-    # print()
+    print()
 
     # print(measure_me())  # It took 0.21... seconds for measure_me to run
     # 5
@@ -258,22 +259,22 @@ if __name__ == '__main__':
     # print(process_file_contents())  # This should just print out the file contents in a list.
     # print()
 
-    print(no_more_duck_typing(5, None))  # 5
-
-    try:
-        print(no_more_duck_typing("5", None))
-        print("TypeError should be thrown, but wasn't.")
-    except TypeError as e:
-        print(e)  # Argument 'num' must be of type int or float, but was '5' of type str
-
-    try:
-        print(no_more_duck_typing(5.0, 2))
-        print("TypeError should be thrown, but wasn't.")
-    except TypeError as e:
-        print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
-
-    try:
-        print(no_more_duck_typing("5", None))
-        print("TypeError should be thrown, but wasn't.")
-    except TypeError as e:
-        print(e)
+    # print(no_more_duck_typing(5, None))  # 5
+    #
+    # try:
+    #     print(no_more_duck_typing("5", None))
+    #     print("TypeError should be thrown, but wasn't.")
+    # except TypeError as e:
+    #     print(e)  # Argument 'num' must be of type int or float, but was '5' of type str
+    #
+    # try:
+    #     print(no_more_duck_typing(5.0, 2))
+    #     print("TypeError should be thrown, but wasn't.")
+    # except TypeError as e:
+    #     print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
+    #
+    # try:
+    #     print(no_more_duck_typing("5", None))
+    #     print("TypeError should be thrown, but wasn't.")
+    # except TypeError as e:
+    #     print(e)
