@@ -61,9 +61,7 @@ def parse(row: str) -> tuple:
         address = None
     if address == '':
         address = None
-    if first_name and last_name and id_code:
-        return first_name, last_name, id_code, phone_num, date_of_birth, address
-    return None, None, id_code, None, None, None
+    return first_name, last_name, id_code, phone_num, date_of_birth, address
 
 
 
