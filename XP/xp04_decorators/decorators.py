@@ -167,7 +167,7 @@ def enforce_types(func):
                             raise TypeError(f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
                     elif not isinstance(expected_type, types.UnionType) and (value is not None or expected_type is not None):
                         actual_type = type(value).__name__
-                        raise TypeError(f"Argument '{name}' must be of type {expected_type}, but was {value} of type {actual_type}")
+                        raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was {value} of type {actual_type}")
         result = func(*args, **kwargs)
         if return_annotation is not inspect.Signature.empty:
             expected_type = return_annotation
@@ -225,7 +225,7 @@ def process_file_contents(data: list, prefix: str = ""):
 @enforce_types
 def no_more_duck_typing(num: int | float, g: None) -> str:
     """Test function for @enforce_types."""
-    return str(num)
+    return num
 
 
 if __name__ == '__main__':
@@ -258,7 +258,7 @@ if __name__ == '__main__':
     # print(process_file_contents())  # This should just print out the file contents in a list.
     # print()
 
-    # print(no_more_duck_typing(5, None))  # 5
+    print(no_more_duck_typing(5, None))  # 5
 
     try:
         print(no_more_duck_typing("5", None))
