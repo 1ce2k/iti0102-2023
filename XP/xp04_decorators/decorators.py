@@ -110,8 +110,10 @@ def catch(*error_classes):
             try:
                 result = func(*args, **kwargs)
                 return 0, result
-            except error_classes as error:
+            except Exception as error:
                 return 1, type(error)
+            # except error_classes as error:
+            #     return 1, type(error)
         return inner_func
     return decorator
 
@@ -163,7 +165,9 @@ def enforce_types(func):
                             actual_type = type(value).__name__
                             expected = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + expected_type.__args__[-1].__name__
                             raise TypeError(f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
-
+                    elif not isinstance(expected_type, types.UnionType) and (value is not None or expected_type is not None):
+                        actual_type = type(value).__name__
+                        raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was {value} of type {actual_type}")
         result = func(*args, **kwargs)
         if return_annotation is not inspect.Signature.empty:
             expected_type = return_annotation
@@ -206,10 +210,10 @@ def fibonacci(n: int):
     return fibonacci(n - 2) + fibonacci(n - 1)
 
 
-@catch(KeyError, ZeroDivisionError)
-def error_func(iterable):
+@catch()
+def error_func(a, b):
     """Test function for @catch."""
-    return iterable[2]
+    return a / b
 
 
 @read_data
@@ -224,15 +228,15 @@ def no_more_duck_typing(num: int | float, g: None) -> str | bool | float:
     return num
 
 
-@enforce_types
-def foo(a: int, b: int):
-    return a + b
+# @enforce_types
+# def foo(a: int, b: int):
+#     return a + b
 
 
 if __name__ == '__main__':
     # print(double_me(5))  # 10
     # print(double_me("Hello"))  # HelloHello
-    print()
+    # print()
 
     # print(measure_me())  # It took 0.21... seconds for measure_me to run
     # 5
@@ -242,7 +246,7 @@ if __name__ == '__main__':
     # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
     # print()
 
-    # print(error_func("Hello"))  # (0, 'l')
+    print(error_func(5, 0))  # (0, 'l')
     # print(error_func([5, 6, 7]))  # (0, 7)
     # print(error_func({}))  # (1, <class 'KeyError'>)
 
@@ -278,3 +282,5 @@ if __name__ == '__main__':
     #     print("TypeError should be thrown, but wasn't.")
     # except TypeError as e:
     #     print(e)
+
+    # print(foo(1, 0))
