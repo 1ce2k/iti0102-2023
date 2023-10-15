@@ -56,14 +56,14 @@ def memoize(func):
     :return: Inner function.
     """
     cache = {}
-    def memoized_func(*args):
-        if args in cache:
-            return cache[args]
-        result = func(*args)
-        cache[args] = result
-        return result
-
-    return memoized_func
+    def inner(arg):
+        if arg not in cache:
+            result = func(arg)
+            cache[arg] = result
+            return result
+        else:
+            return cache[arg]
+    return inner
 
 
 def read_data(func):
