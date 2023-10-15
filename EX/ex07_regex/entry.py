@@ -20,12 +20,7 @@ def parse(row: str) -> tuple:
     :param row: given string to find values from
     :return: tuple of values found in given string
     """
-    first_name = None
-    last_name = None
-    id_code = None
-    phone_num = None
-    date_of_birth = None
-    address = None
+    first_name, last_name, id_code, phone_num, date_of_birth, address = None, None, None, None, None, None
 
     name_pattern = r'(^[A-Z][a-z]+)([A-Z][a-z]+)'
     id_pattern = r'\d{11}'
