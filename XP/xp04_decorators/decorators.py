@@ -136,7 +136,48 @@ def enforce_types(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    pass
+    sig = inspect.signature(func)
+
+    def check_type(param_name, param_value, param_type):
+        # print(param_type is inspect.Parameter.empty)
+        if param_type is inspect.Parameter.empty:
+            return  # No type annotation, so no check is needed
+        # If the parameter type is a class (e.g., int, float, str), check if the value is an instance of that class
+        possible_types = []
+        if "|" in str(param_type):
+            possible_types = str(param_type).split(' | ')
+        elif not param_type:
+            possible_types = ["None"]
+        else:
+            possible_types = [str(param_type.__name__)]
+        actual_type = str(type(param_value).__name__)
+
+        if actual_type == 'NoneType':
+            actual_type = actual_type.replace('Type', '')
+        if actual_type not in possible_types:
+            valid_type_str = ''
+            if len(possible_types) > 1:
+                valid_type_str = ' or '.join(possible_types)
+                if valid_type_str == 'None':
+                    valid_type_str += 'Type'
+            elif len(possible_types) == 1:
+                valid_type_str = possible_types[0]
+            raise TypeError(
+                f"Argument '{param_name}' must be of type {valid_type_str}, but was '{param_value}' of type {type(param_value).__name__}"
+            )
+
+    def wrapper(*args, **kwargs):
+        bound_args = sig.bind(*args, **kwargs)
+        bound_args.apply_defaults()
+        for param_name, param_value in bound_args.arguments.items():
+            param_type = sig.parameters[param_name].annotation
+            check_type(param_name, param_value, param_type)
+        result = func(*args, **kwargs)
+        return_type = sig.return_annotation
+        check_type('return value', result, return_type)
+        return result
+
+    return wrapper
 
 
 #  Everything below is just for testing purposes, tester does not care what you do with them.
