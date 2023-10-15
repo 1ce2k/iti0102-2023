@@ -30,7 +30,17 @@ def stopwatch(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    pass
+
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        function_name = func.__name__
+        print(f"It took {elapsed_time} seconds for {function_name} to run")
+        return result
+
+    return wrapper
 
 
 def memoize(func):
@@ -45,7 +55,15 @@ def memoize(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    pass
+    cache = {}
+    def memoized_func(*args):
+        if args in cache:
+            return cache[args]
+        result = func(*args)
+        cache[args] = result
+        return result
+
+    return memoized_func
 
 
 def read_data(func):
