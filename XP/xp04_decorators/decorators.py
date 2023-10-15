@@ -220,7 +220,7 @@ def fibonacci(n: int):
     return fibonacci(n - 2) + fibonacci(n - 1)
 
 
-@catch()
+@catch(KeyError, ZeroDivisionError)
 def error_func(a, b):
     """Test function for @catch."""
     return a / b
