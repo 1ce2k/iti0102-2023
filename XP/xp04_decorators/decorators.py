@@ -1,4 +1,4 @@
-"""XP - decorators"""
+"""XP - decorators."""
 
 import time
 
@@ -6,6 +6,7 @@ import time
 def double(func):
     """
     Double the return value of a function.
+
     :param func: The decorated function.
     :return: Inner function.
     """
@@ -129,10 +130,10 @@ def fibonacci(n: int):
     return fibonacci(n - 2) + fibonacci(n - 1)
 
 
-@catch(KeyError, ZeroDivisionError)
-def error_func(iterable):
-    """Test function for @catch."""
-    return iterable[2]
+# @catch(KeyError, ZeroDivisionError)
+# def error_func(iterable):
+#     """Test function for @catch."""
+#     return iterable[2]
 
 
 @read_data
