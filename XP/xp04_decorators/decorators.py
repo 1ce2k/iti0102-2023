@@ -112,8 +112,8 @@ def catch(*error_classes):
                 return 0, result
             except Exception as error:
                 return 1, type(error)
-            # except error_classes as error:
-            #     return 1, type(error)
+            except error_classes as error:
+                return 1, type(error)
         return inner_func
     return decorator
 
