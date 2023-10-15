@@ -1,6 +1,7 @@
 """XP - decorators."""
 
 import time
+import inspect
 
 
 def double(func):
