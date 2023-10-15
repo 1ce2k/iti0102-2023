@@ -112,9 +112,6 @@ def catch(*error_classes):
                 return 0, result
             except error_classes as error:
                 return 1, type(error)
-            except Exception as error:
-                if not error_classes:
-                    return 1, type(error)
 
         return inner_func
 
