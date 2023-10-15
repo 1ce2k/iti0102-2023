@@ -1,23 +1,15 @@
-"""XP - decorators."""
-import inspect
+"""XP - decorators"""
+
 import time
 
 
 def double(func):
     """
     Double the return value of a function.
-
     :param func: The decorated function.
     :return: Inner function.
     """
-
-    def wrapper(*args, **kwargs):
-        # return value from func()
-        result = func(*args, **kwargs)
-        # return value * 2
-        return result * 2
-
-    return wrapper
+    pass
 
 
 def stopwatch(func):
@@ -31,17 +23,7 @@ def stopwatch(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-
-    def wrapper(*args, **kwargs):
-        start_time = time.time()
-        result = func(*args, **kwargs)
-        end_time = time.time()
-        elapsed_time = end_time - start_time
-        function_name = func.__name__
-        print(f"It took {elapsed_time} seconds for {function_name} to run")
-        return result
-
-    return wrapper
+    pass
 
 
 def memoize(func):
@@ -56,15 +38,7 @@ def memoize(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    cache = {}
-
-    def memoized_func(*args):
-        if args in cache:
-            return cache[args]
-        result = func(*args)
-        cache[args] = result
-        return result
-    return memoized_func
+    pass
 
 
 def read_data(func):
@@ -76,11 +50,7 @@ def read_data(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    def inner(*args, **kwargs):
-        with open('data.txt', 'r') as file:
-            data = [line.strip() for line in file.readlines()]
-        return func(data, *args, **kwargs)
-    return inner
+    pass
 
 
 def catch(*error_classes):
@@ -98,15 +68,7 @@ def catch(*error_classes):
     :param error_classes: The exceptions to catch.
     :return: Inner function.
     """
-
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            try:
-                return 0, func(*args, **kwargs)
-            except error_classes as e:
-                return 1, type(e)
-        return wrapper
-    return decorator
+    pass
 
 
 def enforce_types(func):
@@ -149,8 +111,7 @@ def double_me(element):
 @stopwatch
 def measure_me():
     """Test function for @stopwatch."""
-    # time.sleep(0.21)
-    fibonacci(35)
+    time.sleep(0.21)
     return 5
 
 
@@ -160,13 +121,6 @@ def fibonacci(n: int):
     if n in (0, 1):
         return n
     return fibonacci(n - 2) + fibonacci(n - 1)
-
-
-@memoize
-def factorial(n: int):
-    if n == 0:
-        return 1
-    return n * factorial(n - 1)
 
 
 @catch(KeyError, ZeroDivisionError)
@@ -182,57 +136,51 @@ def process_file_contents(data: list, prefix: str = ""):
 
 
 @enforce_types
-def no_more_duck_typing(num: int | float | bool | str, g: None) -> str:
+def no_more_duck_typing(num: int | float, g: None) -> str:
     """Test function for @enforce_types."""
     return str(num)
 
 
-# if __name__ == '__main__':
-#     print(double_me(5))  # 10
-    # print(double_me("Hello"))  # HelloHello
-    # print()
+if __name__ == '__main__':
+    print(double_me(5))  # 10
+    print(double_me("Hello"))  # HelloHello
+    print()
 
-    # print(measure_me())  # It took 0.21... seconds for measure_me to run
-    # # 5
-    # print()
-    #
-    # print(fibonacci(35))  # 9227465
+    print(measure_me())  # It took 0.21... seconds for measure_me to run
+    # 5
+    print()
+
+    print(fibonacci(35))  # 9227465
     # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
-    # print(factorial(499))  # 3628800
-    #
-    # print(error_func("Hello"))  # (0, 'l')
-    # print(error_func([5, 6, 7]))  # (0, 7)
-    # print(error_func({}))  # (1, <class 'KeyError'>)
-    #
-    # try:
-    #     print(error_func([]))
-    #     print("IndexError should not be caught at this situation.")
-    # except IndexError:
-    #     print("IndexError was thrown (as it should).")
-    #
-    # print()
-    #
-    # print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
-    # # contents in a list with "hi" in front of each line like ["hiLine 1", "hiLine 2", ...].
-    # print(process_file_contents())  # This should just print out the file contents in a list.
-    # print()
+    print()
 
-    # print(no_more_duck_typing(5.0, None))  # 5
-    #
-    # try:
-    #     print(no_more_duck_typing("5", None))
-    #     print("TypeError should be thrown, but wasn't.")
-    # except TypeError as e:
-    #     print(e)  # Argument 'num' must be of type int or float, but was '5' of type str
-    #
-    # try:
-    #     print(no_more_duck_typing(5.0, 2))
-    #     print("TypeError should be thrown, but wasn't.")
-    # except TypeError as e:
-    #     print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
-    #
-    # try:
-    #     print(no_more_duck_typing(True, None))
-    #     print("TypeError should be thrown, but wasn't.")
-    # except TypeError as e:
-    #     print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
+    print(error_func("Hello"))  # (0, 'l')
+    print(error_func([5, 6, 7]))  # (0, 7)
+    print(error_func({}))  # (1, <class 'KeyError'>)
+
+    try:
+        print(error_func([]))
+        print("IndexError should not be caught at this situation.")
+    except IndexError:
+        print("IndexError was thrown (as it should).")
+
+    print()
+
+    print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
+    # contents in a list with "hi" in front of each line like ["hiLine 1", "hiLine 2", ...].
+    print(process_file_contents())  # This should just print out the file contents in a list.
+    print()
+
+    print(no_more_duck_typing(5, None))  # 5
+
+    try:
+        print(no_more_duck_typing("5", None))
+        print("TypeError should be thrown, but wasn't.")
+    except TypeError as e:
+        print(e)  # Argument 'num' must be of type int or float, but was '5' of type str
+
+    try:
+        print(no_more_duck_typing(5.0, 2))
+        print("TypeError should be thrown, but wasn't.")
+    except TypeError as e:
+        print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
