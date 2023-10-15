@@ -55,7 +55,15 @@ def memoize(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    pass
+    cache = {}
+    def memoized_func(*args):
+        if args in cache:
+            return cache[args]
+        result = func(*args)
+        cache[args] = result
+        return result
+
+    return memoized_func
 
 
 def read_data(func):
