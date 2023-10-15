@@ -22,15 +22,10 @@ def parse(row: str) -> tuple:
     """
     first_name, last_name, id_code, phone_num, date_of_birth, address = None, None, None, None, None, None
 
-    name_pattern = r'(^[A-Z][a-z]+)([A-Z][a-z]+)'
-    id_pattern = r'\d{11}'
-    phone_pattern = r'(?<=\d{11})\s?(\+?\d{3}\s?\d{8}|\d{8})'
-    dob_pattern = r'\d{2}-\d{2}-\d{4}'
-
-    name_match = re.findall(name_pattern, row)
-    id_match = re.search(id_pattern, row)
-    phone_match = re.search(phone_pattern, row)
-    dob_match = re.search(dob_pattern, row)
+    name_match = re.findall(r'(^[A-Z][a-z]+)([A-Z][a-z]+)', row)
+    id_match = re.search(r'\d{11}', row)
+    phone_match = re.search(r'(?<=\d{11})\s?(\+?\d{3}\s?\d{8}|\d{8})', row)
+    dob_match = re.search(r'\d{2}-\d{2}-\d{4}', row)
 
     if name_match:
         first_name, last_name = name_match[0][0], name_match[0][1]
