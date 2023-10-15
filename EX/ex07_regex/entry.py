@@ -30,7 +30,7 @@ def parse(row: str) -> tuple:
     # name_pattern = r'^[A-Z][a-z]+[A-Z][a-z]+'
     name_pattern = r'(^[A-Z][a-z]+)([A-Z][a-z]+)'
     id_pattern = r'\d{11}'
-    phone_pattern = r'(?<=\d{11})(\+?\d{3} \d{8})'
+    phone_pattern = r'(?<=\d{11})(\+?\d{3}\s?\d{8})'
     dob_pattern = r'\d{2}-\d{2}-\d{4}'
 
     name_match = re.findall(name_pattern, row)
@@ -68,7 +68,7 @@ def parse(row: str) -> tuple:
 
 if __name__ == '__main__':
     print(1)
-    print(parse('PriitPann39712047623+372 5688736402-12-1998Oja 18-2,Pärnumaa,Are'))
+    print(parse('PriitPann39712047623+3725688736402-12-1998Oja 18-2,Pärnumaa,Are'))
     # ('Priit', 'Pann', '39712047623', '+372 56887364', '02-12-1998', 'Oja 18-2,Pärnumaa,Are')
     print(2)
     print(parse('39712047623+372 5688736402-12-1998Oja 18-2,Pärnumaa,Are'))
