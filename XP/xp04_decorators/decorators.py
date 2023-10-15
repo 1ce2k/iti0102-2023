@@ -101,13 +101,14 @@ def catch(*error_classes):
     """
 
     def decorator(func):
-        def wrapper(*args, **kwargs):
+        def inner_func(*args, **kwargs):
             try:
-                return 0, func(*args, **kwargs)
-            except error_classes as e:
-                return 1, type(e)
+                result = func(*args, **kwargs)
+                return 0, result
+            except error_classes as error:
+                return 1, type(error)
 
-        return wrapper
+        return inner_func
 
     return decorator
 
@@ -164,10 +165,10 @@ def fibonacci(n: int):
     return fibonacci(n - 2) + fibonacci(n - 1)
 
 
-# @catch(KeyError, ZeroDivisionError)
-# def error_func(iterable):
-#     """Test function for @catch."""
-#     return iterable[2]
+@catch(KeyError, ZeroDivisionError)
+def error_func(iterable):
+    """Test function for @catch."""
+    return iterable[2]
 
 
 @read_data
