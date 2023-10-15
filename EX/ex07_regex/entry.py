@@ -30,7 +30,8 @@ def parse(row: str) -> tuple:
     # name_pattern = r'^[A-Z][a-z]+[A-Z][a-z]+'
     name_pattern = r'(^[A-Z][a-z]+)([A-Z][a-z]+)'
     id_pattern = r'\d{11}'
-    phone_pattern = r'(?<=\d{11})(\+?\d{0,3}?\s?\d{8})'
+    phone_pattern = r'(?<=\d{11})(\+?\d{0,3}\s?\d{8})'
+
     dob_pattern = r'\d{2}-\d{2}-\d{4}'
 
     name_match = re.findall(name_pattern, row)
