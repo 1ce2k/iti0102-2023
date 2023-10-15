@@ -9,7 +9,13 @@ def double(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    pass
+    def wrapper(*args, **kwargs):
+        # return value from func()
+        result = func(*args, **kwargs)
+        # return value * 2
+        return result * 2
+
+    return wrapper
 
 
 def stopwatch(func):
