@@ -188,10 +188,10 @@ def no_more_duck_typing(num: int | float | bool | str, g: None) -> str:
 
 
 if __name__ == '__main__':
-    # print(double_me(5))  # 10
-    # print(double_me("Hello"))  # HelloHello
-    # print()
-    #
+    print(double_me(5))  # 10
+    print(double_me("Hello"))  # HelloHello
+    print()
+
     print(measure_me())  # It took 0.21... seconds for measure_me to run
     # # 5
     # print()
