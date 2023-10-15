@@ -107,12 +107,16 @@ def catch(*error_classes):
 
     def decorator(func):
         def inner_func(*args, **kwargs):
+            if error_classes:
+                try:
+                    result = func(*args, **kwargs)
+                    return 0, result
+                except error_classes as error:
+                    return 1, type(error)
             try:
                 result = func(*args, **kwargs)
                 return 0, result
             except Exception as error:
-                return 1, type(error)
-            except error_classes as error:
                 return 1, type(error)
         return inner_func
     return decorator
