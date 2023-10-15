@@ -40,19 +40,25 @@ def parse(row: str) -> tuple:
     if name_match:
         first_name, last_name = name_match[0][0], name_match[0][1]
 
-    if dob_match:
-        date_of_birth = dob_match.group(0)
-        address = row[dob_match.end():]
+    if id_match:
+        id_code = id_match.group(0)
+
     if phone_match:
         phone_num = phone_match.group(0)
         if '+' not in phone_num:
             if '372' in phone_num[:3]:
                 phone_num = '+' + phone_num
-        address = row[phone_match.end():]
-    if id_match:
-        id_code = id_match.group(0)
-        address = row[id_match.end():]
+    if dob_match:
+        date_of_birth = dob_match.group(0)
 
+    if dob_match:
+        address = row[dob_match.end():]
+    elif phone_match:
+        address = row[phone_match.end():]
+    elif id_match:
+        address = row[id_match.end():]
+    else:
+        address = None
     if address == '':
         address = None
     return first_name, last_name, id_code, phone_num, date_of_birth, address
