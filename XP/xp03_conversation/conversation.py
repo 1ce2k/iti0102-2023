@@ -151,7 +151,7 @@ class Student:
         :param is_bigger: to use the bigger or smaller result of the quadratic equation(min or max from [x1, x2])
         """
         solutions = quadratic_equation_solver(equation)
-        self.possible_answers = solutions
+        # self.possible_answers = solutions
         if multiplicative != 0:
             if not to_multiply and is_bigger:
                 self.deal_with_dec_value(f'{max(solutions) / multiplicative:.0f}')
