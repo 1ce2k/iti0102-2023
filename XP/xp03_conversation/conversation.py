@@ -31,12 +31,9 @@ class Student:
         """
 
         if re.findall(r"(occur to be a prime number|have to be a prime number)", sentence):
-            self.deal_with_primes(True)
-        elif re.findall(r"(occur not to be a prime number|have not to be a prime number)", sentence):
-            self.deal_with_primes(False)
+            self.deal_with_primes(True) if re.findall(r"(occur to be a prime number|have to be a prime number)", sentence) else self.deal_with_composites(True)
 
         if len(self.possible_answers) == 1:
-
             return f"The num I needed to guess was {self.possible_answers}."
         return f"Possible answers are {list(self.possible_answers)}."
 
