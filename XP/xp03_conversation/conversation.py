@@ -155,7 +155,7 @@ class Student:
             if to_multiply:
                 x = int(x * multiplicative)
                 self.deal_with_dec_value(f'{x * multiplicative:.0f}')
-                # self.possible_answers = x
+                self.possible_answers = x
             else:
                 self.deal_with_dec_value(f'{x / multiplicative:.0f}')
                 # self.possible_answers = x
