@@ -36,7 +36,7 @@ class Student:
         if len(self.possible_answers) == 1:
 
             return f"The num I needed to guess was {self.possible_answers}"
-        return f"Possible answers are {self.possible_answers}"
+        return f"Possible answers are {list(self.possible_answers)}"
 
     def intersect_possible_answers(self, update: list):
         """
