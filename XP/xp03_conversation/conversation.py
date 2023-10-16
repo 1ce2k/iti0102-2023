@@ -16,7 +16,7 @@ class Student:
         NB: calculating using sets is much faster compared to lists
         """
         self.num = biggest_number
-        self.possible_answers = set([all_possible_answers for all_possible_answers in range(biggest_number + 1)])
+        self.possible_answers = set([x for x in range(self.num + 1)])
 
     def decision_branch(self, sentence: str):
         """
@@ -141,17 +141,6 @@ class Student:
         """
         solutions = quadratic_equation_solver(equation)
         self.possible_answers = solutions
-        # x = ''
-        # if not solutions:
-        #     x = ''
-        # elif len(solutions) == 2:
-        #     if is_bigger:
-        #         x = max(solutions)
-        #     else:
-        #         x = min(solutions)
-        # else:
-        #     if solutions:
-        #         x = solutions
         if multiplicative != 0:
             if not to_multiply and is_bigger:
                 self.deal_with_dec_value(f'{max(solutions) / multiplicative:.0f}')
