@@ -214,7 +214,7 @@ def fibonacci(n: int):
     return fibonacci(n - 2) + fibonacci(n - 1)
 
 
-@catch(KeyError, ZeroDivisionError)
+@catch(ZeroDivisionError,KeyError)
 def error_func(iterable):
     """Test function for @catch."""
     return iterable[2]
@@ -248,7 +248,7 @@ if __name__ == '__main__':
     print(error_func("Hello"))  # (0, 'l')
     print(error_func([5, 6, 7]))  # (0, 7)
     print(error_func({}))  # (1, <class 'KeyError'>)
-    print(error_func())
+    print(error_func(2))
 
     try:
         print(error_func([]))
