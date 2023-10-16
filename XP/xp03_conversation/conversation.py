@@ -92,9 +92,9 @@ class Student:
         """
         primes = find_primes_in_range(self.num)
         if is_prime:
-            self.intersect_possible_answers(primes)
+            self.possible_answers &= set(primes)
         else:
-            self.exclude_possible_answers(primes)
+            self.possible_answers -= set(primes)
 
     def deal_with_composites(self, is_composite: bool):
         """
