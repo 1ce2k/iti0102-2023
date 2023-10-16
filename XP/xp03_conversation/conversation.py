@@ -49,6 +49,10 @@ class Student:
             amount_of_ones = int(re.search(r"(\d+)", sentence).group(1))
             self.deal_with_number_of_ones(amount_of_ones)
 
+        if re.search(r"(fibonacci)", sentence):
+            is_in = False if re.search("not|n't", sentence) else True
+            self.deal_with_fibonacci_sequence(is_in)
+
         # if re.search(r"equation", sentence):
         #     equation = ''
         #     multiplicative = ''
