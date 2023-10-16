@@ -33,6 +33,9 @@ class Student:
             is_prime = False if re.search(r"not|n't", sentence) else True
             self.deal_with_primes(is_prime)
 
+        if re.search(r"(composite)", sentence):
+            is_composite = False if re.search(r"not|n't", sentence) else True
+            self.deal_with_composites(is_composite)
 
         if re.search(r"(\d+) zeroes in its binary form", sentence):
             amount_of_zeroes = int(re.search(r"(\d+)", sentence).group(1))
@@ -45,6 +48,11 @@ class Student:
         if re.search(r"equation", sentence):
             amount_of_ones = int(re.search(r"(\d+)", sentence).group(1))
             self.deal_with_number_of_ones(amount_of_ones)
+
+        if re.search(r'decimal value: ({\d+})', sentence):
+            decimal = str(re.search(r'({\d+})', sentence))
+            self.deal_with_dec_value(decimal)
+
 
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
