@@ -59,7 +59,7 @@ class Student:
             self.deal_with_number_order(increasing, to_be)
 
         if re.search(r'decimal value: ({\d+})', sentence):
-            decimal = str(re.search(r'({\d+})', sentence))
+            decimal = str(re.search(r'(\d+)', sentence).group(1))
             self.possible_answers = decimal
 
         if len(self.possible_answers) == 1:
