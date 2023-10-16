@@ -38,6 +38,10 @@ class Student:
             amount_of_zeroes = int(re.search(r"(\d+)", sentence).group(1))
             self.deal_with_number_of_zeroes(amount_of_zeroes)
 
+        if re.search(r"(\d+) ones in its binary form", sentence):
+            amount_of_ones = int(re.search(r"(\d+)", sentence).group(1))
+            self.deal_with_number_of_ones(amount_of_ones)
+
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
         sorted_list = sorted(self.possible_answers)
