@@ -34,7 +34,7 @@ class Student:
         if re.search(r"(occur not to be a prime number|have not to be a prime number)", sentence):
             self.deal_with_primes(False)
 
-        if re.search(r"(\d+) of zeroes in its binary form", sentence):
+        if re.search(r"(\d+) zeroes in its binary form", sentence):
             amount_of_zeroes = int(re.search(r"(\d+)", sentence).group(1))
             self.deal_with_number_of_zeroes(amount_of_zeroes)
 
