@@ -60,7 +60,7 @@ class Student:
 
         if re.search(r'decimal value: (\d+)', sentence):
             decimal = str(re.search(r'(\d+)', sentence).group(1))
-            self.possible_answers = decimal
+            self.deal_with_dec_value(decimal)
 
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
