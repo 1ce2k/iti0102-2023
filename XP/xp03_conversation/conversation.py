@@ -30,7 +30,10 @@ class Student:
         f"The number I needed to guess was {final_answer}."
         """
 
-        self.deal_with_primes(True) if re.findall(r'(occur to be a prime number|have to be a prime number)', sentence) else self.deal_with_primes(False)
+        if re.findall(r"(occur to be a prime number|have to be a prime number)", sentence):
+            self.deal_with_primes(False)
+        elif re.findall(r"(occur{not}? to be a prime number|have{not}? to be a prime number)", sentence):
+            self.deal_with_primes(False)
 
         if len(self.possible_answers) == 1:
 
@@ -88,11 +91,10 @@ class Student:
         :param is_prime: boolean whether the number is prime or not
         """
         primes = find_primes_in_range(self.num)
-        compos = find_composites_in_range(self.num)
         if is_prime:
             self.intersect_possible_answers(primes)
         else:
-            self.intersect_possible_answers(compos)
+            self.exclude_possible_answers(primes)
 
     def deal_with_composites(self, is_composite: bool):
         """
