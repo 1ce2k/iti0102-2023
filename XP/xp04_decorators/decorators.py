@@ -113,8 +113,13 @@ def catch(*error_classes):
             except error_classes as error:
                 return 1, type(error)
         return inner_func
-
-    return decorator
+    if error_classes:
+        print(1)
+        return decorator
+    else:
+        print(2)
+        error_classes = Exception
+        return decorator
 
 
 def enforce_types(func):
@@ -209,10 +214,10 @@ def fibonacci(n: int):
     return fibonacci(n - 2) + fibonacci(n - 1)
 
 
-@catch()
-def error_func():
+@catch(KeyError, ZeroDivisionError)
+def error_func(iterable):
     """Test function for @catch."""
-    return 1 / 0
+    return iterable[2]
 
 
 @read_data
@@ -241,8 +246,9 @@ if __name__ == '__main__':
     # print()
 
     print(error_func("Hello"))  # (0, 'l')
-    # print(error_func([5, 6, 7]))  # (0, 7)
-    # print(error_func({}))  # (1, <class 'KeyError'>)
+    print(error_func([5, 6, 7]))  # (0, 7)
+    print(error_func({}))  # (1, <class 'KeyError'>)
+    print(error_func())
 
     try:
         print(error_func([]))
