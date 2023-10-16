@@ -29,8 +29,8 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        if re.search(r'is prime', sentence):
-            self.deal_with_primes(True)
+        if re.findall(r'(occur to be a prime number|have to be a prime number)', sentence):
+            self.possible_answers = '1'
 
         if len(self.possible_answers) == 1:
             final = next(iter(self.possible_answers))
