@@ -31,13 +31,12 @@ class Student:
         """
 
         self.deal_with_primes(True) if re.findall(r'(occur to be a prime number|have to be a prime number)', sentence) else self.deal_with_primes(False)
-        return self.possible_answers
+        # return self.possible_answers
 
-        # if len(self.possible_answers) == 1:
-        #     final = next(iter(self.possible_answers))
-        #     return f"The num I needed to guess was {final}"
-        # sorted_res = sorted(self.possible_answers)
-        # return f"Possible answers are {sorted_res}"
+        if len(self.possible_answers) == 1:
+
+            return f"The num I needed to guess was {self.possible_answers}"
+        return f"Possible answers are {self.possible_answers}"
 
     def intersect_possible_answers(self, update: list):
         """
