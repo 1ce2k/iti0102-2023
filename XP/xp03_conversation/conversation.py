@@ -44,7 +44,7 @@ class Student:
         conjunction between self.possible_answers and update
         https://en.wikipedia.org/wiki/Logical_conjunction
         """
-        self.possible_answers = self.possible_answers.intersection(set(update))
+        self.possible_answers &= set(update)
 
     def exclude_possible_answers(self, update: list):
         """
@@ -111,7 +111,7 @@ class Student:
 
         :param decimal_value: decimal value within the number like 9 in 192
         """
-        self.intersect_possible_answers([x for x in self.possible_answers if decimal_value in str(x)])
+        self.exclude_possible_answers([x for x in self.possible_answers if decimal_value not in str(x)])
 
     def deal_with_hex_value(self, hex_value: str):
         """
