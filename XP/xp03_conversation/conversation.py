@@ -163,8 +163,8 @@ class Student:
             # self.deal_with_dec_value(f'{max(solutions) * multiplicative:.0f}')
             self.possible_answers = f'{max(solutions) * multiplicative:.0f}, {solutions}'
         elif to_multiply and not is_bigger:
-            # self.deal_with_dec_value(f'{min(solutions) * multiplicative:.0f}')
-            self.possible_answers = f'{min(solutions) * multiplicative:.0f}, {solutions}'
+            self.deal_with_dec_value(f'{min(solutions) * multiplicative:.0f}')
+            # self.possible_answers = f'{min(solutions) * multiplicative:.0f}, {solutions}'
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
