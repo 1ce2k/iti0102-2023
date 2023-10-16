@@ -155,16 +155,16 @@ class Student:
         if multiplicative != 0:
             if not to_multiply and is_bigger:
                 # self.deal_with_dec_value(f'{max(solutions) / multiplicative:.0f}')
-                self.possible_answers = f'{max(solutions) / multiplicative:.0f}, {solutions}'
+                self.possible_answers = f'{max(solutions) / multiplicative:.0f}, {solutions}, {multiplicative}'
             elif not to_multiply and not is_bigger:
-                self.deal_with_dec_value(f'{min(solutions) / multiplicative:.0f}')
-                # self.possible_answers = f'{min(solutions) / multiplicative:.0f}, {solutions}'
+                # self.deal_with_dec_value(f'{min(solutions) / multiplicative:.0f}')
+                self.possible_answers = f'{min(solutions) / multiplicative:.0f}, {solutions}, {multiplicative}'
         if to_multiply and is_bigger:
             # self.deal_with_dec_value(f'{max(solutions) * multiplicative:.0f}')
-            self.possible_answers = f'{max(solutions) * multiplicative:.0f}, {solutions}'
+            self.possible_answers = f'{max(solutions) * multiplicative:.0f}, {solutions}, {multiplicative}'
         elif to_multiply and not is_bigger:
-            self.deal_with_dec_value(f'{min(solutions) * multiplicative:.0f}')
-            # self.possible_answers = f'{min(solutions) * multiplicative:.0f}, {solutions}'
+            # self.deal_with_dec_value(f'{min(solutions) * multiplicative:.0f}')
+            self.possible_answers = f'{min(solutions) * multiplicative:.0f}, {solutions}, {multiplicative}'
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
