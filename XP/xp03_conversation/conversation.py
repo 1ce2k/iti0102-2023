@@ -31,7 +31,6 @@ class Student:
         """
 
         self.deal_with_primes(True) if re.findall(r'(occur to be a prime number|have to be a prime number)', sentence) else self.deal_with_primes(False)
-        # return self.possible_answers
 
         if len(self.possible_answers) == 1:
 
@@ -89,10 +88,11 @@ class Student:
         :param is_prime: boolean whether the number is prime or not
         """
         primes = find_primes_in_range(self.num)
+        compos = find_composites_in_range(self.num)
         if is_prime:
             self.intersect_possible_answers(primes)
         else:
-            self.exclude_possible_answers(primes)
+            self.intersect_possible_answers(compos)
 
     def deal_with_composites(self, is_composite: bool):
         """
