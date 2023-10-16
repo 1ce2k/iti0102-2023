@@ -53,6 +53,13 @@ class Student:
             is_in = False if re.search("not|n't", sentence) else True
             self.deal_with_fibonacci_sequence(is_in)
 
+        if re.search(r"(order)", sentence):
+            increasing = False if re.search(r'(decreasing)', sentence) else True
+            to_be = False if re.search(r"n't|not", sentence) else True
+            self.deal_with_number_order(increasing, to_be)
+
+
+
         # if re.search(r"equation", sentence):
         #     equation = ''
         #     multiplicative = ''
