@@ -34,6 +34,9 @@ class Student:
         if re.search(r"(occur not to be a prime number|have not to be a prime number)", sentence):
             self.deal_with_primes(False)
 
+        if re.search(r"(\d+) of zeroes in its binary form", sentence):
+            amount_of_zeroes = int(re.search(r"(\d+)", sentence).group(1))
+            self.deal_with_number_of_zeroes(amount_of_zeroes)
 
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
@@ -92,9 +95,9 @@ class Student:
         """
         primes = find_primes_in_range(self.num)
         if is_prime:
-            self.possible_answers &= set(primes)
+            self.intersect_possible_answers(primes)
         else:
-            self.possible_answers -= set(primes)
+            self.exclude_possible_answers(primes)
 
     def deal_with_composites(self, is_composite: bool):
         """
