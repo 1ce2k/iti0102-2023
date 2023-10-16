@@ -53,7 +53,7 @@ class Student:
         :param update: new list to be excluded from self.possible_answers
         update excluded from self.possible_answers
         """
-        self.possible_answers -= set(update)
+        self.possible_answers = self.possible_answers.difference(set(update))
 
     def deal_with_number_of_zeroes(self, amount_of_zeroes: int):
         """
