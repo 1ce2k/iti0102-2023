@@ -29,12 +29,14 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        pass
-        # if len(self.possible_answers) == 1:
-        #     final = next(iter(self.possible_answers))
-        #     return f"The num I needed to guess was {final}"
-        # sorted_res = sorted(self.possible_answers)
-        # return f"Possible answers are {sorted_res}"
+        if re.search(r'is prime', sentence):
+            self.deal_with_primes(True)
+
+        if len(self.possible_answers) == 1:
+            final = next(iter(self.possible_answers))
+            return f"The num I needed to guess was {final}"
+        sorted_res = sorted(self.possible_answers)
+        return f"Possible answers are {sorted_res}"
 
     def intersect_possible_answers(self, update: list):
         """
