@@ -29,16 +29,20 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        if re.search(r"(occur to be a prime number|have to be a prime number)", sentence):
-            self.deal_with_primes(True)
-        if re.search(r"(occur not to be a prime number|have not to be a prime number)", sentence):
-            self.deal_with_primes(False)
+        if re.search(r"(prime)", sentence):
+            is_prime = False if re.search(r"not|n't", sentence) else True
+            self.deal_with_primes(is_prime)
+
 
         if re.search(r"(\d+) zeroes in its binary form", sentence):
             amount_of_zeroes = int(re.search(r"(\d+)", sentence).group(1))
             self.deal_with_number_of_zeroes(amount_of_zeroes)
 
         if re.search(r"(\d+) ones in its binary form", sentence):
+            amount_of_ones = int(re.search(r"(\d+)", sentence).group(1))
+            self.deal_with_number_of_ones(amount_of_ones)
+
+        if re.search(r"equation", sentence):
             amount_of_ones = int(re.search(r"(\d+)", sentence).group(1))
             self.deal_with_number_of_ones(amount_of_ones)
 
