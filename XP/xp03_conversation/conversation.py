@@ -31,7 +31,7 @@ class Student:
         """
 
         if re.findall(r"(occur to be a prime number|have to be a prime number)", sentence):
-            self.deal_with_primes(False)
+            self.deal_with_primes(True)
         elif re.findall(r"(occur{not}? to be a prime number|have{not}? to be a prime number)", sentence):
             self.deal_with_primes(False)
 
