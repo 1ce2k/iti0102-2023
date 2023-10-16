@@ -44,7 +44,7 @@ class Student:
         conjunction between self.possible_answers and update
         https://en.wikipedia.org/wiki/Logical_conjunction
         """
-        self.possible_answers &= set(update)
+        self.possible_answers = self.possible_answers.intersection(set(update))
 
     def exclude_possible_answers(self, update: list):
         """
