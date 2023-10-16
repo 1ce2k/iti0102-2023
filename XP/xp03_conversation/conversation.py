@@ -31,6 +31,7 @@ class Student:
         """
 
         self.deal_with_primes(True) if re.findall(r'(occur to be a prime number|have to be a prime number)', sentence) else self.deal_with_primes(False)
+        return self.possible_answers
 
         # if len(self.possible_answers) == 1:
         #     final = next(iter(self.possible_answers))
