@@ -29,7 +29,7 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        self.deal_with_primes(True) if re.search(r"(occur to be a prime number|have to be a prime number)", sentence) else self.deal_with_primes(False)
+        self.deal_with_primes(True) if re.search(r"(occur to be a prime number|have to be a prime number)", sentence) else self.deal_with_composites(True)
 
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
