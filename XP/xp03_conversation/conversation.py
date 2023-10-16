@@ -37,6 +37,10 @@ class Student:
             is_composite = False if re.search(r"not|n't", sentence) else True
             self.deal_with_composites(is_composite)
 
+        if re.search(r"(catalan)", sentence):
+            is_catalan = False if re.search(r"not|n't", sentence) else True
+            self.deal_with_catalan_sequence(is_catalan)
+
         if re.search(r"(\d+) zeroes in its binary form", sentence):
             amount_of_zeroes = int(re.search(r"(\d+)", sentence).group(1))
             self.deal_with_number_of_zeroes(amount_of_zeroes)
@@ -45,9 +49,16 @@ class Student:
             amount_of_ones = int(re.search(r"(\d+)", sentence).group(1))
             self.deal_with_number_of_ones(amount_of_ones)
 
-        if re.search(r"equation", sentence):
-            amount_of_ones = int(re.search(r"(\d+)", sentence).group(1))
-            self.deal_with_number_of_ones(amount_of_ones)
+        # if re.search(r"equation", sentence):
+        #     equation = ''
+        #     multiplicative = ''
+        #     if re.search(r'divided', sentence):
+        #         multiplicative = re.search(r'is divided by (\d+).(\d+)', sentence).group(1) + '.' + re.search(r'is divided by (\d+).(\d+)', sentence).group(2)
+        #     elif re.search(r'times', sentence):
+        #         multiplicative = re.search(r'(\d+).(\d+) times', sentence).group(1) + '.' + re.search(r'(\d+).(\d+) times', sentence).group(2)
+        #     to_multiply = False if re.search(r'divided', sentence) else True
+        #     is_bigger = False if re.search(r'smaller', sentence) else True
+        #     self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
         if re.search(r'decimal value: ({\d+})', sentence):
             decimal = str(re.search(r'({\d+})', sentence))
