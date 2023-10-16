@@ -58,28 +58,25 @@ class Student:
             to_be = False if re.search(r"n't|not", sentence) else True
             self.deal_with_number_order(increasing, to_be)
 
-
-
-        # if re.search(r"equation", sentence):
-        #     equation = ''
-        #     multiplicative = ''
-        #     if re.search(r'divided', sentence):
-        #         multiplicative = re.search(r'is divided by (\d+).(\d+)', sentence).group(1) + '.' + re.search(r'is divided by (\d+).(\d+)', sentence).group(2)
-        #     elif re.search(r'times', sentence):
-        #         multiplicative = re.search(r'(\d+).(\d+) times', sentence).group(1) + '.' + re.search(r'(\d+).(\d+) times', sentence).group(2)
-        #     to_multiply = False if re.search(r'divided', sentence) else True
-        #     is_bigger = False if re.search(r'smaller', sentence) else True
-        #     self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
-
         if re.search(r'decimal value: ({\d+})', sentence):
             decimal = str(re.search(r'({\d+})', sentence))
             self.deal_with_dec_value(decimal)
-
 
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
         sorted_list = sorted(self.possible_answers)
         return f"Possible answers are {sorted_list}."
+
+    # if re.search(r"equation", sentence):
+    #     equation = ''
+    #     multiplicative = ''
+    #     if re.search(r'divided', sentence):
+    #         multiplicative = re.search(r'is divided by (\d+).(\d+)', sentence).group(1) + '.' + re.search(r'is divided by (\d+).(\d+)', sentence).group(2)
+    #     elif re.search(r'times', sentence):
+    #         multiplicative = re.search(r'(\d+).(\d+) times', sentence).group(1) + '.' + re.search(r'(\d+).(\d+) times', sentence).group(2)
+    #     to_multiply = False if re.search(r'divided', sentence) else True
+    #     is_bigger = False if re.search(r'smaller', sentence) else True
+    #     self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
     def intersect_possible_answers(self, update: list):
         """
