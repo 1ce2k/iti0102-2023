@@ -30,11 +30,11 @@ class Student:
         f"The number I needed to guess was {final_answer}."
         """
         if re.search(r"(prime)", sentence):
-            self.deal_with_primes(re.search(r'prime', sentence) and not re.search(r"not|n't", sentence))
+            self.deal_with_primes(not re.search(r"not|n't", sentence))
         elif re.search(r"(composite)", sentence):
-            self.deal_with_composites(False if re.search(r"not|n't", sentence) else True)
+            self.deal_with_composites(not re.search(r"not|n't", sentence))
         elif re.search(r"(catalan)", sentence):
-            self.deal_with_catalan_sequence(False if re.search(r"not|n't", sentence) else True)
+            self.deal_with_catalan_sequence(not re.search(r"not|n't", sentence))
 
         if re.search(r"binary form", sentence):
             if re.search(r'ones', sentence):
@@ -43,23 +43,22 @@ class Student:
                 self.deal_with_number_of_zeroes(int(re.search(r"\d+", sentence).group()))
 
         if re.search(r"(fibonacci)", sentence):
-
-            self.deal_with_fibonacci_sequence(False if re.search("not|n't", sentence) else True)
+            self.deal_with_fibonacci_sequence(not re.search("not|n't", sentence))
 
         if re.search(r"(order)", sentence):
-            increasing = False if re.search(r'(decreasing)', sentence) else True
-            to_be = False if re.search(r"n't|not", sentence) else True
+            increasing = not re.search(r'(decreasing)', sentence)
+            to_be = not re.search(r"n't|not", sentence)
             self.deal_with_number_order(increasing, to_be)
 
         if re.search(r'decimal value: "(\d+)"', sentence):
             self.deal_with_dec_value(str(re.search(r'(\d+)', sentence).group(1)))
 
-        if re.search(r'hex value: "\b(?:0[xX])?[0-9A-Fa-f]+\b"', sentence):
-            self.deal_with_hex_value(re.search(r"\b(?:0[xX])?[0-9A-Fa-f]+\b", sentence).group())
+        if re.search(r'hex value: "\b(?:0[xX])?[\dA-Fa-f]+\b"', sentence):
+            self.deal_with_hex_value(re.search(r"\b(?:0[xX])?[\dA-Fa-f]+\b", sentence).group())
 
         if re.search(r"equation", sentence):
-            is_bigger = False if re.search(r'smaller', sentence) else True
-            to_multiply = False if re.search(r'divided', sentence) else True
+            is_bigger = not re.search(r'smaller', sentence)
+            to_multiply = not re.search(r'divided', sentence)
             multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
             equation = re.search(r'"(.*?)"', sentence).group(1)
             # return [equation, multiplicative, to_multiply, is_bigger, solution]
