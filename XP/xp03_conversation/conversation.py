@@ -47,7 +47,6 @@ class Student:
             self.deal_with_hex_value(re.search(r"\b(?:0[xX])?[\dA-Fa-f]+\b", sentence).group())
         if re.search(r"equation", sentence):
             self.equation(sentence)
-
         if len(self.possible_answers) == 1:
             final = list(self.possible_answers)[0]
             return f"The num I needed to guess was {final}."
