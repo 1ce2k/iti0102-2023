@@ -183,7 +183,7 @@ class Student:
         """
         solutions = quadratic_equation_solver(equation)
         # self.possible_answers = solutions
-        if multiplicative != 0:
+        if multiplicative != 0 and solutions:
             if not to_multiply and is_bigger:
                 self.deal_with_dec_value(f'{max(solutions) / multiplicative:.0f}')
                 # self.possible_answers = f'{max(solutions) / multiplicative:.0f}, {solutions}, {multiplicative}'
