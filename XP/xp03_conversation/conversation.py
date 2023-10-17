@@ -29,14 +29,7 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        if re.search(r"(prime)", sentence):
-            self.deal_with_primes(not re.search(r"not|n't", sentence))
-        if re.search(r"(composite)", sentence):
-            self.deal_with_composites(not re.search(r"not|n't", sentence))
-        if re.search(r"(catalan)", sentence):
-            self.deal_with_catalan_sequence(not re.search(r"not|n't", sentence))
-        if re.search(r"(fibonacci)", sentence):
-            self.deal_with_fibonacci_sequence(not re.search("not|n't", sentence))
+        self.deal_with_number_type(sentence)
         if re.search(r"binary form", sentence):
             self.binary_form(sentence)
         if re.search(r"(order)", sentence):
@@ -73,6 +66,17 @@ class Student:
         increasing = not re.search(r'(decreasing)', sentence)
         to_be = not re.search(r"n't|not", sentence)
         self.deal_with_number_order(increasing, to_be)
+
+    def deal_with_number_type(self, sentence):
+        """Deal with number type, func to make decision branch less complex."""
+        if re.search(r"(prime)", sentence):
+            self.deal_with_primes(not re.search(r"not|n't", sentence))
+        if re.search(r"(composite)", sentence):
+            self.deal_with_composites(not re.search(r"not|n't", sentence))
+        if re.search(r"(catalan)", sentence):
+            self.deal_with_catalan_sequence(not re.search(r"not|n't", sentence))
+        if re.search(r"(fibonacci)", sentence):
+            self.deal_with_fibonacci_sequence(not re.search("not|n't", sentence))
 
     def intersect_possible_answers(self, update: list):
         """
