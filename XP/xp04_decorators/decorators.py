@@ -172,7 +172,7 @@ def enforce_types(func):
                     elif not isinstance(expected_type, types.UnionType) and (value is not None or expected_type is not None):
                         actual_type = type(value)
                         if actual_type != expected_type:
-                            raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was '{value}' of type {actual_type.__name__}")
+                            raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was {value} of type {actual_type.__name__}")
         result = func(*args, **kwargs)
         if return_annotation is not inspect.Signature.empty:
             expected_type = return_annotation
