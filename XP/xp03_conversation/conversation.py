@@ -194,8 +194,6 @@ class Student:
                 self.deal_with_dec_value(f'{round(min(solutions) * multiplicative)}')
             elif not to_multiply and not is_bigger:
                 self.deal_with_dec_value(f'{round(min(solutions) / multiplicative)}')
-        else:
-            self.deal_with_dec_value('')
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
