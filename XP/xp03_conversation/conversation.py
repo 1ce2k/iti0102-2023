@@ -35,15 +35,14 @@ class Student:
             self.deal_with_composites(not re.search(r"not|n't", sentence))
         elif re.search(r"(catalan)", sentence):
             self.deal_with_catalan_sequence(not re.search(r"not|n't", sentence))
+        elif re.search(r"(fibonacci)", sentence):
+            self.deal_with_fibonacci_sequence(not re.search("not|n't", sentence))
 
         if re.search(r"binary form", sentence):
             if re.search(r'ones', sentence):
                 self.deal_with_number_of_ones(int(re.search(r'\d+', sentence).group()))
             else:
                 self.deal_with_number_of_zeroes(int(re.search(r"\d+", sentence).group()))
-
-        if re.search(r"(fibonacci)", sentence):
-            self.deal_with_fibonacci_sequence(not re.search("not|n't", sentence))
 
         if re.search(r"(order)", sentence):
             increasing = not re.search(r'(decreasing)', sentence)
