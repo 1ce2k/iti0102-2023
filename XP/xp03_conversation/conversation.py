@@ -75,7 +75,8 @@ class Student:
             self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
         if len(self.possible_answers) == 1:
-            return f"The num I needed to guess was {self.possible_answers}."
+            final = list(self.possible_answers)[0]
+            return f"The num I needed to guess was {final}."
         sorted_list = sorted(self.possible_answers)
         return f"Possible answers are {sorted_list}."
 
