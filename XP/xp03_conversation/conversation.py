@@ -29,17 +29,13 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        if re.search(r"(prime)", sentence):
-            is_prime = False if re.search(r"not|n't", sentence) else True
-            self.deal_with_primes(is_prime)
+        is_prime = re.search(r'prime', sentence) and not re.search(r"not|n't", sentence)
+        self.deal_with_primes(is_prime)
+        is_composite = re.search(r'composite', sentence) and not re.search(r"not|n't", sentence)
+        self.deal_with_composites(is_composite)
 
-        if re.search(r"(composite)", sentence):
-            is_composite = False if re.search(r"not|n't", sentence) else True
-            self.deal_with_composites(is_composite)
-
-        if re.search(r"(catalan)", sentence):
-            is_catalan = False if re.search(r"not|n't", sentence) else True
-            self.deal_with_catalan_sequence(is_catalan)
+        is_catalan = re.search(r'catalan', sentence) and not re.search(r"not|n't", sentence)
+        self.deal_with_catalan_sequence(is_catalan)
 
         if re.search(r"binary form", sentence):
             if re.search(r'ones', sentence):
