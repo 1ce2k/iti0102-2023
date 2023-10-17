@@ -70,7 +70,7 @@ class Student:
             bigger = False if re.search(r'is smaller', sentence) else True
             to_multiply = False if re.search(r'divided', sentence) else True
             x = float(re.search(r'[-+]?[0-9]*\.[0-9]+', sentence).group())
-            equation = re.search(r'"(.*?)"', sentence).group()
+            equation = re.search(r'"(.*?)"', sentence).group(1)
             self.deal_with_quadratic_equation(equation, to_multiply, x, bigger)
 
         if len(self.possible_answers) == 1:
