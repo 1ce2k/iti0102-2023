@@ -113,13 +113,7 @@ def catch(*error_classes):
             except error_classes as error:
                 return 1, type(error)
         return inner_func
-    if error_classes:
-        print(1)
-        return decorator
-    else:
-        print(2)
-        error_classes = Exception
-        return decorator
+    return decorator
 
 
 def enforce_types(func):
@@ -171,7 +165,8 @@ def enforce_types(func):
                             raise TypeError(f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
                     elif not isinstance(expected_type, types.UnionType) and (value is not None or expected_type is not None):
                         actual_type = type(value)
-                        raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was '{value}' of type {actual_type.__name__}")
+                        if type(value) is not expected_type:
+                            raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was {value} of type {actual_type.__name__}")
         result = func(*args, **kwargs)
         if return_annotation is not inspect.Signature.empty:
             expected_type = return_annotation
@@ -214,7 +209,7 @@ def fibonacci(n: int):
     return fibonacci(n - 2) + fibonacci(n - 1)
 
 
-@catch(ZeroDivisionError,KeyError)
+@catch
 def error_func(iterable):
     """Test function for @catch."""
     return iterable[2]
@@ -227,58 +222,9 @@ def process_file_contents(data: list, prefix: str = ""):
 
 
 @enforce_types
-def no_more_duck_typing(a: int | float, b: int) -> int:
+def no_more_duck_typing(a: int, b: int) -> int:
     """Test function for @enforce_types."""
     return a + b
 
 
-if __name__ == '__main__':
-    # print(double_me(5))  # 10
-    # print(double_me("Hello"))  # HelloHello
-    # print()
-
-    # print(measure_me())  # It took 0.21... seconds for measure_me to run
-    # 5
-    # print()
-
-    # print(fibonacci(35))  # 9227465
-    # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
-    # print()
-
-    print(error_func("Hello"))  # (0, 'l')
-    print(error_func([5, 6, 7]))  # (0, 7)
-    print(error_func({}))  # (1, <class 'KeyError'>)
-    print(error_func(2))
-
-    try:
-        print(error_func([]))
-        print("IndexError should not be caught at this situation.")
-    except IndexError:
-        print("IndexError was thrown (as it should).")
-
-    # print()
-
-    # print(process_file_contents("hi"))  # This assumes you have a file "data.txt". It should print out the file
-    # contents in a list with "hi" in front of each line like ["hiLine 1", "hiLine 2", ...].
-    # print(process_file_contents())  # This should just print out the file contents in a list.
-    # print()
-
-    # print(no_more_duck_typing(5, 0))  # 5
-
-    # try:
-    #     print(no_more_duck_typing("5", None))
-    #     print("TypeError should be thrown, but wasn't.")
-    # except TypeError as e:
-    #     print(e)  # Argument 'num' must be of type int or float, but was '5' of type str
-    #
-    # try:
-    #     print(no_more_duck_typing(5.0, 2))
-    #     print("TypeError should be thrown, but wasn't.")
-    # except TypeError as e:
-    #     print(e)  # Argument 'g' must be of type NoneType, but was 2 of type int
-    #
-    # try:
-    #     print(no_more_duck_typing("5", None))
-    #     print("TypeError should be thrown, but wasn't.")
-    # except TypeError as e:
-    #     print(e)
+assert no_more_duck_typing(1, 5) == 6

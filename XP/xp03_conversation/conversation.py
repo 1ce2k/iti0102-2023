@@ -41,13 +41,13 @@ class Student:
             is_catalan = False if re.search(r"not|n't", sentence) else True
             self.deal_with_catalan_sequence(is_catalan)
 
-        if re.search(r"(\d+) zeroes in its binary form", sentence):
-            amount_of_zeroes = int(re.search(r"(\d+)", sentence).group(1))
-            self.deal_with_number_of_zeroes(amount_of_zeroes)
-
-        if re.search(r"(\d+) ones in its binary form", sentence):
-            amount_of_ones = int(re.search(r"(\d+)", sentence).group(1))
-            self.deal_with_number_of_ones(amount_of_ones)
+        if re.search(r"binary form", sentence):
+            if re.search(r'ones', sentence):
+                ones_count = int(re.search(r'\d+', sentence).group())
+                self.deal_with_number_of_ones(ones_count)
+            else:
+                zeroes_count = int(re.search(r"\d+", sentence).group())
+                self.deal_with_number_of_zeroes(zeroes_count)
 
         if re.search(r"(fibonacci)", sentence):
             is_in = False if re.search("not|n't", sentence) else True
@@ -62,21 +62,21 @@ class Student:
             decimal = str(re.search(r'(\d+)', sentence).group(1))
             self.deal_with_dec_value(decimal)
 
+        if re.search(r'hex value: "\b(?:0[xX])?[0-9A-Fa-f]+\b"', sentence):
+            hex_value = re.search(r"\b(?:0[xX])?[0-9A-Fa-f]+\b", sentence).group()
+            self.deal_with_hex_value(hex_value)
+
+        if re.search(r"equation", sentence):
+            is_bigger = False if re.search(r'is smaller', sentence) else True
+            to_multiply = False if re.search(r'divided', sentence) else True
+            multiplicative = float(re.search(r'[-+]?[0-9]*\.[0-9]+', sentence).group())
+            equation = re.search(r'"(.*?)"', sentence).group(1)
+            self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
+
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
         sorted_list = sorted(self.possible_answers)
         return f"Possible answers are {sorted_list}."
-
-    # if re.search(r"equation", sentence):
-    #     equation = ''
-    #     multiplicative = ''
-    #     if re.search(r'divided', sentence):
-    #         multiplicative = re.search(r'is divided by (\d+).(\d+)', sentence).group(1) + '.' + re.search(r'is divided by (\d+).(\d+)', sentence).group(2)
-    #     elif re.search(r'times', sentence):
-    #         multiplicative = re.search(r'(\d+).(\d+) times', sentence).group(1) + '.' + re.search(r'(\d+).(\d+) times', sentence).group(2)
-    #     to_multiply = False if re.search(r'divided', sentence) else True
-    #     is_bigger = False if re.search(r'smaller', sentence) else True
-    #     self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
     def intersect_possible_answers(self, update: list):
         """
@@ -182,20 +182,14 @@ class Student:
         :param is_bigger: to use the bigger or smaller result of the quadratic equation(min or max from [x1, x2])
         """
         solutions = quadratic_equation_solver(equation)
-        # self.possible_answers = solutions
-        if multiplicative != 0 and solutions:
-            if not to_multiply and is_bigger:
-                self.deal_with_dec_value(f'{max(solutions) / multiplicative:.0f}')
-                # self.possible_answers = f'{max(solutions) / multiplicative:.0f}, {solutions}, {multiplicative}'
-            elif not to_multiply and not is_bigger:
-                self.deal_with_dec_value(f'{min(solutions) / multiplicative:.0f}')
-                # self.possible_answers = f'{min(solutions) / multiplicative:.0f}, {solutions}, {multiplicative}'
-            if to_multiply and is_bigger:
-                self.deal_with_dec_value(f'{max(solutions) * multiplicative:.0f}')
-                # self.possible_answers = f'{max(solutions) * multiplicative:.0f}, {solutions}, {multiplicative}'
-            elif to_multiply and not is_bigger:
-                self.deal_with_dec_value(f'{min(solutions) * multiplicative:.0f}')
-                # self.possible_answers = f'{min(solutions) * multiplicative:.0f}, {solutions}, {multiplicative}'
+        if to_multiply and is_bigger:
+            self.deal_with_dec_value(f'{max(solutions) * multiplicative:.0f}')
+        elif not to_multiply and is_bigger:
+            self.deal_with_dec_value(f'{max(solutions) / multiplicative:.0f}')
+        elif to_multiply and not is_bigger:
+            self.deal_with_dec_value(f'{min(solutions) * multiplicative:.0f}')
+        elif not to_multiply and not is_bigger:
+            self.deal_with_dec_value(f'{min(solutions) / multiplicative:.0f}')
 
     def deal_with_fibonacci_sequence(self, is_in: bool):
         """
@@ -433,6 +427,7 @@ def equation_coefficients(equation: str):
     return a, b, c
 
 
+# regex patterns to find coefficients a, b, c
 regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
 regex_b = r'\s*(-?\s*\d*|-)\s*x1?(?![0-9])'
 regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
