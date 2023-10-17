@@ -33,15 +33,15 @@ class Student:
             is_prime = False if re.search(r"not|n't", sentence) else True
             self.deal_with_primes(is_prime)
 
-        elif re.search(r"(composite)", sentence):
+        if re.search(r"(composite)", sentence):
             is_composite = False if re.search(r"not|n't", sentence) else True
             self.deal_with_composites(is_composite)
 
-        elif re.search(r"(catalan)", sentence):
+        if re.search(r"(catalan)", sentence):
             is_catalan = False if re.search(r"not|n't", sentence) else True
             self.deal_with_catalan_sequence(is_catalan)
 
-        elif re.search(r"binary form", sentence):
+        if re.search(r"binary form", sentence):
             if re.search(r'ones', sentence):
                 ones_count = int(re.search(r'\d+', sentence).group())
                 self.deal_with_number_of_ones(ones_count)
@@ -49,24 +49,24 @@ class Student:
                 zeroes_count = int(re.search(r"\d+", sentence).group())
                 self.deal_with_number_of_zeroes(zeroes_count)
 
-        elif re.search(r"(fibonacci)", sentence):
+        if re.search(r"(fibonacci)", sentence):
             is_in = False if re.search("not|n't", sentence) else True
             self.deal_with_fibonacci_sequence(is_in)
 
-        elif re.search(r"(order)", sentence):
+        if re.search(r"(order)", sentence):
             increasing = False if re.search(r'(decreasing)', sentence) else True
             to_be = False if re.search(r"n't|not", sentence) else True
             self.deal_with_number_order(increasing, to_be)
 
-        elif re.search(r'decimal value: "(\d+)"', sentence):
+        if re.search(r'decimal value: "(\d+)"', sentence):
             decimal = str(re.search(r'(\d+)', sentence).group(1))
             self.deal_with_dec_value(decimal)
 
-        elif re.search(r'hex value: "\b(?:0[xX])?[0-9A-Fa-f]+\b"', sentence):
+        if re.search(r'hex value: "\b(?:0[xX])?[0-9A-Fa-f]+\b"', sentence):
             hex_value = re.search(r"\b(?:0[xX])?[0-9A-Fa-f]+\b", sentence).group()
             self.deal_with_hex_value(hex_value)
 
-        elif re.search(r"equation", sentence):
+        if re.search(r"equation", sentence):
             is_bigger = False if re.search(r'smaller', sentence) else True
             to_multiply = False if re.search(r'divided', sentence) else True
             multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
@@ -434,10 +434,3 @@ def equation_coefficients(equation: str):
 regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
 regex_b = r'\s*(-?\s*\d*|-)\s*x1?(?![0-9])'
 regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
-
-
-if __name__ == '__main__':
-    u = Student(56)
-    print(u.decision_branch(
-        "This is comprised of a digit where 3.0000 times the bigger"
-    ))
