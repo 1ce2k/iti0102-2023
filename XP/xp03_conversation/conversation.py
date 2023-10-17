@@ -53,12 +53,7 @@ class Student:
             self.deal_with_hex_value(re.search(r"\b(?:0[xX])?[\dA-Fa-f]+\b", sentence).group())
 
         if re.search(r"equation", sentence):
-            is_bigger = not re.search(r'smaller', sentence)
-            to_multiply = not re.search(r'divided', sentence)
-            multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
-            equation = re.search(r'"(.*?)"', sentence).group(1)
-            # return [equation, multiplicative, to_multiply, is_bigger, solution]
-            self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
+            equation(sentence)
 
         if len(self.possible_answers) == 1:
             final = list(self.possible_answers)[0]
@@ -67,10 +62,19 @@ class Student:
         return f"Possible answers are {sorted_list}."
 
     def binary_form(self, sentence):
+        """Deal with binary form func to make decision branch less complex."""
         if re.search(r'ones', sentence):
             self.deal_with_number_of_ones(int(re.search(r'\d+', sentence).group()))
         else:
             self.deal_with_number_of_zeroes(int(re.search(r"\d+", sentence).group()))
+
+    def equation(self, sentence):
+        """Deal with equation func to make decision branch less complex."""
+        is_bigger = not re.search(r'smaller', sentence)
+        to_multiply = not re.search(r'divided', sentence)
+        multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
+        equation = re.search(r'"(.*?)"', sentence).group(1)
+        self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
     def intersect_possible_answers(self, update: list):
         """
