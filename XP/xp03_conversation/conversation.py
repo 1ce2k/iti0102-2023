@@ -66,21 +66,17 @@ class Student:
             hex_value = re.search(r"\b(?:0[xX])?[0-9A-Fa-f]+\b", sentence).group()
             self.deal_with_hex_value(hex_value)
 
+        if re.search(r"equation", sentence):
+            bigger = False if re.search(r'is smaller', sentence) else True
+            to_multiply = False if re.search(r'divided', sentence) else True
+            x = float(re.search(r'[-+]?[0-9]*\.[0-9]+', sentence).group())
+            equation = re.search(r'"(.*?)"', sentence).group()
+            self.deal_with_quadratic_equation(equation, to_multiply, x, bigger)
+
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
         sorted_list = sorted(self.possible_answers)
         return f"Possible answers are {sorted_list}."
-
-    # if re.search(r"equation", sentence):
-    #     equation = ''
-    #     multiplicative = ''
-    #     if re.search(r'divided', sentence):
-    #         multiplicative = re.search(r'is divided by (\d+).(\d+)', sentence).group(1) + '.' + re.search(r'is divided by (\d+).(\d+)', sentence).group(2)
-    #     elif re.search(r'times', sentence):
-    #         multiplicative = re.search(r'(\d+).(\d+) times', sentence).group(1) + '.' + re.search(r'(\d+).(\d+) times', sentence).group(2)
-    #     to_multiply = False if re.search(r'divided', sentence) else True
-    #     is_bigger = False if re.search(r'smaller', sentence) else True
-    #     self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
     def intersect_possible_answers(self, update: list):
         """
