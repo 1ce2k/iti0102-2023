@@ -72,8 +72,8 @@ class Student:
             multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
             equation = re.search(r'"(.*?)"', sentence).group(1)
             solution = quadratic_equation_solver(equation)
-            return [equation, multiplicative, to_multiply, is_bigger, solution]
-            # self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
+            # return [equation, multiplicative, to_multiply, is_bigger, solution]
+            self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
