@@ -31,27 +31,20 @@ class Student:
         """
         if re.search(r"(prime)", sentence):
             self.deal_with_primes(not re.search(r"not|n't", sentence))
-        elif re.search(r"(composite)", sentence):
+        if re.search(r"(composite)", sentence):
             self.deal_with_composites(not re.search(r"not|n't", sentence))
-        elif re.search(r"(catalan)", sentence):
+        if re.search(r"(catalan)", sentence):
             self.deal_with_catalan_sequence(not re.search(r"not|n't", sentence))
-        elif re.search(r"(fibonacci)", sentence):
+        if re.search(r"(fibonacci)", sentence):
             self.deal_with_fibonacci_sequence(not re.search("not|n't", sentence))
-
         if re.search(r"binary form", sentence):
             self.binary_form(sentence)
-
         if re.search(r"(order)", sentence):
-            increasing = not re.search(r'(decreasing)', sentence)
-            to_be = not re.search(r"n't|not", sentence)
-            self.deal_with_number_order(increasing, to_be)
-
+            self.order(sentence)
         if re.search(r'decimal value: "(\d+)"', sentence):
             self.deal_with_dec_value(str(re.search(r'(\d+)', sentence).group(1)))
-
         if re.search(r'hex value: "\b(?:0[xX])?[\dA-Fa-f]+\b"', sentence):
             self.deal_with_hex_value(re.search(r"\b(?:0[xX])?[\dA-Fa-f]+\b", sentence).group())
-
         if re.search(r"equation", sentence):
             self.equation(sentence)
 
@@ -62,19 +55,25 @@ class Student:
         return f"Possible answers are {sorted_list}."
 
     def binary_form(self, sentence):
-        """Deal with binary form func to make decision branch less complex."""
+        """Deal with binary form, func to make decision branch less complex."""
         if re.search(r'ones', sentence):
             self.deal_with_number_of_ones(int(re.search(r'\d+', sentence).group()))
         else:
             self.deal_with_number_of_zeroes(int(re.search(r"\d+", sentence).group()))
 
     def equation(self, sentence):
-        """Deal with equation func to make decision branch less complex."""
+        """Deal with equation, func to make decision branch less complex."""
         is_bigger = not re.search(r'smaller', sentence)
         to_multiply = not re.search(r'divided', sentence)
         multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
         equation = re.search(r'"(.*?)"', sentence).group(1)
         self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
+
+    def order(self, sentence):
+        """Deal with order, func to make decision branch less complex."""
+        increasing = not re.search(r'(decreasing)', sentence)
+        to_be = not re.search(r"n't|not", sentence)
+        self.deal_with_number_order(increasing, to_be)
 
     def intersect_possible_answers(self, update: list):
         """
