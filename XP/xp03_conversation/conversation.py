@@ -67,7 +67,7 @@ class Student:
             self.deal_with_hex_value(hex_value)
 
         if re.search(r"equation", sentence):
-            is_bigger = False if re.search(r'is smaller', sentence) else True
+            is_bigger = False if re.search(r'smaller', sentence) else True
             to_multiply = False if re.search(r'divided', sentence) else True
             multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
             equation = re.search(r'"(.*?)"', sentence).group(1)
