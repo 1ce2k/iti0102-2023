@@ -29,66 +29,47 @@ class Student:
         if the result is certain
         f"The number I needed to guess was {final_answer}."
         """
-        # if re.search(r"(prime)", sentence):
-        #     is_prime = re.search(r'prime', sentence) and not re.search(r"not|n't", sentence)
-        #     self.deal_with_primes(is_prime)
-        # elif re.search(r"(composite)", sentence):
-        #     is_composite = False if re.search(r"not|n't", sentence) else True
-        #     self.deal_with_composites(is_composite)
-        # elif re.search(r"(catalan)", sentence):
-        #     is_catalan = False if re.search(r"not|n't", sentence) else True
-        #     self.deal_with_catalan_sequence(is_catalan)
-        # elif re.search(r"binary form", sentence):
-        #     if re.search(r'ones', sentence):
-        #         ones_count = int(re.search(r'\d+', sentence).group())
-        #         self.deal_with_number_of_ones(ones_count)
-        #     else:
-        #         zeroes_count = int(re.search(r"\d+", sentence).group())
-        #         self.deal_with_number_of_zeroes(zeroes_count)
-        #
-        # if re.search(r"(fibonacci)", sentence):
-        #     is_in = False if re.search("not|n't", sentence) else True
-        #     self.deal_with_fibonacci_sequence(is_in)
-        #
-        # if re.search(r"(order)", sentence):
-        #     increasing = False if re.search(r'(decreasing)', sentence) else True
-        #     to_be = False if re.search(r"n't|not", sentence) else True
-        #     self.deal_with_number_order(increasing, to_be)
-        #
-        # if re.search(r'decimal value: "(\d+)"', sentence):
-        #     decimal = str(re.search(r'(\d+)', sentence).group(1))
-        #     self.deal_with_dec_value(decimal)
-        #
-        # if re.search(r'hex value: "\b(?:0[xX])?[0-9A-Fa-f]+\b"', sentence):
-        #     hex_value = re.search(r"\b(?:0[xX])?[0-9A-Fa-f]+\b", sentence).group()
-        #     self.deal_with_hex_value(hex_value)
-        #
-        # if re.search(r"equation", sentence):
-        #     is_bigger = False if re.search(r'smaller', sentence) else True
-        #     to_multiply = False if re.search(r'divided', sentence) else True
-        #     multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
-        #     equation = re.search(r'"(.*?)"', sentence).group(1)
-        #     # return [equation, multiplicative, to_multiply, is_bigger, solution]
-        #     self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
+        if re.search(r"(prime)", sentence):
+            is_prime = re.search(r'prime', sentence) and not re.search(r"not|n't", sentence)
+            self.deal_with_primes(is_prime)
+        elif re.search(r"(composite)", sentence):
+            is_composite = False if re.search(r"not|n't", sentence) else True
+            self.deal_with_composites(is_composite)
+        elif re.search(r"(catalan)", sentence):
+            is_catalan = False if re.search(r"not|n't", sentence) else True
+            self.deal_with_catalan_sequence(is_catalan)
+        elif re.search(r"binary form", sentence):
+            if re.search(r'ones', sentence):
+                ones_count = int(re.search(r'\d+', sentence).group())
+                self.deal_with_number_of_ones(ones_count)
+            else:
+                zeroes_count = int(re.search(r"\d+", sentence).group())
+                self.deal_with_number_of_zeroes(zeroes_count)
 
-        pattern_map = {
-            r"(prime)": self.deal_with_primes,
-            r"(composite)": self.deal_with_composites,
-            r"(catalan)": self.deal_with_catalan_sequence,
-            r"binary form (\d+) ones": self.deal_with_number_of_ones,
-            r"binary form (\d+) zeroes": self.deal_with_number_of_zeroes,
-            r"(fibonacci)": self.deal_with_fibonacci_sequence,
-            r"(order) (decreasing) (not|n't)": self.deal_with_number_order,
-            r'decimal value: "(\d+)"': self.deal_with_dec_value,
-            r'hex value: "\b(?:0[xX])?[0-9A-Fa-f]+\b"': self.deal_with_hex_value,
-            r"equation (smaller|bigger) (divided|not|n't) ([-+]?[\d+]*\.[\d+]+) \"(.*?)\"": self.deal_with_quadratic_equation,
-        }
+        if re.search(r"(fibonacci)", sentence):
+            is_in = False if re.search("not|n't", sentence) else True
+            self.deal_with_fibonacci_sequence(is_in)
 
-        for pattern, handler in pattern_map.items():
-            match = re.search(pattern, sentence)
-            if match:
-                args = match.groups()
-                handler(*args)
+        if re.search(r"(order)", sentence):
+            increasing = False if re.search(r'(decreasing)', sentence) else True
+            to_be = False if re.search(r"n't|not", sentence) else True
+            self.deal_with_number_order(increasing, to_be)
+
+        if re.search(r'decimal value: "(\d+)"', sentence):
+            decimal = str(re.search(r'(\d+)', sentence).group(1))
+            self.deal_with_dec_value(decimal)
+
+        if re.search(r'hex value: "\b(?:0[xX])?[0-9A-Fa-f]+\b"', sentence):
+            hex_value = re.search(r"\b(?:0[xX])?[0-9A-Fa-f]+\b", sentence).group()
+            self.deal_with_hex_value(hex_value)
+
+        if re.search(r"equation", sentence):
+            is_bigger = False if re.search(r'smaller', sentence) else True
+            to_multiply = False if re.search(r'divided', sentence) else True
+            multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
+            equation = re.search(r'"(.*?)"', sentence).group(1)
+            # return [equation, multiplicative, to_multiply, is_bigger, solution]
+            self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
         if len(self.possible_answers) == 1:
             final = list(self.possible_answers)[0]
