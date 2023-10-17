@@ -30,25 +30,21 @@ class Student:
         f"The number I needed to guess was {final_answer}."
         """
         if re.search(r"(prime)", sentence):
-            is_prime = re.search(r'prime', sentence) and not re.search(r"not|n't", sentence)
-            self.deal_with_primes(is_prime)
+            self.deal_with_primes(re.search(r'prime', sentence) and not re.search(r"not|n't", sentence))
         elif re.search(r"(composite)", sentence):
-            is_composite = False if re.search(r"not|n't", sentence) else True
-            self.deal_with_composites(is_composite)
+            self.deal_with_composites(False if re.search(r"not|n't", sentence) else True)
         elif re.search(r"(catalan)", sentence):
-            is_catalan = False if re.search(r"not|n't", sentence) else True
-            self.deal_with_catalan_sequence(is_catalan)
+            self.deal_with_catalan_sequence(False if re.search(r"not|n't", sentence) else True)
+
         if re.search(r"binary form", sentence):
             if re.search(r'ones', sentence):
-                ones_count = int(re.search(r'\d+', sentence).group())
-                self.deal_with_number_of_ones(ones_count)
+                self.deal_with_number_of_ones(int(re.search(r'\d+', sentence).group()))
             else:
-                zeroes_count = int(re.search(r"\d+", sentence).group())
-                self.deal_with_number_of_zeroes(zeroes_count)
+                self.deal_with_number_of_zeroes(int(re.search(r"\d+", sentence).group()))
 
         if re.search(r"(fibonacci)", sentence):
-            is_in = False if re.search("not|n't", sentence) else True
-            self.deal_with_fibonacci_sequence(is_in)
+
+            self.deal_with_fibonacci_sequence(False if re.search("not|n't", sentence) else True)
 
         if re.search(r"(order)", sentence):
             increasing = False if re.search(r'(decreasing)', sentence) else True
@@ -56,12 +52,10 @@ class Student:
             self.deal_with_number_order(increasing, to_be)
 
         if re.search(r'decimal value: "(\d+)"', sentence):
-            decimal = str(re.search(r'(\d+)', sentence).group(1))
-            self.deal_with_dec_value(decimal)
+            self.deal_with_dec_value(str(re.search(r'(\d+)', sentence).group(1)))
 
         if re.search(r'hex value: "\b(?:0[xX])?[0-9A-Fa-f]+\b"', sentence):
-            hex_value = re.search(r"\b(?:0[xX])?[0-9A-Fa-f]+\b", sentence).group()
-            self.deal_with_hex_value(hex_value)
+            self.deal_with_hex_value(re.search(r"\b(?:0[xX])?[0-9A-Fa-f]+\b", sentence).group())
 
         if re.search(r"equation", sentence):
             is_bigger = False if re.search(r'smaller', sentence) else True
