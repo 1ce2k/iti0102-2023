@@ -78,7 +78,6 @@ class Student:
         sorted_list = sorted(self.possible_answers)
         return f"Possible answers are {sorted_list}."
 
-
     def intersect_possible_answers(self, update: list):
         """
         Logical AND between two sets.
