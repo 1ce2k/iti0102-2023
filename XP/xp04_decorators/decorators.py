@@ -113,13 +113,7 @@ def catch(*error_classes):
             except error_classes as error:
                 return 1, type(error)
         return inner_func
-    if error_classes:
-        print(1)
-        return decorator
-    else:
-        print(2)
-        error_classes = Exception
-        return decorator
+    return decorator
 
 
 def enforce_types(func):
@@ -169,10 +163,10 @@ def enforce_types(func):
                             actual_type = type(value).__name__
                             expected = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + expected_type.__args__[-1].__name__
                             raise TypeError(f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
-                    elif not isinstance(expected_type, types.UnionType):
-                        # and (value is not None or expected_type is not None):
+                    elif not isinstance(expected_type, types.UnionType) and (value is not None or expected_type is not None):
                         actual_type = type(value)
-                        raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was '{value}' of type {actual_type.__name__}")
+                        if type(value) is not expected_type:
+                            raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was '{value}' of type {actual_type.__name__}")
         result = func(*args, **kwargs)
         if return_annotation is not inspect.Signature.empty:
             expected_type = return_annotation
@@ -228,12 +222,13 @@ def process_file_contents(data: list, prefix: str = ""):
 
 
 @enforce_types
-def no_more_duck_typing(a: int | float, b: int) -> int:
+def no_more_duck_typing(a: int, b: int) -> int:
     """Test function for @enforce_types."""
     return a + b
 
+assert no_more_duck_typing(1, 5) == 6
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # print(double_me(5))  # 10
     # print(double_me("Hello"))  # HelloHello
     # print()
@@ -246,16 +241,16 @@ if __name__ == '__main__':
     # Probably takes about 2 seconds without memoization and under 50 microseconds with memoization
     # print()
 
-    print(error_func("Hello"))  # (0, 'l')
-    print(error_func([5, 6, 7]))  # (0, 7)
-    print(error_func({}))  # (1, <class 'KeyError'>)
-    print(error_func(2))
+    # print(error_func("Hello"))  # (0, 'l')
+    # print(error_func([5, 6, 7]))  # (0, 7)
+    # print(error_func({}))  # (1, <class 'KeyError'>)
+    # print(error_func(2))
 
-    try:
-        print(error_func([]))
-        print("IndexError should not be caught at this situation.")
-    except IndexError:
-        print("IndexError was thrown (as it should).")
+    # try:
+    #     print(error_func([]))
+    #     print("IndexError should not be caught at this situation.")
+    # except IndexError:
+    #     print("IndexError was thrown (as it should).")
 
     # print()
 
