@@ -182,7 +182,6 @@ class Student:
         :param is_bigger: to use the bigger or smaller result of the quadratic equation(min or max from [x1, x2])
         """
         solutions = quadratic_equation_solver(equation)
-        # self.possible_answers = solutions
         if to_multiply and is_bigger:
             self.deal_with_dec_value(f'{max(solutions) * multiplicative:.0f}')
         elif not to_multiply and is_bigger:
@@ -192,55 +191,52 @@ class Student:
         elif not to_multiply and not is_bigger:
             self.deal_with_dec_value(f'{min(solutions) / multiplicative:.0f}')
 
+    def deal_with_fibonacci_sequence(self, is_in: bool):
+        """
+        Filter possible answers to either keep or remove all fibonacci numbers.
 
-def deal_with_fibonacci_sequence(self, is_in: bool):
-    """
-    Filter possible answers to either keep or remove all fibonacci numbers.
+        Call find_fibonacci_numbers to get all fibonacci numbers in range.
+        :param is_in: boolean whether the number is in fibonacci sequence or not
+        """
+        fibonacci_nums = find_fibonacci_numbers(self.num)
+        if is_in:
+            self.intersect_possible_answers(fibonacci_nums)
+        else:
+            self.exclude_possible_answers(fibonacci_nums)
 
-    Call find_fibonacci_numbers to get all fibonacci numbers in range.
-    :param is_in: boolean whether the number is in fibonacci sequence or not
-    """
-    fibonacci_nums = find_fibonacci_numbers(self.num)
-    if is_in:
-        self.intersect_possible_answers(fibonacci_nums)
-    else:
-        self.exclude_possible_answers(fibonacci_nums)
+    def deal_with_catalan_sequence(self, is_in: bool):
+        """
+        Filter possible answers to either keep or remove all catalan numbers.
 
+        Call find_catalan_numbers to get all catalan numbers in range.
+        :param is_in: boolean whether the number is in catalan sequence or not
+        """
+        catalan_nums = find_catalan_numbers(self.num)
+        if is_in:
+            self.intersect_possible_answers(catalan_nums)
+        else:
+            self.exclude_possible_answers(catalan_nums)
 
-def deal_with_catalan_sequence(self, is_in: bool):
-    """
-    Filter possible answers to either keep or remove all catalan numbers.
+    def deal_with_number_order(self, increasing: bool, to_be: bool):
+        """
+        Filter possible answers to either keep or remove all numbers with wrong order.
 
-    Call find_catalan_numbers to get all catalan numbers in range.
-    :param is_in: boolean whether the number is in catalan sequence or not
-    """
-    catalan_nums = find_catalan_numbers(self.num)
-    if is_in:
-        self.intersect_possible_answers(catalan_nums)
-    else:
-        self.exclude_possible_answers(catalan_nums)
+        :param increasing: boolean whether to check is in increasing or decreasing order
+        :param to_be: boolean whether the number is indeed in that order
+        """
+        filtered_numbers = []
+        for num in self.possible_answers:
+            # Convert the number to a string to check its order
+            num_str = str(num)
+            is_increasing = num_str == ''.join(sorted(num_str))
+            is_decreasing = num_str == ''.join(sorted(num_str, reverse=True))
 
-
-def deal_with_number_order(self, increasing: bool, to_be: bool):
-    """
-    Filter possible answers to either keep or remove all numbers with wrong order.
-
-    :param increasing: boolean whether to check is in increasing or decreasing order
-    :param to_be: boolean whether the number is indeed in that order
-    """
-    filtered_numbers = []
-    for num in self.possible_answers:
-        # Convert the number to a string to check its order
-        num_str = str(num)
-        is_increasing = num_str == ''.join(sorted(num_str))
-        is_decreasing = num_str == ''.join(sorted(num_str, reverse=True))
-
-        if (increasing and to_be and is_increasing) or (not increasing and to_be and is_decreasing):
-            filtered_numbers.append(num)
-        elif (increasing and not to_be and not is_increasing) or (
-                not increasing and not to_be and not is_decreasing):
-            filtered_numbers.append(num)
-    self.intersect_possible_answers(filtered_numbers)
+            if (increasing and to_be and is_increasing) or (not increasing and to_be and is_decreasing):
+                filtered_numbers.append(num)
+            elif (increasing and not to_be and not is_increasing) or (
+                    not increasing and not to_be and not is_decreasing):
+                filtered_numbers.append(num)
+        self.intersect_possible_answers(filtered_numbers)
 
 
 def quadratic_equation_solver(equation: str) -> None or float or tuple:
