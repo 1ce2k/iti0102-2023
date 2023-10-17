@@ -62,6 +62,10 @@ class Student:
             decimal = str(re.search(r'(\d+)', sentence).group(1))
             self.deal_with_dec_value(decimal)
 
+        if re.search(r'hex value: "([0-1A-F])"', sentence):
+            hex_value = str(re.search("r([0-1A-F])", sentence))
+            self.deal_with_hex_value(hex_value)
+
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
         sorted_list = sorted(self.possible_answers)
