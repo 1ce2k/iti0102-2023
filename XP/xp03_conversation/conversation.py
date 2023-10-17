@@ -67,11 +67,11 @@ class Student:
             self.deal_with_hex_value(hex_value)
 
         if re.search(r"equation", sentence):
-            bigger = False if re.search(r'is smaller', sentence) else True
+            is_bigger = False if re.search(r'is smaller', sentence) else True
             to_multiply = False if re.search(r'divided', sentence) else True
-            x = float(re.search(r'[-+]?[0-9]*\.[0-9]+', sentence).group())
+            multiplicative = float(re.search(r'[-+]?[0-9]*\.[0-9]+', sentence).group())
             equation = re.search(r'"(.*?)"', sentence).group(1)
-            self.deal_with_quadratic_equation(equation, to_multiply, x, bigger)
+            self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
         if len(self.possible_answers) == 1:
             return f"The num I needed to guess was {self.possible_answers}."
