@@ -39,10 +39,7 @@ class Student:
             self.deal_with_fibonacci_sequence(not re.search("not|n't", sentence))
 
         if re.search(r"binary form", sentence):
-            if re.search(r'ones', sentence):
-                self.deal_with_number_of_ones(int(re.search(r'\d+', sentence).group()))
-            else:
-                self.deal_with_number_of_zeroes(int(re.search(r"\d+", sentence).group()))
+            self.binary_form(sentence)
 
         if re.search(r"(order)", sentence):
             increasing = not re.search(r'(decreasing)', sentence)
@@ -68,6 +65,12 @@ class Student:
             return f"The num I needed to guess was {final}."
         sorted_list = sorted(self.possible_answers)
         return f"Possible answers are {sorted_list}."
+
+    def binary_form(self, sentence):
+        if re.search(r'ones', sentence):
+            self.deal_with_number_of_ones(int(re.search(r'\d+', sentence).group()))
+        else:
+            self.deal_with_number_of_zeroes(int(re.search(r"\d+", sentence).group()))
 
     def intersect_possible_answers(self, update: list):
         """
