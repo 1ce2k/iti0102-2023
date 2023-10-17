@@ -38,7 +38,7 @@ class Student:
         elif re.search(r"(catalan)", sentence):
             is_catalan = False if re.search(r"not|n't", sentence) else True
             self.deal_with_catalan_sequence(is_catalan)
-        elif re.search(r"binary form", sentence):
+        if re.search(r"binary form", sentence):
             if re.search(r'ones', sentence):
                 ones_count = int(re.search(r'\d+', sentence).group())
                 self.deal_with_number_of_ones(ones_count)
