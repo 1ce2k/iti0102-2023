@@ -63,7 +63,7 @@ class Student:
             self.deal_with_dec_value(decimal)
 
         if re.search(r'hex value: "\b(?:0[xX])?[0-9A-Fa-f]+\b"', sentence):
-            hex_value = str(re.search(r"\b(?:0[xX])?[0-9A-Fa-f]+\b", sentence))
+            hex_value = re.search(r"\b(?:0[xX])?[0-9A-Fa-f]+\b", sentence).group()
             self.deal_with_hex_value(hex_value)
 
         if len(self.possible_answers) == 1:
