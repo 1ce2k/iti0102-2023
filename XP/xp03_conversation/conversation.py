@@ -71,7 +71,6 @@ class Student:
             to_multiply = False if re.search(r'divided', sentence) else True
             multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
             equation = re.search(r'"(.*?)"', sentence).group(1)
-            solution = quadratic_equation_solver(equation)
             # return [equation, multiplicative, to_multiply, is_bigger, solution]
             self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
@@ -186,7 +185,6 @@ class Student:
         solutions = quadratic_equation_solver(equation)
         if solutions:
             if to_multiply and is_bigger:
-                x = round(max(solutions) * multiplicative, 1)
                 self.deal_with_dec_value(f'{round(max(solutions) * multiplicative)}')
             elif not to_multiply and is_bigger:
                 self.deal_with_dec_value(f'{round(max(solutions) / multiplicative)}')
