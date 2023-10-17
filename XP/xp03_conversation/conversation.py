@@ -57,7 +57,11 @@ class Student:
             self.deal_with_hex_value(re.search(r"\b(?:0[xX])?[\dA-Fa-f]+\b", sentence).group())
 
         if re.search(r"equation", sentence):
-            is_bigger, to_multiply, multiplicative, equation = not re.search(r'smaller', sentence), not re.search(r'divided', sentence), float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group()), re.search(r'"(.*?)"', sentence).group(1)
+            is_bigger = not re.search(r'smaller', sentence)
+            to_multiply = not re.search(r'divided', sentence)
+            multiplicative = float(re.search(r'[-+]?[\d+]*\.[\d+]+', sentence).group())
+            equation = re.search(r'"(.*?)"', sentence).group(1)
+            # return [equation, multiplicative, to_multiply, is_bigger, solution]
             self.deal_with_quadratic_equation(equation, to_multiply, multiplicative, is_bigger)
 
         if len(self.possible_answers) == 1:
