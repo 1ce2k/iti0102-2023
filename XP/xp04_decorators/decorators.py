@@ -168,7 +168,8 @@ def enforce_types(func):
                         if not is_instance_of_union(value, expected_type):
                             actual_type = type(value).__name__
                             expected = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + expected_type.__args__[-1].__name__
-                            raise TypeError(f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
+                            if actual_type not in expected_type.__args__:
+                                raise TypeError(f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
                     elif not isinstance(expected_type, types.UnionType) and (value is not None or expected_type is not None):
                         actual_type = type(value)
                         raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was '{value}' of type {actual_type.__name__}")
@@ -214,7 +215,7 @@ def fibonacci(n: int):
     return fibonacci(n - 2) + fibonacci(n - 1)
 
 
-@catch(ZeroDivisionError,KeyError)
+@catch
 def error_func(iterable):
     """Test function for @catch."""
     return iterable[2]
