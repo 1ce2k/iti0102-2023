@@ -77,7 +77,7 @@ def get_usernames(text: str) -> list[str]:
 
 def get_errors(text: str) -> list[int]:
     """Get errors from text."""
-    return re.findall(r'(?i)error (\d{1,3})', text)
+    return [int(error) for error in re.findall(r'(?i)error (\d{1,3})', text)]
 
 
 def get_addresses(text: str) -> list[str]:
@@ -87,7 +87,7 @@ def get_addresses(text: str) -> list[str]:
 
 def get_endpoints(text: str) -> list[str]:
     """Get endpoints from text."""
-    return re.findall(r'/([A-Za-z0-9&\/=?\-_%]+)', text)
+    return re.findall(r'/[A-Za-z0-9&\/=?\-_%]+', text)
 
 
 def format_times(text: str) -> list[str]:
