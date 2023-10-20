@@ -126,11 +126,11 @@ def format_times(text: str) -> list[str]:
     for minute in sorted(set(times_in_minute)):
         new_time = ''
         if 60 <= minute <= 720:
-            new_time = f'{minute // 60:02d}:{minute % 60:02d} AM'
+            new_time = f'{minute // 60}:{minute % 60:02d} AM'
         elif minute <= 59:
             new_time = f'12:{minute % 60:02d} AM'
         elif 721 <= minute <= 1380:
-            new_time = f'{(minute - 12 * 60) // 60:02d}:{minute % 60:02d} PM'
+            new_time = f'{(minute - 12 * 60) // 60}:{minute % 60:02d} PM'
         elif 1381 <= minute < 1440:
             new_time = f'23:{minute % 60:02d} PM'
         ret.append(new_time)
