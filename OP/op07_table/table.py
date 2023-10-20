@@ -65,6 +65,7 @@ def create_table_string(text: str) -> str:
 
 
 def get_max_width(time, user, error, ipv4, endpoint) -> int:
+    """Find max longest category name."""
     if endpoint:
         return 9
     if error:
@@ -114,6 +115,7 @@ def get_endpoints(text: str) -> list[str]:
 
 
 def format_times(text: str) -> list[str]:
+    """Format time from 24h to 12h."""
     times = get_times(text)
     in_minutes = []
 
@@ -122,7 +124,6 @@ def format_times(text: str) -> list[str]:
         if hour < 0:
             hour = 24 - hour
         in_minutes.append(hour * 60 + minute)
-    print(in_minutes)
 
     ret = []
     for minute in sorted(set(in_minutes)):
@@ -167,8 +168,6 @@ if __name__ == '__main__':
         [0?0 UTC+0] ok
         [0.0 UTC+0] also ok
         """
-    print(create_table_string(logs2))
-    print(get_times(logs))
     # time     | 12:00 AM, 12:05 AM, 1:54 AM, 3:46 AM, 8:53 AM, 11:07 AM, 5:57 PM, 9:53 PM
     # user     | 96NC9yqb, B3HIyLm, uJV5sf82_
     # error    | 9, 452, 700, 741, 844
