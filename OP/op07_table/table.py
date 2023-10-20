@@ -123,15 +123,16 @@ def format_times(text: str) -> list[str]:
         time_in_minute = new_time * 60 + minute
         times_in_minute.append(time_in_minute)
     ret = []
+    print(times_in_minute)
     for minute in sorted(set(times_in_minute)):
         new_time = ''
         if minute <= 59:
             new_time = f'12:{minute % 60:02d} AM'
-        elif 60 <= minute < 720:
+        elif 60 <= minute <= 719:
             new_time = f'{minute // 60}:{minute % 60:02d} AM'
-        elif minute == 720:
-            new_time = '12:00 PM'
-        elif 721 <= minute <= 1380:
+        elif 720 <= minute <= 779:
+            new_time = f'12:{minute % 60:02d} PM'
+        elif 780 <= minute <= 1380:
             new_time = f'{(minute - 12 * 60) // 60}:{minute % 60:02d} PM'
         elif 1381 <= minute < 1440:
             new_time = f'23:{minute % 60:02d} PM'
@@ -165,7 +166,7 @@ if __name__ == '__main__':
         [23-7 UTC+12] /1slr8I
         [07.46 UTC+4] usr:B3HIyLm 119.892.677.533
         [0:60 UTC+0] bad
-        [12?0 UTC+0] ok
+        [12?3 UTC+0] ok
         [0.0 UTC+0] also ok
         """
     print(create_table_string(logs2))
