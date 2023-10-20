@@ -115,27 +115,24 @@ def get_endpoints(text: str) -> list[str]:
 
 def format_times(text: str) -> list[str]:
     times = get_times(text)
-    times_in_minute = []
+    in_minutes = []
+
     for hour, minute, offset in times:
-        new_time = hour - offset
-        if new_time < 0:
-            new_time = 24 + new_time
-        time_in_minute = new_time * 60 + minute
-        times_in_minute.append(time_in_minute)
+        hour = hour - offset
+        if hour < 0:
+            hour = 24 - hour
+        in_minutes.append(hour * 60 + minute)
+    print(in_minutes)
+
     ret = []
-    print(times_in_minute)
-    for minute in sorted(set(times_in_minute)):
-        new_time = ''
-        if minute <= 59:
-            new_time = f'12:{minute % 60:02d} AM'
-        elif 60 <= minute <= 719:
-            new_time = f'{minute // 60}:{minute % 60:02d} AM'
-        elif 720 <= minute <= 779:
-            new_time = f'12:{minute % 60:02d} PM'
-        elif 780 <= minute <= 1380:
-            new_time = f'{(minute - 12 * 60) // 60}:{minute % 60:02d} PM'
-        elif 1381 <= minute < 1440:
-            new_time = f'23:{minute % 60:02d} PM'
+    for minute in sorted(set(in_minutes)):
+        hour = minute // 60
+        meridian = "AM" if hour < 12 else "PM"
+        if hour == 0:
+            hour = 12
+        elif hour > 12:
+            hour -= 12
+        new_time = f"{hour}:{minute % 60:02d} {meridian}"
         ret.append(new_time)
     return ret
 
@@ -165,11 +162,13 @@ if __name__ == '__main__':
         [15=53 UTC+7] /NBYFaC0 468.793.214.681
         [23-7 UTC+12] /1slr8I
         [07.46 UTC+4] usr:B3HIyLm 119.892.677.533
+        
         [0:60 UTC+0] bad
-        [12?3 UTC+0] ok
+        [0?0 UTC+0] ok
         [0.0 UTC+0] also ok
         """
     print(create_table_string(logs2))
+    print(get_times(logs))
     # time     | 12:00 AM, 12:05 AM, 1:54 AM, 3:46 AM, 8:53 AM, 11:07 AM, 5:57 PM, 9:53 PM
     # user     | 96NC9yqb, B3HIyLm, uJV5sf82_
     # error    | 9, 452, 700, 741, 844
