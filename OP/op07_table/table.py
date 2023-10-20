@@ -67,7 +67,7 @@ def get_times(text: str) -> list[tuple[int, int, int]]:
     :return: list of tuples containing the time and offset
     """
     regex_pattern = r'(\d{1,2})[^\d](\d{1,2}) UTC([+-]?\d{1,2})'
-    return [(int(hour), int(minute), int(offset)) for hour, minute, offset in re.findall(regex_pattern, text)]
+    return [(int(hour), int(minute), int(offset)) for hour, minute, offset in re.findall(regex_pattern, text) if -12 <= int(offset) <= 12]
 
 
 def get_usernames(text: str) -> list[str]:
