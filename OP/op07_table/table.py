@@ -43,12 +43,34 @@ def create_table_string(text: str) -> str:
     and "12:00 AM".
     Times in the table should be displayed in UTC(https://et.wikipedia.org/wiki/UTC) time.
     """
-    time = get_times(text)
+    time = format_times(text)
     user = get_usernames(text)
-    errors = get_errors(text)
+    error = get_errors(text)
     ipv4 = get_addresses(text)
-    endpoints = get_endpoints(text)
-    print(time, user, errors, ipv4, endpoints)
+    endpoint = get_endpoints(text)
+    max_width = get_max_width(time, user, error, ipv4, endpoint)
+    table = []
+    if time:
+        table.append(f'{"time".ljust(max_width)}' + '| ' + f'{", ".join(time)}')
+    if user:
+        table.append(f'{"user".ljust(max_width)}' + '| ' + f'{", ".join(user)}')
+    if error:
+        table.append(f'{"error".ljust(max_width)}' + '| ' + f'{", ".join(str(x) for x in error)}')
+    if ipv4:
+        table.append(f'{"ipv4".ljust(max_width)}' + '| ' + f'{", ".join(ipv4)}')
+    if endpoint:
+        table.append(f'{"endpoint".ljust(max_width)}' + '| ' + f'{", ".join(endpoint)}')
+    ret = '\n'.join(table)
+    return ret
+
+
+def get_max_width(time, user, error, ipv4, endpoint) -> int:
+    if endpoint:
+        return 9
+    if error:
+        return 6
+    if user or time or ipv4:
+        return 5
 
 
 def get_times(text: str) -> list[tuple[int, int, int]]:
@@ -68,8 +90,6 @@ def get_times(text: str) -> list[tuple[int, int, int]]:
     """
     regex_pattern = r'\[(\d{1,2})[^\d](\d{1,2}) UTC([+-]?\d{1,2})'
     return [(int(hour), int(minute), int(offset)) for hour, minute, offset in re.findall(regex_pattern, text) if -12 <= int(offset) <= 12 and 0 <= int(hour) <= 23 and 0 <= int(minute) <= 59]
-
-print(get_times('[02:53 UTC+5] usr:96NC9yqb /aA?Y4pK'))
 
 
 def get_usernames(text: str) -> list[str]:
@@ -102,8 +122,6 @@ def format_times(text: str) -> list[str]:
         else:
             formated.append(f'{new_hour % 12:02d}:{minute:02d} PM')
     return sorted(formated)
-
-print(format_times('20:12 UTC+1, 10:54 UTC-2'))
 
 
 if __name__ == '__main__':
