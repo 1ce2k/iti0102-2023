@@ -110,7 +110,7 @@ def get_addresses(text: str) -> list[str]:
 
 def get_endpoints(text: str) -> list[str]:
     """Get endpoints from text."""
-    return re.findall(r'/[A-Za-z0-9&\/=?\-_%]+', text)
+    return re.findall(r'/[A-Za-z0-9&/=?\-_%]+', text)
 
 
 def format_times(text: str) -> list[str]:
@@ -125,10 +125,12 @@ def format_times(text: str) -> list[str]:
     ret = []
     for minute in sorted(set(times_in_minute)):
         new_time = ''
-        if 60 <= minute <= 720:
-            new_time = f'{minute // 60}:{minute % 60:02d} AM'
-        elif minute <= 59:
+        if minute <= 59:
             new_time = f'12:{minute % 60:02d} AM'
+        elif 60 <= minute < 720:
+            new_time = f'{minute // 60}:{minute % 60:02d} AM'
+        elif minute == 720:
+            new_time = '12:00 PM'
         elif 721 <= minute <= 1380:
             new_time = f'{(minute - 12 * 60) // 60}:{minute % 60:02d} PM'
         elif 1381 <= minute < 1440:
@@ -163,7 +165,7 @@ if __name__ == '__main__':
         [23-7 UTC+12] /1slr8I
         [07.46 UTC+4] usr:B3HIyLm 119.892.677.533
         [0:60 UTC+0] bad
-        [0?0 UTC+0] ok
+        [12?0 UTC+0] ok
         [0.0 UTC+0] also ok
         """
     print(create_table_string(logs2))
