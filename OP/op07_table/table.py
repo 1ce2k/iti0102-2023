@@ -53,13 +53,13 @@ def create_table_string(text: str) -> str:
     if time:
         table.append(f'{"time".ljust(max_width)}' + '| ' + f'{", ".join(time)}')
     if user:
-        table.append(f'{"user".ljust(max_width)}' + '| ' + f'{", ".join(sorted(user))}')
+        table.append(f'{"user".ljust(max_width)}' + '| ' + f'{", ".join(sorted(set(user)))}')
     if error:
-        table.append(f'{"error".ljust(max_width)}' + '| ' + f'{", ".join(str(x) for x in sorted(error))}')
+        table.append(f'{"error".ljust(max_width)}' + '| ' + f'{", ".join(str(x) for x in sorted(set(error)))}')
     if ipv4:
-        table.append(f'{"ipv4".ljust(max_width)}' + '| ' + f'{", ".join(sorted(ipv4))}')
+        table.append(f'{"ipv4".ljust(max_width)}' + '| ' + f'{", ".join(sorted(set(ipv4)))}')
     if endpoint:
-        table.append(f'{"endpoint".ljust(max_width)}' + '| ' + f'{", ".join(sorted(endpoint))}')
+        table.append(f'{"endpoint".ljust(max_width)}' + '| ' + f'{", ".join(sorted(set(endpoint)))}')
     ret = '\n'.join(table)
     return ret
 
