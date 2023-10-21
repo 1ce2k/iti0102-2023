@@ -118,26 +118,22 @@ def format_times(text: str) -> list[str]:
     in_minutes = []
 
     for hour, minute, offset in times:
-        print(hour)
         hour = hour - offset
         if hour < 0:
             hour = 24 + hour
-        print(hour)
-        print()
         in_minutes.append(hour * 60 + minute)
-    print(in_minutes)
-
+    in_minutes.sort()
     ret = []
-    for minute in sorted(set(in_minutes)):
+    for minute in in_minutes:
         hour = minute // 60
         meridian = "AM" if hour < 12 else "PM"
         if hour == 0:
             hour = 12
         elif hour > 12:
-            print(hour)
             hour -= 12
         new_time = f"{hour}:{minute % 60:02d} {meridian}"
-        ret.append(new_time)
+        if new_time not in ret:
+            ret.append(new_time)
     return ret
 
 
@@ -172,7 +168,6 @@ if __name__ == '__main__':
         [0.0 UTC+0] also ok
         """
     print(create_table_string(logs2))
-    print(get_times(logs))
     # time     | 12:00 AM, 12:05 AM, 1:54 AM, 3:46 AM, 8:53 AM, 11:07 AM, 5:57 PM, 9:53 PM
     # user     | 96NC9yqb, B3HIyLm, uJV5sf82_
     # error    | 9, 452, 700, 741, 844
