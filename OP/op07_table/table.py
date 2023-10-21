@@ -126,7 +126,7 @@ def format_times(text: str) -> list[str]:
         hour = hour - offset
         if hour < 0:
             hour = 24 + hour
-        elif hour > 24:
+        elif hour >= 24:
             hour = hour - 24
         in_minute = hour * 60 + minute
         in_minutes.append(in_minute)
