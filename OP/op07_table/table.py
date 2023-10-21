@@ -120,11 +120,12 @@ def format_times(text: str) -> list[str]:
     for hour, minute, offset in times:
         hour = hour - offset
         if hour < 0:
-            hour = 24 + hour
+            hour = 24 - hour
         in_minutes.append(hour * 60 + minute)
-    in_minutes.sort()
+    print(in_minutes)
+
     ret = []
-    for minute in in_minutes:
+    for minute in sorted(set(in_minutes)):
         hour = minute // 60
         meridian = "AM" if hour < 12 else "PM"
         if hour == 0:
@@ -132,8 +133,7 @@ def format_times(text: str) -> list[str]:
         elif hour > 12:
             hour -= 12
         new_time = f"{hour}:{minute % 60:02d} {meridian}"
-        if new_time not in ret:
-            ret.append(new_time)
+        ret.append(new_time)
     return ret
 
 
@@ -163,15 +163,14 @@ if __name__ == '__main__':
         [23-7 UTC+12] /1slr8I
         [07.46 UTC+4] usr:B3HIyLm 119.892.677.533
         
-        [23:60 UTC+0] bad
+        [0:60 UTC+0] bad
         [0?0 UTC+0] ok
         [0.0 UTC+0] also ok
         """
     print(create_table_string(logs2))
+    print(get_times(logs))
     # time     | 12:00 AM, 12:05 AM, 1:54 AM, 3:46 AM, 8:53 AM, 11:07 AM, 5:57 PM, 9:53 PM
     # user     | 96NC9yqb, B3HIyLm, uJV5sf82_
     # error    | 9, 452, 700, 741, 844
     # ipv4     | 119.892.677.533, 15.822.272.473, 268.495.856.225, 468.793.214.681, 715.545.485.989, 776.330.579.818
     # endpoint | /1slr8I, /NBYFaC0, /aA?Y4pK
-
-    # print(format_times(logs2))
