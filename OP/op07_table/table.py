@@ -144,11 +144,11 @@ def format_times(text: str) -> list[str]:
 
 
 if __name__ == '__main__':
-    logs = """
-            [14?36yjjynybutcUTC+9] /tere eRRoR 418 192.168.0.255
-            [8B48 UTC-6] usr:kasutaja
-            """
-    print(create_table_string(logs))
+    # logs = """
+    #         [14?36yjjynybutcUTC+9] /tere eRRoR 418 192.168.0.255
+    #         [8B48 UTC-6] usr:kasutaja
+    #         """
+    # print(create_table_string(logs))
     # time     | 5:36 AM, 2:48 PM
     # user     | kasutaja
     # error    | 418
