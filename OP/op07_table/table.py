@@ -155,8 +155,6 @@ if __name__ == '__main__':
     # ipv4     | 192.168.0.255
     # endpoint | /tere
 
-    print()
-
     logs2 = """
         [-1b35 UTC-4] errOR 741
 [24a48 UTC+0] 776.330.579.818
