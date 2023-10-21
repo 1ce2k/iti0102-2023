@@ -114,7 +114,7 @@ def get_addresses(text: str) -> list[str]:
 
 def get_endpoints(text: str) -> list[str]:
     """Get endpoints from text."""
-    return re.findall(r'\/(?![^\[\]]*\sUTC[+-]\d+)[^\s]+', text)
+    return re.findall(r'/(?![^\[\]]*\sUTC[+-]\d+)\S+', text)
 
 
 def format_times(text: str) -> list[str]:
@@ -158,19 +158,20 @@ if __name__ == '__main__':
     print()
 
     logs2 = """
-        [-1b35 UTC-1] errOR 741
-        [24a48 UTC+0] 776.330.579.818
-        [02:53 UTC12] usr:96NC9yqb /aA?Y4pK
-        [5b05 UTC+5] ERrOr 700 268.495.856.225
-        [24-09 UTC+10] usr:uJV5sf82_ eRrOR 844 715.545.485.989
-        [04=54 UTC+3] eRROR 452
-        [11=57 UTC-6] 15.822.272.473 error 9
-        [15=53 UTC+7] /NBYFaC0 468.793.214.681
-        [23/7 UTC-12] /1slr8I
-        [07.46 UTC+4] usr:B3HIyLm 119.892.677.533
+        [-1b35 UTC-4] errOR 741
+[24a48 UTC+0] 776.330.579.818
+[02:53 UTC+5] usr:96NC9yqb /aA?Y4pK
+[5b05 UTC+5] ERrOr 700 268.495.856.225
+[24-09 UTC+10] usr:uJV5sf82_ eRrOR 844 715.545.485.989
+[04=54 UTC+3] eRROR 452
+[11=57 UTC-6] 15.822.272.473 error 9
+[15=53 UTC+7] /NBYFaC0 468.793.214.681
+[23-7 UTC+12] /1slr8I
+[07.46 UTC+4] usr:B3HIyLm 119.892.677.533
 
-        [0:60 UTC+1] bad
-        [0.0 UTC+12] also ok
+[0:60 UTC+0] bad
+[0?0 UTC+0] ok
+[0.0 UTC+0] also ok
         """
     print(create_table_string(logs2))
     # time     | 12:00 AM, 12:05 AM, 1:54 AM, 3:46 AM, 8:53 AM, 11:07 AM, 5:57 PM, 9:53 PM
