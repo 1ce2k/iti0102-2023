@@ -126,6 +126,8 @@ def format_times(text: str) -> list[str]:
         hour = hour - offset
         if hour < 0:
             hour = 24 + hour
+        elif hour > 24:
+            hour = hour - 24
         in_minute = hour * 60 + minute
         in_minutes.append(in_minute)
     ret = []
@@ -164,12 +166,11 @@ if __name__ == '__main__':
         [04=54 UTC+3] eRROR 452
         [11=57 UTC-6] 15.822.272.473 error 9
         [15=53 UTC+7] /NBYFaC0 468.793.214.681
-        [23/7 UTC+12] /1slr8I
+        [23/7 UTC-12] /1slr8I
         [07.46 UTC+4] usr:B3HIyLm 119.892.677.533
 
         [0:60 UTC+1] bad
-        [0?0 UTC+0] ok
-        [0.0 UTC+0] also ok
+        [0.0 UTC+12] also ok
         """
     print(create_table_string(logs2))
     # time     | 12:00 AM, 12:05 AM, 1:54 AM, 3:46 AM, 8:53 AM, 11:07 AM, 5:57 PM, 9:53 PM
