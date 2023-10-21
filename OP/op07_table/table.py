@@ -89,7 +89,7 @@ def get_times(text: str) -> list[tuple[int, int, int]]:
     :param text: text to search for the times
     :return: list of tuples containing the time and offset
     """
-    regex_pattern = r'\[(\d{1,2})[^\d]+(\d{1,2}) UTC([+-]?\d{1,2})'
+    regex_pattern = r'\[(\d{1,2})[^\d]+(\d{1,2}[^\d])[^\d]+UTC([+-]?\d{1,2})'
     ret = []
     for hour, minute, offset in re.findall(regex_pattern, text):
         if -13 < int(offset) < 13 and 0 <= int(hour) < 24 and 0 <= int(minute) < 60:
@@ -171,6 +171,7 @@ if __name__ == '__main__':
 
 [0:60 UTC+0] bad
 [0?0 UTC+0] ok
+[0?9 UTC+12] ok
 [0.0 UTC+0] also ok
         """
     print(create_table_string(logs2))
