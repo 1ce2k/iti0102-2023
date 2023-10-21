@@ -99,7 +99,7 @@ def get_times(text: str) -> list[tuple[int, int, int]]:
 
 def get_usernames(text: str) -> list[str]:
     """Get usernames from text."""
-    return re.findall(r'usr:(\w+)', text)
+    return re.findall(r'usr:([A-Za-z0-9_]+)', text)
 
 
 def get_errors(text: str) -> list[int]:
