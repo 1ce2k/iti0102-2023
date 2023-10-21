@@ -43,7 +43,7 @@ def create_table_string(text: str) -> str:
     and "12:00 AM".
     Times in the table should be displayed in UTC(https://et.wikipedia.org/wiki/UTC) time.
     """
-    time = format_times(text)
+    time = convert_to_12_hour_format(format_times(text))
     user = get_usernames(text)
     error = get_errors(text)
     ipv4 = get_addresses(text)
@@ -117,27 +117,33 @@ def get_endpoints(text: str) -> list[str]:
     return re.findall(r'/[A-Za-z0-9&/=?\-_%]+', text)
 
 
-def format_times(text: str) -> list[str]:
-    """Format time from 24h to 12h."""
+def format_times(text: str):
+    """Convert hours to minutes."""
     times = get_times(text)
     in_minutes = []
 
     for hour, minute, offset in times:
+        print(hour, offset)
         hour = hour - offset
         if hour < 0:
             hour = 24 + hour
         in_minute = hour * 60 + minute
+        print(hour, in_minute)
         in_minutes.append(in_minute)
+    return in_minutes
+
+
+def convert_to_12_hour_format(minutes):
+    """From minutes to 12h."""
     ret = []
-    for minute in sorted(set(in_minutes)):
+    for minute in sorted(set(minutes)):
         hour = minute // 60
         meridian = "AM" if hour < 12 else "PM"
+        hour = hour % 12
         if hour == 0:
             hour = 12
-        elif hour > 12:
-            hour -= 12
-        new_time = f"{hour}:{minute % 60:02d} {meridian}"
-        ret.append(new_time)
+        time_12h = f"{hour:02d}:{minute % 60:02d} {meridian}"
+        ret.append(time_12h)
     return ret
 
 
@@ -146,7 +152,7 @@ if __name__ == '__main__':
             [14?36 UTC+9] /tere eRRoR 418 192.168.0.255
             [8B48 UTC-6] usr:kasutaja
             """
-    print(create_table_string(logs))
+    # print(create_table_string(logs))
     # time     | 5:36 AM, 2:48 PM
     # user     | kasutaja
     # error    | 418
@@ -158,7 +164,7 @@ if __name__ == '__main__':
     logs2 = """
         [-1b35 UTC-4] errOR 741
         [24a48 UTC+0] 776.330.579.818
-        [02:53 UTC+5] usr:96NC9yqb /aA?Y4pK
+        [2:53 UTC+5] usr:96NC9yqb /aA?Y4pK
         [5b05 UTC+5] ERrOr 700 268.495.856.225
         [24-09 UTC+10] usr:uJV5sf82_ eRrOR 844 715.545.485.989
         [04=54 UTC+3] eRROR 452
