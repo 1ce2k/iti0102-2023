@@ -164,7 +164,7 @@ if __name__ == '__main__':
         [04=54 UTC+3] eRROR 452
         [11=57 UTC-6] 15.822.272.473 error 9
         [15=53 UTC+7] /NBYFaC0 468.793.214.681
-        [23-7 UTC+12] /1slr8I
+        [23/7 UTC+12] /1slr8I
         [07.46 UTC+4] usr:B3HIyLm 119.892.677.533
 
         [0:60 UTC+1] bad
