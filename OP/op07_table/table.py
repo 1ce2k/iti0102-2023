@@ -89,7 +89,7 @@ def get_times(text: str) -> list[tuple[int, int, int]]:
     :param text: text to search for the times
     :return: list of tuples containing the time and offset
     """
-    regex_pattern = r'\[(\d{1,2})[^\d]+(\d{2}) UTC([+-]?\d{1,2})'
+    regex_pattern = r'\[(\d{1,2})[^\d]+(\d{1,2}) UTC([+-]?\d{1,2})'
     ret = []
     for hour, minute, offset in re.findall(regex_pattern, text):
         if -12 <= int(offset) <= 12 and 0 <= int(hour) <= 23 and 0 <= int(minute) <= 59:
@@ -114,7 +114,7 @@ def get_addresses(text: str) -> list[str]:
 
 def get_endpoints(text: str) -> list[str]:
     """Get endpoints from text."""
-    return re.findall(r'/[A-Za-z0-9&/=?\-_%]+', text)
+    return re.findall(r'\/(?![^\[\]]*\sUTC[+-]\d+)[^\s]+', text)
 
 
 def format_times(text: str) -> list[str]:
@@ -158,9 +158,9 @@ if __name__ == '__main__':
     print()
 
     logs2 = """
-        [-1b35 UTC-4] errOR 741
+        [-1b35 UTC-1] errOR 741
         [24a48 UTC+0] 776.330.579.818
-        [02:53 UTC+5] usr:96NC9yqb /aA?Y4pK
+        [02:53 UTC12] usr:96NC9yqb /aA?Y4pK
         [5b05 UTC+5] ERrOr 700 268.495.856.225
         [24-09 UTC+10] usr:uJV5sf82_ eRrOR 844 715.545.485.989
         [04=54 UTC+3] eRROR 452
