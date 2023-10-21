@@ -65,6 +65,7 @@ def create_table_string(text: str) -> str:
 
 
 def get_max_width(time, user, error, ipv4, endpoint) -> int:
+    """Find max length of left column."""
     if endpoint:
         return 9
     if error:
@@ -95,6 +96,7 @@ def get_times(text: str) -> list[tuple[int, int, int]]:
             ret.append((int(hour), int(minute), int(offset)))
     return ret
 
+
 def get_usernames(text: str) -> list[str]:
     """Get usernames from text."""
     return re.findall(r'usr:(\w+)', text)
@@ -116,6 +118,7 @@ def get_endpoints(text: str) -> list[str]:
 
 
 def format_times(text: str) -> list[str]:
+    """Format time from 24h to 12h."""
     times = get_times(text)
     in_minutes = []
 
@@ -163,7 +166,7 @@ if __name__ == '__main__':
         [15=53 UTC+7] /NBYFaC0 468.793.214.681
         [23-7 UTC+12] /1slr8I
         [07.46 UTC+4] usr:B3HIyLm 119.892.677.533
-        
+
         [0:60 UTC+1] bad
         [0?0 UTC+0] ok
         [0.0 UTC+0] also ok
