@@ -89,7 +89,7 @@ def get_times(text: str) -> list[tuple[int, int, int]]:
     :param text: text to search for the times
     :return: list of tuples containing the time and offset
     """
-    regex_pattern = r'\[(\d{1,2})[^\d]+(\d{1,2}).*?UTC\s*?([+-]?\d{1,2})'
+    regex_pattern = r'\[(\d{1,2})[^\d](\d{1,2}).*?([+-]?\d{1,2})'
     ret = []
     for hour, minute, offset in re.findall(regex_pattern, text):
         if -12 <= int(offset) <= 12 and 0 <= int(hour) <= 23 and 0 <= int(minute) <= 59:
@@ -161,10 +161,10 @@ if __name__ == '__main__':
         [-1b35 UTC-4] errOR 741
 [24a48 UTC+0] 776.330.579.818
 [02:53 UTC+5] usr:96NC9yqb /aA?Y4pK
-[5b05 UTC +5] ERrOr 700 268.495.856.225
+[5b05 +5] ERrOr 700 268.495.856.225
 [24-09 UTC+10] usr:uJV5sf82_ eRrOR 844 715.545.485.989
 [04=54 UTC+3] eRROR 452
-[11=57 hdfhdjhfjdhfjUTC-6] 15.822.272.473 error 9
+[11=57 UTC-6] 15.822.272.473 error 9
 [15=53 UTC+7] /NBYFaC0 468.793.214.681
 [23-7 UTC+12] /1slr8I
 [07.46 UTC+4] usr:B3HIyLm 119.892.677.533
