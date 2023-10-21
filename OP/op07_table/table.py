@@ -88,10 +88,12 @@ def get_times(text: str) -> list[tuple[int, int, int]]:
     :param text: text to search for the times
     :return: list of tuples containing the time and offset
     """
-    regex_pattern = r'\[(\d{1,2})[^\d](\d{2}) UTC([+-]?\d{1,2})'
-    return [(int(hour), int(minute), int(offset)) for hour, minute, offset in re.findall(regex_pattern, text) if
-            -12 <= int(offset) <= 12 and 0 <= int(hour) <= 23 and 0 <= int(minute) <= 59]
-
+    regex_pattern = r'\[(\d{1,2})[^\d](\d{1,2}) UTC([+-]?\d{1,2})'
+    ret = []
+    for hour, minute, offset in re.findall(regex_pattern, text):
+        if -12 <= int(offset) <= 12 and 0 <= int(hour) <= 23 and 0 <= int(minute) <= 59:
+            ret.append((int(hour), int(minute), int(offset)))
+    return ret
 
 def get_usernames(text: str) -> list[str]:
     """Get usernames from text."""
@@ -132,7 +134,6 @@ def format_times(text: str) -> list[str]:
         elif hour > 12:
             hour -= 12
         new_time = f"{hour}:{minute % 60:02d} {meridian}"
-        print(minute, hour, meridian, new_time)
         ret.append(new_time)
     return ret
 
@@ -165,7 +166,7 @@ if __name__ == '__main__':
         
         [0:60 UTC+1] bad
         [0?0 UTC+0] ok
-        [0.3 UTC+0] also ok
+        [0.0 UTC+0] also ok
         """
     print(create_table_string(logs2))
     # time     | 12:00 AM, 12:05 AM, 1:54 AM, 3:46 AM, 8:53 AM, 11:07 AM, 5:57 PM, 9:53 PM
