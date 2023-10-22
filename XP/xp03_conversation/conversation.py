@@ -48,10 +48,10 @@ class Student:
 
     def binary_form(self, sentence):
         """Deal with binary form, func to make decision branch less complex."""
-        if re.search(r'(one|ones)\b', sentence):
-            self.deal_with_number_of_ones(int(re.search(r'(\d+)?', sentence).group(1)))
-        elif re.search(r'(zero|zeroes)\b', sentence):
-            self.deal_with_number_of_zeroes(int(re.search(r'(\d+)?', sentence).group(1)))
+        if re.search(r'one', sentence):
+            self.deal_with_number_of_ones(int(re.search(r'(\d+)', sentence).group(1)))
+        elif re.search(r'zero', sentence):
+            self.deal_with_number_of_zeroes(int(re.search(r'(\d+)', sentence).group(1)))
 
     def equation(self, sentence):
         """Deal with equation, func to make decision branch less complex."""
