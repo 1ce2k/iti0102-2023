@@ -34,7 +34,7 @@ class Student:
         if re.search(r"binary form", sentence):
             if re.search(r'one', sentence):
                 self.deal_with_number_of_ones(int(re.search(r'\d+', sentence).group()))
-            if re.search(r'zero', sentence):
+            else:
                 self.deal_with_number_of_zeroes(int(re.search(r'\d+', sentence).group()))
         if re.search(r"(order)", sentence):
             self.order(sentence)
