@@ -42,7 +42,7 @@ class Student:
             self.equation(sentence)
         if len(self.possible_answers) == 1:
             final = list(self.possible_answers)[0]
-            return f"The num I needed to guess was {final}."
+            return f"The number I needed to guess was {final}."
         sorted_list = sorted(self.possible_answers)
         return f"Possible answers are {sorted_list}."
 
