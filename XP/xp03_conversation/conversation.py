@@ -30,12 +30,8 @@ class Student:
         f"The number I needed to guess was {final_answer}."
         """
         self.deal_with_number_type(sentence)
-
         if re.search(r"binary form", sentence):
-            if re.search(r'one', sentence):
-                self.deal_with_number_of_ones(int(re.search(r'\d+', sentence).group()))
-            else:
-                self.deal_with_number_of_zeroes(int(re.search(r'\d+', sentence).group()))
+            self.binary_form(sentence)
         if re.search(r"(order)", sentence):
             self.order(sentence)
         if re.search(r'decimal value: "(\d+)"', sentence):
@@ -46,9 +42,16 @@ class Student:
             self.equation(sentence)
         if len(self.possible_answers) == 1:
             final = list(self.possible_answers)[0]
-            return f"The number I needed to guess was {final}."
+            return f"The num I needed to guess was {final}."
         sorted_list = sorted(self.possible_answers)
         return f"Possible answers are {sorted_list}."
+
+    def binary_form(self, sentence):
+        """Deal with binary form, func to make decision branch less complex."""
+        if re.search(r'ones', sentence):
+            self.deal_with_number_of_ones(int(re.search(r'(\d+)', sentence).group()))
+        elif re.search(r'zeroes', sentence):
+            self.deal_with_number_of_zeroes(int(re.search(r"(\d+)", sentence).group()))
 
     def equation(self, sentence):
         """Deal with equation, func to make decision branch less complex."""
@@ -429,4 +432,3 @@ def equation_coefficients(equation: str):
 regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
 regex_b = r'\s*(-?\s*\d*|-)\s*x1?(?![0-9])'
 regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
-# 123
