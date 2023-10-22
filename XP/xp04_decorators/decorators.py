@@ -113,7 +113,7 @@ def catch(*error_classes):
             except error_classes as error:
                 return 1, type(error)
         return inner_func
-    return decorator
+    return decorator if error_classes else decorator()
 
 
 def enforce_types(func):
