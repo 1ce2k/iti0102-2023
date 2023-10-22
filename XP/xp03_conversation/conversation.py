@@ -49,9 +49,9 @@ class Student:
     def binary_form(self, sentence):
         """Deal with binary form, func to make decision branch less complex."""
         if re.search(r'(one|ones)\b', sentence):
-            self.deal_with_number_of_ones(int(re.search(r'(\d+) one(s)?', sentence).group(1)))
+            self.deal_with_number_of_ones(int(re.search(r'(\d+)?', sentence).group(1)))
         elif re.search(r'(zero|zeroes)\b', sentence):
-            self.deal_with_number_of_zeroes(int(re.search(r'(\d+) zero(es)?', sentence).group(1)))
+            self.deal_with_number_of_zeroes(int(re.search(r'(\d+)?', sentence).group(1)))
 
     def equation(self, sentence):
         """Deal with equation, func to make decision branch less complex."""
@@ -432,4 +432,4 @@ def equation_coefficients(equation: str):
 regex_a = r'\s*(-?\s*\d*|-)\s*x2(?![0-9])'
 regex_b = r'\s*(-?\s*\d*|-)\s*x1?(?![0-9])'
 regex_c = r'(?<!x)(?<!x1>)(?<!x2)\s*(-?\s*\d+)(?=\s|$)'
-# 1234
+# 1
