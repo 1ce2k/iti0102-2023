@@ -100,7 +100,17 @@ def draw_dragon(string: str, length: float) -> None:
     :param string: instructions left to process
     :param length: how many pixels to move forward, left or right
     """
-    pass
+    if not string:
+        return
+    if string[0] == 'L':
+        t.left(90)
+        t.forward(length)
+    elif string[0] == 'R':
+        t.right(90)
+        t.forward(length)
+    elif string[0] == 'F':
+        t.forward(length)
+    draw_dragon(string[1:], length)
 
 
 def get_line_length(dragon_width: int, depth: int) -> float:
