@@ -112,6 +112,8 @@ def catch(*error_classes):
                 return 0, result
             except error_classes as error:
                 return 1, type(error)
+            except Exception as e:
+                return 1, type(e)
         return inner_func
     return decorator if error_classes else decorator()
 
@@ -213,6 +215,12 @@ def fibonacci(n: int):
 def error_func(iterable):
     """Test function for @catch."""
     return iterable[2]
+
+@catch
+def foo(a, b):
+    return a / b
+
+foo(1, 0)
 
 
 @read_data
