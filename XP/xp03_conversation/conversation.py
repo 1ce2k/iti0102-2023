@@ -105,7 +105,7 @@ class Student:
         """
         list_of_nums = []
         for i in self.possible_answers:
-            if bin(i).count('0') != amount_of_zeroes:
+            if bin(i).count('0') - 1 != amount_of_zeroes:
                 list_of_nums.append(i)
         self.exclude_possible_answers(list_of_nums)
 
