@@ -32,7 +32,7 @@ def recursive_reverse(string: str) -> str:
     """
     if len(string) <= 1:
         return string
-    return loop_reverse(string[1:]) + string[0]
+    return recursive_reverse(string[1:]) + string[0]
 
 
 def loop_sum(num: int) -> int:
