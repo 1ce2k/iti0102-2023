@@ -82,7 +82,11 @@ def format_curve(string: str) -> str:
     :param string: instruction string
     :return: clean instructions with only "F", "R", and "L" characters
     """
-    pass
+    if not string:
+        return ''
+    if string[0] in ('a', 'b'):
+        return format_curve(string[1:])
+    return string[0] + format_curve(string[1:])
 
 
 def draw_dragon(string: str, length: float) -> None:
