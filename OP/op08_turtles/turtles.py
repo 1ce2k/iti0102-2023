@@ -67,7 +67,9 @@ def curve(string: str, depth: int) -> None | str:
     :param depth: how many times the rules are applied
     :return: instructionset for drawing the dragon at iteration 'depth'
     """
-    pass
+    if depth == 0:
+        return string
+    return curve(apply_dragon_rules(string), depth - 1)
 
 
 def format_curve(string: str) -> str:
