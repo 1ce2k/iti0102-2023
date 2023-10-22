@@ -27,7 +27,7 @@ def tree(length: int, origin=(0, 0)) -> None:
     turtle.setheading(90)
     turtle.forward(length)
 
-    tree(int(length * 3/5), turtle.pos())
+    tree(int(length * 3 / 5), turtle.pos())
     turtle.penup()
     turtle.goto(origin)
     turtle.pendown()
