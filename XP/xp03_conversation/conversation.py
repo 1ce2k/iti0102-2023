@@ -30,8 +30,12 @@ class Student:
         f"The number I needed to guess was {final_answer}."
         """
         self.deal_with_number_type(sentence)
+
         if re.search(r"binary form", sentence):
-            self.binary_form(sentence)
+            if re.search(r'one', sentence):
+                self.deal_with_number_of_ones(int(re.search(r'\d+', sentence).group()))
+            if re.search(r'zero', sentence):
+                self.deal_with_number_of_zeroes(int(re.search(r'\d+', sentence).group()))
         if re.search(r"(order)", sentence):
             self.order(sentence)
         if re.search(r'decimal value: "(\d+)"', sentence):
@@ -45,13 +49,6 @@ class Student:
             return f"The number I needed to guess was {final}."
         sorted_list = sorted(self.possible_answers)
         return f"Possible answers are {sorted_list}."
-
-    def binary_form(self, sentence):
-        """Deal with binary form, func to make decision branch less complex."""
-        if re.search(r'one', sentence):
-            self.deal_with_number_of_ones(int(re.search(r'\d+', sentence).group()))
-        if re.search(r'zero', sentence):
-            self.deal_with_number_of_zeroes(int(re.search(r'\d+', sentence).group()))
 
     def equation(self, sentence):
         """Deal with equation, func to make decision branch less complex."""
