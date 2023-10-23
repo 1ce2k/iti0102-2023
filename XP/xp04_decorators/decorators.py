@@ -166,7 +166,16 @@ def enforce_types(func):
                     else:
                         # Argument not provided; skip type checking
                         continue
-                check_parameter_type(arg_name, expected_type, actual_value)
+                if not isinstance(actual_value, expected_type.annotation) and expected_type is not inspect.Parameter.empty:
+                    types = str(expected_type.annotation).split(' | ')
+                    if len(types) == 1:
+                        types_str = expected_type.annotation.__name__
+                    elif len(types) > 1:
+                        types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
+                    if len(types) > 0:
+                        raise TypeError(
+                            f"Argument '{arg_name}' must be of type {types_str}, but was {repr(actual_value)} of type {type(actual_value).__name__}"
+                        )
         # Call the original function
         result = func(*args, **kwargs)
         # Check the return type
@@ -178,7 +187,7 @@ def enforce_types(func):
 
 
 def check_result(result, return_annotation):
-    """Check if result is in possible type."""
+    """Check if return value is correct type."""
     if not isinstance(result, return_annotation):
         types = str(return_annotation).split(' | ')
         types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
@@ -187,24 +196,9 @@ def check_result(result, return_annotation):
         )
 
 
-def check_parameter_type(arg_name, expected_type, actual_value):
-    """Check if parameters are in correct type."""
-    if not isinstance(actual_value, expected_type.annotation):
-        types = str(expected_type.annotation).split(' | ')
-        if len(types) == 1:
-            types_str = expected_type.annotation.__name__
-        elif len(types) > 1:
-            types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
-        if len(types) > 0:
-            raise TypeError(
-                f"Argument '{arg_name}' must be of type {types_str}, but was {repr(actual_value)} of type {type(actual_value).__name__}"
-            )
-
-
 @enforce_types
 def foo(a: int, b: float | int) -> str | int:
     """Test for enforce_type."""
-    return b
-
-
-print(foo(1, 2.3))
+    if b:
+        return str(a)
+    return a
