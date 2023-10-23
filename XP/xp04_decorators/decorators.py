@@ -183,7 +183,7 @@ def enforce_types(func):
                         actual_type = type(value)
                         if type(value) is not expected_type:
                             raise TypeError(
-                                f"Argument '{name}' must be of type {expected_type.__name__}, but was '{value}' of type {actual_type.__name__}")
+                                f"Argument '{name}' must be of type {expected_type.__name__}, but was {value} of type {actual_type.__name__}")
         result = func(*args, **kwargs)
         if return_annotation is not inspect.Signature.empty:
             expected_type = return_annotation
