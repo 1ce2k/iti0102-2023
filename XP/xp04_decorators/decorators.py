@@ -206,10 +206,3 @@ def check_result(result, return_annotation):
         raise TypeError(
             f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
         )
-
-#
-# @enforce_types
-# def foo(a: str, b: None) -> None:
-#     return 1
-#
-# print(foo("This is ", None))  # == "This is False"
