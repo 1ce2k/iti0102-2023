@@ -157,16 +157,16 @@ def enforce_types(func):
         # Check parameter types
         for arg_name, expected_type in param_annotations.items():
             if expected_type.annotation != inspect.Parameter.empty:
-                if arg_name in kwargs:
-                    actual_value = kwargs[arg_name]
-                else:
-                    arg_index = list(param_annotations).index(arg_name)
-                    if arg_index < len(args):
-                        actual_value = args[arg_index]
-                    else:
-                        # Argument not provided; skip type checking
-                        continue
                 if expected_type.annotation is not None:
+                    if arg_name in kwargs:
+                        actual_value = kwargs[arg_name]
+                    else:
+                        arg_index = list(param_annotations).index(arg_name)
+                        if arg_index < len(args):
+                            actual_value = args[arg_index]
+                        else:
+                            # Argument not provided; skip type checking
+                            continue
                     if not isinstance(actual_value, expected_type.annotation):
                         raise_error(arg_name, expected_type, actual_value)
         # Call the original function
