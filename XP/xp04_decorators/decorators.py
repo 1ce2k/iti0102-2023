@@ -180,6 +180,8 @@ def enforce_types(func):
         if return_annotation is not None:
             if return_annotation != inspect.Parameter.empty:
                 check_result(result, return_annotation)
+        else:
+            raise TypeError('1')
         return result
     return wrapper
 
