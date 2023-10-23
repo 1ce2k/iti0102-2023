@@ -166,7 +166,7 @@ def enforce_types(func):
                     else:
                         # Argument not provided; skip type checking
                         continue
-                if expected_type.annotation is None:
+                if expected_type.annotation is not None:
                     if not isinstance(actual_value, expected_type.annotation):
                         raise_error(arg_name, expected_type, actual_value)
         # Call the original function
