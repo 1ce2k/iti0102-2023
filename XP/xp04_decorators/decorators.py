@@ -160,8 +160,7 @@ def enforce_types(func):
                 if expected_type.annotation is None:
                     if arg_name in kwargs:
                         actual_value = kwargs[arg_name]
-                    if type(actual_value) is not None:
-                        raise TypeError(f"Argument '{arg_name}' must be of type NoneType, but was {repr(actual_value)} of type {type(actual_value).__name__}")
+                        print(actual_value)
                 else:
                     if arg_name in kwargs:
                         actual_value = kwargs[arg_name]
@@ -207,3 +206,10 @@ def check_result(result, return_annotation):
         raise TypeError(
             f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
         )
+
+
+@enforce_types
+def foo(a: str, b: None):
+    return "This is False"
+
+print(foo("This is ", None))  # == "This is False"
