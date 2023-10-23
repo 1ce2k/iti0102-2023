@@ -2,8 +2,6 @@
 
 import time
 import inspect
-import types
-import typing
 
 
 def double(func):
@@ -187,13 +185,12 @@ def enforce_types(func):
                 f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
             )
         return result
-
     return wrapper
+
 
 @enforce_types
 def foo(a: int, b: float | int) -> str | int:
+    """Test for enforce_type."""
     if b:
         return str(a)
     return a
-
-
