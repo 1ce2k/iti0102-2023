@@ -200,6 +200,7 @@ def check_parameter_type(arg_name, expected_type, actual_value):
                 f"Argument '{arg_name}' must be of type {types_str}, but was {repr(actual_value)} of type {type(actual_value).__name__}"
             )
 
+
 @enforce_types
 def foo(a: int, b: float | int) -> str | int:
     """Test for enforce_type."""
