@@ -166,7 +166,7 @@ def enforce_types(func):
                     else:
                         # Argument not provided; skip type checking
                         continue
-                if not isinstance(actual_value, expected_type.annotation) and expected_type is not None:
+                if not isinstance(actual_value, expected_type.annotation) and expected_type.annotation is not None:
                     raise_error(arg_name, expected_type, actual_value)
         # Call the original function
         result = func(*args, **kwargs)
@@ -199,3 +199,11 @@ def check_result(result, return_annotation):
         raise TypeError(
             f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
         )
+
+
+@enforce_types
+def foo(a: str, b: None) -> str:
+    return a
+
+
+print(foo("This is ", None))
