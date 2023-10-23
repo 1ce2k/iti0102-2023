@@ -166,12 +166,10 @@ def enforce_types(func):
                         actual_value = args[arg_index]
                     else:
                         continue
-                if expected_type.annotation is None:
-                    if actual_value != expected_type.annotation:
-                        raise TypeError(f"Argument '{arg_name}' must be of type NoneType, but was {repr(actual_value)} of type {type(actual_value).__name__}")
-                else:
-                    if not isinstance(actual_value, expected_type.annotation):
-                        raise_error(arg_name, expected_type, actual_value)
+                if expected_type.annotation is None and actual_value != expected_type.annotation:
+                    raise TypeError(f"Argument '{arg_name}' must be of type NoneType, but was {repr(actual_value)} of type {type(actual_value).__name__}")
+                elif expected_type.annotation is not None and not isinstance(actual_value, expected_type.annotation):
+                    raise_error(arg_name, expected_type, actual_value)
         # Call the original function
         result = func(*args, **kwargs)
         # Check the return type
