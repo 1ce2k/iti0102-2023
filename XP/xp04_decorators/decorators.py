@@ -124,6 +124,9 @@ def catch(*error_classes):
         if is_func_callable:
             return wrapper
         return wrapper(*args, **kwargs)
+    return inner
+
+
 def enforce_types(func):
     """
     Enforce the types of the function's parameters and return value.
