@@ -167,7 +167,7 @@ def enforce_types(func):
                 else:
                     # Argument not provided; skip type checking
                     continue
-            if not isinstance(actual_value, expected_type.annotation):
+            if not isinstance(actual_value, expected_type.annotation) and :
                 types = str(expected_type.annotation).split(' | ')
                 if len(types) == 1:
                     types_str = expected_type.annotation.__name__
