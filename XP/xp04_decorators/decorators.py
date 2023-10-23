@@ -165,7 +165,6 @@ def enforce_types(func):
                     if arg_index < len(args):
                         actual_value = args[arg_index]
                     else:
-                        # Argument not provided; skip type checking
                         continue
                 if expected_type.annotation is None:
                     if actual_value != expected_type.annotation:
@@ -177,12 +176,11 @@ def enforce_types(func):
         result = func(*args, **kwargs)
         # Check the return type
         return_annotation = inspect.signature(func).return_annotation
-        if return_annotation is not None:
-            if return_annotation != inspect.Parameter.empty:
-                check_result(result, return_annotation)
-        else:
-            if return_annotation != result:
-                raise TypeError(f"Returned value must be of type NoneType, but was {repr(result)} of type {type(result).__name__}")
+        if return_annotation is not None and return_annotation != inspect.Parameter.empty:
+            # if return_annotation != inspect.Parameter.empty:
+            check_result(result, return_annotation)
+        elif return_annotation is None and return_annotation != result:
+            raise TypeError(f"Returned value must be of type NoneType, but was {repr(result)} of type {type(result).__name__}")
         return result
     return wrapper
 
