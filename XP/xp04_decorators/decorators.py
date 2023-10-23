@@ -168,8 +168,8 @@ def enforce_types(func):
                         # Argument not provided; skip type checking
                         continue
                 if expected_type.annotation is None:
-                    if actual_value == expected_type.annotation:
-                        raise TypeError('1')
+                    if actual_value != expected_type.annotation:
+                        raise TypeError(f"Argument '{arg_name}' must be of type NoneType, but was {repr(actual_value)} of type {type(actual_value).__name__}")
                 else:
                     if not isinstance(actual_value, expected_type.annotation):
                         raise_error(arg_name, expected_type, actual_value)
@@ -207,8 +207,8 @@ def check_result(result, return_annotation):
         )
 
 #
-# @enforce_types
-# def foo(a: str, b: None):
-#     return "This is False"
-#
-# print(foo("This is ", None))  # == "This is False"
+@enforce_types
+def foo(a: str, b: None):
+    return "This is False"
+
+print(foo("This is ", 1))  # == "This is False"
