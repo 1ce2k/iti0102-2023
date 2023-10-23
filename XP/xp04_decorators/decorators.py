@@ -181,7 +181,8 @@ def enforce_types(func):
             if return_annotation != inspect.Parameter.empty:
                 check_result(result, return_annotation)
         else:
-            raise TypeError('1')
+            if return_annotation != result:
+                raise TypeError(f"Returned value must be of type NoneType, but was {repr(result)} of type {type(result).__name__}")
         return result
     return wrapper
 
@@ -209,8 +210,8 @@ def check_result(result, return_annotation):
         )
 
 #
-# @enforce_types
-# def foo(a: str, b: None):
-#     return "This is False"
-#
-# print(foo("This is ", 1))  # == "This is False"
+@enforce_types
+def foo(a: str, b: None) -> None:
+    return 1
+
+print(foo("This is ", None))  # == "This is False"
