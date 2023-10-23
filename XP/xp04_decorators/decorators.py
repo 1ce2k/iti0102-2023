@@ -179,16 +179,18 @@ def enforce_types(func):
         result = func(*args, **kwargs)
         # Check the return type
         return_annotation = inspect.signature(func).return_annotation
-        if not isinstance(result, return_annotation) and return_annotation is not inspect.Parameter.empty:
-            types = str(return_annotation).split(' | ')
-            types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
-            if len(types) > 0:
-                raise TypeError(
-                    f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
-                )
+        check_result(result, return_annotation)
         return result
     return wrapper
 
+
+def check_result(result, return_annotation):
+    if not isinstance(result, return_annotation) and return_annotation is not inspect.Parameter.empty:
+        types = str(return_annotation).split(' | ')
+        types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
+        raise TypeError(
+            f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
+        )
 
 @enforce_types
 def foo(a: int, b: float | int) -> str | int:
