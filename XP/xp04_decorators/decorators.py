@@ -222,12 +222,6 @@ def error_func(iterable):
     """Test function for @catch."""
     return iterable[2]
 
-@catch
-def foo(a, b):
-    return a / b
-
-foo(1, 0)
-
 
 @read_data
 def process_file_contents(data: list, prefix: str = ""):
