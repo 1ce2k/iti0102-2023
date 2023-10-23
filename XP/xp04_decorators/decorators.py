@@ -193,9 +193,17 @@ def raise_error(arg_name, expected_type, actual_value):
 
 def check_result(result, return_annotation):
     """Check if return value is correct type."""
-    if not isinstance(result, return_annotation) and return_annotation is not None:
+    if not isinstance(result, return_annotation):
         types = str(return_annotation).split(' | ')
         types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
         raise TypeError(
             f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
         )
+
+
+@enforce_types
+def foo(a: str, b: None) -> str:
+    return f'{a} {b}'
+
+
+print(foo('This is', None))
