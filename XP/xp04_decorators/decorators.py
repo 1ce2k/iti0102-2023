@@ -179,6 +179,7 @@ def enforce_types(func):
 
 
 def raise_error(arg_name, expected_type, actual_value):
+    """Raise type error if parameters are wrong type, just additional func to make stile better."""
     types = str(expected_type.annotation).split(' | ')
     if len(types) == 1:
         types_str = expected_type.annotation.__name__
