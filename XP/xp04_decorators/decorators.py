@@ -173,7 +173,7 @@ def enforce_types(func):
                         if not is_instance_of_union(value, expected_type):
                             actual_type = type(value).__name__
                             expected = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + expected_type.__args__[-1].__name__
-                            raise TypeError(f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
+                            raise TypeError(f"Argument '{name}' must be of type {expected}, but was '{value}' of type {actual_type}")
                     elif not isinstance(expected_type, types.UnionType) and (value is not None or expected_type is not None):
                         actual_type = type(value)
                         if type(value) is not expected_type:
