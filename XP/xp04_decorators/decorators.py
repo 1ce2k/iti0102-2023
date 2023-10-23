@@ -178,7 +178,7 @@ def enforce_types(func):
         result = func(*args, **kwargs)
         # Check the return type
         return_annotation = inspect.signature(func).return_annotation
-        if not isinstance(result, return_annotation):
+        if not isinstance(result, return_annotation) and return_annotation is not inspect.Parameter.empty:
             types = str(return_annotation).split(' | ')
             types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
             raise TypeError(
