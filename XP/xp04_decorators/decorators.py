@@ -105,19 +105,25 @@ def catch(*error_classes):
     :return: Inner function.
     """
 
-    def decorator(func):
-        def inner_func(*args, **kwargs):
+    def inner(*args, **kwargs):
+        possible_func = args[0]
+        is_func_callable = callable(possible_func)
+
+        def wrapper(*iargs, **ikwargs):
+            error_length = 0 if not(error_classes and is_func_callable) else len(error_classes)
+            if error_length > 0:
+                errors = error_classes
+            else:
+                errors = Exception
+            func_used = possible_func if is_func_callable else error_classes[0]
             try:
-                result = func(*args, **kwargs)
-                return 0, result
-            except error_classes as error:
-                return 1, type(error)
-            except Exception as e:
+                res = func_used(*iargs, **ikwargs)
+                return 0, res
+            except errors as e:
                 return 1, type(e)
-        return inner_func
-    return decorator if error_classes else decorator()
-
-
+        if is_func_callable:
+            return wrapper
+        return wrapper(*args, **kwargs)
 def enforce_types(func):
     """
     Enforce the types of the function's parameters and return value.
