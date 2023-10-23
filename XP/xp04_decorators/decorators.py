@@ -206,9 +206,9 @@ def check_result(result, return_annotation):
             f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
         )
 
-
-@enforce_types
-def foo(a: str, b: None):
-    return "This is False"
-
-print(foo("This is ", None))  # == "This is False"
+#
+# @enforce_types
+# def foo(a: str, b: None):
+#     return "This is False"
+#
+# print(foo("This is ", None))  # == "This is False"
