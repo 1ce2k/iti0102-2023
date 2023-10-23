@@ -193,7 +193,7 @@ def raise_error(arg_name, expected_type, actual_value):
 
 def check_result(result, return_annotation):
     """Check if return value is correct type."""
-    if not isinstance(result, return_annotation) and (result is not None or return_annotation is not None):
+    if not isinstance(result, return_annotation) and result is not None:
         types = str(return_annotation).split(' | ')
         types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
         raise TypeError(
