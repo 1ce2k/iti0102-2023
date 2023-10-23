@@ -3,6 +3,7 @@
 import time
 import inspect
 import types
+import typing
 
 
 def double(func):
@@ -152,4 +153,47 @@ def enforce_types(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    pass
+    param_annotations = inspect.signature(func).parameters
+
+    def wrapper(*args, **kwargs):
+        # Check parameter types
+        for arg_name, expected_type in param_annotations.items():
+            if arg_name in kwargs:
+                actual_value = kwargs[arg_name]
+            else:
+                arg_index = list(param_annotations).index(arg_name)
+                if arg_index < len(args):
+                    actual_value = args[arg_index]
+                else:
+                    # Argument not provided; skip type checking
+                    continue
+            if not isinstance(actual_value, expected_type.annotation):
+                types = str(expected_type.annotation).split(' | ')
+                if len(types) == 1:
+                    types_str = expected_type.annotation.__name__
+                elif len(types) > 1:
+                    types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
+                raise TypeError(
+                    f"Argument '{arg_name}' must be of type {types_str}, but was {repr(actual_value)} of type {type(actual_value).__name__}"
+                )
+        # Call the original function
+        result = func(*args, **kwargs)
+        # Check the return type
+        return_annotation = inspect.signature(func).return_annotation
+        if not isinstance(result, return_annotation):
+            types = str(return_annotation).split(' | ')
+            types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
+            raise TypeError(
+                f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
+            )
+        return result
+
+    return wrapper
+
+@enforce_types
+def foo(a: int, b: float | int) -> str | int:
+    if b:
+        return str(a)
+    return a
+
+
