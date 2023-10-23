@@ -173,8 +173,9 @@ def enforce_types(func):
         result = func(*args, **kwargs)
         # Check the return type
         return_annotation = inspect.signature(func).return_annotation
-        if return_annotation != inspect.Parameter.empty:
-            check_result(result, return_annotation)
+        if return_annotation is not None:
+            if return_annotation != inspect.Parameter.empty:
+                check_result(result, return_annotation)
         return result
     return wrapper
 
