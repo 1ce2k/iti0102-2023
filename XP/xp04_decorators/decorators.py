@@ -152,55 +152,7 @@ def enforce_types(func):
     :param func: The decorated function.
     :return: Inner function.
     """
-    sig = inspect.signature(func)
-    parameters = sig.parameters
-    return_annotation = sig.return_annotation
-
-    def is_instance_of_union(value, union_type):
-        for t in union_type.__args__:
-            if isinstance(value, t):
-                return True
-        return False
-
-    def inner(*args, **kwargs):
-        bound_args = sig.bind(*args, **kwargs)
-        bound_args.apply_defaults()
-
-        for name, value in bound_args.arguments.items():
-            if name in parameters:
-                expected_type = parameters[name].annotation
-
-                if expected_type is not inspect.Parameter.empty:
-                    if isinstance(expected_type, types.UnionType):
-                        if not is_instance_of_union(value, expected_type):
-                            actual_type = type(value).__name__
-                            expected = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + \
-                                       expected_type.__args__[-1].__name__
-                            raise TypeError(
-                                f"Argument '{name}' must be of type {expected}, but was {value} of type {actual_type}")
-                    elif not isinstance(expected_type, types.UnionType) and (
-                            value is not None or expected_type is not None):
-                        actual_type = type(value)
-                        if type(value) is not expected_type:
-                            raise TypeError(
-                                f"Argument '{name}' must be of type {expected_type.__name__}, but was {value} of type {actual_type.__name__}")
-        result = func(*args, **kwargs)
-        if return_annotation is not inspect.Signature.empty:
-            expected_type = return_annotation
-            check_result(result, expected_type)
-        return result
-
-    def check_result(result, expected_type):
-        if isinstance(expected_type, types.UnionType) and not is_instance_of_union(result, expected_type):
-            actual_type = type(result).__name__
-            expected_types = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + expected_type.__args__[-1].__name__
-            raise TypeError(f"Returned value must be of type {expected_types}, but was {result} of type {actual_type}")
-        else:
-            actual_type = type(result).__name__
-            if actual_type != expected_type.__name__:
-                raise TypeError(f"Returned value must be of type {expected_type.__name__}, but was {result} of type {actual_type}")
-
-    return inner
+    pass
 
 
 #  Everything below is just for testing purposes, tester does not care what you do with them.
