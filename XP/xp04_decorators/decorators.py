@@ -210,8 +210,8 @@ def check_result(result, return_annotation):
         )
 
 #
-@enforce_types
-def foo(a: str, b: None) -> None:
-    return 1
-
-print(foo("This is ", None))  # == "This is False"
+# @enforce_types
+# def foo(a: str, b: None) -> None:
+#     return 1
+#
+# print(foo("This is ", None))  # == "This is False"
