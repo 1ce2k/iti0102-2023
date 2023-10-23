@@ -184,6 +184,7 @@ def enforce_types(func):
 
             if isinstance(expected_type, types.UnionType):
                 if not is_instance_of_union(result, expected_type):
+                    print(1)
                     actual_type = type(result).__name__
                     expected_types = ', '.join(t.__name__ for t in expected_type.__args__[:-1]) + ' or ' + expected_type.__args__[-1].__name__
                     raise TypeError(
@@ -191,9 +192,49 @@ def enforce_types(func):
             elif not isinstance(result, expected_type):
                 actual_type = type(result).__name__
                 raise TypeError(
-                    f"Returned value must be of type {expected_type}, but was {result} of type {actual_type}")
+                    f"Returned value must be of type {expected_type.__name__}, but was {result} of type {actual_type}")
         return result
     return inner
+    # def is_instance_of_union(value, union_type):
+    #     for t in union_type.__args__:
+    #         if isinstance(value, t):
+    #             return True
+    #     return False
+    #
+    # sig = inspect.signature(func)
+    # print(sig)
+    # parameters = sig.parameters
+    # returned = sig.return_annotation
+    # print(parameters, returned)
+
+    # def wrapper(*args, **kwargs):
+    #     bound_args = sig.bind(*args, **kwargs)
+    #     bound_args.apply_defaults()
+    #     print(bound_args)
+    #     for name, value in bound_args.arguments.items():
+    #         if name in parameters:
+    #             expected_type = parameters[name].annotation
+    #             print(expected_type)
+    #             if expected_type is not inspect.Parameter.empty:
+    #                 if isinstance(expected_type, types.UnionType):
+    #                     actual_type = type(value)
+    #                     expected_types = ", ".join(t.__name__ for t in expected_type.__args__[:-1] ) + ' or ' + expected_type.__args__[-1].__name__
+    #                     if not is_instance_of_union(value, expected_types):
+    #                         raise TypeError(f"Argument {name} must be of type {expected_types}, but was {value} of type {actual_type.__name__}.")
+    #                 elif not isinstance(expected_type, types.UnionType):
+    #                     actual_type = type(value)
+    #                     if actual_type != expected_type:
+    #                         raise TypeError(f"Argument '{name}' must be of type {expected_type.__name__}, but was {value} of type {actual_type.__name__}")
+    #
+    #
+    #     res = func(*args, **kwargs)
+    #     return res
+
+    # return wrapper
+
+
+
+
 #  Everything below is just for testing purposes, tester does not care what you do with them.
 #    |           |           |           |           |           |           |           |
 #    V           V           V           V           V           V           V           V
@@ -233,9 +274,9 @@ def process_file_contents(data: list, prefix: str = ""):
 
 
 @enforce_types
-def no_more_duck_typing(a: int, b: int) -> int:
+def no_more_duck_typing(a:  int, b: int ) -> int:
     """Test function for @enforce_types."""
-    return a + b
+    return a * b
 
 
-assert no_more_duck_typing(1, 5) == 6
+print(no_more_duck_typing(1, 2))
