@@ -50,7 +50,7 @@ class Student:
         """Deal with binary form, func to make decision branch less complex."""
         if re.search(r'ones', sentence):
             self.deal_with_number_of_ones(int(re.search(r'(\d+)', sentence).group()))
-        elif re.search(r'zeroes', sentence):
+        if re.search(r'zero', sentence):
             self.deal_with_number_of_zeroes(int(re.search(r"(\d+)", sentence).group()))
 
     def equation(self, sentence):
