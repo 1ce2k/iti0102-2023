@@ -171,9 +171,10 @@ def enforce_types(func):
                     types_str = expected_type.annotation.__name__
                 elif len(types) > 1:
                     types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
-                raise TypeError(
-                    f"Argument '{arg_name}' must be of type {types_str}, but was {repr(actual_value)} of type {type(actual_value).__name__}"
-                )
+                if len(types) > 0:
+                    raise TypeError(
+                        f"Argument '{arg_name}' must be of type {types_str}, but was {repr(actual_value)} of type {type(actual_value).__name__}"
+                    )
         # Call the original function
         result = func(*args, **kwargs)
         # Check the return type
@@ -181,9 +182,10 @@ def enforce_types(func):
         if not isinstance(result, return_annotation) and return_annotation is not inspect.Parameter.empty:
             types = str(return_annotation).split(' | ')
             types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
-            raise TypeError(
-                f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
-            )
+            if len(types) > 0:
+                raise TypeError(
+                    f"Returned value must be of type {types_str}, but was {repr(result)} of type {type(result).__name__}"
+                )
         return result
     return wrapper
 
