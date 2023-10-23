@@ -185,7 +185,7 @@ def enforce_types(func):
 
 
 def check_result(result, return_annotation):
-    if not isinstance(result, return_annotation) and return_annotation is not inspect.Parameter.empty:
+    if not isinstance(result, return_annotation) and return_annotation is not inspect.Parameter.empty and result is not None:
         types = str(return_annotation).split(' | ')
         types_str = ', '.join(types[:-1]) + ' or ' + types[-1]
         raise TypeError(
