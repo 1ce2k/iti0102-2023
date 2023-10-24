@@ -21,16 +21,19 @@ def tree(length: int, origin=(0, 0)) -> None:
     """
     if length < 5:
         return
-    turtle.penup()
-    turtle.goto(origin)
-    turtle.pendown()
-    turtle.setheading(90)
-    turtle.forward(length)
-
-    tree(int(length * 3 / 5), turtle.pos())
-    turtle.penup()
-    turtle.goto(origin)
-    turtle.pendown()
+    t.penup()
+    x, y = origin
+    t.goto(x, y)
+    t.pendown()
+    t.forward(length)
+    t.left(60)
+    tree(round(length * 0.6), t.pos())
+    t.right(120)
+    tree(round(length * 0.6), t.pos())
+    t.left(60)
+    t.penup()
+    t.goto(x, y)
+    t.pendown()
 
 
 def apply_dragon_rules(string: str) -> str:
@@ -132,13 +135,13 @@ if __name__ == '__main__':
     t.pensize(2)
     t.left(90)
     # use this to draw the binary tree
-    # tree(200)
+    tree(200)
 
     s = curve("Fa", 8)
     s = format_curve(s)
     line_length = get_line_length(100, 8)
     # use this to draw the dragon curve
-    draw_dragon(s, line_length)
+    # draw_dragon(s, line_length)
 
     save(t)
     t.getscreen().exitonclick()
