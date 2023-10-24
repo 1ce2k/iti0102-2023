@@ -1,5 +1,4 @@
 """Meta-trees and meta-dragons with Turtle."""
-import turtle
 from turtle import Turtle
 from sys import setrecursionlimit
 
@@ -128,20 +127,21 @@ def save(turtle: Turtle) -> None:
 
 
 if __name__ == '__main__':
+
     t = Turtle()
     t.getscreen().bgcolor("#1c262b")
     t.color("#96004f")
     t.speed(0)
-    t.pensize(2)
+    t.pensize(1)
     t.left(90)
     # use this to draw the binary tree
-    tree(200)
+    # tree(200)
 
     s = curve("Fa", 8)
     s = format_curve(s)
     line_length = get_line_length(100, 8)
     # use this to draw the dragon curve
-    # draw_dragon(s, line_length)
+    draw_dragon(s, line_length)
 
     save(t)
     t.getscreen().exitonclick()
