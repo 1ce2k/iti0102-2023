@@ -10,7 +10,7 @@ def generate_menu_prices(services: list) -> list:
     :param services: list of spa service names
     :return: list of service prices
     """
-    return [round(random.uniform(30, 150), 2) for service in services]
+    return [[service, round(random.uniform(30, 150), 2)] for service in services]
 
 
 # Exercise 2: Create Spa Appointment Slots
@@ -22,8 +22,9 @@ def create_appointment_slots(hours: list, duration: int, date: str) -> list:
     :param duration: duration of each appointment
     :param date: appointment date
     :return: list of available slots
+    '2023-09-20 14:00 - 16:00'
     """
-    pass
+    return [f"{date} {hour}:00 - {hour + duration}:00" for hour in hours]
 
 
 # Exercise 3: Discounted Spa Packages
