@@ -127,7 +127,6 @@ def check_service_availability(service_schedules: dict, date: str) -> list:
     return [service for service, schedule in service_schedules.items() if date in schedule]
 
 
-
 if __name__ == '__main__':
     print("Exercise 1: Generate Spa Menu Prices")
     services = ["Massage", "Facial", "Manicure", "Pedicure", "Sauna"]
