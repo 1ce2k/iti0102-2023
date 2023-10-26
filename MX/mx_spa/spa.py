@@ -1,6 +1,7 @@
 """Spa."""
 import random
 
+
 # Exercise 1: Generate Spa Menu Prices
 def generate_menu_prices(services: list) -> list:
     """
@@ -35,7 +36,7 @@ def generate_package_names(adjectives: list) -> list:
     :param adjectives: list of adjectives to use in package names
     :return: list of spa package names
     """
-    pass
+    return [f"{adjective} Spa Package" for adjective in adjectives]
 
 
 # Exercise 4: Customer Feedback
@@ -46,7 +47,7 @@ def filter_positive_feedback(feedback_data: list) -> list:
     :param feedback_data: list of feedback comments with grades (e.g., ["Excellent", 5], ["Bad", 1])
     :return: list of positive feedback comments
     """
-    pass
+    return [feedback[0] for feedback in feedback_data if feedback[1] > 2]
 
 
 # Exercise 5: Spa Employee Schedules
@@ -59,7 +60,7 @@ def generate_employee_schedules(employees: list, working_hours: list) -> list:
     :param working_hours: list of working hours for each day
     :return: list of employee schedules
     """
-    pass
+    return [[employee, [working_hours[i]]] for i in random.randint(1, 5) for employee in employees]
 
 
 # Exercise 6: Spa Product Inventory
