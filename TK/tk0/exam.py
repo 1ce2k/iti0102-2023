@@ -103,7 +103,6 @@ def divisions(numbers: list) -> int:
 
     divisions([]) => 0
     divisions([5]) => 0
-
     divisions([3, 14, 12, 6]) => 3 (The pairs are {3, 12}, {3, 6} and {12, 6})
     divisions([2, 3, 8]) => 1 (The only valid pair is {2, 8})
     divisions([25, 22, 4, 400, 50]) => 4 (The pairs are {25, 400}, {25, 50}, {4, 400} and {400, 50})
