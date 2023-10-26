@@ -74,7 +74,7 @@ def generate_product_inventory(products: list, initial_quantity: int) -> list:
     :param initial_quantity: initial quantity in stock
     :return: list of product names and quantities
     """
-    pass
+    return [[product, calculate_product_quantity(initial_quantity, product)] for product in products]
 
 
 def calculate_product_quantity(initial_quantity: int, product: str) -> int:
@@ -99,7 +99,7 @@ def generate_product_scents(product_types: list, scents: list) -> list:
     :param scents: list of scents (e.g., "Lavender", "Eucalyptus")
     :return: list of paired product and scent combinations
     """
-    pass
+    return [[product_type, scent] for product_type in product_types for scent in scents]
 
 
 # Exercise 8: Identify VIP Customers
@@ -112,7 +112,7 @@ def identify_vip_customers(customer_names: list) -> list:
     :param customer_names: list of customer names
     :return: list of customer names with VIPs marked as "vip"
     """
-    pass
+    return ["vip" if name[0].isupper() else name for name in customer_names]
 
 
 # Exercise 9: Spa Service Availability Checker
@@ -124,7 +124,8 @@ def check_service_availability(service_schedules: dict, date: str) -> list:
     :param date: date for which availability is checked
     :return: list of available spa services
     """
-    pass
+    return [service for service, schedule in service_schedules.items() if date in schedule]
+
 
 
 if __name__ == '__main__':
