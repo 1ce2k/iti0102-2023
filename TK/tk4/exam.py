@@ -6,7 +6,6 @@ def string_edges(first: str, second: str) -> str:
     Given two strings return a string which consists of the last elements of input strings.
 
     The strings will have length 1 or more.
-
     string_edges("abc", "def") => "cf"
     string_edges("a", "b") => "ab"
     """
