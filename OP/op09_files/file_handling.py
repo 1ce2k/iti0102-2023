@@ -205,7 +205,6 @@ def read_people_data(directory: str) -> dict[int, dict]:
     :param directory: The directory containing CSV files.
     :return: A dictionary with "id" as keys and data dictionaries as values.
     """
-    people_data = {}
     files = []
     keys = []
     for filename in os.listdir(f'{directory}'):
@@ -221,14 +220,14 @@ def read_people_data(directory: str) -> dict[int, dict]:
     for file in files:
         data.append(read_csv_file_into_list_of_dicts_using_datatypes(file))
     # print(data)
-    ret = {}
+    people_data = {}
     for sublist in data:
         for item in sublist:
             id = item['id']
-            if id not in ret:
-                ret[id] = {'id': id, **{key: None for key in keys[1:]}}
-            ret[id].update(item)
-    return ret
+            if id not in people_data:
+                people_data[id] = {'id': id, **{key: None for key in keys[1:]}}
+            people_data[id].update(item)
+    return people_data
 
 
 def find_keys(file: str):
@@ -239,12 +238,9 @@ def find_keys(file: str):
         return keys
 
 
-# print(read_people_data('data'))
-
-
 def generate_people_report(person_data_directory: str, report_filename: str) -> None:
     """
-   Generate a report about people data from CSV files.
+    Generate a report about people data from CSV files.
 
     Note: Use the read_people_data() function to read the data from CSV files.
 
