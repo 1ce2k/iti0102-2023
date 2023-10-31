@@ -1,18 +1,34 @@
-def function_a():
+def function_a(x):
     pass
-def function_b():
+
+
+def function_b(x):
     pass
-def function_d():
+
+
+def function_d(x):
     pass
-def function_e():
+
+
+def function_e(x):
     pass
-def function_f():
+
+
+def function_f(x):
     pass
-def function_g():
+
+
+def function_g(x):
     pass
-def function_h():
+
+
+def function_h(x):
     pass
-def function_i():
+
+
+def function_i(x):
     pass
-def function_j():
+
+
+def function_j(x):
     pass
