@@ -189,4 +189,73 @@ def merge_dates_and_towns_into_csv(dates_filename: str, towns_filename: str, csv
     write_csv_file(csv_output_filename, [['name', 'town', 'date']] + merged)
 
 
-# print(merge_dates_and_towns_into_csv('dates.csv', 'towns.csv', 'result.csv'))
+def read_csv_file_into_list_of_dicts(filename: str) -> list[dict[str, str]]:
+    """
+    Read a CSV file into a list of dictionaries.
+
+    The header line of the CSV file will be used as keys for the dictionaries.
+    If there are only headers or no rows in the CSV file, the result is an empty list.
+    Each line after the header line will result in a dictionary inside the result list.
+    Every line should contain the same number of fields.
+    The order of the elements in the list corresponds to the lines in the file
+    (the first line becomes the first element, and so on).
+
+    Given a CSV file like this:
+    name,age,sex
+    John,12,M
+    Mary,13,F
+
+    The result will be:
+    [
+      {"name": "John", "age": "12", "sex": "M"},
+      {"name": "Mary", "age": "13", "sex": "F"},
+    ]
+
+    :param filename: The name of the CSV file to read.
+    :return: A list of dictionaries where keys are taken from the header and values are strings.
+    """
+    data = []
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            data.append(row)
+    keys = data[0]
+    # print(keys)
+    result = []
+    for line in data[1:]:
+        data_dict = {}
+        for i in range(len(keys)):
+            data_dict[keys[i]] = line[i]
+        result.append(data_dict)
+    return result
+
+
+print(read_csv_file_into_list_of_dicts('result.csv'))
+
+
+
+def write_list_of_dicts_to_csv_file(filename: str, data: list[dict]) -> None:
+    """
+    Write a list of dictionaries to a CSV file.
+
+    Each dictionary in the 'data' list represents a row in the CSV file,
+    with dictionary keys representing the fields of a header.
+    Fields missing in certain rows will be empty in these rows.
+    The order of rows in the file matches the order of elements in the list.
+
+    Example data:
+    [
+      {"name": "john", "age": "12"},
+      {"name": "mary", "town": "London"}
+    ]
+
+    This data will be written to the CSV file as:
+    name,age,town
+    john,12,
+    mary,,London
+
+    :param filename: The name of the file to write to.
+    :param data: List of dictionaries to write to the file.
+    :return: None
+    """
+    pass
