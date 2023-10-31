@@ -2,6 +2,7 @@
 import csv
 import re
 from datetime import datetime
+import os
 
 
 def read_csv_file_into_list_of_dicts_using_datatypes(filename: str) -> list[dict]:
@@ -167,4 +168,80 @@ def convert_strings(data: list):
     return res
 
 
-# print(read_csv_file_into_list_of_dicts_using_datatypes('../../EX/ex09_files/input.csv'))
+def read_people_data(directory: str) -> dict[int, dict]:
+    """
+    Read people data from CSV files and merge information.
+
+    This function reads CSV files located inside the specified directory, and all *.csv files are read.
+    Each file is expected to have an integer field "id" which is used to merge information.
+    The result is a single dictionary where the keys are "id" and the values are
+    dictionaries containing all the different values across the files.
+    Missing keys are included in every dictionary with None as the value.
+
+    File: a.csv
+    id,name
+    1,john
+    2,mary
+    3,john
+
+    File: births.csv
+    id,birth
+    1,01.01.2001
+    2,05.06.1990
+
+    File: deaths.csv
+    id,death
+    2,01.02.2022
+    1,-
+
+    Will become:
+    {
+        1: {"id": 1, "name": "john", "birth": datetime.date(2001, 1, 1), "death": None},
+        2: {"id": 2, "name": "mary", "birth": datetime.date(1990, 6, 5),
+            "death": datetime.date(2022, 2, 1)},
+        3: {"id": 3, "name": "john", "birth": None, "death": None},
+    }
+
+    :param directory: The directory containing CSV files.
+    :return: A dictionary with "id" as keys and data dictionaries as values.
+    """
+    people_data = {}
+    for filename in os.listdir(f'{directory}'):
+        print(filename)
+
+
+print(read_people_data('../op09_files'))
+
+
+def generate_people_report(person_data_directory: str, report_filename: str) -> None:
+    """
+   Generate a report about people data from CSV files.
+
+    Note: Use the read_people_data() function to read the data from CSV files.
+
+    Input files should contain fields "birth" and "death," which are dates in the format "dd.mm.yyyy".
+    There are no duplicate headers in the files except for the "id" field.
+
+    The report is a CSV file that includes all fields from the input data along with two fields:
+    - "status": Either "dead" or "alive" based on the presence of a death date;
+    - "age": The current age or the age of death, calculated in full years.
+      If there is no birthdate, the age is set to -1.
+
+    Example:
+    - Birth 01.01.1940, death 01.01.2022 => age: 80
+    - Birth 02.01.1940, death 01.01.2022 => age: 79
+
+    Hint: You can compare dates directly when calculating age.
+
+    The lines in the report are ordered based on the following criteria:
+    - Age ascending (younger before older); lines with incalculable age come last;
+    - If the age is the same, birthdate descending (newer birth before older birth);
+    - If both the age and birthdate are the same, sorted by name ascending (a before b);
+      If a name is not available, use "" (people with missing names should come before people with name);
+    - If names are the same or the name field is missing, ordered by id ascending.
+
+    :param person_data_directory: The directory containing CSV files.
+    :param report_filename: The name of the file to write to.
+    :return: None
+    """
+    pass
