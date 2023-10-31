@@ -160,4 +160,4 @@ def convert_strings(data: list):
     return res
 
 
-print(read_csv_file_into_list_of_dicts_using_datatypes('../../EX/ex09_files/input.csv'))
+# print(read_csv_file_into_list_of_dicts_using_datatypes('../../EX/ex09_files/input.csv'))
