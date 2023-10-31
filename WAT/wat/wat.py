@@ -15,7 +15,7 @@ def function_d(x: int) -> int:
 
 
 def function_e(x: int) -> int:
-    return x
+    return x + 32
 
 
 def function_f(x: int) -> int:
