@@ -34,7 +34,7 @@ def function_h(x: int) -> int:
 
 
 def function_i(x: int) -> int:
-    return x
+    return 0
 
 
 def function_j(x: int) -> int:
