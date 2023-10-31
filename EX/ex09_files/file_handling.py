@@ -187,5 +187,9 @@ def merge_dates_and_towns_into_csv(dates_filename: str, towns_filename: str, csv
             merged_dict[name] = ['-', dict_of_dates[name]]
     with open(csv_output_filename, 'w', newline='') as file:
         writer = csv.writer(file, delimiter=',')
+        writer.writerow(['name','town','date'])
         for name, data in merged_dict.items():
             writer.writerow([name, data[0], data[1]])
+
+
+# print(merge_dates_and_towns_into_csv('dates.csv', 'towns.csv', 'result.csv'))
