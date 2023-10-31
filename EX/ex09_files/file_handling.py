@@ -230,8 +230,7 @@ def read_csv_file_into_list_of_dicts(filename: str) -> list[dict[str, str]]:
     return result
 
 
-print(read_csv_file_into_list_of_dicts('result.csv'))
-
+# print(read_csv_file_into_list_of_dicts('result.csv'))
 
 
 def write_list_of_dicts_to_csv_file(filename: str, data: list[dict]) -> None:
