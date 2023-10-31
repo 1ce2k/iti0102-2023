@@ -19,7 +19,10 @@ def function_e(x: int) -> int:
 
 
 def function_f(x: int) -> int:
-    return x
+    count = 0
+    for i in str(x):
+        count += int(i)
+    return count * 2
 
 
 def function_g(x: int) -> int:
