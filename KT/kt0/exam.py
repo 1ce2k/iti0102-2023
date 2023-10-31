@@ -130,6 +130,8 @@ def str_dist(string: str, sub: str) -> int:
     str_dist("catcowcat", "cow") => 3
     str_dist("cccatcowcatxx", "cat") => 9
     """
+    if not string:
+        return 0
     if string.startswith(sub) and string.endswith(sub):
         return len(string)
     if not string.startswith(sub):
