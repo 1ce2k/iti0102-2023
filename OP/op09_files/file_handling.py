@@ -78,6 +78,9 @@ def read_csv_file_into_list_of_dicts_using_datatypes(filename: str) -> list[dict
     """
     with open(filename, 'r') as file:
         reader = csv.reader(file)
+        line_count = sum(1 for row in reader)
+        if line_count == 1:
+            return []
         keys = next(reader)
         res = [[] for _ in range(len(keys))]
         converted_data = []
@@ -160,4 +163,4 @@ def convert_strings(data: list):
     return res
 
 
-# print(read_csv_file_into_list_of_dicts_using_datatypes('../../EX/ex09_files/input.csv'))
+print(read_csv_file_into_list_of_dicts_using_datatypes('../../EX/ex09_files/input.csv'))
