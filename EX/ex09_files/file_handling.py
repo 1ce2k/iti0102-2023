@@ -189,4 +189,4 @@ def merge_dates_and_towns_into_csv(dates_filename: str, towns_filename: str, csv
     write_csv_file(csv_output_filename, [['name', 'town', 'date']] + merged)
 
 
-print(merge_dates_and_towns_into_csv('dates.csv', 'towns.csv', 'result.csv'))
+# print(merge_dates_and_towns_into_csv('dates.csv', 'towns.csv', 'result.csv'))
