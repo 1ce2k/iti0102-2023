@@ -265,9 +265,12 @@ def write_list_of_dicts_to_csv_file(filename: str, data: list[dict]) -> None:
     result = [keys]
     for line in data:
         row = list(line.values())
+        for x in range(len(row)):
+            if row[x] == '-':
+                row[x] = ''
         result.append(row)
     print(result)
     write_csv_file(filename, result)
 
 
-# print(write_list_of_dicts_to_csv_file('text.csv', read_csv_file_into_list_of_dicts('result.csv')))
+print(write_list_of_dicts_to_csv_file('text.csv', read_csv_file_into_list_of_dicts('result.csv')))
