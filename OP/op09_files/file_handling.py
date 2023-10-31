@@ -81,7 +81,7 @@ def read_csv_file_into_list_of_dicts_using_datatypes(filename: str) -> list[dict
         reader = csv.reader(file)
         first = next(reader, None)
         check = next(reader, None)
-        if check is None:
+        if check is None or first is None:
             return []
     with open(filename, 'r') as file:
         reader = csv.reader(file)
