@@ -7,7 +7,7 @@ def function_b(x: int) -> int:
 
 
 def function_c(x: int) -> int:
-    return x
+    return x ** 8
 
 
 def function_d(x: int) -> int:
