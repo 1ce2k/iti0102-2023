@@ -189,6 +189,9 @@ def merge_dates_and_towns_into_csv(dates_filename: str, towns_filename: str, csv
     write_csv_file(csv_output_filename, [['name', 'town', 'date']] + merged)
 
 
+# print(merge_dates_and_towns_into_csv('dates.csv', 'towns.csv', 'result.csv'))
+
+
 def read_csv_file_into_list_of_dicts(filename: str) -> list[dict[str, str]]:
     """
     Read a CSV file into a list of dictionaries.
@@ -232,9 +235,6 @@ def read_csv_file_into_list_of_dicts(filename: str) -> list[dict[str, str]]:
     return result
 
 
-# print(read_csv_file_into_list_of_dicts('result.csv'))
-
-
 def write_list_of_dicts_to_csv_file(filename: str, data: list[dict]) -> None:
     """
     Write a list of dictionaries to a CSV file.
@@ -259,4 +259,15 @@ def write_list_of_dicts_to_csv_file(filename: str, data: list[dict]) -> None:
     :param data: List of dictionaries to write to the file.
     :return: None
     """
-    pass
+    if not data:
+        return
+    keys = list(data[0].keys())
+    result = [keys]
+    for line in data:
+        row = list(line.values())
+        result.append(row)
+    print(result)
+    write_csv_file(filename, result)
+
+
+# print(write_list_of_dicts_to_csv_file('text.csv', read_csv_file_into_list_of_dicts('result.csv')))
