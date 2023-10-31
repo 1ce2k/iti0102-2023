@@ -189,9 +189,6 @@ def merge_dates_and_towns_into_csv(dates_filename: str, towns_filename: str, csv
     write_csv_file(csv_output_filename, [['name', 'town', 'date']] + merged)
 
 
-# print(merge_dates_and_towns_into_csv('dates.csv', 'towns.csv', 'result.csv'))
-
-
 def read_csv_file_into_list_of_dicts(filename: str) -> list[dict[str, str]]:
     """
     Read a CSV file into a list of dictionaries.
@@ -268,6 +265,3 @@ def write_list_of_dicts_to_csv_file(filename: str, data: list[dict]) -> None:
         writer.writeheader()
         for row in data:
             writer.writerow(row)
-
-
-# print(write_list_of_dicts_to_csv_file('text.csv', read_csv_file_into_list_of_dicts('result.csv')))
