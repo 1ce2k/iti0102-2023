@@ -3,7 +3,7 @@ def function_a(x: int) -> int:
 
 
 def function_b(x: int) -> int:
-    return x
+    return x + 11
 
 
 def function_c(x: int) -> int:
@@ -23,7 +23,7 @@ def function_f(x: int) -> int:
 
 
 def function_g(x: int) -> int:
-    return x
+    return -x
 
 
 def function_h(x: int) -> int:
