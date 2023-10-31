@@ -1,4 +1,5 @@
 """KT0."""
+import re
 
 
 def add_char_into_pos(char: str, pos: int, string: str) -> str:
@@ -70,12 +71,6 @@ def nr_into_num_list(nr: int, num_list: list) -> list:
     return num_list
 
 
-print(nr_into_num_list(5, []))
-print(nr_into_num_list(5, [1,2,3,4]))
-print(nr_into_num_list(5, [1,2,3,4,5,6]))
-print(nr_into_num_list(0, [1,2,3,4,5]))
-
-
 def symbol_average_position_in_words(words: list) -> dict:
     """
     Find the average position for each symbol.
@@ -117,7 +112,43 @@ def symbol_average_position_in_words(words: list) -> dict:
     :param words: list of words
     :return: dictionary with symbol average positions
     """
-    pass
+    # dict_of_chars = {}
+    # for word in words:
+    #     for char in word:
+    #         if char not in dict_of_chars:
+    #             dict_of_chars[char] = []
+    #         if word.count(char) > 1:
+    #             dict_of_chars[char] += ([(i.start(), i.end())[0] for i in re.finditer(char, word)])
+    #         else:
+    #             dict_of_chars[char].append(word.index(char))
+    # print(dict_of_chars)
+    # dict_of_avg_pos = {}
+    # for char, positions in dict_of_chars.items():
+    #     dict_of_avg_pos[char] = round(sum(positions) / len(positions), 2)
+    # return dict_of_avg_pos
+
+    dict_of_indexes_in_word = {}
+    for word in words:
+        dict_of_chars = {}
+        for char in word:
+            if char not in dict_of_chars:
+                dict_of_chars[char] = []
+            dict_of_chars[char] = ([(i.start(), i.end())[0] for i in re.finditer(char, word)])
+        dict_of_indexes_in_word[word] = dict_of_chars
+    dict_of_char_positions = {}
+    for word, chars in dict_of_indexes_in_word.items():
+        for char, positions in chars.items():
+            if char not in dict_of_char_positions:
+                dict_of_char_positions[char] = []
+            dict_of_char_positions[char] += positions
+    dict_avg_positions = {}
+    for char, positions in dict_of_char_positions.items():
+        dict_avg_positions[char] = round(sum(positions) / len(positions), 2)
+    return dict_avg_positions
+
+print(symbol_average_position_in_words(["hello", "world"]))
+print(symbol_average_position_in_words(["abc", "a", "bc", ""]))
+print(symbol_average_position_in_words(["1", "a", "A"]))
 
 
 def str_dist(string: str, sub: str) -> int:
