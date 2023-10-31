@@ -36,17 +36,16 @@ def nr_of_common_characters(string1: str, string2: str) -> int:
     common_char_list = []
     min_str_len = len(string1) if len(string1) <= len(string2) else len(string2)
     for i in range(min_str_len):
-        if string1[i] in string2:
-            if string1[i] not in common_char_list:
-                common_char_list.append(string1[i])
+        if string1[i] in string2 and string1[i] not in common_char_list:
+            common_char_list.append(string1[i])
     count = len(common_char_list)
     return count
 
 
-print(nr_of_common_characters("iva", "avis")) # -> 3 # 'a', 'i', 'v' are common
-print(nr_of_common_characters("saali", "pall")) # -> 2  # 'a', 'l' are common
-print(nr_of_common_characters("memm", "taat")) # -> 0
-print(nr_of_common_characters("memm", "")) # ->0
+# print(nr_of_common_characters("iva", "avis")) # -> 3 # 'a', 'i', 'v' are common
+# print(nr_of_common_characters("saali", "pall")) # -> 2  # 'a', 'l' are common
+# print(nr_of_common_characters("memm", "taat")) # -> 0
+# print(nr_of_common_characters("memm", "")) # ->0
 
 
 def nr_into_num_list(nr: int, num_list: list) -> list:
@@ -61,7 +60,20 @@ def nr_into_num_list(nr: int, num_list: list) -> list:
     nr_into_num_list(0, [1,2,3,4,5]) -> [0,1,2,3,4,5,]
 
     """
-    pass
+    if not num_list and nr:
+        return [nr]
+    index = 0
+    for x in range(len(num_list)):
+        if num_list[x] <= nr:
+            index = x + 1
+    num_list.insert(index, nr)
+    return num_list
+
+
+print(nr_into_num_list(5, []))
+print(nr_into_num_list(5, [1,2,3,4]))
+print(nr_into_num_list(5, [1,2,3,4,5,6]))
+print(nr_into_num_list(0, [1,2,3,4,5]))
 
 
 def symbol_average_position_in_words(words: list) -> dict:
