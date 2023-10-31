@@ -62,7 +62,7 @@ def read_csv_file(filename: str) -> list[list[str]]:
     with open(filename, 'r') as file:
         reader = csv.reader(file, delimiter=',')
         for row in reader:
-           ret.append(row)
+            ret.append(row)
     return ret
 
 
@@ -93,7 +93,8 @@ def write_lines_to_file(filename: str, lines: list[str]) -> None:
     :param lines: A list of strings, each representing a line to write to the file.
     :return: None
     """
-    pass
+    with open(filename, 'w') as file:
+        file.write('\n'.join(lines))
 
 
 def write_csv_file(filename: str, data: list[list[str]]) -> None:
