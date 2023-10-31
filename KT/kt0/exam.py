@@ -34,13 +34,7 @@ def nr_of_common_characters(string1: str, string2: str) -> int:
     common_characters("memm", "") -> 0
 
     """
-    common_char_list = []
-    min_str_len = len(string1) if len(string1) <= len(string2) else len(string2)
-    for i in range(min_str_len):
-        if string1[i] in string2 and string1[i] not in common_char_list:
-            common_char_list.append(string1[i])
-    count = len(common_char_list)
-    return count
+    return len(set(string1).intersection(set(string2)))
 
 
 # print(nr_of_common_characters("iva", "avis")) # -> 3 # 'a', 'i', 'v' are common
