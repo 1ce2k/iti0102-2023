@@ -94,4 +94,4 @@ def read_csv_file_into_list_of_dicts_using_datatypes(filename: str) -> list[dict
     return result
 
 
-print(read_csv_file_into_list_of_dicts_using_datatypes('../../EX/ex09_files/input.csv'))
+# print(read_csv_file_into_list_of_dicts_using_datatypes('../../EX/ex09_files/input.csv'))
