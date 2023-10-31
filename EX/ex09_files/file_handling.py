@@ -219,6 +219,8 @@ def read_csv_file_into_list_of_dicts(filename: str) -> list[dict[str, str]]:
         reader = csv.reader(file)
         for row in reader:
             data.append(row)
+    if len(data) < 2:
+        return []
     keys = data[0]
     # print(keys)
     result = []
