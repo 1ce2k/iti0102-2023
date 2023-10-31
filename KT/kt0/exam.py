@@ -14,8 +14,17 @@ def add_char_into_pos(char: str, pos: int, string: str) -> str:
     add_char_into_pos("k", 10, "kalla") -> "kalla"
 
     """
-    pass
+    if not string and pos == 1:
+        return char
+    if pos - 1 <= len(string):
+        return string[:pos - 1] + char + string[pos - 1:]
+    return string
 
+print(add_char_into_pos("a", 2, "kheksa"))  # -> "kaheksa"
+print(add_char_into_pos("t", 8, "kaheksa"))  # -> "kaheksat"
+print(add_char_into_pos("a", 1, "mps"))  # -> "amps"
+print(add_char_into_pos("a", 1, ""))  # -> "a"
+print(add_char_into_pos("k", 10, "kalla"))  # -> "kalla"
 
 def nr_of_common_characters(string1: str, string2: str) -> int:
     """
