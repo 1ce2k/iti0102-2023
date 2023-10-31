@@ -11,7 +11,7 @@ def function_c(x: int) -> int:
 
 
 def function_d(x: int) -> int:
-    return x
+    return x ** 2 * 36
 
 
 def function_e(x: int) -> int:
