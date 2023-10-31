@@ -118,10 +118,6 @@ def symbol_average_position_in_words(words: list) -> dict:
         ret[char] = round(sum(positions) / len(positions), 2)
     return ret
 
-print(symbol_average_position_in_words(["hello", "world"]))
-print(symbol_average_position_in_words(["abc", "a", "bc", ""]))
-print(symbol_average_position_in_words(["1", "a", "A"]))
-
 
 def str_dist(string: str, sub: str) -> int:
     """
@@ -134,4 +130,12 @@ def str_dist(string: str, sub: str) -> int:
     str_dist("catcowcat", "cow") => 3
     str_dist("cccatcowcatxx", "cat") => 9
     """
-    pass
+    if string.startswith(sub) and string.endswith(sub):
+        return len(string)
+    if not string.startswith(sub):
+        return str_dist(string[1:], sub)
+    return str_dist(string[:-1], sub)
+
+print(str_dist('catcowcat', 'cat'))
+print(str_dist('catcowcat', 'cow'))
+print(str_dist('23catcowcat343', 'cat'))
