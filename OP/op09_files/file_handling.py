@@ -206,11 +206,40 @@ def read_people_data(directory: str) -> dict[int, dict]:
     :return: A dictionary with "id" as keys and data dictionaries as values.
     """
     people_data = {}
+    files = []
+    keys = []
     for filename in os.listdir(f'{directory}'):
-        print(filename)
+        if filename[-4:] == '.csv':
+            files.append(f'{directory}/{filename}')
+            temp = find_keys(f'{directory}/{filename}')
+            for key in temp:
+                if key not in keys:
+                    keys.append(key)
+    # print(keys)
+    # print(files)
+    data = []
+    for file in files:
+        data.append(read_csv_file_into_list_of_dicts_using_datatypes(file))
+    # print(data)
+    ret = {}
+    for sublist in data:
+        for item in sublist:
+            id = item['id']
+            if id not in ret:
+                ret[id] = {'id': id, **{key: None for key in keys[1:]}}
+            ret[id].update(item)
+    return ret
 
 
-# print(read_people_data('../op09_files'))
+def find_keys(file: str):
+    """Find all keys from data."""
+    with open(file, 'r') as file:
+        reader = csv.reader(file)
+        keys = next(reader)
+        return keys
+
+
+print(read_people_data('data'))
 
 
 def generate_people_report(person_data_directory: str, report_filename: str) -> None:
