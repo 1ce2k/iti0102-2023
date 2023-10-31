@@ -25,7 +25,10 @@ def read_file_contents_to_list(filename: str) -> list[str]:
     :return: A list of lines without newline characters.
     """
     with open(filename, 'r') as file:
-        return file.readlines()
+        ret = []
+        for line in file.readlines():
+            ret.append(line.strip())
+        return ret
 
 
 def read_csv_file(filename: str) -> list[list[str]]:
