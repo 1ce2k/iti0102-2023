@@ -47,8 +47,6 @@ def parse(row: str) -> tuple:
         address = row[id_match.end():]
     else:
         address = None
-    if not address:
-        address = None
     return first_name, last_name, id_code, phone_num, date_of_birth, address
 
 
