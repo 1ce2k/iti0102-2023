@@ -22,20 +22,22 @@ def parse(row: str) -> tuple:
     """
     first_name, last_name, id_code, phone_num, date_of_birth, address = None, None, None, None, None, None
 
-    name_match = re.search(r'(^[A-Z][a-z]+)([A-Z][a-z]+)', row)
+    name_match = re.findall(r'(^[A-Z][a-z]+)([A-Z][a-z]+)', row)
     id_match = re.search(r'\d{11}', row)
     phone_match = re.search(r'(?<=\d{11})\s?(\+?\d{3}\s?\d{8}|\d{8})', row)
     dob_match = re.search(r'\d{2}-\d{2}-\d{4}', row)
 
     if name_match:
-        first_name, last_name = name_match.group(1), name_match.group(2)
+        first_name, last_name = name_match[0][0], name_match[0][1]
 
     if id_match:
         id_code = id_match.group(0)
 
     if phone_match:
-        phone_num = "+" + phone_match.group(0) if phone_match.group(0).startswith('372') else phone_match.group(0)
-    # "+" + phone_match.group(0) if not phone_match.group(0).startswith('+') else
+        phone_num = phone_match.group(0)
+        if '+' not in phone_num:
+            if '372' in phone_num[:3]:
+                phone_num = '+' + phone_num
     if dob_match:
         date_of_birth = dob_match.group(0)
 
@@ -46,6 +48,8 @@ def parse(row: str) -> tuple:
     elif id_match:
         address = row[id_match.end():]
     else:
+        address = None
+    if address == '':
         address = None
     return first_name, last_name, id_code, phone_num, date_of_birth, address
 
