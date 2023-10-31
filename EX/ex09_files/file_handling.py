@@ -273,4 +273,4 @@ def write_list_of_dicts_to_csv_file(filename: str, data: list[dict]) -> None:
     write_csv_file(filename, result)
 
 
-print(write_list_of_dicts_to_csv_file('text.csv', read_csv_file_into_list_of_dicts('result.csv')))
+# print(write_list_of_dicts_to_csv_file('text.csv', read_csv_file_into_list_of_dicts('result.csv')))
