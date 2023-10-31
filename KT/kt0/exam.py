@@ -1,5 +1,4 @@
 """KT0."""
-import re
 
 
 def add_char_into_pos(char: str, pos: int, string: str) -> str:
@@ -110,7 +109,7 @@ def symbol_average_position_in_words(words: list) -> dict:
     for word in words:
         for i, char in enumerate(word):
             if char not in counts:
-                counts[char] =[i]
+                counts[char] = [i]
             else:
                 counts[char].append(i)
     ret = {}
@@ -137,6 +136,7 @@ def str_dist(string: str, sub: str) -> int:
     if not string.startswith(sub):
         return str_dist(string[1:], sub)
     return str_dist(string[:-1], sub)
+
 
 print(str_dist('catcowcat', 'cat'))
 print(str_dist('catcowcat', 'cow'))
