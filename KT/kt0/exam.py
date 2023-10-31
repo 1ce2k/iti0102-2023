@@ -20,11 +20,6 @@ def add_char_into_pos(char: str, pos: int, string: str) -> str:
         return string[:pos - 1] + char + string[pos - 1:]
     return string
 
-print(add_char_into_pos("a", 2, "kheksa"))  # -> "kaheksa"
-print(add_char_into_pos("t", 8, "kaheksa"))  # -> "kaheksat"
-print(add_char_into_pos("a", 1, "mps"))  # -> "amps"
-print(add_char_into_pos("a", 1, ""))  # -> "a"
-print(add_char_into_pos("k", 10, "kalla"))  # -> "kalla"
 
 def nr_of_common_characters(string1: str, string2: str) -> int:
     """
@@ -38,7 +33,20 @@ def nr_of_common_characters(string1: str, string2: str) -> int:
     common_characters("memm", "") -> 0
 
     """
-    pass
+    common_char_list = []
+    min_str_len = len(string1) if len(string1) <= len(string2) else len(string2)
+    for i in range(min_str_len):
+        if string1[i] in string2:
+            if string1[i] not in common_char_list:
+                common_char_list.append(string1[i])
+    count = len(common_char_list)
+    return count
+
+
+print(nr_of_common_characters("iva", "avis")) # -> 3 # 'a', 'i', 'v' are common
+print(nr_of_common_characters("saali", "pall")) # -> 2  # 'a', 'l' are common
+print(nr_of_common_characters("memm", "taat")) # -> 0
+print(nr_of_common_characters("memm", "")) # ->0
 
 
 def nr_into_num_list(nr: int, num_list: list) -> list:
