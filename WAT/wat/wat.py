@@ -1,5 +1,5 @@
 def function_a(x: int) -> int:
-    return int(str(x)[0])
+    return 1
 
 
 def function_b(x: int) -> int:
