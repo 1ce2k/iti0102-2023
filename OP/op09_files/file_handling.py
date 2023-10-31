@@ -239,7 +239,7 @@ def find_keys(file: str):
         return keys
 
 
-print(read_people_data('data'))
+# print(read_people_data('data'))
 
 
 def generate_people_report(person_data_directory: str, report_filename: str) -> None:
