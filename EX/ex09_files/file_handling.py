@@ -165,4 +165,30 @@ def merge_dates_and_towns_into_csv(dates_filename: str, towns_filename: str, csv
     :param csv_output_filename: The name of the CSV file to write to names, towns, and dates.
     :return: None
     """
-    pass
+    dict_of_dates = {}
+    dict_of_towns = {}
+    with open(dates_filename, 'r') as file:
+        for line in file.readlines():
+            name, date = line.strip().split(":")
+            dict_of_dates[name] = date
+    with open(towns_filename, 'r') as file:
+        for line in file.readlines():
+            name, town = line.strip().split(":")
+            dict_of_towns[name] = town
+    print(dict_of_dates)
+    print(dict_of_towns)
+    merged_dict = {}
+    for name in set(dict_of_towns.keys()).union(set(dict_of_dates)):
+        if name in dict_of_dates and name in dict_of_towns:
+            merged_dict[name] = [dict_of_towns[name], dict_of_dates[name]]
+        elif name in dict_of_towns:
+            merged_dict[name] = [dict_of_towns[name], '-']
+        else:
+            merged_dict[name] = ['-', dict_of_dates[name]]
+    with open(csv_output_filename, 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=',')
+        for name, data in merged_dict.items():
+            writer.writerow([name, data[0], data[1]])
+
+
+print(merge_dates_and_towns_into_csv('dates.csv', 'towns.csv', 'result.csv'))
