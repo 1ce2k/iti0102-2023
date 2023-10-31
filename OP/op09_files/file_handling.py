@@ -210,7 +210,7 @@ def read_people_data(directory: str) -> dict[int, dict]:
         print(filename)
 
 
-print(read_people_data('../op09_files'))
+# print(read_people_data('../op09_files'))
 
 
 def generate_people_report(person_data_directory: str, report_filename: str) -> None:
