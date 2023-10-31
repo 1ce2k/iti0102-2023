@@ -261,16 +261,13 @@ def write_list_of_dicts_to_csv_file(filename: str, data: list[dict]) -> None:
     """
     if not data:
         return
-    keys = list(data[0].keys())
-    result = [keys]
-    for line in data:
-        row = list(line.values())
-        for x in range(len(row)):
-            if row[x] == '-':
-                row[x] = ''
-        result.append(row)
-    print(result)
-    write_csv_file(filename, result)
+    keys = set(key for row in data for key in row.keys())
+    print(keys)
+    with open(filename, 'w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=keys)
+        writer.writeheader()
+        for row in data:
+            writer.writerow(row)
 
 
 # print(write_list_of_dicts_to_csv_file('text.csv', read_csv_file_into_list_of_dicts('result.csv')))
