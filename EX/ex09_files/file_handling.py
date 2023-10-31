@@ -118,7 +118,10 @@ def write_csv_file(filename: str, data: list[list[str]]) -> None:
     :param data: A list of lists to write to the file, where each list represents a row.
     :return: None
     """
-    pass
+    with open(filename, 'w') as file:
+        writer = csv.writer(file)
+        for line in data:
+            writer.writerow(line)
 
 
 def merge_dates_and_towns_into_csv(dates_filename: str, towns_filename: str, csv_output_filename: str) -> None:
