@@ -270,6 +270,22 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
     :return: None
     """
     data = read_people_data(person_data_directory)
+    print(data)
+    for line in data.values():
+        age = 0
+        if line['death'] and line['birth']:
+            age = (line['death'].year - line['birth'].year)
+        elif line['death'] == None:
+            age = datetime.today().year - line['birth'].year
+        else:
+            age = -1
+        line['age'] = age
+        print(line)
+    print(data)
     with open(report_filename, 'w') as file:
         writer = csv.writer(file)
         writer.writerow(data)
+
+
+
+# print(generate_people_report('data', 'report.csv'))
