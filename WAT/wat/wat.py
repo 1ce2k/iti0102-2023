@@ -1,3 +1,6 @@
+"""WAT."""
+
+
 def function_a(x: int) -> int:
     """Return 1."""
     return 1
