@@ -271,21 +271,33 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
     """
     data = read_people_data(person_data_directory)
     print(data)
-    for line in data.values():
-        age = 0
-        if line['death'] and line['birth']:
-            age = (line['death'].year - line['birth'].year)
-        elif line['death'] == None:
-            age = datetime.today().year - line['birth'].year
+    report_data = []
+    for person in data.values():
+        birth_date = person.get('birth')
+        death_date = person.get('death')
+        if birth_date:
+            current_date = datetime.now().date()
+            if death_date:
+                age = (death_date - birth_date).days // 365
+                status = 'dead'
+            else:
+                age = (current_date - birth_date).days // 365
+                status = 'alive'
         else:
             age = -1
-        line['age'] = age
-        print(line)
-    print(data)
-    with open(report_filename, 'w') as file:
-        writer = csv.writer(file)
-        writer.writerow(data)
+            status = 'unknown'
+        person['status'] = status
+        person['age'] = age
+        report_data.append(person)
+
+    report_data.sort(key=lambda x: (x['age'], x.get('birth', datetime.max.date()), x.get('name', ''), x['id']))
+    print(report_data)
+
+    with open(report_filename, 'w', newline='') as file:
+        fieldnames = report_data[0].keys()
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(report_data)
 
 
-
-# print(generate_people_report('data', 'report.csv'))
+print(generate_people_report('data', 'report.csv'))
