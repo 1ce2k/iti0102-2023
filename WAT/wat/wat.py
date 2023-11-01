@@ -48,4 +48,4 @@ def function_i(x: int) -> int:
 
 def function_j(x: int) -> int:
     """Return smth."""
-    return x * 2
+    return int(x * 1.5)
