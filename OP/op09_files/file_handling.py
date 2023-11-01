@@ -272,3 +272,4 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
     data = read_people_data(person_data_directory)
     with open(report_filename, 'w') as file:
         writer = csv.writer(file)
+        writer.writerow(data)
