@@ -19,7 +19,7 @@ def function_e(x: int) -> int:
 
 
 def function_f(x: int) -> int:
-    pass
+    return x
 
 
 def function_g(x: int) -> int:
