@@ -269,4 +269,6 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
     :param report_filename: The name of the file to write to.
     :return: None
     """
-    pass
+    data = read_people_data(person_data_directory)
+    with open(report_filename, 'w') as file:
+        writer = csv.writer(file)
