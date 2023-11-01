@@ -24,7 +24,7 @@ def function_e(x: int) -> int:
 
 
 def function_f(x: int) -> int:
-    """Some func."""
+    """Return smth."""
     return x
 
 
@@ -34,7 +34,7 @@ def function_g(x: int) -> int:
 
 
 def function_h(x: int) -> int:
-    """Some func."""
+    """Return smth."""
     return x
 
 
@@ -44,5 +44,5 @@ def function_i(x: int) -> int:
 
 
 def function_j(x: int) -> int:
-    """Some func."""
+    """Return smth."""
     return x * 2
