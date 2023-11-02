@@ -319,4 +319,4 @@ def sort_key(item):
         return float('inf'), datetime.min, name, id
 
 
-generate_people_report('data', 'report.csv')
+# generate_people_report('data', 'report.csv')
