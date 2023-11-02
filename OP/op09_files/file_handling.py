@@ -317,4 +317,4 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
         writer.writerows(ret)
 
 
-generate_people_report('data', 'report.csv')
+# generate_people_report('data', 'report.csv')
