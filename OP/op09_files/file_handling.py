@@ -293,7 +293,7 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
             if value is None:
                 person[key] = '-'
             if re.match(r'\d{4}-\d{2}-\d{2}', str(value)):
-                person[key] = f'{str(value).split("-")[2]}.{str(value).split("-")[1]}.{str(value).split("-")[0]}'
+                person[key] = datetime.strftime(value, '%d.%m.%Y')
 
         report_data.append(person)
 
@@ -314,9 +314,10 @@ def sort_key(item):
     id = item['id']
 
     if age != -1:
-        return age, datetime.strptime(birth_date, '%d.%m.%Y'), name, id
+
+        return age, datetime.date, name, id
     else:
         return float('inf'), datetime.min, name, id
 
 
-# generate_people_report('data', 'report.csv')
+generate_people_report('data', 'report.csv')
