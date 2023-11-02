@@ -314,10 +314,9 @@ def sort_key(item):
     id = item['id']
 
     if age != -1:
-
-        return age, datetime.date, name, id
+        return age, datetime.max, name, id
     else:
         return float('inf'), datetime.min, name, id
 
 
-# generate_people_report('data', 'report.csv')
+generate_people_report('data', 'report.csv')
