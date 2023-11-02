@@ -314,11 +314,9 @@ def sort_key(item):
     id = item['id']
 
     if age != -1:
-        return (age, datetime.strptime(birth_date, '%d.%m.%Y'), name, id)
+        return age, datetime.strptime(birth_date, '%d.%m.%Y'), name, id
     else:
-        return (float('inf'), datetime.min, name, id)
+        return float('inf'), datetime.min, name, id
 
 
-
-
-generate_people_report('data', 'report.csv')
+# generate_people_report('data', 'report.csv')
