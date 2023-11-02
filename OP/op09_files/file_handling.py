@@ -279,10 +279,10 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
         if birth_date:
             current_date = datetime.now().date()
             if death_date:
-                age = (death_date - birth_date).days // 365.25
+                age = int((death_date - birth_date).days // 365.25)
                 status = 'dead'
             else:
-                age = (current_date - birth_date).days // 365.25
+                age = int((current_date - birth_date).days // 365.25)
                 status = 'alive'
         else:
             age = -1
