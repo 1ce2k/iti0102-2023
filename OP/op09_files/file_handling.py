@@ -296,8 +296,8 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
                 person[key] = datetime.strftime(value, '%d.%m.%Y')
 
         report_data.append(person)
-
-    report_data.sort(key=sort_key)
+    report_data.sort(key=lambda x: (x.get('birth', datetime.date)), reverse=True)
+    report_data.sort(key=lambda x: (x['age'], x.get('name', ''), x['id']))
     # print(report_data)
 
     with open(report_filename, 'w', newline='') as file:
@@ -307,16 +307,4 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
         writer.writerows(report_data)
 
 
-def sort_key(item):
-    age = item.get('age')
-    birth_date = item.get('birth')
-    name = item.get('name')
-    id = item['id']
-
-    if age != -1:
-        return age, datetime.max, name, id
-    else:
-        return float('inf'), datetime.min, name, id
-
-
-# generate_people_report('data', 'report.csv')
+generate_people_report('data', 'report.csv')
