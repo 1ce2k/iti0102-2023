@@ -297,7 +297,7 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
 
         report_data.append(person)
 
-    report_data.sort(key=lambda x: (x['age'], x.get('birth', datetime.max.date(), reversed=True), x.get('name', ''), x['id']))
+    report_data.sort(key=lambda x: (x['age'], x.get('birth', datetime.max.date()), x.get('name', ''), x['id']))
     # print(report_data)
 
     with open(report_filename, 'w', newline='') as file:
