@@ -289,21 +289,32 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
             status = 'unknown'
         person['status'] = status
         person['age'] = age
-        for key, value in person.items():
-            if value is None:
-                person[key] = '-'
-            if re.match(r'\d{4}-\d{2}-\d{2}', str(value)):
-                person[key] = datetime.strftime(value, '%d.%m.%Y')
 
         report_data.append(person)
-    report_data.sort(key=lambda x: (x['age'], x.get('birth', datetime.min.date), x.get('name', ''), x['id']))
+
+    report_data.sort(key=lambda x: (x['age'], x.get('birth', datetime.date),
+                                    x.get('name', ''), x.get('last name', ''), x['id']))
+    ret = []
+    for person_ in report_data:
+        for key, value in person_.items():
+            if value is None:
+                person_[key] = '-'
+            elif re.match(r'\d{4}-\d{2}-\d{2}', str(value)):
+                person_[key] = datetime.strftime(value, '%d.%m.%Y')
+        ret.append(person_)
+
+    # for x in ret:
+    #     print(x['id'])
+    #     print(x)
+
+
     # print(report_data)
 
     with open(report_filename, 'w', newline='') as file:
-        fieldnames = report_data[0].keys()
+        fieldnames = ret[0].keys()
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
-        writer.writerows(report_data)
+        writer.writerows(ret)
 
 
 generate_people_report('data', 'report.csv')
