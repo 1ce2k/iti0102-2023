@@ -308,7 +308,6 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
     #     print(x['id'])
     #     print(x)
 
-
     # print(report_data)
 
     with open(report_filename, 'w', newline='') as file:
