@@ -1,7 +1,7 @@
 """OP09."""
 import csv
 import re
-from datetime import datetime
+import datetime
 import os
 
 
@@ -154,7 +154,7 @@ def convert_to_dates(data: list):
     res = []
     for element in data:
         if element != '-':
-            res.append(datetime.strptime(element, '%d.%m.%Y').date())
+            res.append(datetime.datetime.strptime(element, '%d.%m.%Y').date())
         else:
             res.append(None)
     return res
@@ -277,7 +277,7 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
         birth_date = person.get('birth')
         death_date = person.get('death')
         if birth_date:
-            current_date = datetime.now().date()
+            current_date = datetime.datetime.now().date()
             if death_date:
                 age = round((death_date - birth_date).days // 365.25)
                 status = 'dead'
@@ -292,7 +292,7 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
 
         report_data.append(person)
 
-    report_data.sort(key=lambda x: (x['age'], -datetime.strptime(x.get('birth', datetime.today().strftime('%d.%m.%Y')), '%d.%m.%Y').timestamp(),
+    report_data.sort(key=lambda x: (x['age'], -datetime.datetime.strptime(x.get('birth', datetime.datetime.today().strftime('%d.%m.%Y')), '%d.%m.%Y').timestamp(),
                                     x.get('name', ''), x.get('last name', ''), x['id']))
     ret = []
     for person_ in report_data:
@@ -300,7 +300,7 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
             if value is None:
                 person_[key] = '-'
             elif re.match(r'\d{4}-\d{2}-\d{2}', str(value)):
-                person_[key] = datetime.strftime(value, '%d.%m.%Y')
+                person_[key] = datetime.datetime.strftime(value, '%d.%m.%Y')
         ret.append(person_)
 
     # for x in ret:
