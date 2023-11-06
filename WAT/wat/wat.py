@@ -1,4 +1,5 @@
 """WAT."""
+import math
 
 
 def function_a(x: int) -> int:
@@ -28,7 +29,10 @@ def function_e(x: int) -> int:
 
 def function_f(x: int) -> int:
     """Return smth."""
-    return x
+    a = 2
+    b = 150
+    calculation = (a + b) * (x // b)
+    return round(calculation / math.e)
 
 
 def function_g(x: int) -> int:
@@ -48,4 +52,4 @@ def function_i(x: int) -> int:
 
 def function_j(x: int) -> int:
     """Return smth."""
-    return (x - 1) * 8
+    return x
