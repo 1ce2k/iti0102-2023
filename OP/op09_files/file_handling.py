@@ -283,7 +283,7 @@ def calculate_age(birth: datetime, death: datetime) -> str:
     elif current_month < birth.month:
         return str(age_rough - 1)
     else:
-        if current_day > birth.day:
+        if current_day >= birth.day:
             return str(age_rough)
         else:
             return str(age_rough - 1)
