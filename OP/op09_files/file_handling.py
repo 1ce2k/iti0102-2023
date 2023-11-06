@@ -271,6 +271,7 @@ def read_people_data(directory: str) -> dict[int, dict]:
 
 
 def calculate_age(birth: datetime, death: datetime) -> str:
+    """Calculate age."""
     birth_year = birth.year
     if death == '-':
         current_year, current_month, current_day = datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day
@@ -289,6 +290,7 @@ def calculate_age(birth: datetime, death: datetime) -> str:
 
 
 def find_all_keys(input_list: list) -> list:
+    """Fina keys."""
     key_list = []
     for dict in input_list:
         for key in dict.keys():
@@ -298,12 +300,14 @@ def find_all_keys(input_list: list) -> list:
 
 
 def sort_age(age: str) -> int:
+    """Sort age."""
     if int(age) >= 0:
         return int(age)
     return int(age) + 1000
 
 
 def sort_birth(birth: str) -> int:
+    """Sort birth dates."""
     if birth == '-':
         return 0
     total_days = int(birth[:2]) + int(birth[3:5]) * 30 + int(birth[6:]) * 365
@@ -311,6 +315,7 @@ def sort_birth(birth: str) -> int:
 
 
 def sort_dict_by_keys(input_list: list) -> list:
+    """Sort dicts."""
     sorted_list = []
     age_dicts = []
     birth_dicts = []
@@ -333,6 +338,7 @@ def sort_dict_by_keys(input_list: list) -> list:
 
 
 def create_list_to_write(info_dict):
+    """Create list to write."""
     list_to_write = []
     for value in info_dict.values():
         list_to_write.append(value)
@@ -340,6 +346,7 @@ def create_list_to_write(info_dict):
 
 
 def help_func_1(sub_dict, dictionary, key_list):
+    """Help func."""
     if 'name' in key_list:
         sub_dict['name'] = dictionary['name']
     elif 'notname' in key_list:
@@ -419,7 +426,6 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
 
 def write_list_of_dicts_to_csv_file(filename: str, data: list[dict]) -> None:
     """Write a list of dictionaries to a CSV file."""
-
     if not data:
         return
     keys = set(key for row in data for key in row.keys())
