@@ -28,13 +28,7 @@ def function_e(x: int) -> int:
 
 def function_f(x: int) -> int:
     """Return sum - 2 of digits of x."""
-    nums = [int(x) for x in str(x)]
-    if (sum(nums) - 2) % 2 == 0:
-        return sum(nums) - 2
-    return sum(nums) - 11
-
-
-print(function_f(13591))
+    return sum([int(y) for y in str(x)]) - 11
 
 
 def function_g(x: int) -> int:
@@ -45,9 +39,6 @@ def function_g(x: int) -> int:
 def function_h(x: int) -> int:
     """Do func h."""
     return x * 1431
-
-
-print(function_h(7025))
 
 
 def function_i(x: int) -> int:
