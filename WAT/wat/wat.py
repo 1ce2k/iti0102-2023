@@ -29,7 +29,7 @@ def function_e(x: int) -> int:
 def function_f(x: int) -> int:
     """Return sum - 2 of digits of x."""
     nums = [int(x) for x in str(x)]
-    return sum(nums) - 2
+    return sum(nums) - 11
 
 
 def function_g(x: int) -> int:
