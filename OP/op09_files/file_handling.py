@@ -1,8 +1,28 @@
 """OP09."""
 import csv
+import os
 import re
 import datetime
-import os
+
+
+def read_csv_file_into_list_of_dicts(filename: str) -> list[dict[str, str]]:
+    """Read a CSV file into a list of dictionaries."""
+    data = []
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            data.append(row)
+    if len(data) < 2:
+        return []
+    keys = data[0]
+    # print(keys)
+    result = []
+    for line in data[1:]:
+        data_dict = {}
+        for i in range(len(keys)):
+            data_dict[keys[i]] = line[i]
+        result.append(data_dict)
+    return result
 
 
 def read_csv_file_into_list_of_dicts_using_datatypes(filename: str) -> list[dict]:
@@ -205,38 +225,141 @@ def read_people_data(directory: str) -> dict[int, dict]:
     :param directory: The directory containing CSV files.
     :return: A dictionary with "id" as keys and data dictionaries as values.
     """
-    files = []
-    keys = []
-    for filename in os.listdir(f'{directory}'):
-        if filename[-4:] == '.csv':
-            files.append(f'{directory}/{filename}')
-            temp = find_keys(f'{directory}/{filename}')
-            for key in temp:
-                if key not in keys:
-                    keys.append(key)
+    # files = []
+    # keys = []
+    # for filename in os.listdir(f'{directory}'):
+    #     if filename[-4:] == '.csv':
+    #         files.append(f'{directory}/{filename}')
+    #         temp = find_keys(f'{directory}/{filename}')
+    #         for key in temp:
+    #             if key not in keys:
+    #                 keys.append(key)
     # print(keys)
     # print(files)
-    data = []
-    for file in files:
-        data.append(read_csv_file_into_list_of_dicts_using_datatypes(file))
-    # print(data)
-    people_data = {}
-    for sublist in data:
-        for item in sublist:
-            # print(item)
-            id = item['id']
-            if id not in people_data:
-                people_data[id] = {'id': id, **{key: None for key in keys[1:]}}
-            people_data[id].update(item)
-    return people_data
+    # data = []
+    # for file in files:
+    #     data.append(read_csv_file_into_list_of_dicts_using_datatypes(file))
+    # # print(data)
+    # people_data = {}
+    # for sublist in data:
+    #     for item in sublist:
+    #         # print(item)
+    #         id = item['id']
+    #         if id not in people_data:
+    #             people_data[id] = {'id': id, **{key: None for key in keys[1:]}}
+    #         people_data[id].update(item)
+    # return people_data
+    all_list = []
+    for file in os.listdir(directory):
+        if file.endswith('.csv'):
+            file_data = read_csv_file_into_list_of_dicts_using_datatypes(os.path.join(directory, file))
+            all_list.append(file_data)
+    id_list = []
+    for dictionary in all_list[0]:
+        id_list.append(dictionary['id'])
+    id_list.sort()
+    final_dict = {}
+    for id in id_list:
+        id_dict = {}
+        for sub_list in all_list:
+            for dictionary in sub_list:
+                if dictionary['id'] == id:
+                    for key in dictionary.keys():
+                        id_dict[key] = dictionary[key]
+        final_dict[id] = id_dict
+    return final_dict
 
 
-def find_keys(file: str):
-    """Find all keys from data."""
-    with open(file, 'r') as file:
-        reader = csv.reader(file)
-        keys = next(reader)
-        return keys
+def calculate_age(birth: datetime, death: datetime) -> str:
+    """Calculate age."""
+    birth_year = birth.year
+    if death == '-':
+        current_year, current_month, current_day = datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day
+    else:
+        current_year, current_month, current_day = death.year, death.month, death.day
+    age_rough = int(current_year) - int(birth_year)
+    if current_month > birth.month:
+        return str(age_rough)
+    elif current_month < birth.month:
+        return str(age_rough - 1)
+    else:
+        if current_day >= birth.day:
+            return str(age_rough)
+        else:
+            return str(age_rough - 1)
+
+
+def find_all_keys(input_list: list) -> list:
+    """Fina keys."""
+    key_list = []
+    for dict in input_list:
+        for key in dict.keys():
+            if key not in key_list:
+                key_list.append(key)
+    return key_list
+
+
+def sort_age(age: str) -> int:
+    """Sort age."""
+    if int(age) >= 0:
+        return int(age)
+    return int(age) + 1000
+
+
+def sort_birth(birth: str) -> int:
+    """Sort birth dates."""
+    if birth == '-':
+        return 0
+    total_days = int(birth[:2]) + int(birth[3:5]) * 30 + int(birth[6:]) * 365
+    return total_days
+
+
+def sort_dict_by_keys(input_list: list) -> list:
+    """Sort dicts."""
+    sorted_list = []
+    age_dicts = []
+    birth_dicts = []
+    for dictionary in input_list:
+        if dictionary["age"] != "-1":
+            age_dicts.append(dictionary)
+        else:
+            birth_dicts.append(dictionary)
+    if "name" in age_dicts[0].keys():
+        age_dicts.sort(
+            key=lambda x: (sort_age(x["age"]), -sort_birth(x["birth"]), x["name"], x["id"]))
+    else:
+        age_dicts.sort(key=lambda x: (sort_age(x["age"]), -sort_birth(x["birth"]), x["id"]))
+    for dic in age_dicts:
+        sorted_list.append(dic)
+    birth_dicts.sort(key=lambda x: (sort_birth(x["birth"]), x["name"], x["id"]))
+    for dictionary in birth_dicts:
+        sorted_list.append(dictionary)
+    return sorted_list
+
+
+def create_list_to_write(info_dict):
+    """Create list to write."""
+    list_to_write = []
+    for value in info_dict.values():
+        list_to_write.append(value)
+    return list_to_write
+
+
+def help_func_1(sub_dict, dictionary, key_list):
+    """Help func."""
+    if 'name' in key_list:
+        sub_dict['name'] = dictionary['name']
+    elif 'notname' in key_list:
+        sub_dict['name'] = dictionary['notname']
+    if sub_dict['death'] == '-':
+        sub_dict['status'] = 'alive'
+    else:
+        sub_dict['status'] = 'dead'
+    if dictionary['birth'] == '-':
+        sub_dict['age'] = '-1'
+    else:
+        sub_dict['age'] = calculate_age(dictionary['birth'], dictionary['death'])
+    return sub_dict
 
 
 def generate_people_report(person_data_directory: str, report_filename: str) -> None:
@@ -270,51 +393,45 @@ def generate_people_report(person_data_directory: str, report_filename: str) -> 
     :param report_filename: The name of the file to write to.
     :return: None
     """
-    data = read_people_data(person_data_directory)
-    # print(data)
-    report_data = []
-    for person in data.values():
-        birth_date = person.get('birth')
-        death_date = person.get('death')
-        if birth_date:
-            current_date = datetime.datetime.now().date()
-            if death_date:
-                age = round((death_date - birth_date).days // 365.25)
-                status = 'dead'
+    info_dict = read_people_data(person_data_directory)
+    list_to_write = create_list_to_write(info_dict)
+    final_list = []
+    keys_list = find_all_keys(list_to_write)
+    for dictionary in list_to_write:
+        sub_dict = {}
+        for key in keys_list:
+            if key not in dictionary.keys() or dictionary[key] is None:
+                dictionary[key] = "-"
+            if str(type(dictionary[key])) == "<class 'datetime.date'>":
+                sub_dict[key] = dictionary[key].strftime("%d.%m.%Y")
             else:
-                age = round((current_date - birth_date).days // 365.25)
-                status = 'alive'
+                sub_dict[key] = dictionary[key]
+            sub_dict['id'] = dictionary['id']
+        if dictionary['birth'] != '-':
+            sub_dict['birth'] = dictionary['birth'].strftime('%d.%m.%Y')
         else:
-            age = -1
-            status = 'unknown'
-        person['status'] = status
-        person['age'] = age
-
-        report_data.append(person)
-
-    report_data.sort(key=lambda x: (x.get('age', '-1'), -datetime.datetime.strptime(
-                                    x.get('birth', datetime.date.today()).strftime('%d.%m.%Y'), '%d.%m.%Y').timestamp(),
-                                    x.get('name', ''), x.get('last name', ''), x['id']))
-    ret = []
-    for person_ in report_data:
-        for key, value in person_.items():
-            if value is None:
-                person_[key] = '-'
-            elif re.match(r'\d{4}-\d{2}-\d{2}', str(value)):
-                person_[key] = datetime.datetime.strftime(value, '%d.%m.%Y')
-        ret.append(person_)
-
-    # for x in ret:
-    #     print(x['id'])
-    #     print(x)
-
-    # print(report_data)
-
-    with open(report_filename, 'w', newline='') as file:
-        fieldnames = ret[0].keys()
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(ret)
+            sub_dict['birth'] = dictionary['birth']
+        if dictionary['death'] != '-':
+            sub_dict['death'] = dictionary['death'].strftime('%d.%m.%Y')
+        else:
+            sub_dict['death'] = dictionary['death']
+        sub_dict = help_func_1(sub_dict, dictionary, keys_list)
+        final_list.append(sub_dict)
+        sorted_list = sort_dict_by_keys(final_list)
+        write_list_of_dicts_to_csv_file(report_filename, sorted_list)
 
 
 # generate_people_report('data', 'report.csv')
+
+
+def write_list_of_dicts_to_csv_file(filename: str, data: list[dict]) -> None:
+    """Write a list of dictionaries to a CSV file."""
+    if not data:
+        return
+    keys = set(key for row in data for key in row.keys())
+    print(keys)
+    with open(filename, 'w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=keys)
+        writer.writeheader()
+        for row in data:
+            writer.writerow(row)

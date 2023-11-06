@@ -1,5 +1,4 @@
 """WAT."""
-import math
 
 
 def function_a(x: int) -> int:
@@ -28,8 +27,8 @@ def function_e(x: int) -> int:
 
 
 def function_f(x: int) -> int:
-    """Return smth."""
-    return (x + 25) % 36
+    """Return sum - 2 of digits of x."""
+    return sum([int(y) for y in str(x)]) - 2
 
 
 def function_g(x: int) -> int:
@@ -38,10 +37,9 @@ def function_g(x: int) -> int:
 
 
 def function_h(x: int) -> int:
-    """Return smth."""
-    return x * 918
+    """Do func h."""
+    return x * 1431
 
-print(function_h(13441))
 
 def function_i(x: int) -> int:
     """Return 0."""
