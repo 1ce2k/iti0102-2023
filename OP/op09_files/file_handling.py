@@ -273,9 +273,9 @@ def read_people_data(directory: str) -> dict[int, dict]:
 def calculate_age(birth: datetime, death: datetime) -> str:
     birth_year = birth.year
     if death == '-':
-        current_year, current_month, current_day = datetime.datetime.now()
+        current_year, current_month, current_day = datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day
     else:
-        current_year, current_month, current_day = death
+        current_year, current_month, current_day = death.year, death.month, death.day
     age_rough = int(current_year) - int(birth_year)
     if current_month > birth.month:
         return str(age_rough)
