@@ -1,5 +1,6 @@
 """OP09."""
 import csv
+import os
 import re
 import datetime
 
@@ -187,67 +188,86 @@ def convert_strings(data: list):
     return res
 
 
-# def read_people_data(directory: str) -> dict[int, dict]:
-#     """
-#     Read people data from CSV files and merge information.
-#
-#     This function reads CSV files located inside the specified directory, and all *.csv files are read.
-#     Each file is expected to have an integer field "id" which is used to merge information.
-#     The result is a single dictionary where the keys are "id" and the values are
-#     dictionaries containing all the different values across the files.
-#     Missing keys are included in every dictionary with None as the value.
-#
-#     File: a.csv
-#     id,name
-#     1,john
-#     2,mary
-#     3,john
-#
-#     File: births.csv
-#     id,birth
-#     1,01.01.2001
-#     2,05.06.1990
-#
-#     File: deaths.csv
-#     id,death
-#     2,01.02.2022
-#     1,-
-#
-#     Will become:
-#     {
-#         1: {"id": 1, "name": "john", "birth": datetime.date(2001, 1, 1), "death": None},
-#         2: {"id": 2, "name": "mary", "birth": datetime.date(1990, 6, 5),
-#             "death": datetime.date(2022, 2, 1)},
-#         3: {"id": 3, "name": "john", "birth": None, "death": None},
-#     }
-#
-#     :param directory: The directory containing CSV files.
-#     :return: A dictionary with "id" as keys and data dictionaries as values.
-#     """
-#     files = []
-#     keys = []
-#     for filename in os.listdir(f'{directory}'):
-#         if filename[-4:] == '.csv':
-#             files.append(f'{directory}/{filename}')
-#             temp = find_keys(f'{directory}/{filename}')
-#             for key in temp:
-#                 if key not in keys:
-#                     keys.append(key)
-#     # print(keys)
-#     # print(files)
-#     data = []
-#     for file in files:
-#         data.append(read_csv_file_into_list_of_dicts_using_datatypes(file))
-#     # print(data)
-#     people_data = {}
-#     for sublist in data:
-#         for item in sublist:
-#             # print(item)
-#             id = item['id']
-#             if id not in people_data:
-#                 people_data[id] = {'id': id, **{key: None for key in keys[1:]}}
-#             people_data[id].update(item)
-#     return people_data
+def read_people_data(directory: str) -> dict[int, dict]:
+    """
+    Read people data from CSV files and merge information.
+
+    This function reads CSV files located inside the specified directory, and all *.csv files are read.
+    Each file is expected to have an integer field "id" which is used to merge information.
+    The result is a single dictionary where the keys are "id" and the values are
+    dictionaries containing all the different values across the files.
+    Missing keys are included in every dictionary with None as the value.
+
+    File: a.csv
+    id,name
+    1,john
+    2,mary
+    3,john
+
+    File: births.csv
+    id,birth
+    1,01.01.2001
+    2,05.06.1990
+
+    File: deaths.csv
+    id,death
+    2,01.02.2022
+    1,-
+
+    Will become:
+    {
+        1: {"id": 1, "name": "john", "birth": datetime.date(2001, 1, 1), "death": None},
+        2: {"id": 2, "name": "mary", "birth": datetime.date(1990, 6, 5),
+            "death": datetime.date(2022, 2, 1)},
+        3: {"id": 3, "name": "john", "birth": None, "death": None},
+    }
+
+    :param directory: The directory containing CSV files.
+    :return: A dictionary with "id" as keys and data dictionaries as values.
+    """
+    # files = []
+    # keys = []
+    # for filename in os.listdir(f'{directory}'):
+    #     if filename[-4:] == '.csv':
+    #         files.append(f'{directory}/{filename}')
+    #         temp = find_keys(f'{directory}/{filename}')
+    #         for key in temp:
+    #             if key not in keys:
+    #                 keys.append(key)
+    # print(keys)
+    # print(files)
+    # data = []
+    # for file in files:
+    #     data.append(read_csv_file_into_list_of_dicts_using_datatypes(file))
+    # # print(data)
+    # people_data = {}
+    # for sublist in data:
+    #     for item in sublist:
+    #         # print(item)
+    #         id = item['id']
+    #         if id not in people_data:
+    #             people_data[id] = {'id': id, **{key: None for key in keys[1:]}}
+    #         people_data[id].update(item)
+    # return people_data
+    all_list = []
+    for file in os.listdir(directory):
+        if file.endswith('.csv'):
+            file_data = read_csv_file_into_list_of_dicts_using_datatypes(os.path.join(directory, file))
+            all_list.append(file_data)
+    id_list = []
+    for dictionary in all_list[0]:
+        id_list.append(dictionary['id'])
+    id_list.sort()
+    final_dict = {}
+    for id in id_list:
+        id_dict = {}
+        for sub_list in all_list:
+            for dictionary in sub_list:
+                if dictionary['id'] == id:
+                    for key in dictionary.keys():
+                        id_dict[key] = dictionary[key]
+        final_dict[id] = id_dict
+    return final_dict
 
 
 # def find_keys(file: str):
@@ -258,86 +278,38 @@ def convert_strings(data: list):
 #         return keys
 
 
-# def generate_people_report(person_data_directory: str, report_filename: str) -> None:
-#     """
-#     Generate a report about people data from CSV files.
-#
-#     Note: Use the read_people_data() function to read the data from CSV files.
-#
-#     Input files should contain fields "birth" and "death," which are dates in the format "dd.mm.yyyy".
-#     There are no duplicate headers in the files except for the "id" field.
-#
-#     The report is a CSV file that includes all fields from the input data along with two fields:
-#     - "status": Either "dead" or "alive" based on the presence of a death date;
-#     - "age": The current age or the age of death, calculated in full years.
-#       If there is no birthdate, the age is set to -1.
-#
-#     Example:
-#     - Birth 01.01.1940, death 01.01.2022 => age: 80
-#     - Birth 02.01.1940, death 01.01.2022 => age: 79
-#
-#     Hint: You can compare dates directly when calculating age.
-#
-#     The lines in the report are ordered based on the following criteria:
-#     - Age ascending (younger before older); lines with incalculable age come last;
-#     - If the age is the same, birthdate descending (newer birth before older birth);
-#     - If both the age and birthdate are the same, sorted by name ascending (a before b);
-#       If a name is not available, use "" (people with missing names should come before people with name);
-#     - If names are the same or the name field is missing, ordered by id ascending.
-#
-#     :param person_data_directory: The directory containing CSV files.
-#     :param report_filename: The name of the file to write to.
-#     :return: None
-#     """
-#     data = read_people_data(person_data_directory)
-#     # print(data)
-#     report_data = []
-#     for person in data.values():
-#         birth_date = person.get('birth')
-#         death_date = person.get('death')
-#         if birth_date:
-#             current_date = datetime.datetime.now().date()
-#             if death_date:
-#                 age = round((death_date - birth_date).days // 365.25)
-#                 status = 'dead'
-#             else:
-#                 age = round((current_date - birth_date).days // 365.25)
-#                 status = 'alive'
-#         else:
-#             age = -1
-#             status = 'unknown'
-#         person['status'] = status
-#         person['age'] = age
-#
-#         report_data.append(person)
-#
-#     report_data = sorted(report_data, key=sort_key)
-#
-#     ret = []
-#     for person_ in report_data:
-#         for key, value in person_.items():
-#             if value is None:
-#                 person_[key] = '-'
-#             elif re.match(r'\d{4}-\d{2}-\d{2}', str(value)):
-#                 person_[key] = datetime.datetime.strftime(value, '%d.%m.%Y')
-#         ret.append(person_)
-#
-#     with open(report_filename, 'w', newline='') as file:
-#         fieldnames = ret[0].keys()
-#         writer = csv.DictWriter(file, fieldnames=fieldnames)
-#         writer.writeheader()
-#         writer.writerows(ret)
+def generate_people_report(person_data_directory: str, report_filename: str) -> None:
+    """
+    Generate a report about people data from CSV files.
 
+    Note: Use the read_people_data() function to read the data from CSV files.
 
-# def sort_key(person):
-#     age = person['age']
-#     if age == -1:
-#         return person['age'] < 0, person['age']
-#     return person['age'] < 0, person['age'], -datetime.datetime.strptime(person.get('birth', datetime.date.today()).strftime('%d.%m.%Y'), '%d.%m.%Y').timestamp(), person.get('name', ''), person.get('last name', ''), person['id']
+    Input files should contain fields "birth" and "death," which are dates in the format "dd.mm.yyyy".
+    There are no duplicate headers in the files except for the "id" field.
 
+    The report is a CSV file that includes all fields from the input data along with two fields:
+    - "status": Either "dead" or "alive" based on the presence of a death date;
+    - "age": The current age or the age of death, calculated in full years.
+      If there is no birthdate, the age is set to -1.
 
-# (x.get('age', '-1'), -datetime.datetime.strptime(
-#                                     x.get('birth', datetime.date.today()).strftime('%d.%m.%Y'), '%d.%m.%Y').timestamp(),
-#                                     x.get('name', ''), x.get('last name', ''), x['id']))
+    Example:
+    - Birth 01.01.1940, death 01.01.2022 => age: 80
+    - Birth 02.01.1940, death 01.01.2022 => age: 79
+
+    Hint: You can compare dates directly when calculating age.
+
+    The lines in the report are ordered based on the following criteria:
+    - Age ascending (younger before older); lines with incalculable age come last;
+    - If the age is the same, birthdate descending (newer birth before older birth);
+    - If both the age and birthdate are the same, sorted by name ascending (a before b);
+      If a name is not available, use "" (people with missing names should come before people with name);
+    - If names are the same or the name field is missing, ordered by id ascending.
+
+    :param person_data_directory: The directory containing CSV files.
+    :param report_filename: The name of the file to write to.
+    :return: None
+    """
+    pass
+
 
 # generate_people_report('data', 'report.csv')
