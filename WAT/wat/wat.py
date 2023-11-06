@@ -1,5 +1,4 @@
 """WAT."""
-import math
 
 
 def function_a(x: int) -> int:
@@ -42,7 +41,6 @@ def function_h(x: int) -> int:
     """Return smth."""
     return x * 918
 
-print(function_h(13441))
 
 def function_i(x: int) -> int:
     """Return 0."""
