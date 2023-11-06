@@ -1,8 +1,6 @@
 """OP09."""
 import csv
-import re
 import datetime
-import os
 
 
 def read_csv_file_into_list_of_dicts(filename: str) -> list[dict[str, str]]:
@@ -98,7 +96,7 @@ def read_csv_file_into_list_of_dicts_using_datatypes(filename: str) -> list[dict
     :param filename: The name of the CSV file to read.
     :return: A list of dictionaries containing processed field values.
     """
-    list_not_types = []
+    list_not_types = read_csv_file_into_list_of_dicts(filename)
     if not list_not_types:
         return []
     keys_list = []
@@ -118,7 +116,7 @@ def read_csv_file_into_list_of_dicts_using_datatypes(filename: str) -> list[dict
                 elif type_info == 'int':
                     sub_dict[key] = int(dictionary[key])
                 elif type_info == 'date':
-                    my_date = datetime.date(datetime.datetime.strptime(dictionary[key], '%d.%m.%Y'))
+                    my_date = datetime.date(datetime.date.strptime(dictionary[key], '%d.%m.%Y'))
                     sub_dict[key] = my_date
                 else:
                     sub_dict[key] = dictionary[key]
@@ -135,32 +133,31 @@ def is_all_same_type(list_of_dicts: list, key: str) -> bool:
     element_list = []
     for dictionary in list_of_dicts:
         element_list.append(dictionary[key])
-    for elem in element_list:
-        if elem == "-":
+    for element in element_list:
+        if element == "-":
             continue
-        first_type = find_info_type(elem)
-    for elem in element_list:
-        if elem == '-':
+        first_type = find_info_type(element)
+    for element in element_list:
+        if element == "-":
             continue
-        type_elem = find_info_type(elem)
-        if first_type != type_elem:
+        type_element = find_info_type(element)
+        if first_type != type_element:
             return False
     return True
 
 
 def find_info_type(info: str) -> str:
-    if info == '-':
-        return '-'
+    if info == "-":
+        return "-"
     try:
         int(info)
-        return 'int'
+        return "int"
     except ValueError:
         try:
-            datetime.datetime.strptime(info, '%d.%m.%Y') or datetime.datetime.strptime(info, '%Y.%m.%d')
-            return 'date'
+            datetime.datetime.strptime(info, "%d.%m.%Y") or datetime.datetime.strptime(info, "%Y.%m.%d")
+            return "date"
         except ValueError:
-            return 'str'
-
+            return "str"
 
 # def read_people_data(directory: str) -> dict[int, dict]:
 #     """
