@@ -49,5 +49,3 @@ def function_i(x: int) -> int:
 def function_j(x: int) -> int:
     """Return smth."""
     return x
-
-#test
