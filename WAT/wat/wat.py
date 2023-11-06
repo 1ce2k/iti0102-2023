@@ -27,12 +27,10 @@ def function_e(x: int) -> int:
     return x * 32
 
 
-def function_f(x: int) -> int:
+def function_f(f: int) -> int:
     """Return smth."""
-    a = 2
-    b = 150
-    calculation = (a + b) * (x // b)
-    return round(calculation / math.e)
+    nums = [int(x) for x in str(f)]
+    return sum(nums) - 2
 
 
 def function_g(x: int) -> int:
@@ -42,8 +40,9 @@ def function_g(x: int) -> int:
 
 def function_h(x: int) -> int:
     """Return smth."""
-    return x
+    return x * 918
 
+print(function_h(13441))
 
 def function_i(x: int) -> int:
     """Return 0."""
