@@ -102,7 +102,6 @@ def read_csv_file_into_list_of_dicts_using_datatypes(filename: str) -> list[dict
     keys_list = []
     dict_same_type = {}
     final_list = []
-
     for key in list_not_types[0].keys():
         keys_list.append(key)
         dict_same_type[key] = is_all_same_type(list_not_types, key)
@@ -111,17 +110,17 @@ def read_csv_file_into_list_of_dicts_using_datatypes(filename: str) -> list[dict
         for key in keys_list:
             if dict_same_type[key]:
                 type_info = find_info_type(dictionary[key])
-                if type_info == '-':
+                if type_info == "-":
                     sub_dict[key] = None
-                elif type_info == 'int':
+                elif type_info == "int":
                     sub_dict[key] = int(dictionary[key])
-                elif type_info == 'date':
-                    my_date = datetime.date(datetime.datetime.strptime(dictionary[key], '%d.%m.%Y'))
+                elif type_info == "date":
+                    my_date = datetime.date(datetime.strptime((dictionary[key]), "%d.%m.%Y"))
                     sub_dict[key] = my_date
                 else:
                     sub_dict[key] = dictionary[key]
             else:
-                if dictionary[key] == '-':
+                if dictionary[key] == "-":
                     sub_dict[key] = None
                 else:
                     sub_dict[key] = dictionary[key]
