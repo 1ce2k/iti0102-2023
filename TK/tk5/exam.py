@@ -80,7 +80,6 @@ def min_diff(nums: list):
     :param nums: List of integers.
     :return: Min diff
     """
-
     if not nums:
         return -1  # Return -1 if the list is empty
 
@@ -97,15 +96,6 @@ def min_diff(nums: list):
     elif last_diff == -1:
         return first_diff
     return min(first_diff, last_diff)
-
-
-print(min_diff([1,2,3,4,5,3]))
-print(min_diff([1,3,3,4,1,4]))
-print(min_diff([0,1,2,0]))
-print(min_diff([1,100,102,2]))
-print(min_diff([1,2,3]))
-print(min_diff([79,2,0]))
-print(min_diff([123,0,122]))
 
 
 def word_numeration(words: list) -> list:
