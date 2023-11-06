@@ -27,9 +27,9 @@ def function_e(x: int) -> int:
     return x * 32
 
 
-def function_f(f: int) -> int:
-    """Return smth."""
-    nums = [int(x) for x in str(f)]
+def function_f(x: int) -> int:
+    """Return sum - 2 of digits of x."""
+    nums = [int(x) for x in str(x)]
     return sum(nums) - 2
 
 
