@@ -32,7 +32,8 @@ def near_ten(nr: int) -> bool:
     :param nr: non-negative integer.
     :return: True if num is within 2 of a multiple of 10.
     """
-    pass
+    remainder = nr % 10
+    return remainder <= 2 or remainder >= 8
 
 
 def combo_string(s1: str, s2: str) -> str:
