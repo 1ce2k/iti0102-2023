@@ -298,7 +298,7 @@ def find_all_keys(input_list: list) -> list:
 
 
 def sort_age(age: str) -> int:
-    if int(age) > 0:
+    if int(age) >= 0:
         return int(age)
     return int(age) + 1000
 
