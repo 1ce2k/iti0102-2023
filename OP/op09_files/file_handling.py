@@ -115,7 +115,7 @@ def read_csv_file_into_list_of_dicts_using_datatypes(filename: str) -> list[dict
                 elif type_info == "int":
                     sub_dict[key] = int(dictionary[key])
                 elif type_info == "date":
-                    my_date = datetime.date(datetime.strptime((dictionary[key]), "%d.%m.%Y"))
+                    my_date = datetime.date(datetime.datetime.strptime((dictionary[key]), "%d.%m.%Y"))
                     sub_dict[key] = my_date
                 else:
                     sub_dict[key] = dictionary[key]
