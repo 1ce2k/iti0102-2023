@@ -27,7 +27,7 @@ def function_e(x: int) -> int:
     return x * 32
 
 
-def function_f(f: int) -> int:
+def function_f(x: int) -> int:
     """Return smth."""
     return (x + 25) % 36
 
