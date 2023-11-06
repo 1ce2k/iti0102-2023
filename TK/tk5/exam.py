@@ -52,7 +52,10 @@ def combo_string(s1: str, s2: str) -> str:
     :param s2:
     :return:
     """
-    pass
+    if len(s1) > len(s2):
+        return s2 + s1 + s2
+    else:
+        return s1 + s2 + s1
 
 
 def min_diff(nums: list):
