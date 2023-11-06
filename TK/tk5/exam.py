@@ -118,4 +118,17 @@ def word_numeration(words: list) -> list:
     :param words: A list of strings.
     :return: List of string with numeration.
     """
-    pass
+    print(words)
+    count_dict = {}
+    output_list = []
+    for word in words:
+        print(word)
+        word_lower = word.lower()
+        if word_lower in count_dict:
+            count_dict[word_lower] += 1
+            count = count_dict[word_lower]
+        else:
+            count_dict[word_lower] = 1
+            count = 1
+        output_list.append(f"{word}#{count}")
+    return output_list
