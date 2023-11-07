@@ -108,10 +108,3 @@ def test_fruit_order_only_fails():
     assert fruit_order(300, 300, 600400) == -1
     assert fruit_order(3000, 1200, 6004000) == -1
     assert fruit_order(3, 20000, 90379) == -1
-
-
-
-
-
-
-
