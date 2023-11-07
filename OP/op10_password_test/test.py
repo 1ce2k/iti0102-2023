@@ -163,9 +163,12 @@ def test__is_different__new_pass_even_length__barely_not_different__not_in_begin
 #     """Test 10."""
 #     assert password.is_different_from_old_password('eva19701', '10791jfjf') is False
 
+def test__is_different__new_pass_even_length__barely_not_different__reverse():
+    """Test 11."""
+    assert password.is_different_from_old_password('eva1970', '0791jfjf') is False
+
 
 # def test__is_different__new_pass_even_length__barely_different():
 #     """Tests if old and new passwords are different."""
 #     assert password.is_different_from_old_password("1234ty", "iu4321") is False
 #     assert password.is_different_from_old_password('aba', 'aba12341') is True
-#     assert password.is_different_from_old_password('eva1970', '0791jfjf') is False
