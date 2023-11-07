@@ -103,8 +103,24 @@ def test_fruit_order_only_fails():
     assert fruit_order(0, 0, 6) == -1
     assert fruit_order(0, 10, 55) == -1
     assert fruit_order(0, 9, 47) == -1
-    assert fruit_order(12, 0, 47) == -1
+    assert fruit_order(0, 91, 47) == -1
+    assert fruit_order(7, 0, 12) == -1
+    assert fruit_order(3, 11, 54) == -1
+    assert fruit_order(3, 5, 29) == -1
+    assert fruit_order(300, 12, 6004) == -1
     assert fruit_order(300, 300, 600400) == -1
     assert fruit_order(3000, 1200, 6004000) == -1
-    assert fruit_order(53, 12, 115) == -1
+    assert fruit_order(3, 5, 29) == -1
+    assert fruit_order(3, 1, 10) == -1
+    assert fruit_order(3, 20000, 90379) == -1
+    assert fruit_order(3000, 500000, 2505400) == -1
+    assert fruit_order(40, 10, 91) == -1
+    assert fruit_order(5, 3, 55) == -1
+    assert fruit_order(3, 1, 10) == -1
+    assert fruit_order(3, 5000, 25004) == -1
+
+
+
+
+
 
