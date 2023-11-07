@@ -32,3 +32,28 @@ def test_students_study_day():
     assert students_study(8, False) is False
     assert students_study(17, True) is True
     assert students_study(17, False) is False
+
+
+def test_lottery_all_fives():
+    """Test if all are 5."""
+    assert lottery(5, 5, 5) == 10
+
+
+def test_lottery_all_same_but_not_five():
+    """Test if all are same but not 5."""
+    assert lottery(1, 1, 1) == 5
+    assert lottery(-2, -2, -2) == 5
+    assert lottery(0, 0, 0) == 5
+
+
+def test_lottery_b_c_different_than_a():
+    """Test if b and are different from a."""
+    assert lottery(4, 3, 2) == 1
+    assert lottery(1, 2, 3) == 1
+    assert lottery(3, 4, 1) == 1
+
+
+def test_lottery_b_or_c_same_as_a():
+    """Test if b or c is same as a."""
+    assert lottery(4, 4, 2) == 0
+    assert lottery(4, 2, 4) == 0
