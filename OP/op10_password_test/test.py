@@ -1,6 +1,6 @@
 """Password validation tests."""
-# from EX.ex04_validation import password
-import password
+from EX.ex04_validation import password
+# import password
 
 
 def test__is_correct_length_empty():
@@ -122,7 +122,7 @@ def test__is_different__new_pass_case_sensitive():
 
 def test__is_different__new_pass_odd_length__barely_different():
     """Test 3."""
-    assert password.is_different_from_old_password('new_pas', 'pass') is True
+    assert password.is_different_from_old_password('new_pas', 'password') is True
 
 
 # def test__is_different__new_pass_odd_length__barely_not_different():
