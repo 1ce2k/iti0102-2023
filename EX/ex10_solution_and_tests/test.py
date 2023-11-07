@@ -50,12 +50,11 @@ def test_lottery_b_c_different_than_a():
     """Test if b and are different from a."""
     assert lottery(4, 3, 2) == 1
     assert lottery(1, 2, 3) == 1
-    assert lottery(3, 4, 1) == 1
+    assert lottery(3, 4, 4) == 1
 
 
-def test_lottery_two_same_one_diff():
+def test_lottery_b_or_c_same_as_a():
     """Test if b or c is same as a."""
     assert lottery(1, 2, 1) == 0
     assert lottery(2, 2, 1) == 0
     assert lottery(3, 3, 1) == 0
-    assert lottery(1, 2, 2) == 0
