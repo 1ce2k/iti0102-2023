@@ -114,10 +114,10 @@ def test__is_different__old_pass_case_sensitive():
     assert password.is_different_from_old_password('pasS', 'pass') is False
 
 
-# def test__is_different__new_pass_case_sensitive():
-#     """Test 2."""
-#     assert password.is_different_from_old_password('pass', 'PASS') is False
-#     assert password.is_different_from_old_password('pass', 'Pass') is False
+def test__is_different__new_pass_case_sensitive():
+    """Test 2."""
+    assert password.is_different_from_old_password('pass', 'PASS') is False
+    assert password.is_different_from_old_password('pass', 'Pass') is False
 #
 #
 # def test__is_different__new_pass_odd_length__barely_different():
