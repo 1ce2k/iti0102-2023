@@ -53,8 +53,9 @@ def test_lottery_b_c_different_than_a():
     assert lottery(3, 4, 1) == 1
 
 
-def test_lottery_b_or_c_same_as_a():
+def test_lottery_two_same_one_diff():
     """Test if b or c is same as a."""
     assert lottery(1, 2, 1) == 0
     assert lottery(2, 2, 1) == 0
     assert lottery(3, 3, 1) == 0
+    assert lottery(1, 2, 2) == 0
