@@ -78,6 +78,11 @@ def test__includes_lowercase_includes_number():
     assert password.includes_lowercase('f3f35s1') is True
 
 
+def test__includes_lowercase_not_first_lower():
+    """Test if there are lowercase but not first one."""
+    assert password.includes_lowercase('Fjfjfhh') is True
+
+
 # ---------- Tests if password includes specials ----------
 
 def test__includes_special_empty():
@@ -95,9 +100,14 @@ def test__includes_special_includes_whitespace():
     assert password.includes_special('ksmqwd p24DS') is True
 
 
-def test__includes_special_no_specials():
+def test__includes_special_no_several_specials():
     """Test if password has specials."""
-    assert password.includes_special('vjruhgkalhj') is False
+    assert password.includes_special('!"№;;()*:_-') is True
+
+
+def test__includes_special_no_special():
+    """Test if password has no specials."""
+    assert password.includes_special('jfjhrygfry') is False
 
 
 # ---------- Tests if password includes numbers ----------
