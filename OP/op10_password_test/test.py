@@ -97,6 +97,7 @@ def test__include_number_all_digits():
 
 
 def test__include_number_fails():
+    """Test if there are no digits."""
     assert password.includes_number('dfjehfuhFEDFeuhs') is False
 
 
@@ -139,7 +140,7 @@ def test__is_different__new_pass_even_length__barely_different():
     assert password.is_different_from_old_password('pas', 'password') is True
 
 
-def test__is_different__new_pass_even_length__barely_different():
+def test__is_different__new_pass_odd_length__barely_different():
     """Test 7."""
     assert password.is_different_from_old_password('123bbb', '123aaa') is False
 
@@ -157,7 +158,6 @@ def test__is_different__new_pass_odd_length__barely_different__reverse():
 def test__is_different__new_pass_odd_length__barely_not_different__reverse():
     """Test 10."""
     assert password.is_different_from_old_password('eva19701', '10791jfjf') is False
-
 
 
 def test__is_different__new_pass_even_length__barely_different():
