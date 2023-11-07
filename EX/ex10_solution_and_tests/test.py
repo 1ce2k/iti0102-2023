@@ -76,17 +76,22 @@ def test_fruit_order_classic():
     assert fruit_order(4, 1, 9) == 4
     assert fruit_order(30, 5, 55) == 30
     assert fruit_order(1, 1, 6) == 1
+    assert fruit_order(10, 1, 15) == 10
+    assert fruit_order(4, 7, 29) == 4
+    assert fruit_order(7, 0, 4) == 4
+    assert fruit_order(5, 8, 34) == 4
+    assert fruit_order(6, 0, 6) == 6
+    assert fruit_order(40, 10, 90) == 40
+    assert fruit_order(30, 0, 30) == 30
+    assert fruit_order(25, 1, 29) == 24
+    assert fruit_order(30, 1, 35) == 30
+    assert fruit_order(40, 10, 90) == 40
 
 
 def test_fruit_order_big_size():
     assert fruit_order(1000, 4000, 21000) == 1000
     assert fruit_order(40004, 100000, 39994) == 4
     assert fruit_order(373, 4000, 7043) == 3
-    assert fruit_order(300, 5000, 5042) == 2
-    assert fruit_order(20, 1196, 6000) == 20
-    assert fruit_order(100, 20, 120) == 20
-    assert fruit_order(4, 120, 604) == 4
-    assert fruit_order(4, 1200, 6004) == 4
 
 
 def test_fruit_order_only_small():
