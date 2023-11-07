@@ -28,6 +28,7 @@ def test_includes_lowercase():
     assert password.includes_lowercase('FJHFHFHF') is False
     assert password.includes_lowercase('fdfdf') is True
     assert password.includes_lowercase('f3f35s1') is True
+    assert password.includes_lowercase('qwertyuiopasdfghjklzxcvbnm') is True
 
 
 def test_includes_special():
