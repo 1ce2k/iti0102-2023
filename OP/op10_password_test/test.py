@@ -28,4 +28,3 @@ def test_includes_lowercase():
     assert password.includes_lowercase('f3f35s1') is True
 
 
-def
