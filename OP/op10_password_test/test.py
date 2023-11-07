@@ -40,7 +40,15 @@ def test_includes_special():
 
 
 def test_include_number():
+    """Test if there is a digit in password."""
     assert password.includes_number('') is False
     assert password.includes_number('1234567890') is True
     assert password.includes_number('dfjrfhrj34kfk') is True
     assert password.includes_number('dfjehfuhFEDFeuhs') is False
+
+
+def test_is_different_enough():
+    """Tests if old and new passwords are different."""
+    assert password.is_different_from_old_password('pass', 'PASS') is False
+    assert password.is_different_from_old_password('pass', 'Pass') is False
+    assert password.is_different_from_old_password('pass', 'new_pas') is True
