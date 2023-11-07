@@ -34,4 +34,4 @@ def test_includes_special():
     assert password.includes_special('') is False
     assert password.includes_special('ksmqwd p24DS') is True
     assert password.includes_special('fegfvbbhefb') is False
-    assert password.includes_special('&smqwdp24D!S') is True
+    assert password.includes_special('!"№;;()*:_-') is True
