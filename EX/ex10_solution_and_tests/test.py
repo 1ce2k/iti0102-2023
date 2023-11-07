@@ -58,3 +58,15 @@ def test_lottery_b_or_c_same_as_a():
     assert lottery(1, 2, 1) == 0
     assert lottery(2, 2, 1) == 0
     assert lottery(3, 3, 1) == 0
+
+
+def test_fruit_order_zeros():
+    assert fruit_order(0, 0, 0) == 0
+    assert fruit_order(1, 0, 0) == 0
+    assert fruit_order(0, 1, 0) == 0
+    assert fruit_order(1, 1, 0) == 0
+    assert fruit_order(5, 5, 25) == 0
+    assert fruit_order(0, 5, 25) == 0
+    assert fruit_order(0, 1200, 6000) == 0
+    assert fruit_order(0, 120, 600) == 0
+    assert fruit_order(0, 5, 20) == 0
