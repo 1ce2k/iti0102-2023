@@ -76,6 +76,7 @@ def test_fruit_order_classic():
     assert fruit_order(4, 1, 9) == 4
     assert fruit_order(30, 5, 55) == 30
     assert fruit_order(1, 1, 6) == 1
+    assert fruit_order(6, 2, 11) == 6
 
 
 def test_fruit_order_big():
