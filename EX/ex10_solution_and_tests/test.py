@@ -82,3 +82,9 @@ def test_fruit_order_big():
     assert fruit_order(1000, 4000, 21000) == 1000
     assert fruit_order(40004, 100000, 39994) == 4
     assert fruit_order(373, 4000, 7043) == 3
+
+
+def test_fruit_order_only_small():
+    assert fruit_order(10, 0, 9) == 9
+    assert fruit_order(20, 0, 18) == 18
+    assert fruit_order(40, 0, 15) == 15
