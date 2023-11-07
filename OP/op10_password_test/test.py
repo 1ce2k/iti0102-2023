@@ -16,7 +16,8 @@ def test_includes_uppercase():
     assert password.includes_uppercase('') is False
     assert password.includes_uppercase('Defwefwevwe') is True
     assert password.includes_uppercase('e/¤!fwe64fwevw') is False
-    assert password.includes_uppercase('ADGPEJNF') is True
+    assert password.includes_uppercase('fDGPEJNF') is True
+    assert password.includes_uppercase('DGPEJNF') is True
 
 
 def test_includes_lowercase():
@@ -25,3 +26,6 @@ def test_includes_lowercase():
     assert password.includes_lowercase('FJHFHFHF') is False
     assert password.includes_lowercase('fdfdf') is True
     assert password.includes_lowercase('f3f35s1') is True
+
+
+def
