@@ -37,3 +37,10 @@ def test_includes_special():
     assert password.includes_special('ksmqwd p24DS') is True
     assert password.includes_special('fegfvbbhefb') is False
     assert password.includes_special('!"№;;()*:_-') is True
+
+
+def test_include_digits():
+    assert password.includes_digits('') is False
+    assert password.includes_digits('1234567890') is True
+    assert password.includes_digits('dfjrfhrj34kfk') is True
+    assert password.includes_digits('dfjehfuhFEDFeuhs') is False
