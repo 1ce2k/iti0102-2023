@@ -16,4 +16,5 @@ def test_includes_uppercase():
     assert password.includes_uppercase('') is False
     assert password.includes_uppercase('Defwefwevwe') is True
     assert password.includes_uppercase('e/¤!fwe64fwevw') is False
+    assert password.includes_uppercase('ADGPEJNF') is True
     assert password.includes_uppercase('ADGPEJNFa') is True
