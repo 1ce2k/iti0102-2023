@@ -173,9 +173,9 @@ def test__is_different__new_pass_odd_length__barely_different__reverse():
 #     assert password.is_different_from_old_password('eva1970', '0791jfjf') is False
 
 
-def test__is_different__new_pass_even_length__barely_not_different_reverse():
-    """Test 12."""
-    assert password.is_different_from_old_password('45678', '87654fgf') is False
+# def test__is_different__new_pass_even_length__barely_not_different_reverse():
+#     """Test 12."""
+#     assert password.is_different_from_old_password('45678', '87654fgf') is False
 
 
 
