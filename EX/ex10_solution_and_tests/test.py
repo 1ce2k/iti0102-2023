@@ -70,3 +70,9 @@ def test_fruit_order_zeros():
     assert fruit_order(0, 1200, 6000) == 0
     assert fruit_order(0, 120, 600) == 0
     assert fruit_order(0, 5, 20) == 0
+
+
+def test_fruit_order_classic():
+    assert fruit_order(4, 1, 9) == 4
+    assert fruit_order(30, 5, 55) == 30
+    assert fruit_order(1, 1, 6) == 1
