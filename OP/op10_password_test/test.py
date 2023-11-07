@@ -58,3 +58,6 @@ def test_is_different_enough():
     assert password.is_different_from_old_password('pasS', 'pass') is False
     assert password.is_different_from_old_password('PASS', 'pass') is False
     assert password.is_different_from_old_password('pass', 'new_pas') is True
+    assert password.is_different_from_old_password("1234ty", "iu4321") is False
+    assert password.is_different_from_old_password('1234', '4321') is False
+    assert password.is_different_from_old_password('1234', '6754') is True
