@@ -1,7 +1,9 @@
 """Password validation tests."""
-from EX.ex04_validation import password
-# import password
+# from EX.ex04_validation import password
+import password
 
+
+# ---------- Tests if password is correct length ----------
 
 def test__is_correct_length_empty():
     """Test empty password."""
@@ -19,6 +21,8 @@ def test__is_correct_length_passed():
     assert password.is_correct_length('password') is True
     assert password.is_correct_length('a' * 64) is True
 
+
+# ---------- Tests if password includes uppercase ----------
 
 def test__includes_uppercase_empty():
     """Test passwords length that passes."""
@@ -41,6 +45,8 @@ def test__includes_uppercase_passes():
     assert password.includes_uppercase('fDGPEJNF') is True
     assert password.includes_uppercase('DGPEJNF') is True
 
+
+# ---------- Tests if password includes lowercase ----------
 
 def test__includes_lowercase_empty():
     """Test empty password."""
@@ -66,7 +72,6 @@ def test__includes_lowercase_passes():
 
 # ---------- Tests if password includes specials ----------
 
-
 def test__includes_special_empty():
     """Test empty."""
     assert password.includes_special('') is False
@@ -84,7 +89,6 @@ def test__includes_special_passes():
 
 
 # ---------- Tests if password includes numbers ----------
-
 
 def test__include_number():
     """Test empty."""
