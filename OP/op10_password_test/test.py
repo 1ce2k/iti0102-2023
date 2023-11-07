@@ -9,3 +9,10 @@ def test__is_correct_length():
     assert password.is_correct_length("a" * 65) is False
     assert password.is_correct_length('password') is True
     assert password.is_correct_length('a' * 64) is True
+
+
+def test_includes_uppercase():
+    """Test if there are some uppercase in password."""
+    assert password.includes_uppercase('') is False
+    assert password.includes_uppercase('Defwefwevwe') is True
+    assert password.includes_uppercase('e/¤!fwe64fwevw') is False
