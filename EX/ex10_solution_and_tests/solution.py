@@ -28,7 +28,13 @@ def lottery(a: int, b: int, c: int) -> int:
     (2, 2, 1) -> 0
     (2, 3, 1) -> 1
     """
-    pass
+    if a == b == c == 5:
+        return 10
+    if a == b == c != 5:
+        return 5
+    if b != a and c != a:
+        return 1
+    return 0
 
 
 def fruit_order(small_baskets: int, big_baskets: int, ordered_amount: int) -> int:
