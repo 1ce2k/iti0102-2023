@@ -51,6 +51,11 @@ def test__includes_uppercase_true_but_not_first():
     assert password.includes_uppercase('fDGPEJNF') is True
 
 
+def test__includes_uppercase_includes_number():
+    """Test if there are some uppercase in password."""
+    assert password.includes_uppercase('fDGPE3994JNF') is True
+
+
 # ---------- Tests if password includes lowercase ----------
 
 def test__includes_lowercase_empty():
@@ -63,15 +68,13 @@ def test__includes_lowercase_all_letters():
     assert password.includes_lowercase('qwertyuiopasdfghjklzxcvbnm') is True
 
 
-def test__includes_lowercase_fails():
+def test__includes_lowercase_only_lower():
     """Test if there are no lowercase in password."""
-    assert password.includes_lowercase('FJHFHFHF') is False
+    assert password.includes_lowercase('fjghrghj') is True
 
 
-def test__includes_lowercase_passes():
+def test__includes_lowercase_includes_number():
     """Test if there are some lowercase in password."""
-    assert password.includes_lowercase('JfjrhfJ') is True
-    assert password.includes_lowercase('fdfdf') is True
     assert password.includes_lowercase('f3f35s1') is True
 
 
@@ -87,10 +90,14 @@ def test__includes_special_fails():
     assert password.includes_special('fegfvbbhefb') is False
 
 
-def test__includes_special_passes():
-    """Test if password has specials."""
+def test__includes_special_includes_whitespace():
+    """Test if there is a whitespace in password."""
     assert password.includes_special('ksmqwd p24DS') is True
-    assert password.includes_special('!"№;;()*:_-') is True
+
+
+def test__includes_special_no_specials():
+    """Test if password has specials."""
+    assert password.includes_special('vjruhgkalhj') is False
 
 
 # ---------- Tests if password includes numbers ----------
