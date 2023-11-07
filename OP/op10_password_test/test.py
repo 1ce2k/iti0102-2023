@@ -50,7 +50,7 @@ def test_include_number():
 def test_is_different_enough():
     """Tests if old and new passwords are different."""
     # assert password.is_different_from_old_password('cata', 'maga') is True
-    # assert password.is_different_from_old_password('cata', 'cats') is False
+    assert password.is_different_from_old_password('123bb', '123aa') is False
     # assert password.is_different_from_old_password('catas', 'magas') is True
     # assert password.is_different_from_old_password('catat', 'catas') is False
     assert password.is_different_from_old_password('pass', 'PASS') is False
