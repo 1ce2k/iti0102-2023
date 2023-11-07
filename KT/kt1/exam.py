@@ -28,7 +28,13 @@ def has_seven(nums):
     has_seven([7, 1, 7, 1, 7]) => True
     has_seven([7, 1, 7, 1, 1, 7]) => False
     """
-    pass
+    count = 0
+    for i in range(len(nums)):
+        if nums[i] == 7:
+            count += 1
+        if i < len(nums) - 1 and nums[i] == nums[i + 1]:
+            return False
+    return count == 3
 
 
 def parse_call_log(call_log: str) -> dict:
@@ -64,7 +70,27 @@ def parse_call_log(call_log: str) -> dict:
     :param call_log: the whole log as string
     :return: dictionary with call information
     """
-    pass
+    # if not call_log:
+    #     return {}
+    # call_chains = call_log.split(',')
+    # call_dict = {}
+    # for chain in call_chains:
+    #     names = chain.split(':')
+    #     caller = names[0]
+    #     receivers = names[1:]
+    #     if caller not in call_dict:
+    #         call_dict[caller] = []
+    #     for receiver in receivers:
+    #         if receiver not in call_dict[caller]:
+    #             call_dict[caller].append(receiver)
+    # return call_dict
+
+
+print(parse_call_log(""))
+print(parse_call_log("ago:kati,mati:malle"))
+print(parse_call_log("ago:kati,ago:mati,ago:kati"))
+print(parse_call_log("ago:kati:mati"))
+print(parse_call_log("mati:kalle,kalle:malle:mari:juri,mari:mati"))
 
 
 def mirror_ends(s: str) -> str:
