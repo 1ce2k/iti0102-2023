@@ -175,7 +175,7 @@ def test__is_different__new_pass_even_length__barely_not_different_reverse():
 
 def test__is_different__new_pass_even_length__barely_different_reverse():
     """Test 14."""
-    assert password.is_different_from_old_password('aaab', '456baaa1') is True
+    assert password.is_different_from_old_password('aaab', '4561baaa') is True
 
 
 #     """Tests if old and new passwords are different."""
