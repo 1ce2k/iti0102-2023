@@ -2,7 +2,7 @@
 import password
 
 
-def test__is_correct_length__too_short():
+def test__is_correct_length():
     """Test whether password is correct length or not."""
     assert password.is_correct_length("passwor") is False
     assert password.is_correct_length('') is False
