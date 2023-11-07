@@ -134,13 +134,20 @@ def test__is_different__new_pass_even_length__barely_not_different():
 
 
 def test__is_different__new_pass_even_length__barely_different_reverse():
-    """Test 14."""
+    """Test 5."""
     assert password.is_different_from_old_password('aaab', 'baaa564712') is True
+
+
+def test__is_different__new_pass_even_length__barely_not_different_reverse():
+    """Test 6."""
+    assert password.is_different_from_old_password('aaab', 'baaa564') is False
 
 
 def test__is_different__new_pass_even_length__barely_not_different__not_in_beginning():
     """Test 8."""
     assert password.is_different_from_old_password('pass', '123pass4') is False
+
+
 
 
 # def test__is_different__new_pass_odd_length__barely_not_different__not_in_beginning():
