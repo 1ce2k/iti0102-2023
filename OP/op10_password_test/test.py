@@ -108,13 +108,13 @@ def test__include_number_passes():
 
 # ---------- Tests if passwords are different enough ----------
 
-def test__is_different__new_pass_case_sensitive():
+def test__is_different__old_pass_case_sensitive():
     """Test 1."""
     assert password.is_different_from_old_password('PASS', 'pass') is False
     assert password.is_different_from_old_password('pasS', 'pass') is False
 
 
-# def test__is_different__old_pass_case_sensitive():
+# def test__is_different__new_pass_case_sensitive():
 #     """Test 2."""
 #     assert password.is_different_from_old_password('pass', 'PASS') is False
 #     assert password.is_different_from_old_password('pass', 'Pass') is False
