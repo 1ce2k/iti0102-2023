@@ -102,3 +102,4 @@ def test_fruit_order_only_fails():
     assert fruit_order(0, 0, 6) == -1
     assert fruit_order(0, 10, 55) == -1
     assert fruit_order(0, 9, 47) == -1
+    assert fruit_order(12, 0, 47) == -1
