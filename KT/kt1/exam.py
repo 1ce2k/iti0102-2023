@@ -82,4 +82,9 @@ def mirror_ends(s: str) -> str:
     mirror_ends("abAAca") => "bc"
     mirror_ends("") => ""
     """
-    pass
+    if len(s) <= 1:
+        return ''
+
+    if s[0] == s[-1]:
+        return mirror_ends(s[1:-1])
+    return s[0] + s[-1]
