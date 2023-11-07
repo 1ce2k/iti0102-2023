@@ -70,27 +70,26 @@ def parse_call_log(call_log: str) -> dict:
     :param call_log: the whole log as string
     :return: dictionary with call information
     """
-    # if not call_log:
-    #     return {}
-    # call_chains = call_log.split(',')
-    # call_dict = {}
-    # for chain in call_chains:
-    #     names = chain.split(':')
-    #     caller = names[0]
-    #     receivers = names[1:]
-    #     if caller not in call_dict:
-    #         call_dict[caller] = []
-    #     for receiver in receivers:
-    #         if receiver not in call_dict[caller]:
-    #             call_dict[caller].append(receiver)
-    # return call_dict
-
-
-print(parse_call_log(""))
-print(parse_call_log("ago:kati,mati:malle"))
-print(parse_call_log("ago:kati,ago:mati,ago:kati"))
-print(parse_call_log("ago:kati:mati"))
-print(parse_call_log("mati:kalle,kalle:malle:mari:juri,mari:mati"))
+    if not call_log:
+        return {}
+    final_logs = {}
+    call_chains = call_log.split(',')
+    for chain in call_chains:
+        names = chain.split(':')
+        if len(names) == 2:
+            if names[0] not in final_logs:
+                final_logs[names[0]] = [names[1]]
+            else:
+                if names[1] not in final_logs[names[0]]:
+                    final_logs[names[0]].append(names[1])
+        elif len(names) > 2:
+            for i in range(len(names) - 1):
+                if names[i] not in final_logs:
+                    final_logs[names[i]] = [names[i + 1]]
+                else:
+                    if names[i + 1] not in final_logs[names[i]]:
+                        final_logs[names[i]].append(names[i + 1])
+    return final_logs
 
 
 def mirror_ends(s: str) -> str:
