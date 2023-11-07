@@ -151,7 +151,7 @@ def test__is_different__new_pass_even_length__barely_not_different__not_in_begin
 
 def test__is_different__new_pass_odd_length__barely_different():
     """Test 6."""
-    assert password.is_different_from_old_password('pas', 'passwordd') is True
+    assert password.is_different_from_old_password('pas', 'password') is True
 
 
 # def test__is_different__new_pass_odd_length__barely_not_different():
