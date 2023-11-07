@@ -11,7 +11,7 @@ def students_study(time: int, coffee_needed: bool) -> bool:
     if 18 <= time <= 24:
         return True
     if 1 <= time <= 4:
-        return False if coffee_needed else True
+        return False
     if 5 <= time <= 17:
         return True if coffee_needed else False
 
