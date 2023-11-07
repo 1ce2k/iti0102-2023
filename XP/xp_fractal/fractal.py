@@ -23,13 +23,7 @@ class Fractal:
 
     def compute(self):
         """Create the fractal by computing every pixel value."""
-        for x in range(self.size[0]):
-            for y in range(self.size[1]):
-                x_scaled = self.scale[0][0] + (x / self.size[0]) * (self.scale[1][0] - self.scale[0][0])
-                y_scaled = self.scale[0][1] + (y / self.size[1]) * (self.scale[1][1] - self.scale[0][1])
-                pixel = x_scaled, y_scaled
-                iterations = self.pixel_value(pixel)
-                color = (iterations, iterations, iterations)
+        pass
 
     def pixel_value(self, pixel):
         """
@@ -41,7 +35,7 @@ class Fractal:
         Returns:
         the number of iterations of computation it took to go out of bounds as integer.
         """
-        return self.computation(pixel, pixel)
+        pass
 
     def save_image(self, filename):
         """
@@ -64,14 +58,14 @@ def mandelbrot_computation(x: float, y: float, x_original: float, y_original: fl
 
     :return tuple[x, y] after single iteration
     """
-    max_iterations = 1000
-    z = 0
-    c = complex(x, y)
-    for i in range(max_iterations):
-        z = z * z + c
-        if abs(z) > 2:
-            return i
-    return max_iterations
+    x_squared = x * x
+    y_squared = y * y
+    xy = x * y
+
+    x_new = x_squared - y_squared + x_original
+    y_new = 2 * xy + y_original
+
+    return x_new, y_new
 
 
 def julia_computation(x: float, y: float, x_original: float, y_original: float) -> tuple:
