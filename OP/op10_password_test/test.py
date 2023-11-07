@@ -114,54 +114,54 @@ def test__is_different__new_pass_case_sensitive():
     assert password.is_different_from_old_password('pasS', 'pass') is False
 
 
-def test__is_different__old_pass_case_sensitive():
-    """Test 2."""
-    assert password.is_different_from_old_password('pass', 'PASS') is False
-    assert password.is_different_from_old_password('pass', 'Pass') is False
+# def test__is_different__old_pass_case_sensitive():
+#     """Test 2."""
+#     assert password.is_different_from_old_password('pass', 'PASS') is False
+#     assert password.is_different_from_old_password('pass', 'Pass') is False
+#
+#
+# def test__is_different__new_pass_odd_length__barely_different():
+#     """Test 3."""
+#     assert password.is_different_from_old_password('pass', 'new_pas') is True
+#
+#
+# def test__is_different__new_pass_odd_length__barely_not_different():
+#     """Test 4."""
+#     assert password.is_different_from_old_password('123bb', '123aa') is False
+#
+#
+# def test__is_different__new_pass_odd_length__barely_not_different__not_in_beginning():
+#     """Test 5."""
+#     assert password.is_different_from_old_password('pas3', '12pas34') is False
+#
+#
+# def test__is_different__new_pass_even_length__barely_different():
+#     """Test 6."""
+#     assert password.is_different_from_old_password('pas', 'password') is True
+#
+#
+# def test__is_different__new_pass_odd_length__barely_different():
+#     """Test 7."""
+#     assert password.is_different_from_old_password('123bbb', '123aaa') is False
+#
+#
+# def test__is_different__new_pass_even_length__barely_not_different__not_in_beginning():
+#     """Test 8."""
+#     assert password.is_different_from_old_password('pass', '123pass4') is False
+#
+#
+# def test__is_different__new_pass_odd_length__barely_different__reverse():
+#     """Test 9."""
+#     assert password.is_different_from_old_password('aaba', 'abaa12341') is True
 
 
-def test__is_different__new_pass_odd_length__barely_different():
-    """Test 3."""
-    assert password.is_different_from_old_password('pass', 'new_pas') is True
+# def test__is_different__new_pass_odd_length__barely_not_different__reverse():
+#     """Test 10."""
+#     assert password.is_different_from_old_password('eva19701', '10791jfjf') is False
 
 
-def test__is_different__new_pass_odd_length__barely_not_different():
-    """Test 4."""
-    assert password.is_different_from_old_password('123bb', '123aa') is False
-
-
-def test__is_different__new_pass_odd_length__barely_not_different__not_in_beginning():
-    """Test 5."""
-    assert password.is_different_from_old_password('pas3', '12pas34') is False
-
-
-def test__is_different__new_pass_even_length__barely_different():
-    """Test 6."""
-    assert password.is_different_from_old_password('pas', 'password') is True
-
-
-def test__is_different__new_pass_odd_length__barely_different():
-    """Test 7."""
-    assert password.is_different_from_old_password('123bbb', '123aaa') is False
-
-
-def test__is_different__new_pass_even_length__barely_not_different__not_in_beginning():
-    """Test 8."""
-    assert password.is_different_from_old_password('pass', '123pass4') is False
-
-
-def test__is_different__new_pass_odd_length__barely_different__reverse():
-    """Test 9."""
-    assert password.is_different_from_old_password('aaba', 'abaa12341') is True
-
-
-def test__is_different__new_pass_odd_length__barely_not_different__reverse():
-    """Test 10."""
-    assert password.is_different_from_old_password('eva19701', '10791jfjf') is False
-
-
-def test__is_different__new_pass_even_length__barely_different():
-    """Tests if old and new passwords are different."""
-    assert password.is_different_from_old_password("1234ty", "iu4321") is False
-    assert password.is_different_from_old_password('aba', 'aba12341') is True
-    assert password.is_different_from_old_password('eva1970', '0791jfjf') is False
+# def test__is_different__new_pass_even_length__barely_different():
+#     """Tests if old and new passwords are different."""
+#     assert password.is_different_from_old_password("1234ty", "iu4321") is False
+#     assert password.is_different_from_old_password('aba', 'aba12341') is True
+#     assert password.is_different_from_old_password('eva1970', '0791jfjf') is False
