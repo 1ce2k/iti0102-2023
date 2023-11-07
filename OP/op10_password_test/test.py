@@ -9,15 +9,23 @@ def test__is_correct_length_empty():
     assert password.is_correct_length('') is False
 
 
-def test__is_correct_length_fails():
-    """Test passwords length that fails."""
+def test__is_correct_length_too_low():
+    """Test password length < 8."""
     assert password.is_correct_length("passwor") is False
+
+
+def test__is_correct_length_too_high():
+    """Test password length > 64."""
     assert password.is_correct_length("a" * 65) is False
 
 
-def test__is_correct_length_passed():
-    """Test passwords length that passes."""
+def test__is_correct_length_min():
+    """Test password min length."""
     assert password.is_correct_length('password') is True
+
+
+def test__is_correct_length_max():
+    """Test password max length."""
     assert password.is_correct_length('a' * 64) is True
 
 
@@ -33,16 +41,14 @@ def test__includes_uppercase_every_letter():
     assert password.includes_uppercase('QWERTYUIOPASDFGHJKLZXCVBNM') is True
 
 
-def test__includes_uppercase_fails():
-    """Test if there are no uppercase in password."""
-    assert password.includes_uppercase('e/¤!fwe64fwevw') is False
-
-
-def test__includes_uppercase_passes():
-    """Test if there are some uppercase in password."""
-    assert password.includes_uppercase('Defwefwevwe') is True
-    assert password.includes_uppercase('fDGPEJNF') is True
+def test__includes_uppercase_only():
+    """Test if there are only uppercase in password."""
     assert password.includes_uppercase('DGPEJNF') is True
+
+
+def test__includes_uppercase_true_but_not_first():
+    """Test if there are some uppercase in password."""
+    assert password.includes_uppercase('fDGPEJNF') is True
 
 
 # ---------- Tests if password includes lowercase ----------
@@ -140,7 +146,7 @@ def test__is_different__new_pass_even_length__barely_different_reverse():
 
 def test__is_different__new_pass_even_length__barely_not_different_reverse():
     """Test 6."""
-    assert password.is_different_from_old_password('aaab', 'baa562') is False
+    assert password.is_different_from_old_password('aaab', 'baaa5621') is False
 
 
 def test__is_different__new_pass_even_length__barely_not_different__not_in_beginning():
