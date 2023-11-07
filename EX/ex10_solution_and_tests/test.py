@@ -95,3 +95,10 @@ def test_fruit_order_only_small():
     # assert fruit_order(0, 4, 15) == -1
     # assert fruit_order(0, 5, 15) == 0
     # assert fruit_order(0, 6, 15) == 0
+
+
+def test_fruit_order_only_fails():
+    """The test where everything must fail."""
+    assert fruit_order(0, 0, 6) == -1
+    assert fruit_order(0, 10, 55) == -1
+    assert fruit_order(0, 9, 47) == -1
