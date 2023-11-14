@@ -207,28 +207,54 @@ def correct_titles_and_count_books(library: list[Book]) -> dict[Book, int]:
     # print(books_by_title_length)
     while books_by_title_length:
         first = books_by_title_length[0]
-        maching_books = [book for book in books_by_title_length if only_name_difference(first, book)]
-        count = len(maching_books)
+        matching_books = [book for book in books_by_title_length if only_name_difference(first, book)]
+
+        count = len(matching_books) + 1
         if first in books_dict:
             books_dict[first] += count
         else:
             books_dict[first] = count
-        # books_by_title_length.remove(first)
-        for book in maching_books:
+        books_by_title_length.remove(first)
+        for book in matching_books:
             books_by_title_length.remove(book)
     return books_dict
 
 
-def only_name_difference(first_book, other):
-    for field in first_book.__dict__:
-        if field != 'title' and getattr(first_book, field) != getattr(other, field):
-            return False
-    return True
+def only_name_difference(book1: Book, book2: Book) -> bool:
+    book1_chars = chars_in_str(book1.title)
+    book2_chars = chars_in_str(book2.title)
+    chars_dif_is_one = chars_different(book1_chars, book2_chars) == 1
+    len_dif_is_one = abs(len(book1.title) - len(book2.title)) == 1
 
-        # if field != 'title' and getattr(first_book, 'title') != getattr(other, 'title'):
-        #     return False
-    # return True
+    title_matches = chars_dif_is_one and len_dif_is_one
+    same_author = book1.author == book2.author
+    same_pages_count = book1.pages == book2.pages
+    same_sales = book1.sales == book2.sales
+    same_year = book1.year == book2.year
+    same_genres = book1.genres == book2.genres
+    return title_matches and same_author and same_pages_count and same_sales and same_year and same_genres
 
+def chars_in_str(s: str):
+    chars = {}
+    for x in s:
+        if x not in chars:
+            chars[x] = 1
+        else:
+            chars[x] += 1
+    return chars
+
+def chars_different(dict1: dict, dict2: dict) -> int:
+    differences = dict1
+    for key in dict2:
+        if key in differences:
+            differences[key] = abs(differences[key] - dict2[key])
+        else:
+            differences[key] = dict2[key]
+        if differences[key] == 0:
+            del differences[key]
+    if not differences:
+        return 0
+    return sum(differences.values())
 
 
 if __name__ == '__main__':
