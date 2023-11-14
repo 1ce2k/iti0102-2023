@@ -211,17 +211,22 @@ def correct_titles_and_count_books(library: list[Book]) -> dict[Book, int]:
     corrected_dict = {}
     for key, books in book_dict.items():
         if len(books) > 1:
-            book_title = max([book.title for book in books], key=len)
-            for book in books:
-                if book.title == book_title:
-                    corrected_dict[book] = len(books)
-                    break
+            for i in range(len(books) - 1):
+                print(books[i])
+                for j in range(len(books)):
+                    print(books[j])
+                    if books[i].title != books[j].title and len(books[i].title) != len(books[j].title):
+                        books[j].title = books[i].title
+                        corrected_dict[books[j]] = len(books)
+                        break
+
         else:
             if books[0] not in corrected_dict:
                 corrected_dict[books[0]] = 1
             else:
                 corrected_dict[books[0]] += 1
     return corrected_dict
+
 
 
 
@@ -241,22 +246,22 @@ if __name__ == '__main__':
 
     book_list: list[Book] = [book1, book2, book3, book4, book5, book6, book7, book8, book9, book10]
 
-    print(author_book_count(book_list, "Harper Lee"))  # 3
-    print(author_page_count(book_list, "Harper Lee"))  # 970
-    print(author_book_count(book_list, "Willy Wonka"))  # 0
-    print(author_page_count(book_list, "Walter White"))  # 0
-    print()
-
-    print(most_popular_book(book_list))  # "1984" by George Orwell
-    print(most_popular_author(book_list))  # George Orwell
-    print(average_author_book_length(book_list, "Harper Lee"))  # 323.3333333333333
-    print()
-
-    print(find_best_selling_genre(book_list))  # Fiction
-    print(find_books_by_genre_and_year(book_list, "Fiction", 1949))  # ["1984" by George Orwell, "Nineteen Eighty-Four" by George Orwell]
-    print(most_popular_author_per_century(book_list))  # {19: 'Jane Austen', 20: 'George Orwell', 21: 'Harper Lee'}
-    print()
-
+    # print(author_book_count(book_list, "Harper Lee"))  # 3
+    # print(author_page_count(book_list, "Harper Lee"))  # 970
+    # print(author_book_count(book_list, "Willy Wonka"))  # 0
+    # print(author_page_count(book_list, "Walter White"))  # 0
+    # print()
+    #
+    # print(most_popular_book(book_list))  # "1984" by George Orwell
+    # print(most_popular_author(book_list))  # George Orwell
+    # print(average_author_book_length(book_list, "Harper Lee"))  # 323.3333333333333
+    # print()
+    #
+    # print(find_best_selling_genre(book_list))  # Fiction
+    # print(find_books_by_genre_and_year(book_list, "Fiction", 1949))  # ["1984" by George Orwell, "Nineteen Eighty-Four" by George Orwell]
+    # print(most_popular_author_per_century(book_list))  # {19: 'Jane Austen', 20: 'George Orwell', 21: 'Harper Lee'}
+    # print()
+    #
     print(correct_titles_and_count_books([
         Book("The Great Gatsby", "F. Scott Fitzgerald", 218, 100_000, ["Classic", "Fiction"], 1925),
         Book("The Great Gatsb", "F. Scott Fitzgerald", 218, 100_000, ["Classic", "Fiction"], 1925),
