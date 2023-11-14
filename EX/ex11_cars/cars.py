@@ -1,6 +1,4 @@
-
 """Cars."""
-import csv
 import json
 
 
@@ -154,6 +152,7 @@ def write_cars_to_file(cars: list[Car], file_name: str):
     print(cars_json_serializable)
     with open(file_name, 'w') as file:
         json.dump(cars_json_serializable, file, indent=2)
+
 
 def read_cars_from_file(file_name: str) -> list[Car]:
     """
