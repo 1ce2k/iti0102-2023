@@ -164,7 +164,7 @@ def most_popular_author_per_century(library: list[Book]) -> dict[int, str]:
     books_per_century = {}
     for x in range(1, 22):
         for book in library:
-            if (x - 1) * 100 <= book.year < x * 100:
+            if x * 100 <= book.year < (x + 1) * 100:
                 if x not in books_per_century:
                     books_per_century[x] = []
                 books_per_century[x].append(book)
