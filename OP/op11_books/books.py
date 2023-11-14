@@ -148,7 +148,7 @@ def find_books_by_genre_and_year(library: list[Book], genre: str, year: int) -> 
     for book in library:
         if book.year == year and genre in book.genres:
             books.append(book)
-    ret = sorted(books, key=lambda x: x.title)
+    ret = sorted(books, key=lambda x: (-x.sales, x.title))
     return ret
 
 
