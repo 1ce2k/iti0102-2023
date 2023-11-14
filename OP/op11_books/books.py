@@ -148,7 +148,8 @@ def find_books_by_genre_and_year(library: list[Book], genre: str, year: int) -> 
     for book in library:
         if book.year == year and genre in book.genres:
             books.append(book)
-    return sorted(books, key=lambda x: x.title)
+    ret = sorted(books, key=lambda x: x.title)
+    return ret
 
 
 def most_popular_author_per_century(library: list[Book]) -> dict[int, str]:
