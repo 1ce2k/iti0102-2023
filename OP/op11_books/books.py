@@ -165,7 +165,7 @@ def most_popular_author_per_century(library: list[Book]) -> dict[int, str]:
     books_per_century = {}
 
     for book in library:
-        century = centuryFromYear(book.year)
+        century = century_from_year(book.year)
         if century not in books_per_century:
             books_per_century[century] = []
         books_per_century[century].append(book)
@@ -176,9 +176,9 @@ def most_popular_author_per_century(library: list[Book]) -> dict[int, str]:
     return most_popular_authors
 
 
-def centuryFromYear(year):
+def century_from_year(year):
     """Find century"""
-    return (year) // 100 + 1
+    return (year - 1) // 100 + 1
 
 
 def correct_titles_and_count_books(library: list[Book]) -> dict[Book, int]:
