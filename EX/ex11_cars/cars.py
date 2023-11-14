@@ -77,8 +77,8 @@ def find_cars_by_feature(cars: list[Car], feature: str) -> list[Car]:
     :param feature: The given feature.
     :return: The list of cars that have the specified feature.
     """
-    sort_cars_by_make(cars)
     ret = [car for car in cars if feature in car.features]
+    sort_cars_by_make(ret)
     return ret
 
 
