@@ -48,7 +48,7 @@ def sort_cars_by_make(cars: list[Car]) -> list[Car]:
     :param cars: The list of cars to sort.
     :return: The sorted list of cars.
     """
-    ret = sorted(cars, key=lambda x: x.make)
+    ret = sorted(cars, key=lambda x: (x.make.lower(), x.model.lower()))
     return ret
 
 
