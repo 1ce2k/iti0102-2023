@@ -202,55 +202,64 @@ def correct_titles_and_count_books(library: list[Book]) -> dict[Book, int]:
     :param library: The list of books.
     :return: The amount of books in the list.
     """
-    book_count = {}
-    corrected_books = []
-    corrected_lib = []
-    for book in library:
-        found_similar = False
-        for existing_book in library:
-            if (existing_book.author == book.author and existing_book.pages == book.pages and existing_book.genres == book.genres and existing_book.year == book.year and existing_book.sales == book.sales):
-                if len(existing_book.title) == len(book.title) - 1:
-                    existing_book.title = book.title
-                    found_similar = True
-                    break
-        if not found_similar:
-            corrected_books.append(book)
-        if book in book_count:
-            book_count[book] += 1
+    books_dict: [Book, int] = {}
+    books_by_title_length: list[Book] = sorted(library, key=lambda x: -len(x.title))
+    # print(books_by_title_length)
+    while books_by_title_length:
+        first = books_by_title_length[0]
+        maching_books = [book for book in books_by_title_length if only_name_difference(first, book)]
+        count = len(maching_books)
+        if first in books_dict:
+            books_dict[first] += count
         else:
-            book_count[book] = 1
-    return book_count
+            books_dict[first] = count
+        # books_by_title_length.remove(first)
+        for book in maching_books:
+            books_by_title_length.remove(book)
+    return books_dict
+
+
+def only_name_difference(first_book, other):
+    for field in first_book.__dict__:
+        if field != 'title' and getattr(first_book, field) != getattr(other, field):
+            return False
+    return True
+
+        # if field != 'title' and getattr(first_book, 'title') != getattr(other, 'title'):
+        #     return False
+    # return True
+
 
 
 if __name__ == '__main__':
-    book1 = Book("The Great Gatsby", "F. Scott Fitzgerald", 218, 100_000, ["Classic", "Fiction"], 1925)
-    book2 = Book("Tender Is the Night", "F. Scott Fitzgerald", 320, 90_000, ["Classic", "Fiction"], 1934)
-    book3 = Book("The Beautiful and Damned", "F. Scott Fitzgerald", 348, 120_000, ["Classic", "Fiction"], 1922)
-    book4 = Book("To Kill a Mockingbird", "Harper Lee", 324, 80_000, ["Fiction"], 1960)
-    book5 = Book("Go Set a Watchman", "Harper Lee", 278, 70_000, ["Fiction"], 2015)
-    book6 = Book("In Cold Blood", "Harper Lee", 368, 110_000, ["True Crime"], 1966)
-    book7 = Book("1984", "George Orwell", 328, 200_000, ["Dystopian", "Fiction"], 1949)
-    book8 = Book("Animal Farm", "George Orwell", 144, 70_000, ["Satire", "Fiction"], 1945)
-    book9 = Book("Nineteen Eighty-Four", "George Orwell", 328, 95_000, ["Dystopian", "Fiction"], 1949)
-    book10 = Book("Pride and Prejudice", "Jane Austen", 432, 85_000, ["Classic", "Romance"], 1813)
-
-    book_list: list[Book] = [book1, book2, book3, book4, book5, book6, book7, book8, book9, book10]
-
-    print(author_book_count(book_list, "Harper Lee"))  # 3
-    print(author_page_count(book_list, "Harper Lee"))  # 970
-    print(author_book_count(book_list, "Willy Wonka"))  # 0
-    print(author_page_count(book_list, "Walter White"))  # 0
-    print()
-
-    print(most_popular_book(book_list))  # "1984" by George Orwell
-    print(most_popular_author(book_list))  # George Orwell
-    print(average_author_book_length(book_list, "Harper Lee"))  # 323.3333333333333
-    print()
-
-    print(find_best_selling_genre(book_list))  # Fiction
-    print(find_books_by_genre_and_year(book_list, "Fiction", 1949))  # ["1984" by George Orwell, "Nineteen Eighty-Four" by George Orwell]
-    print(most_popular_author_per_century(book_list))  # {19: 'Jane Austen', 20: 'George Orwell', 21: 'Harper Lee'}
-    print()
+    # book1 = Book("The Great Gatsby", "F. Scott Fitzgerald", 218, 100_000, ["Classic", "Fiction"], 1925)
+    # book2 = Book("Tender Is the Night", "F. Scott Fitzgerald", 320, 90_000, ["Classic", "Fiction"], 1934)
+    # book3 = Book("The Beautiful and Damned", "F. Scott Fitzgerald", 348, 120_000, ["Classic", "Fiction"], 1922)
+    # book4 = Book("To Kill a Mockingbird", "Harper Lee", 324, 80_000, ["Fiction"], 1960)
+    # book5 = Book("Go Set a Watchman", "Harper Lee", 278, 70_000, ["Fiction"], 2015)
+    # book6 = Book("In Cold Blood", "Harper Lee", 368, 110_000, ["True Crime"], 1966)
+    # book7 = Book("1984", "George Orwell", 328, 200_000, ["Dystopian", "Fiction"], 1949)
+    # book8 = Book("Animal Farm", "George Orwell", 144, 70_000, ["Satire", "Fiction"], 1945)
+    # book9 = Book("Nineteen Eighty-Four", "George Orwell", 328, 95_000, ["Dystopian", "Fiction"], 1949)
+    # book10 = Book("Pride and Prejudice", "Jane Austen", 432, 85_000, ["Classic", "Romance"], 1813)
+    #
+    # book_list: list[Book] = [book1, book2, book3, book4, book5, book6, book7, book8, book9, book10]
+    #
+    # print(author_book_count(book_list, "Harper Lee"))  # 3
+    # print(author_page_count(book_list, "Harper Lee"))  # 970
+    # print(author_book_count(book_list, "Willy Wonka"))  # 0
+    # print(author_page_count(book_list, "Walter White"))  # 0
+    # print()
+    #
+    # print(most_popular_book(book_list))  # "1984" by George Orwell
+    # print(most_popular_author(book_list))  # George Orwell
+    # print(average_author_book_length(book_list, "Harper Lee"))  # 323.3333333333333
+    # print()
+    #
+    # print(find_best_selling_genre(book_list))  # Fiction
+    # print(find_books_by_genre_and_year(book_list, "Fiction", 1949))  # ["1984" by George Orwell, "Nineteen Eighty-Four" by George Orwell]
+    # print(most_popular_author_per_century(book_list))  # {19: 'Jane Austen', 20: 'George Orwell', 21: 'Harper Lee'}
+    # print()
 
     print(correct_titles_and_count_books([
         Book("The Great Gatsby", "F. Scott Fitzgerald", 218, 100_000, ["Classic", "Fiction"], 1925),
