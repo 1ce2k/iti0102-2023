@@ -221,6 +221,7 @@ def correct_titles_and_count_books(library: list[Book]) -> dict[Book, int]:
 
 
 def only_name_difference(book1: Book, book2: Book) -> bool:
+    """Return whether different is only title or not."""
     book1_chars = chars_in_str(book1.title)
     book2_chars = chars_in_str(book2.title)
     chars_dif_is_one = chars_different(book1_chars, book2_chars) == 1
@@ -234,7 +235,9 @@ def only_name_difference(book1: Book, book2: Book) -> bool:
     same_genres = book1.genres == book2.genres
     return title_matches and same_author and same_pages_count and same_sales and same_year and same_genres
 
+
 def chars_in_str(s: str):
+    """Count all chars in title."""
     chars = {}
     for x in s:
         if x not in chars:
@@ -243,7 +246,9 @@ def chars_in_str(s: str):
             chars[x] += 1
     return chars
 
+
 def chars_different(dict1: dict, dict2: dict) -> int:
+    """Find how many chars are different."""
     differences = dict1
     for key in dict2:
         if key in differences:
