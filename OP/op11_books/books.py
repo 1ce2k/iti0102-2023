@@ -202,34 +202,24 @@ def correct_titles_and_count_books(library: list[Book]) -> dict[Book, int]:
     :param library: The list of books.
     :return: The amount of books in the list.
     """
-    book_dict = {}
+    book_count = {}
+    corrected_books = []
+    corrected_lib = []
     for book in library:
-        key = book.author, book.pages, book.sales, tuple(book.genres), book.year
-        if key not in book_dict:
-            book_dict[key] = []
-        book_dict[key].append(book)
-    corrected_dict = {}
-    for key, books in book_dict.items():
-        if len(books) > 1:
-            for i in range(len(books) - 1):
-                print(books[i])
-                for j in range(len(books)):
-                    print(books[j])
-                    if books[i].title != books[j].title and len(books[i].title) != len(books[j].title):
-                        books[j].title = books[i].title
-                        corrected_dict[books[j]] = len(books)
-                        break
-
+        found_similar = False
+        for existing_book in library:
+            if (existing_book.author == book.author and existing_book.pages == book.pages and existing_book.genres == book.genres and existing_book.year == book.year and existing_book.sales == book.sales):
+                if len(existing_book.title) == len(book.title) - 1:
+                    existing_book.title = book.title
+                    found_similar = True
+                    break
+        if not found_similar:
+            corrected_books.append(book)
+        if book in book_count:
+            book_count[book] += 1
         else:
-            if books[0] not in corrected_dict:
-                corrected_dict[books[0]] = 1
-            else:
-                corrected_dict[books[0]] += 1
-    return corrected_dict
-
-
-
-
+            book_count[book] = 1
+    return book_count
 
 
 if __name__ == '__main__':
@@ -246,22 +236,22 @@ if __name__ == '__main__':
 
     book_list: list[Book] = [book1, book2, book3, book4, book5, book6, book7, book8, book9, book10]
 
-    # print(author_book_count(book_list, "Harper Lee"))  # 3
-    # print(author_page_count(book_list, "Harper Lee"))  # 970
-    # print(author_book_count(book_list, "Willy Wonka"))  # 0
-    # print(author_page_count(book_list, "Walter White"))  # 0
-    # print()
-    #
-    # print(most_popular_book(book_list))  # "1984" by George Orwell
-    # print(most_popular_author(book_list))  # George Orwell
-    # print(average_author_book_length(book_list, "Harper Lee"))  # 323.3333333333333
-    # print()
-    #
-    # print(find_best_selling_genre(book_list))  # Fiction
-    # print(find_books_by_genre_and_year(book_list, "Fiction", 1949))  # ["1984" by George Orwell, "Nineteen Eighty-Four" by George Orwell]
-    # print(most_popular_author_per_century(book_list))  # {19: 'Jane Austen', 20: 'George Orwell', 21: 'Harper Lee'}
-    # print()
-    #
+    print(author_book_count(book_list, "Harper Lee"))  # 3
+    print(author_page_count(book_list, "Harper Lee"))  # 970
+    print(author_book_count(book_list, "Willy Wonka"))  # 0
+    print(author_page_count(book_list, "Walter White"))  # 0
+    print()
+
+    print(most_popular_book(book_list))  # "1984" by George Orwell
+    print(most_popular_author(book_list))  # George Orwell
+    print(average_author_book_length(book_list, "Harper Lee"))  # 323.3333333333333
+    print()
+
+    print(find_best_selling_genre(book_list))  # Fiction
+    print(find_books_by_genre_and_year(book_list, "Fiction", 1949))  # ["1984" by George Orwell, "Nineteen Eighty-Four" by George Orwell]
+    print(most_popular_author_per_century(book_list))  # {19: 'Jane Austen', 20: 'George Orwell', 21: 'Harper Lee'}
+    print()
+
     print(correct_titles_and_count_books([
         Book("The Great Gatsby", "F. Scott Fitzgerald", 218, 100_000, ["Classic", "Fiction"], 1925),
         Book("The Great Gatsb", "F. Scott Fitzgerald", 218, 100_000, ["Classic", "Fiction"], 1925),
