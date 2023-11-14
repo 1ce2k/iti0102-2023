@@ -149,7 +149,7 @@ def write_cars_to_file(cars: list[Car], file_name: str):
         for car in cars
     ]
 
-    print(cars_json_serializable)
+    # print(cars_json_serializable)
     with open(file_name, 'w') as file:
         json.dump(cars_json_serializable, file, indent=2)
 
@@ -165,7 +165,13 @@ def read_cars_from_file(file_name: str) -> list[Car]:
     :param file_name: The name of the file to read the cars from.
     :return: The list of cars read from the file.
     """
-    pass
+    with open(file_name, 'r') as file:
+        data = json.load(file)
+    cars = []
+    for item in data:
+        car = Car(item['make'], item['model'], item['fuel_consumption'], item['features'])
+        cars.append(car)
+    return cars
 
 
 if __name__ == '__main__':
