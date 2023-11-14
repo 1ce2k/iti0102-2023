@@ -202,24 +202,29 @@ def correct_titles_and_count_books(library: list[Book]) -> dict[Book, int]:
     :param library: The list of books.
     :return: The amount of books in the list.
     """
-    book_count = {}
-    corrected_books = []
-    corrected_lib = []
+    book_dict = {}
     for book in library:
-        found_similar = False
-        for existing_book in library:
-            if (existing_book.author == book.author and existing_book.pages == book.pages and existing_book.genres == book.genres and existing_book.year == book.year and existing_book.sales == book.sales):
-                if len(existing_book.title) == len(book.title) - 1:
-                    existing_book.title = book.title
-                    found_similar = True
+        key = book.author, book.pages, book.sales, tuple(book.genres), book.year
+        if key not in book_dict:
+            book_dict[key] = []
+        book_dict[key].append(book)
+    corrected_dict = {}
+    for key, books in book_dict.items():
+        if len(books) > 1:
+            book_title = max([book.title for book in books], key=len)
+            for book in books:
+                if book.title == book_title:
+                    corrected_dict[book] = len(books)
                     break
-        if not found_similar:
-            corrected_books.append(book)
-        if book in book_count:
-            book_count[book] += 1
         else:
-            book_count[book] = 1
-    return book_count
+            if books[0] not in corrected_dict:
+                corrected_dict[books[0]] = 1
+            else:
+                corrected_dict[books[0]] += 1
+    return corrected_dict
+
+
+
 
 
 if __name__ == '__main__':
