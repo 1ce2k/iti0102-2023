@@ -64,13 +64,13 @@ def test_fruit_order_zeros():
     """Test where some value is 0 or return is 0."""
     assert fruit_order(0, 0, 0) == 0
     assert fruit_order(1, 0, 0) == 0
-    # assert fruit_order(0, 1, 0) == 0
-    # assert fruit_order(1, 1, 0) == 0
-    # assert fruit_order(5, 5, 25) == 0
-    # assert fruit_order(0, 5, 25) == 0
-    # assert fruit_order(0, 1200, 6000) == 0
-    # assert fruit_order(0, 120, 600) == 0
-    # assert fruit_order(0, 5, 20) == 0
+    assert fruit_order(0, 1, 0) == 0
+    assert fruit_order(1, 1, 0) == 0
+    assert fruit_order(5, 5, 25) == 0
+    assert fruit_order(0, 5, 25) == 0
+    assert fruit_order(0, 1200, 6000) == 0
+    assert fruit_order(0, 120, 600) == 0
+    assert fruit_order(0, 5, 20) == 0
 
 
 def test_fruit_order_classic():
