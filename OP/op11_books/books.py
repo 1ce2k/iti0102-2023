@@ -202,8 +202,8 @@ def correct_titles_and_count_books(library: list[Book]) -> dict[Book, int]:
     :param library: The list of books.
     :return: The amount of books in the list.
     """
-    books_dict: [Book, int] = {}
-    books_by_title_length: list[Book] = sorted(library, key=lambda x: -len(x.title))
+    books_dict = {}
+    books_by_title_length = sorted(library, key=lambda x: -len(x.title))
     # print(books_by_title_length)
     while books_by_title_length:
         first = books_by_title_length[0]
