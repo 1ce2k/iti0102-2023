@@ -177,7 +177,7 @@ def most_popular_author_per_century(library: list[Book]) -> dict[int, str]:
 
 
 def century_from_year(year):
-    """Find century"""
+    """Find century."""
     return (year - 1) // 100 + 1
 
 
