@@ -1,8 +1,8 @@
 """."""
 
-from XP.trees.default_operator import DefaultOperator
+from default_operator import DefaultOperator
 from operator import Operator
-from XP.trees.tree_node import TreeNode
+from tree_node import TreeNode
 
 
 class And(Operator):
