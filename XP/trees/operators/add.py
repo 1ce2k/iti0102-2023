@@ -1,0 +1,32 @@
+"""."""
+
+from XP.trees.default_operator import DefaultOperator
+from XP.trees.operators.operator import Operator
+from XP.trees.tree_node import TreeNode
+
+
+class Add(Operator):
+    """Custom operation."""
+    def __init__(self, left: TreeNode, right: TreeNode):
+        """default constructor."""
+        super().__init__((left, right))
+        self.left = left
+        self.right = right
+
+    @property
+    def priority(self):
+        """:return the value of the operation."""
+        return self.right + self.left
+
+    @property
+    def default_operator(self):
+        """Return the default operator of the operation."""
+        return DefaultOperator(lambda x, y: x + y, "+")
+
+    @property
+    def actions(self):
+        """Return a dictionary of custom operations."""
+        return {
+            (set, set): lambda x, y: x | y,  # set union
+            (set, int): lambda x, y: {*x, y}  # add to set
+        }
