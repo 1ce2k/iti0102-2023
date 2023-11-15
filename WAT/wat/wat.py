@@ -36,6 +36,8 @@ def function_g(x: int) -> int:
     return -x
 
 
+#123
+
 def function_h(x: int) -> int:
     """Do func h."""
     return x * 1431
