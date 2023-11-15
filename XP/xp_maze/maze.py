@@ -130,7 +130,7 @@ class MazeSolver:
 
         return ''.join(maze_str)
 
-    def make_path(self, came_from: dict, start: tuple, end: tuple) -> list | None:
+    def make_path(self, came_from: dict, start: tuple, end: tuple):
         """Make path."""
         if end not in came_from:
             return None
@@ -186,6 +186,21 @@ class MazeSolver:
                     paths.append((came_from, cost))
 
         return sorted(paths, key=lambda x: (x[1], len(x[0])))[0] if len(paths) else (None, -1)
+
+    def locate(self, area: str, x: int, y: int, unknown: str = None) -> tuple:
+        """
+        Locate yourself in a already known maze.
+
+        Note that (0, 0) is top left corner
+
+        :param area: area you know around you.
+        :param x: x-coord relative to known area
+        :param y: y-coord relative to known area
+        :param unknown: single char that represents unknown squares in area param
+
+        :return list of tuple(y, x) with coordinates of your location in big/known maze (all possible locations)
+        """
+        return area, x, y, unknown
 
 
 if __name__ == '__main__':
