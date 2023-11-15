@@ -1,7 +1,7 @@
 """."""
 
 from default_operator import DefaultOperator
-from operator import Operator
+from operators.operator import Operator
 from tree_node import TreeNode
 
 
