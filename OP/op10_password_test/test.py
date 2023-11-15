@@ -1,6 +1,6 @@
 """Password validation tests."""
-import password
-
+# import password
+import EX.ex04_validation.password as password
 
 # ---------- Tests if password is correct length ----------
 
