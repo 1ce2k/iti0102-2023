@@ -23,7 +23,7 @@ class Operator(TreeNode):
 
     def __str__(self):
         """:return the mathematical string representation of the tree with least amount of parenthesis."""
-        return "5 + 6"
+        return f" {self.default_operator} ".join([self.__encase(x) for x in self.__value])
 
     @property
     def associativity(self):
