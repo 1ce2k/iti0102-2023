@@ -9,7 +9,7 @@ class Add(Operator):
     """Custom operation."""
 
     def __init__(self, left: TreeNode, right: TreeNode):
-        """:Default constructor."""
+        """Create default constructor."""
         super().__init__((left, right))
         self.left = left
         self.right = right
