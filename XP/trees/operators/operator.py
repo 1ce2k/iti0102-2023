@@ -18,7 +18,8 @@ class Operator(TreeNode):
 
     def class_str(self):
         """:return class string representation of the object."""
-        return "Add(Leaf(5), Leaf(6))"
+        return f"{self.__class__.__name__}({', '.join([x.class_str() for x in self.__value])})"
+
 
     def __str__(self):
         """:return the mathematical string representation of the tree with least amount of parenthesis."""
