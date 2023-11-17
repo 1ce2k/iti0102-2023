@@ -7,7 +7,7 @@ class Leaf(TreeNode):
     """Leaf node."""
 
     def __init__(self, value):
-        """default constructor."""
+        """Create default constructor."""
         super().__init__(value)
         self.__value = value
 
@@ -20,5 +20,5 @@ class Leaf(TreeNode):
         return f"Leaf({self.__value})"
 
     def __str__(self):
-        """return string format of value."""
+        """Return string format of value."""
         return str(self.__value)
