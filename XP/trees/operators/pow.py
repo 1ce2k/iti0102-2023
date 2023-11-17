@@ -20,7 +20,7 @@ class Pow(Operator):
     @property
     def default_operator(self):
         """Make use of the 'operator' library or use a lambda function."""
-        return DefaultOperator(lambda x, y: -1, "?")
+        return DefaultOperator(lambda x, y: x ** y, "**")
 
     @property
     def actions(self):
