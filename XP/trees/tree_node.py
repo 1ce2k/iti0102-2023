@@ -27,14 +27,14 @@ class TreeNode(metaclass=ABCMeta):
 
     def __eq__(self, other):
         """:return True when 2 object trees have the same shape and values."""
-        if type(other) == str:
+        if type(other) is str:
             return self.__str__() == other
         return self.__str__() == other.__str__()
 
     def __ne__(self, other):
         """:return True when 2 object trees have a different shape and/or values."""
         for item in self.__value:
-            if type(item) == type(other):
+            if type(item) is type(other):
                 return False
             else:
                 return True
