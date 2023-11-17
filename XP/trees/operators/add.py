@@ -7,15 +7,16 @@ from tree_node import TreeNode
 
 class Add(Operator):
     """Custom operation."""
+
     def __init__(self, left: TreeNode, right: TreeNode):
-        """default constructor."""
+        """:Default constructor."""
         super().__init__((left, right))
         self.left = left
         self.right = right
 
     @property
     def priority(self):
-        """:return the value of the operation."""
+        """Return the value of the operation."""
         return self.right + self.left
 
     @property
