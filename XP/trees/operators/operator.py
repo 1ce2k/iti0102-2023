@@ -27,6 +27,7 @@ class Operator(TreeNode):
         return f" {self.default_operator} ".join([self.__encase(x) for x in self.__value])
 
     def __encase(self, node):
+        """Help func."""
         if type(node).__name__ == "Leaf":
             return f"{node}"
         elif type(self).__name__ != "Leaf" and type(self) == type(node) and self.associativity:
@@ -39,20 +40,20 @@ class Operator(TreeNode):
 
     @property
     def associativity(self):
-        """abstract method witch should be overridden to return a boolean when the node is not associative."""
+        """:abstract method witch should be overridden to return a boolean when the node is not associative."""
         return False
 
     @property
     @abstractmethod
     def default_operator(self):
-        """abstract method which should be overridden to return the default_operator object."""
+        """:abstract method which should be overridden to return the default_operator object."""
         pass
 
     @property
     @abstractmethod
     def priority(self):
         """
-        abstract method witch should be overridden to return priority of the node.
+        :abstract method witch should be overridden to return priority of the node.
 
         Boolean whether the operation is associative or not.
         For example addition is associative but subtraction is not.
