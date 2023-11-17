@@ -9,7 +9,7 @@ class Div(Operator):
     """Custom operation."""
 
     def __init__(self, left: TreeNode, right: TreeNode):
-        """:default constructor."""
+        """Create default constructor."""
         super().__init__((left, right))
 
     @property
