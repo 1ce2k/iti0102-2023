@@ -12,7 +12,7 @@ class TreeNode(metaclass=ABCMeta):
 
     @abstractmethod
     def apply(self):
-        """abstract method which should be overridden to compute the value of the given abstract tree."""
+        """:abstract method which should be overridden to compute the value of the given abstract tree."""
         print(self.__value)
 
     @abstractmethod
