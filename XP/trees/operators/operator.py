@@ -16,7 +16,6 @@ class Operator(TreeNode):
         """Make use of the *args to compute the value of the given subtree. Recursion is your friend."""
         return self.default_operator(*[x.apply() for x in self.__value])
 
-
     def class_str(self):
         """:return class string representation of the object."""
         return "Add(Leaf(5), Leaf(6))"
@@ -30,9 +29,9 @@ class Operator(TreeNode):
         """Help func."""
         if type(node).__name__ == "Leaf":
             return f"{node}"
-        elif type(self).__name__ != "Leaf" and type(self) == type(node) and self.associativity:
+        elif type(self).__name__ != "Leaf" and type(self) is type(node) and self.associativity:
             return f"{node.__str__()}"
-        elif type(self).__name__ != "Leaf" and type(self) == type(node) and not self.associativity:
+        elif type(self).__name__ != "Leaf" and type(self) is type(node) and not self.associativity:
             return f"({node.__str__()})"
         elif type(self).__name__ != "Leaf" and self.priority >= node.priority:
             return f"{node.__str__()}"
