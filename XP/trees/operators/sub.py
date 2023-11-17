@@ -9,14 +9,14 @@ class Sub(Operator):
     """Custom operation."""
 
     def __init__(self, left: TreeNode, right: TreeNode):
-        """default constructor."""
+        """Create default constructor."""
         super().__init__((left, right))
         self.left = left
         self.right = right
 
     @property
     def priority(self):
-        """priority of the operation."""
+        """:priority of the operation."""
         return -1
 
     @property
