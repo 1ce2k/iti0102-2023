@@ -56,44 +56,16 @@ def exchange_money(exchange_rates: dict) -> list:
     dates_to_exchange = []
     initial_money = 1000
     current_money = initial_money
-    service_fee = 1 - 0.01
-    dates = list(exchange_rates.keys())
-    # for i in range(len(dates) - 1):
-    #     # date when to buy
-    #     date_buy = dates[i]
-    #     # amount after buying like exchange 1000 EUR to 1067 USD by rate 1.067
-    #     amount_after_buying = current_money * exchange_rates[date_buy]
-    #     # take servise fee 1% from 1067 USD it would be 1056.33 USD
-    #     amount_after_buying = amount_after_buying * service_fee
-    #     print("Days to buy and amount")
-    #     print(date_buy, amount_after_buying)
-    #
-    #     for x in range(i, len(dates)):
-    #         # day when to sell
-    #         date_sell = dates[x]
-    #         # amount after selling like exchange 1000 USD to 937.207 EUR by rate 1.067
-    #         amount_after_selling = amount_after_buying / exchange_rates[date_sell]
-    #         # take servise fee 1% from 937.207 EUR it would be 927.835 EUR
-    #         amount_after_selling = amount_after_selling * service_fee
-    #         print("Days to sell and amount")
-    #         print(date_sell, amount_after_selling)
-    #     print()
+    service_fee = 0.99
+    rates = list(exchange_rates.values())
+    dropping_rates = sorted(rates, reverse=True)
+    print(rates)
+    print(dropping_rates)
+    if dropping_rates == rates:
+        return []
 
-    # if amount_after_selling > current_money:
-    #     dates_to_exchange.extend([date_buy, date_sell])
-    day_to_buy = best_day_to_buy(exchange_rates)
-    day_to_sell = best_day_to_sell(exchange_rates)
-    print(day_to_buy, day_to_sell)
 
-    after_buying = current_money / exchange_rates[day_to_buy[0]]
-    after_buying_with_fee = after_buying * service_fee
-    after_selling = after_buying_with_fee * exchange_rates[day_to_sell[0]]
-    after_selling_with_fee = after_selling * service_fee
 
-    if after_selling_with_fee >= initial_money:
-        dates_to_exchange.append(day_to_buy[0])
-        dates_to_exchange.append(day_to_sell[0])
-    return dates_to_exchange
 
 def best_day_to_buy(exchange_dict: dict) -> tuple:
     lowest_rate = min(exchange_dict.values())
