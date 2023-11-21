@@ -20,7 +20,8 @@ def get_currency_rates_from_file(filename: str) -> tuple:
     """
     with open(filename, 'r') as file:
         reader = csv.reader(file)
-    return reader
+        data = [row for row in reader]
+    return data
 
 
 def exchange_money(exchange_rates: dict) -> list:
