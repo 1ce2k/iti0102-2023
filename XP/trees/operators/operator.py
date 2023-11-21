@@ -31,7 +31,7 @@ class Operator(TreeNode):
             return f"{node}"
         elif type(self).__name__ != "Leaf" and type(self) is type(node) and self.associativity:
             return f"{node.__str__()}"
-        elif type(self).__name__ != "Leaf" and type(self) is type(node) and not self.associativity:
+        elif type(self).__name__ != "Leaf" and type(self) is type(node) and not self.associativity(node):
             return f"({node.__str__()})"
         elif type(self).__name__ != "Leaf" and self.priority >= node.priority:
             return f"{node.__str__()}"
