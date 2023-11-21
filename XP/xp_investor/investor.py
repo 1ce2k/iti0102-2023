@@ -29,7 +29,7 @@ def get_currency_rates_from_file(filename: str) -> tuple:
         z = next(reader)
         rates_data = next(reader)
         for line in rates_data:
-            date, rate = line.split(',')[0], line.split(',')
+            date, rate = line.split(',')[0], int(line.split(',')[1])
             exchange_rates[date] = rate
     return currency[0], exchange_rates
 
