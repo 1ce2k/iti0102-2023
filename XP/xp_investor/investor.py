@@ -18,11 +18,14 @@ def get_currency_rates_from_file(filename: str) -> tuple:
     :param filename: file name to read CSV data from
     :return: Tuple that consists of currency name and dict with exchange rate history
     """
+
     with open(filename, 'r') as file:
         reader = csv.reader(file)
-        data = [row for row in reader]
-
-    return data[1], data[2]
+        x = next(reader)[0].split(', {')
+        currency = x[0]
+        exchange_rates = {}
+        y = x[1:]
+    return currency, y
 
 
 def exchange_money(exchange_rates: dict) -> list:
