@@ -85,14 +85,14 @@ def exchange_money(exchange_rates: dict) -> list:
     day_to_sell = best_day_to_sell(exchange_rates)
     print(day_to_buy, day_to_sell)
 
-    after_buying = current_money * exchange_rates[day_to_buy]
+    after_buying = current_money * exchange_rates[day_to_buy[0]]
     after_buying_with_fee = after_buying * 0.99
-    after_selling = after_buying_with_fee / exchange_rates[day_to_sell]
+    after_selling = after_buying_with_fee / exchange_rates[day_to_sell[0]]
     after_selling_with_fee = after_selling * 0.99
 
     if after_selling_with_fee >= initial_money:
-        dates_to_exchange.append(day_to_buy)
-        dates_to_exchange.append(day_to_sell)
+        dates_to_exchange.append(day_to_buy[0])
+        dates_to_exchange.append(day_to_sell[0])
     return dates_to_exchange
 
 def best_day_to_buy(exchange_dict: dict) -> tuple:
