@@ -17,11 +17,12 @@ class Operator(TreeNode):
         return self.default_operator(*[x.apply() for x in self.__value])
 
     def class_str(self):
-        """Return class string representation of the object."""
+        """:return class string representation of the object."""
         return f"{self.__class__.__name__}({', '.join([x.class_str() for x in self.__value])})"
 
+
     def __str__(self):
-        """Return the mathematical string representation of the tree with the least amount of parenthesis."""
+        """:return the mathematical string representation of the tree with least amount of parenthesis."""
         # return "5 + 6"
         return f" {self.default_operator} ".join([self.__encase(x) for x in self.__value])
 
@@ -39,20 +40,20 @@ class Operator(TreeNode):
 
     @property
     def associativity(self):
-        """Abstract method witch should be overridden to return a boolean when the node is not associative."""
+        """:abstract method witch should be overridden to return a boolean when the node is not associative."""
         return False
 
     @property
     @abstractmethod
     def default_operator(self):
-        """Abstract method which should be overridden to return the default_operator object."""
+        """:abstract method which should be overridden to return the default_operator object."""
         pass
 
     @property
     @abstractmethod
     def priority(self):
         """
-        Abstract method witch should be overridden to return priority of the node.
+        :abstract method witch should be overridden to return priority of the node.
 
         Boolean whether the operation is associative or not.
         For example addition is associative but subtraction is not.
@@ -68,7 +69,7 @@ class Operator(TreeNode):
         All custom implemented actions on different data structures.
 
         For example set - int does not exist, but we can implement it.
-        Return a dictionary of functions where key is accepted parameters and value is a function which takes the
+        :return a dictionary of functions where key is accepted parameters and value is a function which takes the
         aforementioned parameters as inputs and computes a value with them.
         """
         pass
