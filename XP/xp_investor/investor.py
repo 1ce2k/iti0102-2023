@@ -21,20 +21,16 @@ def get_currency_rates_from_file(filename: str) -> tuple:
     """
     regex_pattern = r'(?:\b(?:related to)\b\s+([A-Z]{3}))'
     with open(filename, 'r') as file:
-        data = file.read()
-    return "USD", data
-        # reader = csv.reader(file)
-        # x = next(reader)[0].split(', {')
-        # currency = re.findall(regex_pattern, x[0])
-        # exchange_rates = {}
-        # y = next(reader)
-        # z = next(reader)
-        # rates_data = next(reader)
-        # test_data = [row for row in rates_data]
-        # for line in rates_data:
-        #     date, rate = line.split(',')[0], int(line.split(',')[1])
-        #     exchange_rates[date] = rate
-    # return currency[0], test_data
+        reader = csv.reader(file)
+        x = next(reader)[0].split(', {')
+        currency = re.findall(regex_pattern, x[0])
+        exchange_rates = {}
+        y = next(reader)
+        z = next(reader)
+        for row in reader:
+            exchange_rates[row[0]] = float(row[1])
+
+    return currency[0], exchange_rates
 
 
 def exchange_money(exchange_rates: dict) -> list:
@@ -59,3 +55,7 @@ def exchange_money(exchange_rates: dict) -> list:
         "2023-11-01",
         "2023-11-07"
     ]
+
+
+if __name__ == '__main__':
+    print(get_currency_rates_from_file('data.txt'))
