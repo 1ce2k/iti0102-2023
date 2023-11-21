@@ -19,7 +19,7 @@ def get_currency_rates_from_file(filename: str) -> tuple:
     :param filename: file name to read CSV data from
     :return: Tuple that consists of currency name and dict with exchange rate history
     """
-    regex_pattern = r'related to (.)'
+    regex_pattern = r'related to (*)'
     with open(filename, 'r') as file:
         reader = csv.reader(file)
         x = next(reader)[0].split(', {')
