@@ -29,19 +29,19 @@ class Operator(TreeNode):
         """Help func."""
         if type(node).__name__ == "Leaf":
             return f"{node}"
-        elif type(self).__name__ != "Leaf" and type(self) is type(node) and self.associativity:
+        elif type(self).__name__ != "Leaf" and type(self) is type(node) and node.associativity:
             return f"{node.__str__()}"
-        elif type(self).__name__ != "Leaf" and type(self) is type(node) and not self.associativity(node):
+        elif type(self).__name__ != "Leaf" and type(self) is type(node) and not node.associativity:
             return f"({node.__str__()})"
         elif type(self).__name__ != "Leaf" and self.priority >= node.priority:
             return f"{node.__str__()}"
         return str(f"({node.__str__()})")
 
     @property
-    def associativity(self, node):
-        """:abstract method witch should be overridden to return a boolean when the node is not associative."""
-        return node.associativity()
-
+    # def associativity(self, node):
+    #     """:abstract method witch should be overridden to return a boolean when the node is not associative."""
+    #     return node.associativity()
+    #
     @property
     @abstractmethod
     def default_operator(self):
