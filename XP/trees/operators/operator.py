@@ -47,7 +47,7 @@ class Operator(TreeNode):
     @abstractmethod
     def default_operator(self):
         """:abstract method which should be overridden to return the default_operator object."""
-        pass
+        return self.default_operator
 
     @property
     @abstractmethod
