@@ -38,9 +38,9 @@ class Operator(TreeNode):
         return str(f"({node.__str__()})")
 
     @property
-    def associativity(self):
+    def associativity(self, node):
         """:abstract method witch should be overridden to return a boolean when the node is not associative."""
-        return False
+        return node.associativity()
 
     @property
     @abstractmethod

@@ -24,6 +24,9 @@ class Add(Operator):
         """Return the default operator of the operation."""
         return DefaultOperator(lambda x, y: x + y, "+")
 
+    def associativity(self):
+        return True
+
     @property
     def actions(self):
         """Return a dictionary of custom operations."""
