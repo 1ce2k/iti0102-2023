@@ -26,7 +26,8 @@ def get_currency_rates_from_file(filename: str) -> tuple:
         currency = re.findall(regex_pattern, x[0])
         exchange_rates = {}
         y = next(reader)
-    return currency[0], y
+        z = next(reader)
+    return currency[0], z
 
 
 def exchange_money(exchange_rates: dict) -> list:
