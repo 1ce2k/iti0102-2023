@@ -48,14 +48,13 @@ def exchange_money(exchange_rates: dict) -> list:
     also decide that the best decision is to not make any transactions at all, if
     for example the rate is always dropping. In that case just return an empty list.
 
+    Initial amount of money 1000
+    Service fee 1%
     :param exchange_rates: dictionary of dates and exchange rates
     :return: list of dates
     """
-    return [
-        "2023-11-01",
-        "2023-11-07"
-    ]
-
+    rates = [value for value in exchange_rates.values()]
+    return rates
 
 if __name__ == '__main__':
     print(get_currency_rates_from_file('data.txt'))
