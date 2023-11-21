@@ -62,8 +62,8 @@ def exchange_money(exchange_rates: dict) -> list:
     print(rates)
     print(dropping_rates)
     if dropping_rates == rates:
-        return []
-
+        return dates_to_exchange
+    return dates_to_exchange
 
 
 
