@@ -27,6 +27,7 @@ def get_currency_rates_from_file(filename: str) -> tuple:
         exchange_rates = {}
         y = next(reader)
         z = next(reader)
+        z = next(reader)
     return currency[0], z
 
 
