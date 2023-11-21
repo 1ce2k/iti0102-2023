@@ -24,6 +24,9 @@ class Sub(Operator):
         """Make use of the 'operator' library or use a lambda function."""
         return DefaultOperator(lambda x, y: x - y, "-")
 
+    def associativity(self):
+        return True
+
     def remove(self, set_a, int_a):
         """Remove int from set."""
         if int_a in set_a:
