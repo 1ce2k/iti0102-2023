@@ -1,5 +1,7 @@
 """Music."""
 
+print(-1 % 10)
+
 
 class Note:
     """
@@ -18,14 +20,17 @@ class Note:
         """
         self.original_note = note
         self.note_name, self.sharpness = self.normalize_note()
+        self.normalized = ''
 
     def normalize_note(self):
+        alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         if 'b' in self.original_note:
-            return self.original_note.replace('b', ''), 'b'
+            letter_index = (alphabet.index(self.original_note.replace('b', '').upper()) - 1) % len(alphabet)
+            return alphabet[letter_index], '#'
         elif '#' in self.original_note:
-            return self.original_note.replace('#', ''), '#'
+            return alphabet[alphabet.index(self.original_note.replace('#', '').upper())], '#'
         else:
-            return self.original_note.upper(), ''
+            return self.original_note.upper(), '#'
 
     def __repr__(self) -> str:
         """
@@ -34,7 +39,7 @@ class Note:
         Return: <Note: [note]> where [note] is the note_name + sharpness if the sharpness is given, that is not "".
         Repr should display the original note and sharpness, before normalization.
         """
-        return f"<Note: {self.note_name.upper() + self.sharpness}>"
+        return f"<Note: {self.original_note}>"
 
     def __eq__(self, other):
         """
@@ -80,7 +85,7 @@ class NoteCollection:
         """
         for x in self.notes:
             if x.original_note == note:
-                self.notes.pop(x)
+                self.notes.remove(x)
                 return x
             else:
                 return None
@@ -102,7 +107,9 @@ class NoteCollection:
 
         :return: A list of all the notes that were previously in the collection.
         """
-        return []
+        temp_list = self.notes
+        self.notes = []
+        return temp_list
 
     def get_content(self) -> str:
         """
@@ -128,8 +135,11 @@ class NoteCollection:
 
 if __name__ == '__main__':
     note_one = Note('a') # yes, lowercase
-    note_two = Note('Bb')
+    note_two = Note('Eb')
     note_three = Note('C')
+    not1 = Note("A#")
+    not2 = Note("Bb")
+    print(not1, not2, not1 == not2)
     collection = NoteCollection()
 
     print(note_one) # <Note: A>
