@@ -83,12 +83,14 @@ class NoteCollection:
         :param note: Note to remove
         :return: The removed Note object or None.
         """
+        if not note:
+            return
         for x in self.notes:
             if x.original_note == note:
                 self.notes.remove(x)
                 return x
             else:
-                return None
+                return
 
     def extract(self) -> list[Note]:
         """
