@@ -69,7 +69,7 @@ class NoteCollection:
 
         :param note: Input object to add to the collection
         """
-        if type(note) is Note and note not in self.notes:
+        if type(note) is Note:
             self.notes.append(note)
         else:
             raise TypeError
