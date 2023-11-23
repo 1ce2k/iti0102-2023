@@ -156,6 +156,7 @@ class NoteCollection:
 
         return ''.join(final_list)
 
+
 if __name__ == '__main__':
     note_one = Note('a') # yes, lowercase
     # note_two = Note('C')
