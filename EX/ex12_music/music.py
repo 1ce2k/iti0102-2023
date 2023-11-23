@@ -29,7 +29,7 @@ class Note:
             letter_index = (alphabet.index(self.original_note.replace('b', '').upper()) - 1) % len(alphabet)
             return alphabet[letter_index], '#', 'b'
         elif '#' in self.original_note:
-            return alphabet[alphabet.index(self.original_note.replace('#', '').upper())], '#'
+            return alphabet[alphabet.index(self.original_note.replace('#', '').upper())], '#', '#'
         else:
             return self.original_note.upper(), '#', ''
 
@@ -154,7 +154,7 @@ class NoteCollection:
         notes_list = self.notes
         print(notes_list)
         print(notes_list[0].note_name)
-        sorted_notes = sorted(notes_list, key=lambda x: (x.original_note_name.upper(), self.sort_sharpness(x.sharpness)))
+        sorted_notes = sorted(notes_list, key=lambda x: (x.original_note_name.upper(), self.sort_sharpness(x.sharpness_to_sort)))
         final_list = ['Notes:']
         for note in sorted_notes:
             note_str = "  * " + note.original_note
