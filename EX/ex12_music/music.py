@@ -21,11 +21,11 @@ class Note:
 
     def normalize_note(self):
         if 'b' in self.original_note:
-            return self.original_note.replace('b', ''), 'b'
+            return self.original_note.replace('b', '').upper(), 'b'
         elif '#' in self.original_note:
-            return self.original_note.replace('#', ''), '#'
+            return self.original_note.replace('#', '').upper(), '#'
         else:
-            return self.original_note, ''
+            return self.original_note.upper(), ''
 
     def __repr__(self) -> str:
         """
@@ -34,7 +34,7 @@ class Note:
         Return: <Note: [note]> where [note] is the note_name + sharpness if the sharpness is given, that is not "".
         Repr should display the original note and sharpness, before normalization.
         """
-        return f"<Note: {self.original_note}>"
+        return f"<Note: {self.note_name + self.sharpness}>"
 
     def __eq__(self, other):
         """
