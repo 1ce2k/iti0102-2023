@@ -88,8 +88,6 @@ class NoteCollection:
                 if x.original_note == note:
                     self.notes.remove(x)
                     return x
-                else:
-                    return
         return
 
     def extract(self) -> list[Note]:
@@ -138,34 +136,46 @@ class NoteCollection:
 
 if __name__ == '__main__':
     note_one = Note('a')  # yes, lowercase
-    note_two = Note('Eb')
-    note_three = Note('C')
+    note_two = Note('C')
+    note_three = Note('Eb')
     not1 = Note("A#")
     not2 = Note("Bb")
-    print(not1, not2, not1 == not2)
+    print('test if note1 == note2')
+    print(not1, not2, not1 == not2)  # <Note: A#> <Note: Bb> True
     collection = NoteCollection()
+    print()
 
+    print('test for repr of notes')
     print(note_one)  # <Note: A>
     print(note_two)
     print(note_three)  # <Note: Eb>
-    print(note_one == note_two)
+    print()
 
     collection.add(note_one)
     collection.add(note_two)
 
+    print('test of get_content')
     print(collection.get_content())
     # Notes:
     #   * A
     #   * C
+    print()
 
+    print('test of extract')
     print(collection.extract())  # [<Note: A>,<Note: C>]
     print(collection.get_content())
     # Notes:
     #  Empty
+    print()
 
     collection.add(note_one)
     collection.add(note_two)
     collection.add(note_three)
+    print('test of add')
+    print(collection.notes)
+    print()
 
+    print('test of pop')
     print(collection.pop('a') == note_one)  # True
+    print(collection.notes)
     print(collection.pop('Eb') == note_three)  # True
