@@ -64,7 +64,10 @@ class NoteCollection:
 
         :param note: Input object to add to the collection
         """
-        self.notes.append(note)
+        if type(note) is Note:
+            self.notes.append(note)
+        else:
+            raise TypeError
 
     def pop(self, note: str) -> Note | None:
         """
