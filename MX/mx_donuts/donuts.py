@@ -100,7 +100,7 @@ def calculate_tip(donut_list: list[Donut], customers: int) -> int:
     :return: Tip amount.
     """
     # 141
-    return math.floor(sum(map(lambda x: x.price * 0.2 * customers,  filter(lambda x: 'sugar' in x.ingredients, donut_list))))
+    return math.floor(sum(map(lambda x: x.price * 0.2 * customers, filter(lambda x: 'sugar' in x.ingredients, donut_list))))
 
 
 def sort_donuts_by_allergies(donut_list: list[Donut]) -> list[str]:
@@ -137,7 +137,7 @@ def find_most_popular_donut(donut_list: list[Donut]) -> str:
     :param donut_list: List of Donut objects.
     :return: The name of the most popular donut.
     """
-    return min((x for x in donut_list), key=lambda x: (len(x.allergies), x.price)).name
+    return min(donut_list, key=lambda x: (len(x.allergies), x.price)).name
 
 
 def sort_donuts_alphabetically_by_name(donut_list: list[Donut]) -> list[str]:
