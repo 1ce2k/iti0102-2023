@@ -1,4 +1,5 @@
 """Mama's donuteria."""
+import math
 
 
 class Donut:
@@ -90,7 +91,7 @@ def find_flour_needed_for_baking(donut_list: list[Donut], quantity: int) -> int:
     total_flour = 0
     for x in donut_list:
         total_flour += x.price * 80 * quantity
-    return round(total_flour)
+    return math.ceil(total_flour)
 
 
 def calculate_tip(donut_list: list[Donut], customers: int) -> int:
@@ -138,7 +139,7 @@ def calculate_profit_per_day(donut_list: list[Donut], quantity_per_day: int, cos
     total_profit = 0
     for x in donut_list:
         total_profit += x.price * quantity_per_day - cost_per_donut * quantity_per_day
-    return int(total_profit)
+    return math.floor(total_profit)
 
 
 def find_most_popular_donut(donut_list: list[Donut]) -> str:
