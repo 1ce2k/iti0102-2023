@@ -18,7 +18,7 @@ class Note:
         NB! Ab == Z#
         """
         self.original_note = note
-        self.original_note_name = self.get_original_note_name()
+        self.original_note_name = self.original_note[0].upper()
         self.note_name, self.sharpness, self.original_sharpness = self.normalize_note()
 
     def normalize_note(self):
@@ -31,9 +31,6 @@ class Note:
             return alphabet[alphabet.index(self.original_note.replace('#', '').upper())], '#', '#'
         else:
             return self.original_note.upper(), '#', ''
-
-    def get_original_note_name(self):
-        return self.original_note[0].upper()
 
     def __repr__(self) -> str:
         """
@@ -116,6 +113,7 @@ class NoteCollection:
         return temp_list
 
     def sort_sharpness(self, sharpness):
+        """Sort by sharpness."""
         if sharpness == 'b':
             return 1
         elif sharpness == '#':
@@ -155,33 +153,3 @@ class NoteCollection:
         print(final_list)
 
         return ''.join(final_list)
-
-
-if __name__ == '__main__':
-    note_one = Note('a') # yes, lowercase
-    # note_two = Note('C')
-    # note_three = Note('Eb')
-    collection = NoteCollection()
-
-    # print(note_one) # <Note: A>
-    # print(note_three) # <Note: Eb>
-
-    collection.add(note_one)
-    # collection.add(note_two)
-
-    print(collection.get_content())
-    # Notes:
-    #   * A
-    #   * C
-
-    print(collection.extract()) # [<Note: A>,<Note: C>]
-    print(collection.get_content())
-    # Notes:
-    #  Empty
-    #
-    # collection.add(note_one)
-    # collection.add(note_two)
-    # collection.add(note_three)
-    #
-    # print(collection.pop('a') == note_one)  # True
-    # print(collection.pop('Eb') == note_three)  # True
