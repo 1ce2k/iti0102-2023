@@ -21,9 +21,9 @@ class Note:
 
     def normalize_note(self):
         if 'b' in self.original_note:
-            return self.original_note.replace('b', '').upper(), 'b'
+            return self.original_note.replace('b', ''), 'b'
         elif '#' in self.original_note:
-            return self.original_note.replace('#', '').upper(), '#'
+            return self.original_note.replace('#', ''), '#'
         else:
             return self.original_note.upper(), ''
 
@@ -34,7 +34,7 @@ class Note:
         Return: <Note: [note]> where [note] is the note_name + sharpness if the sharpness is given, that is not "".
         Repr should display the original note and sharpness, before normalization.
         """
-        return f"<Note: {self.note_name + self.sharpness}>"
+        return f"<Note: {self.note_name.upper() + self.sharpness}>"
 
     def __eq__(self, other):
         """
@@ -54,6 +54,7 @@ class NoteCollection:
 
         You will likely need to add something here, maybe a dict or a list?
         """
+        self.notes = []
 
     def add(self, note: Note) -> None:
         """
@@ -63,6 +64,7 @@ class NoteCollection:
 
         :param note: Input object to add to the collection
         """
+        self.notes.append(note)
 
     def pop(self, note: str) -> Note | None:
         """
@@ -73,7 +75,12 @@ class NoteCollection:
         :param note: Note to remove
         :return: The removed Note object or None.
         """
-        return None
+        for x in self.notes:
+            if x.note_name == note:
+                self.notes.pop(x)
+                return x
+            else:
+                return None
 
     def extract(self) -> list[Note]:
         """
@@ -118,12 +125,14 @@ class NoteCollection:
 
 if __name__ == '__main__':
     note_one = Note('a') # yes, lowercase
-    note_two = Note('C')
-    note_three = Note('Eb')
+    note_two = Note('Bb')
+    note_three = Note('C')
     collection = NoteCollection()
 
     print(note_one) # <Note: A>
+    print(note_two)
     print(note_three) # <Note: Eb>
+    print(note_one == note_two)
 
     collection.add(note_one)
     collection.add(note_two)
