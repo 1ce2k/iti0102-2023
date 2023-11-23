@@ -20,7 +20,6 @@ class Note:
         self.original_note = note
         self.original_note_name = self.get_original_note_name()
         self.note_name, self.sharpness, self.sharpness_to_sort = self.normalize_note()
-        print(self.original_note, self.original_note_name, self.sharpness)
 
     def normalize_note(self):
         """Normalize note to A, A#, B, B#."""
@@ -52,11 +51,6 @@ class Note:
         Return True if equal otherwise False. Used to check A# == Bb or Ab == Z#
         """
         return self.note_name == other.note_name and self.sharpness == other.sharpness
-
-
-note1 = Note("A#")
-note2 = Note("Bb")
-print(note1 == note2)
 
 
 class NoteCollection:
@@ -152,11 +146,41 @@ class NoteCollection:
         if not self.notes:
             return "Notes:\n  Empty."
         notes_list = self.notes
-        print(notes_list)
-        print(notes_list[0].note_name)
         sorted_notes = sorted(notes_list, key=lambda x: (x.original_note_name.upper(), self.sort_sharpness(x.sharpness_to_sort)))
-        final_list = ['Notes:']
-        for note in sorted_notes:
-            note_str = "  * " + note.original_note
+        final_list = ['Notes:\n']
+        for x in range(len(sorted_notes) - 1):
+            note_str = "  * " + sorted_notes[x].original_note + '\n'
             final_list.append(note_str)
-        return '\n'.join(final_list[:-1]) + final_list[-1]
+        final_list.append('  * ' + sorted_notes[-1].original_note)
+        print(final_list)
+
+        return ''.join(final_list)
+
+if __name__ == '__main__':
+    note_one = Note('a') # yes, lowercase
+    # note_two = Note('C')
+    # note_three = Note('Eb')
+    collection = NoteCollection()
+
+    # print(note_one) # <Note: A>
+    # print(note_three) # <Note: Eb>
+
+    collection.add(note_one)
+    # collection.add(note_two)
+
+    print(collection.get_content())
+    # Notes:
+    #   * A
+    #   * C
+
+    print(collection.extract()) # [<Note: A>,<Note: C>]
+    print(collection.get_content())
+    # Notes:
+    #  Empty
+    #
+    # collection.add(note_one)
+    # collection.add(note_two)
+    # collection.add(note_three)
+    #
+    # print(collection.pop('a') == note_one)  # True
+    # print(collection.pop('Eb') == note_three)  # True
