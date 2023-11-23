@@ -54,6 +54,11 @@ class Note:
         return self.note_name == other.note_name and self.sharpness == other.sharpness
 
 
+note1 = Note("A#")
+note2 = Note("Bb")
+print(note1 == note2)
+
+
 class NoteCollection:
     """NoteCollection class."""
 
@@ -152,6 +157,6 @@ class NoteCollection:
         sorted_notes = sorted(notes_list, key=lambda x: (x.original_note_name.upper(), self.sort_sharpness(x.sharpness)))
         final_list = ['Notes:\n']
         for note in sorted_notes:
-            note_str = "  * " + note.original_note + '\n'
+            note_str = "  * " + note.original_note
             final_list.append(note_str)
-        return ''.join(final_list)
+        return '\n'.join(final_list[:-1]) + final_list[-1]
