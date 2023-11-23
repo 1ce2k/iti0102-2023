@@ -153,3 +153,107 @@ class NoteCollection:
         print(final_list)
 
         return ''.join(final_list)
+
+class Chord:
+    """Chord class."""
+
+    def __init__(self, note_one: Note, note_two: Note, chord_name: str, note_three: Note = None):
+        """
+        Initialize chord class.
+
+        A chord consists of 2-3 notes and their chord product (string).
+        If any of the parameters are the same, raise the 'DuplicateNoteNamesException' exception.
+        """
+
+    def __repr__(self) -> str:
+        """
+        Chord representation.
+
+        Return as: <Chord: [chord_name]> where [chord_name] is the name of the chord.
+        """
+        return ""
+
+
+class Chords:
+    """Chords class."""
+
+    def __init__(self):
+        """
+        Initialize the Chords class.
+
+        Add whatever you need to make this class function.
+        """
+
+    def add(self, chord: Chord) -> None:
+        """
+        Determine if chord is valid and then add it to chords.
+
+        If there already exists a chord for the given pair of components, raise the 'ChordOverlapException' exception.
+
+        :param chord: Chord to be added.
+        """
+
+    def get(self, first_note: Note, second_note: Note, third_note: Note = None) -> Chord | None:
+        """
+        Return the chord for the 2-3 notes.
+
+        The order of the first_note and second_note and third_note is interchangeable.
+
+        If there are no combinations for the 2-3 notes, return None
+
+        Example:
+          chords = Chords()
+          chords.add(Chord(Note('A'), Note('B'), 'Amaj', Note('C')))
+          print(chords.get(Note('A'), Note('B'), Note('C')))  # ->  <Chord: Amaj>
+          print(chords.get(Note('B'), Note('C'), Note('A')))  # ->  <Chord: Amaj>
+          print(chords.get(Note('D'), Note('Z')))  # ->  None
+          chords.add(Chord(Note('c#'), Note('d#'), 'c#5'))
+          print(chords.get(Note('C#'), Note('d#')))  # ->  <Chord: c#5>
+
+        :param first_note: The first note of the chord.
+        :param second_note: The second note of the chord.
+        :param third_note: The third note of the chord.
+        :return: Chord or None.
+        """
+        return None
+
+class DuplicateNoteNamesException(Exception):
+    """Raised when attempting to add a chord that has same names for notes and product."""
+
+
+class ChordOverlapException(Exception):
+    """Raised when attempting to add a combination of notes that are already used for another existing chord."""
+
+
+if __name__ == '__main__':
+    chords = Chords()
+    chords.add(Chord(Note('A'), Note('B'), 'Amaj', Note('C')))
+    print(chords.get(Note('A'), Note('B'), Note('C')))  # ->  <Chord: Amaj>
+    print(chords.get(Note('B'), Note('C'), Note('A')))  # ->  <Chord: Amaj>
+    print(chords.get(Note('D'), Note('Z')))  # ->  None
+    chords.add(Chord(Note('c#'), Note('d#'), 'c#5'))
+    print(chords.get(Note('C#'), Note('d#')))  # ->  <Chord: c#5>
+
+    chords = Chords()
+
+    chord1 = Chord(Note('A'), Note('C#'), 'Amaj', Note('E'))
+    chord2 = Chord(Note('E'), Note('G'), 'Emin', note_three=Note('B'))
+    chord3 = Chord(Note('E'), Note('B'), 'E5')
+
+    chords.add(chord1)
+    chords.add(chord2)
+    chords.add(chord3)
+
+    print(chords.get(Note('e'), Note('b')))  # -> <Chord: E5>
+
+    try:
+        wrong_chord = Chord(Note('E'), Note('A'), 'E')
+        print('Did not raise, not working as intended.')
+    except DuplicateNoteNamesException:
+        print('Raised DuplicateNoteNamesException, working as intended!')
+
+    try:
+        chords.add(Chord(Note('E'), Note('B'), 'Emaj7add9'))
+        print('Did not raise, not working as intended.')
+    except ChordOverlapException:
+        print('Raised ChordOverlapException, working as intended!')
