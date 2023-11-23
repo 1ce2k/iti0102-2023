@@ -1,7 +1,5 @@
 """Music."""
 
-print(-1 % 10)
-
 
 class Note:
     """
@@ -9,6 +7,7 @@ class Note:
 
     Every note has a name and a sharpness or alteration (supported values: "", "#", "b").
     """
+
     def __init__(self, note: str):
         """Initialize the class.
 
@@ -20,9 +19,9 @@ class Note:
         """
         self.original_note = note
         self.note_name, self.sharpness = self.normalize_note()
-        self.normalized = ''
 
     def normalize_note(self):
+        """Normalize note to A, A#, B, B#"""
         alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         if 'b' in self.original_note:
             letter_index = (alphabet.index(self.original_note.replace('b', '').upper()) - 1) % len(alphabet)
@@ -133,8 +132,9 @@ class NoteCollection:
         """
         return ''
 
+
 if __name__ == '__main__':
-    note_one = Note('a') # yes, lowercase
+    note_one = Note('a')  # yes, lowercase
     note_two = Note('Eb')
     note_three = Note('C')
     not1 = Note("A#")
@@ -142,9 +142,9 @@ if __name__ == '__main__':
     print(not1, not2, not1 == not2)
     collection = NoteCollection()
 
-    print(note_one) # <Note: A>
+    print(note_one)  # <Note: A>
     print(note_two)
-    print(note_three) # <Note: Eb>
+    print(note_three)  # <Note: Eb>
     print(note_one == note_two)
 
     collection.add(note_one)
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     #   * A
     #   * C
 
-    print(collection.extract()) # [<Note: A>,<Note: C>]
+    print(collection.extract())  # [<Note: A>,<Note: C>]
     print(collection.get_content())
     # Notes:
     #  Empty
