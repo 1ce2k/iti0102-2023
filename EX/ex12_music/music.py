@@ -79,7 +79,7 @@ class NoteCollection:
         :return: The removed Note object or None.
         """
         for x in self.notes:
-            if x.note_name == note:
+            if x.original_note == note:
                 self.notes.pop(x)
                 return x
             else:
