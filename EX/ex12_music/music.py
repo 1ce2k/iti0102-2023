@@ -18,18 +18,23 @@ class Note:
         NB! Ab == Z#
         """
         self.original_note = note
+        self.original_note_name = self.get_original_note_name()
         self.note_name, self.sharpness = self.normalize_note()
+        print(self.original_note, self.original_note_name, self.sharpness)
 
     def normalize_note(self):
         """Normalize note to A, A#, B, B#."""
         alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         if 'b' in self.original_note:
             letter_index = (alphabet.index(self.original_note.replace('b', '').upper()) - 1) % len(alphabet)
-            return alphabet[letter_index], '#'
+            return alphabet[letter_index], 'b'
         elif '#' in self.original_note:
             return alphabet[alphabet.index(self.original_note.replace('#', '').upper())], '#'
         else:
-            return self.original_note.upper(), '#'
+            return self.original_note.upper(), ''
+
+    def get_original_note_name(self):
+        return self.original_note[0].upper()
 
     def __repr__(self) -> str:
         """
@@ -111,6 +116,14 @@ class NoteCollection:
         self.notes = []
         return temp_list
 
+    def sort_sharpness(self, sharpness):
+        if sharpness == 'b':
+            return 1
+        elif sharpness == '#':
+            return 3
+        else:
+            return 2
+
     def get_content(self) -> str:
         """
         Return a string that gives an overview of the contents of the collection.
@@ -131,53 +144,14 @@ class NoteCollection:
 
         :return: Content as a string
         """
-        final_table = ["Notes:"]
         if not self.notes:
             return "Notes:\n  Empty."
-
-
-if __name__ == '__main__':
-    note_one = Note('a')  # yes, lowercase
-    note_two = Note('C')
-    note_three = Note('Eb')
-    not1 = Note("A#")
-    not2 = Note("Bb")
-    print('test if note1 == note2')
-    print(not1, not2, not1 == not2)  # <Note: A#> <Note: Bb> True
-    collection = NoteCollection()
-    print()
-
-    print('test for repr of notes')
-    print(note_one)  # <Note: A>
-    print(note_two)
-    print(note_three)  # <Note: Eb>
-    print()
-
-    collection.add(note_one)
-    collection.add(note_two)
-
-    print('test of get_content')
-    print(collection.get_content())
-    # Notes:
-    #   * A
-    #   * C
-    print()
-
-    print('test of extract')
-    print(collection.extract())  # [<Note: A>,<Note: C>]
-    print(collection.get_content())
-    # Notes:
-    #  Empty
-    print()
-
-    collection.add(note_one)
-    collection.add(note_two)
-    collection.add(note_three)
-    print('test of add')
-    print(collection.notes)
-    print()
-
-    print('test of pop')
-    print(collection.pop('a') == note_one)  # True
-    print(collection.notes)
-    print(collection.pop('Eb') == note_three)  # True
+        notes_list = self.notes
+        print(notes_list)
+        print(notes_list[0].note_name)
+        sorted_notes = sorted(notes_list, key=lambda x: (x.original_note_name.upper(), self.sort_sharpness(x.sharpness)))
+        final_list = ['Notes:\n']
+        for note in sorted_notes:
+            note_str = "  * " + note.original_note + '\n'
+            final_list.append(note_str)
+        return ''.join(final_list)
