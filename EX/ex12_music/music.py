@@ -19,7 +19,7 @@ class Note:
         """
         self.original_note = note
         self.original_note_name = self.get_original_note_name()
-        self.note_name, self.sharpness, self.sharpness_to_sort = self.normalize_note()
+        self.note_name, self.sharpness, self.original_sharpness = self.normalize_note()
 
     def normalize_note(self):
         """Normalize note to A, A#, B, B#."""
@@ -146,10 +146,10 @@ class NoteCollection:
         if not self.notes:
             return "Notes:\n  Empty."
         notes_list = self.notes
-        sorted_notes = sorted(notes_list, key=lambda x: (x.original_note_name.upper(), self.sort_sharpness(x.sharpness_to_sort)))
+        sorted_notes = sorted(notes_list, key=lambda x: (x.original_note_name.upper(), self.sort_sharpness(x.original_sharpness)))
         final_list = ['Notes:\n']
         for x in range(len(sorted_notes) - 1):
-            note_str = "  * " + sorted_notes[x].original_note + '\n'
+            note_str = "  * " + sorted_notes[x].original_note_name + sorted_notes[x].original_sharpness + '\n'
             final_list.append(note_str)
         final_list.append('  * ' + sorted_notes[-1].original_note)
         print(final_list)
