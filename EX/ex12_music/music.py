@@ -19,7 +19,7 @@ class Note:
         """
         self.original_note = note
         self.original_note_name = self.get_original_note_name()
-        self.note_name, self.sharpness = self.normalize_note()
+        self.note_name, self.sharpness, self.sharpness_to_sort = self.normalize_note()
         print(self.original_note, self.original_note_name, self.sharpness)
 
     def normalize_note(self):
@@ -27,11 +27,11 @@ class Note:
         alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         if 'b' in self.original_note:
             letter_index = (alphabet.index(self.original_note.replace('b', '').upper()) - 1) % len(alphabet)
-            return alphabet[letter_index], 'b'
+            return alphabet[letter_index], '#', 'b'
         elif '#' in self.original_note:
             return alphabet[alphabet.index(self.original_note.replace('#', '').upper())], '#'
         else:
-            return self.original_note.upper(), ''
+            return self.original_note.upper(), '#', ''
 
     def get_original_note_name(self):
         return self.original_note[0].upper()
@@ -155,7 +155,7 @@ class NoteCollection:
         print(notes_list)
         print(notes_list[0].note_name)
         sorted_notes = sorted(notes_list, key=lambda x: (x.original_note_name.upper(), self.sort_sharpness(x.sharpness)))
-        final_list = ['Notes:\n']
+        final_list = ['Notes:']
         for note in sorted_notes:
             note_str = "  * " + note.original_note
             final_list.append(note_str)
