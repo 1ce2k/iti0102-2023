@@ -110,7 +110,7 @@ def calculate_tip(donut_list: list[Donut], customers: int) -> int:
     for x in donut_list:
         if 'sugar' in x.ingredients:
             total_tip += x.price * tip_percent * customers
-    return total_tip
+    return math.floor(total_tip)
 
 
 def sort_donuts_by_allergies(donut_list: list[Donut]) -> list[str]:
