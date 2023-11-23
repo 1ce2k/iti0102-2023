@@ -133,7 +133,7 @@ class NoteCollection:
         """
         final_table = ["Notes:"]
         if not self.notes:
-            return "Notes:\n  Empty"
+            return "Notes:\n  Empty."
 
 
 if __name__ == '__main__':
