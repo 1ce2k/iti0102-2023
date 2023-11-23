@@ -21,7 +21,7 @@ class Note:
         self.note_name, self.sharpness = self.normalize_note()
 
     def normalize_note(self):
-        """Normalize note to A, A#, B, B#"""
+        """Normalize note to A, A#, B, B#."""
         alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         if 'b' in self.original_note:
             letter_index = (alphabet.index(self.original_note.replace('b', '').upper()) - 1) % len(alphabet)
