@@ -185,17 +185,17 @@ class Chord:
                     note1 == note2
                     or note1 == note3
                     or note2 == note3
-                    or note1.original_note_name + note1.original_sharpness == chord_name
-                    or note2.original_note_name + note2.original_sharpness == chord_name
-                    or note3.original_note_name + note3.original_sharpness == chord_name
+                    or note1.original_note == chord_name
+                    or note2.original_note == chord_name
+                    or note3.original_note == chord_name
             ):
                 return True
             return False
         elif note3 is None:
             if (
                     note1 == note2
-                    or note1.original_note_name + note1.original_sharpness == chord_name
-                    or note2.original_note_name + note2.original_sharpness == chord_name
+                    or note1.original_note == chord_name
+                    or note2.original_note == chord_name
             ):
                 return True
             return False
