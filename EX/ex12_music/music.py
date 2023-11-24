@@ -172,11 +172,11 @@ class Chord:
         """
         if (
                 note_one == note_two
-                or note_one.original_note == chord_name
-                or note_two.original_note == chord_name
+                or note_one.original_note_name == chord_name
+                or note_two.original_note_name == chord_name
                 or (note_three is not None and (note_one == note_three
                                                 or note_two == note_three
-                                                or note_three.original_note == chord_name))
+                                                or note_three.original_note_name == chord_name))
         ):
             raise DuplicateNoteNamesException()
 
