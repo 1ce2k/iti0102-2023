@@ -188,27 +188,6 @@ class Chord:
         # Set chord name
         self.chord_name = chord_name
 
-    def check_if_any_same(self, note1: Note, note2: Note, chord_name: str, note3: Note) -> bool:
-        if note3 is not None:
-            if (
-                    note1 == note2
-                    or note1 == note3
-                    or note2 == note3
-                    or note1.original_note == chord_name
-                    or note2.original_note == chord_name
-                    or note3.original_note == chord_name
-            ):
-                return True
-            return False
-        elif note3 is None:
-            if (
-                    note1 == note2
-                    or note1.original_note == chord_name
-                    or note2.original_note == chord_name
-            ):
-                return True
-            return False
-
     def __repr__(self) -> str:
         """
         Chord representation.
