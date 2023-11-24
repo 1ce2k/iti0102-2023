@@ -154,6 +154,7 @@ class NoteCollection:
 
         return ''.join(final_list)
 
+
 class Chord:
     """Chord class."""
 
@@ -164,6 +165,36 @@ class Chord:
         A chord consists of 2-3 notes and their chord product (string).
         If any of the parameters are the same, raise the 'DuplicateNoteNamesException' exception.
         """
+        are_all_diff = self.check_if_any_same(note_one, note_two, chord_name, note_three)
+        if are_all_diff:
+            if note_three:
+                self.note1 = note_one
+                self.note2 = note_two
+                self.note3 = note_three
+                self.chord_name = chord_name
+            else:
+                self.note1 = note_one
+                self.note2 = note_two
+                self.chord_name = chord_name
+        else:
+            raise DuplicateNoteNamesException()
+
+    @staticmethod
+    def check_if_any_same(note1: Note, note2: Note, chord_name: str, note3: Note = None) -> bool:
+        if note3 is not None:
+            if note1.original_note == note2.original_note or note1.original_note == chord_name or note1.original_note == note3.original_note:
+                return False
+            elif note2.original_note == note3.original_note or note2.original_note == chord_name:
+                return False
+            elif note3.original_note == chord_name:
+                return False
+            return True
+        else:
+            if note1.original_note == note2.original_note or note1.original_note == chord_name:
+                return False
+            elif note2.original_note == chord_name:
+                return False
+            return True
 
     def __repr__(self) -> str:
         """
@@ -171,7 +202,7 @@ class Chord:
 
         Return as: <Chord: [chord_name]> where [chord_name] is the name of the chord.
         """
-        return ""
+        return f'<Chord: {self.chord_name}>'
 
 
 class Chords:
@@ -217,6 +248,7 @@ class Chords:
         """
         return None
 
+
 class DuplicateNoteNamesException(Exception):
     """Raised when attempting to add a chord that has same names for notes and product."""
 
@@ -231,14 +263,17 @@ if __name__ == '__main__':
     print(chords.get(Note('A'), Note('B'), Note('C')))  # ->  <Chord: Amaj>
     print(chords.get(Note('B'), Note('C'), Note('A')))  # ->  <Chord: Amaj>
     print(chords.get(Note('D'), Note('Z')))  # ->  None
-    chords.add(Chord(Note('c#'), Note('d#'), 'c#5'))
-    print(chords.get(Note('C#'), Note('d#')))  # ->  <Chord: c#5>
+    # chords.add(Chord(Note('c#'), Note('d#'), 'c#5'))
+    # print(chords.get(Note('C#'), Note('d#')))  # ->  <Chord: c#5>
 
     chords = Chords()
 
     chord1 = Chord(Note('A'), Note('C#'), 'Amaj', Note('E'))
+    print(chord1)
     chord2 = Chord(Note('E'), Note('G'), 'Emin', note_three=Note('B'))
+    print(chord2)
     chord3 = Chord(Note('E'), Note('B'), 'E5')
+    print(chord3)
 
     chords.add(chord1)
     chords.add(chord2)
