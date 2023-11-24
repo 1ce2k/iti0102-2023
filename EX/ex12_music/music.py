@@ -112,7 +112,8 @@ class NoteCollection:
         self.notes = []
         return temp_list
 
-    def sort_sharpness(self, sharpness):
+    @staticmethod
+    def sort_sharpness(sharpness):
         """Sort by sharpness."""
         if sharpness == 'b':
             return 1
@@ -167,15 +168,10 @@ class Chord:
         """
         are_all_diff = self.check_if_any_same(note_one, note_two, chord_name, note_three)
         if are_all_diff:
-            if note_three:
-                self.note1 = note_one
-                self.note2 = note_two
-                self.note3 = note_three
-                self.chord_name = chord_name
-            else:
-                self.note1 = note_one
-                self.note2 = note_two
-                self.chord_name = chord_name
+            self.note1 = note_one
+            self.note2 = note_two
+            self.note3 = note_three
+            self.chord_name = chord_name
         else:
             raise DuplicateNoteNamesException()
 
@@ -214,6 +210,7 @@ class Chords:
 
         Add whatever you need to make this class function.
         """
+        self.chords = []
 
     def add(self, chord: Chord) -> None:
         """
@@ -223,6 +220,15 @@ class Chords:
 
         :param chord: Chord to be added.
         """
+        for x in self.chords:
+            if self.are_instances_equal_except_name(x, chord):
+                raise ChordOverlapException()
+        else:
+            self.chords.append(chord)
+
+    @staticmethod
+    def are_instances_equal_except_name(chord1, chord2) -> bool:
+        return chord1.note1 == chord2.note1 and chord1.note2 == chord2.note2 and chord1.note3 == chord2.note3
 
     def get(self, first_note: Note, second_note: Note, third_note: Note = None) -> Chord | None:
         """
@@ -263,8 +269,8 @@ if __name__ == '__main__':
     print(chords.get(Note('A'), Note('B'), Note('C')))  # ->  <Chord: Amaj>
     print(chords.get(Note('B'), Note('C'), Note('A')))  # ->  <Chord: Amaj>
     print(chords.get(Note('D'), Note('Z')))  # ->  None
-    # chords.add(Chord(Note('c#'), Note('d#'), 'c#5'))
-    # print(chords.get(Note('C#'), Note('d#')))  # ->  <Chord: c#5>
+    chords.add(Chord(Note('c#'), Note('d#'), 'c#5'))
+    print(chords.get(Note('C#'), Note('d#')))  # ->  <Chord: c#5>
 
     chords = Chords()
 
