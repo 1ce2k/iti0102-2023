@@ -170,7 +170,15 @@ class Chord:
         A chord consists of 2-3 notes and their chord product (string).
         If any of the parameters are the same, raise the 'DuplicateNoteNamesException' exception.
         """
-        if note_one == note_two or (note_three is not None and (note_one == note_three or note_two == note_three)):
+        if (
+                note_one == note_two
+                or note_one.original_note == chord_name
+                or note_two.original_note == chord_name
+                or (note_three is not None and
+                    (note_one == note_three
+                     or note_two == note_three
+                     or note_three.original_note == chord_name))
+        ):
             raise DuplicateNoteNamesException()
 
             # Set chord notes
@@ -309,12 +317,6 @@ if __name__ == '__main__':
     try:
         wrong_chord = Chord(Note('A'), Note('e'), 'E')
         print(Chord(Note('A'), Note('e'), 'E'))
-        print('Did not raise, not working as intended.')
-    except DuplicateNoteNamesException:
-        print('Raised DuplicateNoteNamesException, working as intended!')
-
-    try:
-        wrong_chord = Chord(Note('g'), Note('a'), 'G#', Note('h'))
         print('Did not raise, not working as intended.')
     except DuplicateNoteNamesException:
         print('Raised DuplicateNoteNamesException, working as intended!')
