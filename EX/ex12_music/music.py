@@ -171,7 +171,7 @@ class Chord:
         If any of the parameters are the same, raise the 'DuplicateNoteNamesException' exception.
         """
         are_all_diff = self.check_if_any_same(note_one, note_two, chord_name, note_three)
-        if are_all_diff:
+        if not are_all_diff:
             self.note1 = note_one
             self.note2 = note_two
             self.note3 = note_three
@@ -189,16 +189,16 @@ class Chord:
                     or note2.original_note_name + note2.original_sharpness == chord_name
                     or note3.original_note_name + note3.original_sharpness == chord_name
             ):
-                return False
-            return True
+                return True
+            return False
         elif note3 is None:
             if (
                     note1 == note2
                     or note1.original_note_name + note1.original_sharpness == chord_name
                     or note2.original_note_name + note2.original_sharpness == chord_name
             ):
-                return False
-            return True
+                return True
+            return False
 
     def __repr__(self) -> str:
         """
