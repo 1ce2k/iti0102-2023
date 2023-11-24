@@ -172,20 +172,17 @@ class Chord:
             self.note2 = note_two
             self.note3 = note_three
             self.chord_name = chord_name
-        else:
-            raise DuplicateNoteNamesException()
 
     @staticmethod
     def check_if_any_same(note1: Note, note2: Note, chord_name: str, note3: Note = None) -> bool:
         if note3 is not None:
-            if note1 == note2 or note1 == note3 or note2 == note3 or note1.original_note == chord_name or note2.original_note == chord_name or note3.original_note == chord_name:
-                return False
+            if note1 == note2 or note1 == note3 or note2 == note3 or note1.original_note_name == chord_name or note2.original_note_name == chord_name or note3.original_note_name == chord_name:
+                raise DuplicateNoteNamesException()
             return True
         else:
-            if note1 == note2 or note1.original_note == chord_name or note2.original_note == chord_name:
-                return False
+            if note1 == note2 or note1.original_note_name == chord_name or note2.original_note_name == chord_name:
+                raise DuplicateNoteNamesException()
             return True
-
 
     def __repr__(self) -> str:
         """
@@ -259,29 +256,29 @@ class ChordOverlapException(Exception):
 
 
 if __name__ == '__main__':
-    chords = Chords()
-    chords.add(Chord(Note('A'), Note('B'), 'Amaj', Note('C')))
-    print(chords.get(Note('A'), Note('B'), Note('C')))  # ->  <Chord: Amaj>
-    print(chords.get(Note('B'), Note('C'), Note('A')))  # ->  <Chord: Amaj>
-    print(chords.get(Note('D'), Note('Z')))  # ->  None
-    chords.add(Chord(Note('c#'), Note('d#'), 'c#5'))
-    print(chords.get(Note('C#'), Note('d#')))  # ->  <Chord: c#5>
-
-    chords = Chords()
-
-    chord1 = Chord(Note('A'), Note('C#'), 'Amaj', Note('E'))
-    print(chord1)
-    chord2 = Chord(Note('E'), Note('G'), 'Emin', note_three=Note('B'))
-    print(chord2)
-    chord3 = Chord(Note('E'), Note('B'), 'E5')
-    print(chord3)
-
-    chords.add(chord1)
-    chords.add(chord2)
-    chords.add(chord3)
-
-    print(chords.get(Note('e'), Note('b')))  # -> <Chord: E5>
-
+    # chords = Chords()
+    # chords.add(Chord(Note('A'), Note('B'), 'Amaj', Note('C')))
+    # print(chords.get(Note('A'), Note('B'), Note('C')))  # ->  <Chord: Amaj>
+    # print(chords.get(Note('B'), Note('C'), Note('A')))  # ->  <Chord: Amaj>
+    # print(chords.get(Note('D'), Note('Z')))  # ->  None
+    # chords.add(Chord(Note('c#'), Note('d#'), 'c#5'))
+    # print(chords.get(Note('C#'), Note('d#')))  # ->  <Chord: c#5>
+    #
+    # chords = Chords()
+    #
+    # chord1 = Chord(Note('A'), Note('C#'), 'Amaj', Note('E'))
+    # print(chord1)
+    # chord2 = Chord(Note('E'), Note('G'), 'Emin', note_three=Note('B'))
+    # print(chord2)
+    # chord3 = Chord(Note('E'), Note('B'), 'E5')
+    # print(chord3)
+    #
+    # chords.add(chord1)
+    # chords.add(chord2)
+    # chords.add(chord3)
+    #
+    # print(chords.get(Note('e'), Note('b')))  # -> <Chord: E5>
+    #
     try:
         wrong_chord = Chord(Note('E'), Note('A'), 'E')
         print('Did not raise, not working as intended.')
@@ -289,7 +286,14 @@ if __name__ == '__main__':
         print('Raised DuplicateNoteNamesException, working as intended!')
 
     try:
-        chords.add(Chord(Note('E'), Note('B'), 'Emaj7add9'))
+        wrong_chord = Chord(Note('A'), Note('e'), 'E')
+        print(Chord(Note('A'), Note('e'), 'E'))
         print('Did not raise, not working as intended.')
-    except ChordOverlapException:
-        print('Raised ChordOverlapException, working as intended!')
+    except DuplicateNoteNamesException:
+        print('Raised DuplicateNoteNamesException, working as intended!')
+
+    # try:
+    #     chords.add(Chord(Note('E'), Note('B'), 'Emaj7add9'))
+    #     print('Did not raise, not working as intended.')
+    # except ChordOverlapException:
+    #     print('Raised ChordOverlapException, working as intended!')
