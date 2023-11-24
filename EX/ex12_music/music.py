@@ -220,7 +220,10 @@ class Chords:
 
     @staticmethod
     def are_instances_equal_except_name(chord1, chord2) -> bool:
-        return chord1.note1 == chord2.note1 and chord1.note2 == chord2.note2 and chord1.note3 == chord2.note3
+        """Check if there are same chords existing."""
+        notes1 = {chord1.note1, chord1.note2, chord1.note3}
+        notes2 = {chord2.note1, chord2.note2, chord2.note3}
+        return notes1 == notes2
 
     def get(self, first_note: Note, second_note: Note, third_note: Note = None) -> Chord | None:
         """
