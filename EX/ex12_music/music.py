@@ -178,19 +178,14 @@ class Chord:
     @staticmethod
     def check_if_any_same(note1: Note, note2: Note, chord_name: str, note3: Note = None) -> bool:
         if note3 is not None:
-            if note1.original_note == note2.original_note or note1.original_note == chord_name or note1.original_note == note3.original_note:
-                return False
-            elif note2.original_note == note3.original_note or note2.original_note == chord_name:
-                return False
-            elif note3.original_note == chord_name:
+            if note1 == note2 or note1 == note3 or note2 == note3 or note1.original_note == chord_name or note2.original_note == chord_name or note3.original_note == chord_name:
                 return False
             return True
         else:
-            if note1.original_note == note2.original_note or note1.original_note == chord_name:
-                return False
-            elif note2.original_note == chord_name:
+            if note1 == note2 or note1.original_note == chord_name or note2.original_note == chord_name:
                 return False
             return True
+
 
     def __repr__(self) -> str:
         """
