@@ -179,7 +179,7 @@ class Chord:
         else:
             raise DuplicateNoteNamesException()
 
-    def check_if_any_same(note1: Note, note2: Note, chord_name: str, note3: Note = None) -> bool:
+    def check_if_any_same(self, note1: Note, note2: Note, chord_name: str, note3: Note) -> bool:
         if note3 is not None:
             if (
                     note1 == note2
