@@ -192,7 +192,7 @@ class Chord:
             ):
                 return False
             return True
-        else:
+        elif note3 is None:
             if (
                     note1 == note2
                     or note1.original_note_name + note1.original_sharpness == chord_name
