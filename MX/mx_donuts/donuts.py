@@ -73,7 +73,7 @@ def list_donuts_starting_with(donut_list: list[Donut], letter: str) -> list[str]
     :param letter: The starting letter to filter donut names by.
     :return: List of Donut names sorted alphabetically.
     """
-    return list(map(lambda x: x.name, filter(lambda x: x.name.startswith(letter), donut_list)))
+    return sorted(list(map(lambda x: x.name, filter(lambda x: x.name.startswith(letter), donut_list))))
 
 
 def find_flour_needed_for_baking(donut_list: list[Donut], quantity: int) -> int:
