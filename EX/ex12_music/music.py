@@ -176,6 +176,8 @@ class Chord:
             self.note2 = note_two
             self.note3 = note_three
             self.chord_name = chord_name
+        else:
+            raise DuplicateNoteNamesException()
 
     @staticmethod
     def check_if_any_same(note1: Note, note2: Note, chord_name: str, note3: Note = None) -> bool:
@@ -188,7 +190,7 @@ class Chord:
                     or note2.original_note_name + note2.original_sharpness == chord_name
                     or note3.original_note_name + note3.original_sharpness == chord_name
             ):
-                raise DuplicateNoteNamesException()
+                return False
             return True
         else:
             if (
@@ -196,7 +198,7 @@ class Chord:
                     or note1.original_note_name + note1.original_sharpness == chord_name
                     or note2.original_note_name + note2.original_sharpness == chord_name
             ):
-                raise DuplicateNoteNamesException()
+                return False
             return True
 
     def __repr__(self) -> str:
