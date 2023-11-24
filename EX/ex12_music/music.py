@@ -174,9 +174,9 @@ class Chord:
             raise DuplicateNoteNamesException()
 
             # Set chord notes
-        self.note_one = note_one
-        self.note_two = note_two
-        self.note_three = note_three
+        self.note1 = note_one
+        self.note2 = note_two
+        self.note3 = note_three
 
         # Set chord name
         self.chord_name = chord_name
