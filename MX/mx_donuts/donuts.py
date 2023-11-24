@@ -169,7 +169,7 @@ def find_donuts_with_no_allergy(donut_list: list[Donut], allergy: str) -> list[s
     :param allergy: The allergy to exclude.
     :return: List of Donut names with no occurrence of the specified allergy.
     """
-    return list(map(lambda x: x.name, filter(lambda x: allergy in x.allergies, donut_list)))
+    return list(map(lambda x: x.name, filter(lambda x: allergy not in x.allergies, donut_list)))
 
 
 if __name__ == '__main__':
