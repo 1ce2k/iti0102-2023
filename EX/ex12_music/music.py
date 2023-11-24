@@ -170,14 +170,16 @@ class Chord:
         A chord consists of 2-3 notes and their chord product (string).
         If any of the parameters are the same, raise the 'DuplicateNoteNamesException' exception.
         """
-        are_all_diff = self.check_if_any_same(note_one, note_two, chord_name, note_three)
-        if not are_all_diff:
-            self.note1 = note_one
-            self.note2 = note_two
-            self.note3 = note_three
-            self.chord_name = chord_name
-        else:
+        if note_one == note_two or (note_three is not None and (note_one == note_three or note_two == note_three)):
             raise DuplicateNoteNamesException()
+
+            # Set chord notes
+        self.note_one = note_one
+        self.note_two = note_two
+        self.note_three = note_three
+
+        # Set chord name
+        self.chord_name = chord_name
 
     def check_if_any_same(self, note1: Note, note2: Note, chord_name: str, note3: Note) -> bool:
         if note3 is not None:
