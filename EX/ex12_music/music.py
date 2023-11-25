@@ -196,14 +196,6 @@ class Chord:
         """
         return f'<Chord: {self.chord_name}>'
 
-    def __eq__(self, other):
-        return (
-                type(other) is self.__class__
-                and self.note1 == other.note1
-                and self.note2 == other.note2
-                and self.note3 == other.note3
-        )
-
 
 class Chords:
     """Chords class."""
@@ -224,6 +216,9 @@ class Chords:
 
         :param chord: Chord to be added.
         """
+        if chord in self.chords:
+            raise DuplicateNoteNamesException()
+
         for x in self.chords:
             if self.are_instances_equal_except_name(x, chord):
                 raise ChordOverlapException()
