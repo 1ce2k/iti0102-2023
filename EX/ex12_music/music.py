@@ -20,6 +20,7 @@ class Note:
         self.original_note = note
         self.original_note_name = self.original_note[0].upper()
         self.note_name, self.sharpness, self.original_sharpness = self.normalize_note()
+        # print(self.normalize_note())
 
     def normalize_note(self):
         """Normalize note to A, A#, B, B#."""
@@ -51,8 +52,7 @@ class Note:
 
     def __hash__(self) -> int:
         """Allow a Note object to be used as a key in a dictionary. Don't change this method."""
-        return hash((self.original_note, self.original_note_name, self.note_name, self.sharpness, self.original_sharpness))
-
+        return hash((self.original_note, self.original_note_name, self.note_name, self.sharpness))
 
 class NoteCollection:
     """NoteCollection class."""
@@ -159,7 +159,6 @@ class NoteCollection:
 
         return ''.join(final_list)
 
-
 class Chord:
     """Chord class."""
 
@@ -172,11 +171,11 @@ class Chord:
         """
         if (
                 note_one == note_two
-                or note_one.original_note_name == chord_name
-                or note_two.original_note_name == chord_name
+                or note_one.note_name == chord_name
+                or note_two.original_note == chord_name
                 or (note_three is not None and (note_one == note_three
                                                 or note_two == note_three
-                                                or note_three.original_note_name == chord_name))
+                                                or note_three.original_note == chord_name))
         ):
             raise DuplicateNoteNamesException()
 
@@ -195,7 +194,6 @@ class Chord:
         Return as: <Chord: [chord_name]> where [chord_name] is the name of the chord.
         """
         return f'<Chord: {self.chord_name}>'
-
 
 class Chords:
     """Chords class."""
@@ -254,18 +252,17 @@ class Chords:
         :param third_note: The third note of the chord.
         :return: Chord or None.
         """
-        input_notes = {first_note, second_note, third_note}
+        input_notes = {first_note.original_note.upper(), second_note.original_note.upper(), third_note.original_note.upper()} if third_note is not None else {first_note.original_note.upper(), second_note.original_note.upper()}
         print(input_notes)
         for chord in self.chords:
-            chord_notes = {chord.note1, chord.note2, chord.note3}
+            chord_notes = {chord.note1.original_note.upper(), chord.note2.original_note.upper(), chord.note3.original_note.upper()} if chord.note3 is not None else {chord.note1.original_note.upper(), chord.note2.original_note.upper()}
+            print(chord_notes)
             if chord_notes == input_notes:
                 return chord
         return
 
-
 class DuplicateNoteNamesException(Exception):
     """Raised when attempting to add a chord that has same names for notes and product."""
-
 
 class ChordOverlapException(Exception):
     """Raised when attempting to add a combination of notes that are already used for another existing chord."""
@@ -275,41 +272,10 @@ if __name__ == '__main__':
     chords = Chords()
     chords.add(Chord(Note('A'), Note('B'), 'Amaj', Note('C')))
     print(chords.get(Note('A'), Note('B'), Note('C')))  # ->  <Chord: Amaj>
+    print()
     print(chords.get(Note('B'), Note('C'), Note('A')))  # ->  <Chord: Amaj>
+    print()
     print(chords.get(Note('D'), Note('Z')))  # ->  None
-    # chords.add(Chord(Note('c#'), Note('d#'), 'c#5'))
-    # print(chords.get(Note('C#'), Note('d#')))  # ->  <Chord: c#5>
-    #
-    # chords = Chords()
-    #
-    # chord1 = Chord(Note('A'), Note('C#'), 'Amaj', Note('E'))
-    # print(chord1)
-    # chord2 = Chord(Note('E'), Note('G'), 'Emin', note_three=Note('B'))
-    # print(chord2)
-    # chord3 = Chord(Note('E'), Note('B'), 'E5')
-    # print(chord3)
-    #
-    # chords.add(chord1)
-    # chords.add(chord2)
-    # chords.add(chord3)
-    #
-    # print(chords.get(Note('e'), Note('b')))  # -> <Chord: E5>
-
-    # try:
-    #     wrong_chord = Chord(Note('E'), Note('A'), 'E')
-    #     print('Did not raise, not working as intended.')
-    # except DuplicateNoteNamesException:
-    #     print('Raised DuplicateNoteNamesException, working as intended!')
-    #
-    # try:
-    #     wrong_chord = Chord(Note('A'), Note('e'), 'E')
-    #     print(Chord(Note('A'), Note('e'), 'E'))
-    #     print('Did not raise, not working as intended.')
-    # except DuplicateNoteNamesException:
-    #     print('Raised DuplicateNoteNamesException, working as intended!')
-
-    # try:
-    #     chords.add(Chord(Note('E'), Note('B'), 'Emaj7add9'))
-    #     print('Did not raise, not working as intended.')
-    # except ChordOverlapException:
-    #     print('Raised ChordOverlapException, working as intended!')
+    print()
+    chords.add(Chord(Note('c#'), Note('d#'), 'c#5'))
+    print(chords.get(Note('C#'), Note('d#')))  # ->  <Chord: c#5>
