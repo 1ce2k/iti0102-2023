@@ -44,7 +44,7 @@ class Mixer(NoteCollection):
 
         Similar as with NoteCollection but at the end insert the chords as well.
         """
-        return self.chord_list
+        return self.notes_and_chord
 
     def get_content(self) -> str:
         """
