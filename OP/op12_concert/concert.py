@@ -35,6 +35,8 @@ class Mixer(NoteCollection):
 
         :param note: Input object to add to collection.
         """
+        if not isinstance(note, Note):
+            raise TypeError()
         return [x.name for x in self.chords.chords]
 
 
