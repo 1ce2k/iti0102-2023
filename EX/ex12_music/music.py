@@ -176,6 +176,7 @@ class Chord:
             raise DuplicateNoteNamesException()
 
         self.name = chord_name
+        self.note_names = {note.note_name for note in self.notes}
 
     def __repr__(self) -> str:
         """
@@ -187,7 +188,7 @@ class Chord:
 
     def __eq__(self, other):
         """Check if chords are equal."""
-        return {note.note_name for note in self.notes} == other
+        return self.note_names == other
 
 
 class Chords:
