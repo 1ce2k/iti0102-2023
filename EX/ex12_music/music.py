@@ -39,10 +39,12 @@ class Note:
         return self.note_name == other
 
     def find_alphabet_index(self, char: str) -> int:
+        """Return index of char from alphabet."""
         alphabet_str = re.search(char, self.__alphabet)
         return alphabet_str.start()
 
     def find_note(self, note: str) -> str:
+        """Normalize note."""
         note_pattern = r'([A-Z])(#|b)?'
         note_match = re.match(note_pattern, note, re.IGNORECASE)
         letter, sharpness = note_match.groups()
@@ -81,6 +83,7 @@ class NoteCollection:
             self.notes.append(note)
 
     def dump(self, notes: list[Note]):
+        """Help func."""
         for note in notes:
             self.add(note)
 
@@ -183,6 +186,7 @@ class Chord:
         return f'<Chord: {self.name}>'
 
     def __eq__(self, other):
+        """Check if chords are equal."""
         return {note.note_name for note in self.notes} == other
 
 
