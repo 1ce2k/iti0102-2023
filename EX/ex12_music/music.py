@@ -1,4 +1,5 @@
 """Music."""
+import re
 
 
 class Note:
@@ -17,21 +18,8 @@ class Note:
         Note is a single alphabetical letter which is always uppercase.
         NB! Ab == Z#
         """
-        self.original_note = note
-        self.original_note_upper = note.upper()
-        self.original_note_name = self.original_note[0].upper()
-        self.note_name, self.sharpness, self.original_sharpness = self.normalize_note()
-
-    def normalize_note(self):
-        """Normalize note to A, A#, B, B#."""
-        alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        if 'b' in self.original_note:
-            letter_index = (alphabet.index(self.original_note.replace('b', '').upper()) - 1) % len(alphabet)
-            return alphabet[letter_index], '#', 'b'
-        elif '#' in self.original_note:
-            return alphabet[alphabet.index(self.original_note.replace('#', '').upper())], '#', '#'
-        else:
-            return self.original_note.upper(), '#', ''
+        self.__alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        self.note_name = self.find_note(note)
 
     def __repr__(self) -> str:
         """
@@ -40,7 +28,7 @@ class Note:
         Return: <Note: [note]> where [note] is the note_name + sharpness if the sharpness is given, that is not "".
         Repr should display the original note and sharpness, before normalization.
         """
-        return f"<Note: {self.original_note}>"
+        return f"<Note: {self.note_name}>"
 
     def __eq__(self, other):
         """
@@ -48,11 +36,24 @@ class Note:
 
         Return True if equal otherwise False. Used to check A# == Bb or Ab == Z#
         """
-        return self.note_name == other.note_name and self.sharpness == other.sharpness
+        return self.note_name == other
 
-    def __hash__(self) -> int:
-        """Allow a Note object to be used as a key in a dictionary. Don't change this method."""
-        return hash((self.original_note, self.original_note_name, self.note_name, self.sharpness, self.original_sharpness))
+    def find_alphabet_index(self, char: str) -> int:
+        alphabet_str = re.search(char, self.__alphabet)
+        return alphabet_str.start()
+
+    def find_note(self, note: str) -> str:
+        note_pattern = r'([A-Z])(#|b)?'
+        note_match = re.match(note_pattern, note, re.IGNORECASE)
+        letter, sharpness = note_match.groups()
+        letter = letter.upper()
+        if not sharpness:
+            return letter
+        alphabet_index = self.find_alphabet_index(letter)
+        if sharpness == 'b':
+            alphabet_index = (alphabet_index - 1) % len(self.__alphabet)
+            sharpness = '#'
+        return self.__alphabet[alphabet_index] + sharpness
 
 
 class NoteCollection:
@@ -74,11 +75,14 @@ class NoteCollection:
 
         :param note: Input object to add to the collection
         """
-        if type(note) is Note:
-            if note not in self.notes:
-                self.notes.append(note)
-        else:
-            raise TypeError
+        if not isinstance(note, Note):
+            raise TypeError("Value is not of type Note.")
+        if note not in self.notes:
+            self.notes.append(note)
+
+    def dump(self, notes: list[Note]):
+        for note in notes:
+            self.add(note)
 
     def pop(self, note: str) -> Note | None:
         """
@@ -89,12 +93,12 @@ class NoteCollection:
         :param note: Note to remove
         :return: The removed Note object or None.
         """
-        if note:
-            for x in self.notes:
-                if x.original_note == note:
-                    self.notes.remove(x)
-                    return x
-        return
+        note_to_remove = Note(note)
+        res = [x for x in self.notes if x == note_to_remove]
+        if res:
+            result = res[0]
+            self.notes.remove(result)
+            return result
 
     def extract(self) -> list[Note]:
         """
@@ -113,19 +117,9 @@ class NoteCollection:
 
         :return: A list of all the notes that were previously in the collection.
         """
-        temp_list = self.notes
+        temp_list = self.notes.copy()
         self.notes = []
         return temp_list
-
-    @staticmethod
-    def sort_sharpness(sharpness):
-        """Sort by sharpness."""
-        if sharpness == 'b':
-            return 1
-        elif sharpness == '#':
-            return 3
-        else:
-            return 2
 
     def get_content(self) -> str:
         """
@@ -147,18 +141,14 @@ class NoteCollection:
 
         :return: Content as a string
         """
-        if not self.notes:
-            return "Notes:\n  Empty."
-        notes_list = self.notes
-        sorted_notes = sorted(notes_list, key=lambda x: (x.original_note_name.upper(), self.sort_sharpness(x.original_sharpness)))
-        final_list = ['Notes:\n']
-        for x in range(len(sorted_notes) - 1):
-            note_str = "  * " + sorted_notes[x].original_note_name + sorted_notes[x].original_sharpness + '\n'
-            final_list.append(note_str)
-        final_list.append('  * ' + sorted_notes[-1].original_note)
-        print(final_list)
-
-        return ''.join(final_list)
+        unique_notes = {note.note_name for note in self.notes}
+        header = 'Notes:'
+        if unique_notes:
+            sorted_notes = sorted(unique_notes)
+            components = [header] + sorted_notes
+        else:
+            components = [header, 'Empty.']
+        return '\n  * '.join(components)
 
 
 class Chord:
@@ -171,23 +161,16 @@ class Chord:
         A chord consists of 2-3 notes and their chord product (string).
         If any of the parameters are the same, raise the 'DuplicateNoteNamesException' exception.
         """
-        if (
-                note_one == note_two
-                or note_one.original_note_name == chord_name
-                or note_two.original_note_name == chord_name
-                or (note_three is not None and (note_one == note_three
-                                                or note_two == note_three
-                                                or note_three.original_note_name == chord_name))
-        ):
+        unique_notes = NoteCollection()
+        self.notes = [note for note in [note_one, note_two, note_three] if note is not None]
+        unique_notes.dump(self.notes)
+
+        len_not_matching = len(unique_notes.extract()) != len(self.notes)
+        name_in_notes = all([note.note_name != chord_name for note in self.notes])
+        if len_not_matching or name_in_notes:
             raise DuplicateNoteNamesException()
 
-            # Set chord notes
-        self.note1 = note_one
-        self.note2 = note_two
-        self.note3 = note_three
-
-        # Set chord name
-        self.chord_name = chord_name
+        self.name = chord_name
 
     def __repr__(self) -> str:
         """
@@ -195,7 +178,10 @@ class Chord:
 
         Return as: <Chord: [chord_name]> where [chord_name] is the name of the chord.
         """
-        return f'<Chord: {self.chord_name}>'
+        return f'<Chord: {self.name}>'
+
+    def __eq__(self, other):
+        return {note.note_name for note in self.notes} == other
 
 
 class Chords:
@@ -217,21 +203,11 @@ class Chords:
 
         :param chord: Chord to be added.
         """
-        if chord in self.chords:
-            raise DuplicateNoteNamesException()
-
-        for x in self.chords:
-            if self.are_instances_equal_except_name(x, chord):
-                raise ChordOverlapException()
-        else:
-            self.chords.append(chord)
-
-    @staticmethod
-    def are_instances_equal_except_name(chord1, chord2) -> bool:
-        """Check if there are same chords existing."""
-        notes1 = {chord1.note1, chord1.note2, chord1.note3}
-        notes2 = {chord2.note1, chord2.note2, chord2.note3}
-        return notes1 == notes2
+        if not isinstance(chord, Chord):
+            raise TypeError("Value not a type of Chord.")
+        elif chord in self.chords:
+            raise ChordOverlapException()
+        self.chords.append(chord)
 
     def get(self, first_note: Note, second_note: Note, third_note: Note = None) -> Chord | None:
         """
@@ -255,14 +231,10 @@ class Chords:
         :param third_note: The third note of the chord.
         :return: Chord or None.
         """
-        input_notes = {first_note.original_note_upper, second_note.original_note_upper, third_note.original_note_upper} if third_note else {first_note.original_note_upper, second_note.original_note_upper}
-        print(input_notes, 'start')
-        for chord in self.chords:
-            chord_notes = {chord.note1.original_note_upper, chord.note2.original_note_upper, chord.note3.original_note_upper} if chord.note3 else {chord.note1.original_note_upper, chord.note2.original_note_upper}
-            print(chord_notes)
-            if chord_notes == input_notes:
-                return chord
-        return
+        input_notes = {note.note_name for note in [first_note, second_note, third_note] if note is not None}
+        matching_chords = [chord for chord in self.chords if chord == input_notes]
+        if matching_chords:
+            return matching_chords[0]
 
 
 class DuplicateNoteNamesException(Exception):
