@@ -35,7 +35,7 @@ class Mixer(NoteCollection):
 
         :param note: Input object to add to collection.
         """
-        return self.chords
+        return [x.name for x in self.chords.chords]
 
 
 
