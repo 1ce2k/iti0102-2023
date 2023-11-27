@@ -172,7 +172,6 @@ class Chord:
         if len_not_matching or not name_in_notes:
             raise DuplicateNoteNamesException()
 
-
         self.name = chord_name
 
     def __repr__(self) -> str:
