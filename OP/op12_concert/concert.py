@@ -1,5 +1,5 @@
 """Concert."""
-from music import NoteCollection, Chords, Chord, Note, DuplicateNoteNamesException, ChordOverlapException
+from music import NoteCollection, Chords, Chord, Note
 
 
 class ChordNotInScaleException(Exception):
@@ -35,14 +35,10 @@ class Mixer(NoteCollection):
 
         :param note: Input object to add to collection.
         """
-        super().add(note)
-        self.combine_with_chords()
+        return self.chords
 
-    def combine_with_chords(self):
-        """Check if the added notes can form chords."""
-        for x in self.chords.chords:
-            if set(x.note_names).issubset(note.note_name for note in self.notes):
-                super().add(x)
+
+
 
     def extract(self) -> list[Note | Chord]:
         """
@@ -164,16 +160,16 @@ if __name__ == '__main__':
 
     mixer = Mixer(chords)
     mixer.add(Note('E'))
-    mixer.add(Note('B'))
+    # mixer.add(Note('B'))
     mixer.add(Note('c#'))
 
     print(mixer.extract())  # -> [<Note: C#>, <Chord: E5>]
 
     mixer.add(Note('E'))
-    mixer.add(Note('b'))
+    # mixer.add(Note('b'))
     mixer.add(Note('e'))
     mixer.add(Note('g'))
-    mixer.add(Note('B'))
+    # mixer.add(Note('B'))
     mixer.add(Note('C#'))
 
     print(mixer.extract())  # -> [<Note: C#>, <Chord: E5>, <Chord: Emin>]
