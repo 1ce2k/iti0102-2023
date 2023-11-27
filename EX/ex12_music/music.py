@@ -169,8 +169,9 @@ class Chord:
 
         len_not_matching = len(unique_notes.extract()) != len(self.notes)
         name_in_notes = all([note.note_name != chord_name for note in self.notes])
-        if len_not_matching or name_in_notes:
+        if len_not_matching or not name_in_notes:
             raise DuplicateNoteNamesException()
+
 
         self.name = chord_name
 
