@@ -16,7 +16,7 @@ class Mixer(NoteCollection):
     def __init__(self, chords: Chords):
         """Initialize the Mixer class"""
         super().__init__()
-        self.notes_and_chord = chords
+        self.chords = chords
 
     def add(self, note: Note):
         """
@@ -35,8 +35,14 @@ class Mixer(NoteCollection):
 
         :param note: Input object to add to collection.
         """
-        if not isinstance(note, Note):
-            raise TypeError()
+        super().add(note)
+        self.combine_with_chords()
+
+    def combine_with_chords(self):
+        """Check if the added notes can form chords."""
+        for x in self.chords.chords:
+            if set(x.note_names).issubset(note.note_name for note in self.notes):
+                super().add(x)
 
     def extract(self) -> list[Note | Chord]:
         """
@@ -44,7 +50,8 @@ class Mixer(NoteCollection):
 
         Similar as with NoteCollection but at the end insert the chords as well.
         """
-        return self.notes_and_chord
+        content = super().extract()
+        return content
 
     def get_content(self) -> str:
         """
@@ -52,7 +59,11 @@ class Mixer(NoteCollection):
 
         Similar as with NoteCollection but at the end insert the 'name' of the chords too.
         """
-        return ""
+        content = super().get_content()
+        chord_names = [chord.name for chord in self.notes if isinstance(chord, Chord)]
+        if chord_names:
+            content += '\nChords:\n  * ' + '\n  * '.join(chord_names)
+        return content
 
 
 class Scale:
@@ -137,19 +148,19 @@ if __name__ == '__main__':
     chords.add(chord2)
     chords.add(chord3)
 
-    print(chords.get(Note('e'), Note('b')))  # -> <Chord: E5>
+    # print(chords.get(Note('e'), Note('b')))  # -> <Chord: E5>
 
-    try:
-        wrong_chord = Chord(Note('E'), Note('E'), 'Something else')
-        print('Did not raise, not working as intended.')
-    except DuplicateNoteNamesException:
-        print('Raised DuplicateNoteNamesException, working as intended!')
-
-    try:
-        chords.add(Chord(Note('E'), Note('B'), 'Emaj7add9'))
-        print('Did not raise, not working as intended.')
-    except ChordOverlapException:
-        print('Raised ChordOverlapException, working as intended!')
+    # try:
+    #     wrong_chord = Chord(Note('E'), Note('E'), 'Something else')
+    #     print('Did not raise, not working as intended.')
+    # except DuplicateNoteNamesException:
+    #     print('Raised DuplicateNoteNamesException, working as intended!')
+    #
+    # try:
+    #     chords.add(Chord(Note('E'), Note('B'), 'Emaj7add9'))
+    #     print('Did not raise, not working as intended.')
+    # except ChordOverlapException:
+    #     print('Raised ChordOverlapException, working as intended!')
 
     mixer = Mixer(chords)
     mixer.add(Note('E'))
