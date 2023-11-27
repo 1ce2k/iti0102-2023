@@ -146,9 +146,11 @@ class NoteCollection:
         if unique_notes:
             sorted_notes = sorted(unique_notes)
             components = [header] + sorted_notes
+            separator = '\n  * '
         else:
             components = [header, 'Empty.']
-        return '\n  * '.join(components)
+            separator = '\n  '
+        return separator.join(components)
 
 
 class Chord:
