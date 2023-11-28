@@ -354,24 +354,38 @@ class Hotel:
         If there are several with the same amount of matching features, return the one with the smallest room number.
         If there is no available rooms, return None
         """
-        available_rooms = []
-        max_features = 0
-        for room in self.get_available_rooms():
-            counter = 0
-            for feature in required_features:
-                if feature in room.get_features():
-                    counter += 1
-            if counter > max_features:
-                available_rooms.clear()
-                available_rooms.append(room)
-                max_features = counter
-            elif counter == max_features:
-                available_rooms.append(room)
-        if not available_rooms:
+        # available_rooms = []
+        # max_features = 0
+        # for room in self.get_available_rooms():
+        #     counter = 0
+        #     for feature in required_features:
+        #         if feature in room.get_features():
+        #             counter += 1
+        #     if counter > max_features:
+        #         available_rooms.clear()
+        #         available_rooms.append(room)
+        #         max_features = counter
+        #     elif counter == max_features:
+        #         available_rooms.append(room)
+        # if not available_rooms:
+        #     return
+        # booked_room = sorted(available_rooms, key=lambda x: x.get_number())[0]
+        # booked_room.set_is_booked(True)
+        # return booked_room
+        available = self.get_available_rooms()
+        # print([room.number for room in available])
+        if not available:
             return
-        booked_room = sorted(available_rooms, key=lambda x: x.get_number())[0]
-        booked_room.set_is_booked(True)
-        return booked_room
+
+        def count_matching_features(room):
+            return sum(feature in room.get_features() for feature in required_features)
+
+        # sorted_rooms = sorted(available, key=count_matching_features, reverse=True)
+        # print([room.number for room in sorted_rooms])
+        best_room = sorted(available, key=lambda x: (-count_matching_features(x), x.get_number()))[0]
+        # print(best_room.get_number())
+        best_room.set_is_booked(True)
+        return best_room
 
     def get_available_rooms(self) -> list:
         """Return a list of available (not booked) rooms."""
@@ -469,6 +483,7 @@ if __name__ == '__main__':
     assert hotel.get_booked_rooms() == []
 
     assert hotel.book_room(["bed", "president"]) == room1
+    # print(hotel.book_room(['bed']).get_number())
     assert hotel.book_room(["bed", "president"]) == room4
     assert hotel.get_available_rooms() == [room2]
     assert hotel.get_booked_rooms() == [room1, room4]
