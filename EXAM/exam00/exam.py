@@ -331,7 +331,7 @@ class Hotel:
 
     def __init__(self):
         """Initialize hotel."""
-        self.rooms = []
+        self._rooms = []
 
     def add_room(self, room: Room) -> bool:
         """
@@ -342,10 +342,10 @@ class Hotel:
         """
         if not isinstance(room, Room):
             raise TypeError("Value not type of Room")
-        for existing_room in self.rooms:
+        for existing_room in self._rooms:
             if existing_room.get_number() == room.get_number():
                 return False
-        self.rooms.append(room)
+        self._rooms.append(room)
         return True
 
     def book_room(self, required_features: list) -> Optional[Room]:
@@ -378,19 +378,19 @@ class Hotel:
     def get_available_rooms(self) -> list:
         """Return a list of available (not booked) rooms."""
         ret = []
-        for room in self.rooms:
+        for room in self._rooms:
             if not room.get_is_booked():
                 ret.append(room)
         return ret
 
     def get_rooms(self) -> list:
         """Return all the rooms (both booked and available)."""
-        return self.rooms
+        return self._rooms
 
     def get_booked_rooms(self) -> list:
         """Return all the booked rooms."""
         ret = []
-        for room in self.rooms:
+        for room in self._rooms:
             if room.get_is_booked():
                 ret.append(room)
         return ret
@@ -431,7 +431,6 @@ class Hotel:
         If there are several with the same max value, return the feature which is alphabetically lower (a < z)
         If there are no features booked, return None.
         """
-        ret = None
         features = []
         max_price = 0
         for feature, price in self.get_feature_profits().items():
@@ -441,11 +440,9 @@ class Hotel:
                 features.append(feature)
             if max_price == price:
                 features.append(feature)
-        if not features:
-            return
-        sorted_ret = sorted(features)
-        ret = sorted_ret[0]
-        return ret
+        if features:
+            return sorted(features)[0]
+        return None
 
 
 if __name__ == '__main__':
@@ -470,17 +467,17 @@ if __name__ == '__main__':
     assert hotel.get_booked_rooms() == []
 
     assert hotel.book_room(["tv", "president"]) == room1
-    # assert hotel.book_room(["tv", "president"]) == room1
-    assert hotel.get_available_rooms() == [room2, room4]
-    assert hotel.get_booked_rooms() == [room1]
-
-    assert hotel.book_room([]) == room2
+    assert hotel.book_room(["tv", "president"]) == room2
     assert hotel.get_available_rooms() == [room4]
+    assert hotel.get_booked_rooms() == [room1, room2]
+
+    assert hotel.book_room([]) == room4
+    assert hotel.get_available_rooms() == []
 
     print(hotel.get_feature_profits())
     assert hotel.get_feature_profits() == {
-        'tv': 300,
-        'bed': 100,
+        'tv': 600,
+        'bed': 400,
         'sauna': 200
     }
     assert hotel.get_most_profitable_feature() == 'tv'
