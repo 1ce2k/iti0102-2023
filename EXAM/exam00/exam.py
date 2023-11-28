@@ -170,7 +170,7 @@ def get_top_student_with_credit_points(students: list, min_credit_points: int):
     """
     res_students = [student for student in students if student.credit_points >= min_credit_points]
     if res_students:
-        res_students.sort(key=lambda x: -x.credit_points)
+        res_students.sort(key=lambda x: -x.average_grade)
     return res_students[0]
 
 
