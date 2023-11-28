@@ -286,7 +286,7 @@ class Room:
 
     def __init__(self, number: int, price: int):
         """Initialize room."""
-        self._number = number
+        self.number = number
         self._price = price
         self._features = []
         self._booked = False
@@ -315,7 +315,7 @@ class Room:
 
     def get_number(self) -> int:
         """Return the room number."""
-        return self._number
+        return self.number
 
     def get_is_booked(self) -> bool:
         """Return the room status."""
