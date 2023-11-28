@@ -187,6 +187,7 @@ def longest_substring(text: str) -> str:
     abBcd => Bcd
     '' -> ''
     """
+    text = text.lower()
     longest = ''
     for i in range(len(text)):
         for j in range(i + 1, len(text)):
@@ -298,7 +299,7 @@ class Room:
         - the room is booked.
         Otherwise, add the feature to the room and return True
         """
-        pass
+        print()
 
     def get_features(self) -> list:
         """Return all the features of the room."""
