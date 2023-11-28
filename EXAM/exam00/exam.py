@@ -57,7 +57,22 @@ def get_names_from_results(results_string: str, min_result: int) -> list:
     get_names_from_results("ago 123,peeter 11,kitty11!! 33", 11) => ["ago", "peeter",  "kitty11!!"]
     get_names_from_results("ago 123,peeter 11,kusti riin 14", 12) => ["ago", "kusti riin"]
     """
-    pass
+    name_list = []
+    results = results_string.split(',')
+    for result in results:
+        parts = result.split(' ')
+        score = int(parts[-1]) if len(parts) > 1 else 0
+        name = ' '.join(parts[:-1]) if len(parts) > 1 else ''
+        if name and score >= min_result:
+            name_list.append(name)
+    return name_list
+
+
+# print(get_names_from_results("ago 123,peeter 11", 0))
+# print(get_names_from_results("ago 123,peeter 11,33", 10))
+# print(get_names_from_results("ago 123,peeter 11", 100))
+# print(get_names_from_results("ago 123,peeter 11,kitty11!! 33", 11))
+# print(get_names_from_results("ago 123,peeter 11,kusti riin 14", 12))
 
 
 def tic_tac_toe(game: list) -> int:
