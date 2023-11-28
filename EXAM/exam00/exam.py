@@ -298,7 +298,7 @@ class Room:
         - the room is booked.
         Otherwise, add the feature to the room and return True
         """
-        if
+        pass
 
     def get_features(self) -> list:
         """Return all the features of the room."""
