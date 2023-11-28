@@ -169,9 +169,10 @@ def get_top_student_with_credit_points(students: list, min_credit_points: int):
     If several students have the same average score, return the first.
     """
     res_students = [student for student in students if student.credit_points >= min_credit_points]
-    if res_students:
+    if len(res_students):
         res_students.sort(key=lambda x: -x.average_grade)
-    return res_students[0]
+        return res_students[0]
+    return
 
 
 def add_result_to_student(student: Student, grades_count: int, new_grade: int, credit_points) -> Student:
