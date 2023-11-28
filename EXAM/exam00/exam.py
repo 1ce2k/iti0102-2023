@@ -378,7 +378,7 @@ class Hotel:
             return
 
         def count_matching_features(room):
-            return sum(feature in room.get_features() for feature in required_features)
+            return sum(feature in room.get_features() for feature in list(set(required_features)))
 
         # sorted_rooms = sorted(available, key=count_matching_features, reverse=True)
         # print([room.number for room in sorted_rooms])
@@ -489,18 +489,12 @@ if __name__ == '__main__':
     assert hotel.get_booked_rooms() == []
 
     assert hotel.book_room(["bed", "president"]) == room1
-    # print(hotel.book_room(['bed']).get_number())
     assert hotel.book_room(["bed", "president"]) == room4
     assert hotel.get_available_rooms() == [room2]
     assert hotel.get_booked_rooms() == [room1, room4]
 
     assert hotel.book_room([]) == room2
     assert hotel.get_available_rooms() == []
-    print(room1.get_features(), room1.get_number(), room1.get_price())
-    print(room2.get_features(), room2.get_number(), room2.get_price())
-    print(room4.get_features(), room4.get_number(), room4.get_price())
-    print(hotel.get_rooms())
-    print(hotel.get_feature_profits())
     assert hotel.get_feature_profits() == {
         'tv': 400,
         'bed': 400,
