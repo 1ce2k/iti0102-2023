@@ -95,25 +95,34 @@ def tic_tac_toe(game: list) -> int:
     :param game
     :return: winning player id
     """
-    columns = [[],[],[]]
+    # check if there is wining row
     for row in game:
         if row.count(1) == 3:
             return 1
         elif row.count(2) == 3:
             return 2
+
+    # revert the matrix to columns
+    columns = [[], [], []]
     for row in game:
         columns[0].append(row[0])
         columns[1].append(row[1])
         columns[2].append(row[2])
+
+    # check if there is wining column
     for column in columns:
         if column.count(1) == 3:
             return 1
         elif column.count(2) == 3:
             return 2
+
+    # check if there is wining diagonal
     if game[0][0] == game[1][1] == game[2][2] != 0:
         return game[0][0]
     elif game[0][2] == game[1][1] == game[2][0] != 0:
         return game[0][2]
+
+    # return draw if no wining condition
     return 0
 
 
@@ -138,7 +147,31 @@ def rainbows(field: str, lower=False) -> int:
     :param field: string to search rainbows from
     :return: number of rainbows in the string
     """
-    pass
+    # make input case-insensitive
+    s = field.lower()
+
+    # check if there is some rainbow in str
+    if 'rainbow' in s:
+        x = s.index('rainbow')
+        s = s[:x] + s[x + 7:]
+        return 1 + rainbows(s)
+
+    # reverse str
+    else:
+        s = s[::-1]
+
+    # check if there is some rainbow in reversed str
+    if 'rainbow' in s:
+        x = s.index('rainbow')
+        s = s[:x] + s[x + 7:]
+        return 1 + rainbows(s)
+    else:
+        return 0
+
+
+assert rainbows("rainbowThisIsJustSomeNoise") == 1  # Lisaks vikerkaarele on veel sümboleid
+assert rainbows("WoBniar") == 1  # Vikerkaar on tagurpidi ja sisaldab suuri tähti
+assert rainbows("rainbowobniar") == 1  # Kaks vikerkaart jagavad tähte seega üks neist ei ole valiidne
 
 
 def longest_substring(text: str) -> str:
