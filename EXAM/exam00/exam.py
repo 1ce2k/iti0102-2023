@@ -190,7 +190,7 @@ def longest_substring(text: str) -> str:
     longest = ''
     for i in range(len(text)):
         for j in range(i + 1, len(text)):
-            if len(set(text)) == len(text) and len(text) > len(longest):
+            if len(set(text)) == len(text) and len(text[i:j]) > len(longest):
                 longest = text[i:j]
     return longest
 
@@ -284,7 +284,10 @@ class Room:
 
     def __init__(self, number: int, price: int):
         """Initialize room."""
-        pass
+        self.number = number
+        self.price = price
+        self.features = []
+        self.booked = False
 
     def add_feature(self, feature: str) -> bool:
         """
@@ -295,7 +298,7 @@ class Room:
         - the room is booked.
         Otherwise, add the feature to the room and return True
         """
-        pass
+        if
 
     def get_features(self) -> list:
         """Return all the features of the room."""
