@@ -382,8 +382,14 @@ class Hotel:
 
         # sorted_rooms = sorted(available, key=count_matching_features, reverse=True)
         # print([room.number for room in sorted_rooms])
-        best_room = sorted(available, key=lambda x: (-count_matching_features(x), x.get_number()))[0]
-        # print(best_room.get_number())
+        # best_rooms = sorted(available, key=lambda x: (-count_matching_features(x), x.get_number()))
+        # print([room.get_number() for room in available])
+        # best_room.set_is_booked(True)
+        # return best_room
+        max_features = max([count_matching_features(room) for room in available])
+        # print(max_features)
+        best_rooms = [room for room in available if count_matching_features(room) == max_features]
+        best_room = sorted(best_rooms, key=lambda x: x.get_number())[0]
         best_room.set_is_booked(True)
         return best_room
 
