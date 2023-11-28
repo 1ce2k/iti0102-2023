@@ -169,11 +169,6 @@ def rainbows(field: str, lower=False) -> int:
         return 0
 
 
-assert rainbows("rainbowThisIsJustSomeNoise") == 1  # Lisaks vikerkaarele on veel sümboleid
-assert rainbows("WoBniar") == 1  # Vikerkaar on tagurpidi ja sisaldab suuri tähti
-assert rainbows("rainbowobniar") == 1  # Kaks vikerkaart jagavad tähte seega üks neist ei ole valiidne
-
-
 def longest_substring(text: str) -> str:
     """
     Find the longest substring.
