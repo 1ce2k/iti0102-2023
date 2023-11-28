@@ -154,7 +154,9 @@ def create_student(name: str, grades: list, credit_points: int) -> Student:
     Round the average grade up to three decimal places.
     If the list of grades is empty, the average grade will be 0.
     """
-    pass
+    average_grade = round(sum(grades) / len(grades), 3)
+    new_student = Student(name, average_grade, credit_points)
+    return new_student
 
 
 def get_top_student_with_credit_points(students: list, min_credit_points: int):
@@ -164,7 +166,9 @@ def get_top_student_with_credit_points(students: list, min_credit_points: int):
     If there are no students with enough credit points, return None.
     If several students have the same average score, return the first.
     """
-    pass
+    res_students = [student for student in students if student.credit_points >= min_credit_points]
+    sorted_students = sorted(res_students, key=lambda x: x.average_grade)
+    return sorted_students[0]
 
 
 def add_result_to_student(student: Student, grades_count: int, new_grade: int, credit_points) -> Student:
