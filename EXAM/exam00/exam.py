@@ -191,7 +191,7 @@ def longest_substring(text: str) -> str:
     longest = ''
     for i in range(len(text)):
         for j in range(i + 1, len(text)):
-            if len(set(text)) == len(text) and len(text[i:j]) > len(longest):
+            if len(set(text[i:j])) == len(text[i:j]) and len(text[i:j]) > len(longest):
                 longest = text[i:j]
     return longest
 
