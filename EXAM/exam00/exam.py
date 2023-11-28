@@ -340,10 +340,8 @@ class Hotel:
         If a room with the given number already exists, do not add a room and return False.
         Otherwise add the room to hotel and return True.
         """
-        if not isinstance(room, Room):
-            raise TypeError("Value not type of Room")
         for existing_room in self._rooms:
-            if existing_room.get_number() == room.get_number():
+            if existing_room.number == room.number:
                 return False
         self._rooms.append(room)
         return True
@@ -356,6 +354,11 @@ class Hotel:
         If there are several with the same amount of matching features, return the one with the smallest room number.
         If there is no available rooms, return None
         """
+        if not required_features:
+            available_rooms = self.get_available_rooms()
+            matched = sorted(available_rooms, key=lambda x: x.number)[0]
+            matched.set_is_booked(True)
+            return matched
         available_rooms = []
         max_features = 0
         for room in self.get_available_rooms():
