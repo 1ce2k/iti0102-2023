@@ -16,11 +16,7 @@ def find_capital_letters(s: str) -> str:
     find_capital_letters("abc") => ""
     find_capital_letters("aAbBc") => "AB"
     """
-    if not s:
-        return ''
-    if s[0].isupper():
-        return s[0] + find_capital_letters(s[1:])
-    return find_capital_letters(s[1:])
+    return ''.join([x for x in s if x.isupper()])
 
 
 def close_far(a: int, b: int, c: int) -> bool:
