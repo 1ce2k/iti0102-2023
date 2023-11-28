@@ -286,7 +286,7 @@ class Room:
 
     def __init__(self, number: int, price: int):
         """Initialize room."""
-        self.number = number
+        self._number = number
         self._price = price
         self._features = []
         self._booked = False
@@ -300,7 +300,7 @@ class Room:
         - the room is booked.
         Otherwise, add the feature to the room and return True
         """
-        if feature in self._features:
+        if feature in self._features or self._booked:
             return False
         self._features.append(feature)
         return True
@@ -315,7 +315,7 @@ class Room:
 
     def get_number(self) -> int:
         """Return the room number."""
-        return self.number
+        return self._number
 
     def get_is_booked(self) -> bool:
         """Return the room status."""
@@ -461,6 +461,9 @@ if __name__ == '__main__':
     hotel.add_room(room4)
     room4.add_feature('tv')
     room4.add_feature('bed')
+
+    rooms = hotel.get_rooms()
+    assert not rooms[1].add_feature('tv')
     assert not hotel.add_room(room3)
     assert hotel
     assert hotel.get_rooms() == [room1, room2, room4]
