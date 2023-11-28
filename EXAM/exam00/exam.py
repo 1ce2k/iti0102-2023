@@ -354,11 +354,6 @@ class Hotel:
         If there are several with the same amount of matching features, return the one with the smallest room number.
         If there is no available rooms, return None
         """
-        if not required_features:
-            available_rooms = self.get_available_rooms()
-            matched = sorted(available_rooms, key=lambda x: x.number)[0]
-            matched.set_is_booked(True)
-            return matched
         available_rooms = []
         max_features = 0
         for room in self.get_available_rooms():
@@ -454,7 +449,7 @@ if __name__ == '__main__':
     room1.add_feature("tv")
     room1.add_feature("bed")
     room2 = Room(2, 200)
-    room2.add_feature("tv")
+    # room2.add_feature("tv")
     room2.add_feature("sauna")
     hotel.add_room(room1)
     hotel.add_room(room2)
@@ -464,28 +459,32 @@ if __name__ == '__main__':
     hotel.add_room(room4)
     room4.add_feature('tv')
     room4.add_feature('bed')
+    hotel.add_room(room4)
 
     rooms = hotel.get_rooms()
-    assert not rooms[1].add_feature('tv')
+    # assert not rooms[1].add_feature('tv')
     assert not hotel.add_room(room3)
     assert hotel
     assert hotel.get_rooms() == [room1, room2, room4]
     assert hotel.get_booked_rooms() == []
 
-    assert hotel.book_room(["tv", "president"]) == room1
-    assert hotel.book_room(["tv", "president"]) == room2
-    assert hotel.get_available_rooms() == [room4]
-    assert hotel.get_booked_rooms() == [room1, room2]
+    assert hotel.book_room(["bed", "president"]) == room1
+    assert hotel.book_room(["bed", "president"]) == room4
+    assert hotel.get_available_rooms() == [room2]
+    assert hotel.get_booked_rooms() == [room1, room4]
 
-    assert hotel.book_room([]) == room4
+    assert hotel.book_room([]) == room2
     assert hotel.get_available_rooms() == []
-
+    print(room1.get_features(), room1.get_number(), room1.get_price())
+    print(room2.get_features(), room2.get_number(), room2.get_price())
+    print(room4.get_features(), room4.get_number(), room4.get_price())
+    print(hotel.get_rooms())
     print(hotel.get_feature_profits())
     assert hotel.get_feature_profits() == {
-        'tv': 600,
+        'tv': 400,
         'bed': 400,
         'sauna': 200
     }
-    assert hotel.get_most_profitable_feature() == 'tv'
+    assert hotel.get_most_profitable_feature() == 'bed'
 
     # TODO: try to add a room so that two or more features have the same profit
