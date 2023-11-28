@@ -187,13 +187,21 @@ def longest_substring(text: str) -> str:
     abBcd => Bcd
     '' -> ''
     """
-    text = text.lower()
-    longest = ''
-    for i in range(len(text)):
-        for j in range(i + 1, len(text)):
-            if len(set(text[i:j])) == len(text[i:j]) and len(text[i:j]) > len(longest):
-                longest = text[i:j]
-    return longest
+    start, max_length, max_start = 0, 0, 0
+    char_index = {}
+    for i, char in enumerate(text.lower()):
+        start = max(char_index.get(char, start), start)
+        char_index[char] = i + 1
+        if i - start + 1 > max_length:
+            max_length, max_start = i - start + 1, start
+    return text[max_start:max_start + max_length]
+
+
+# print(longest_substring('aaa'))  # a
+print(longest_substring('abc'))  # abc
+# print(longest_substring('abccba'))  # abc
+print(longest_substring('babcdEFghij'))  # abcdEFghij
+print(longest_substring('abBcd'))  # Bcd
 
 
 class Student:
