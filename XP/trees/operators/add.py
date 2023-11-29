@@ -17,7 +17,7 @@ class Add(Operator):
     @property
     def priority(self):
         """Return the value of the operation."""
-        return 11
+        return 100
 
     @property
     def default_operator(self):
