@@ -30,8 +30,8 @@ class Div(Operator):
     def actions(self):
         """:return a dictionary of custom operations."""
         return {
-            (set, set): {},  # set exclusion
-            (set, int): lambda x, y: x.remove(y),  # remove from set
+            (set, set): lambda x, y: x - y,  # set exclusion
+            (set, int): lambda x, y: x - {y},  # remove from set
             (int, int): lambda x, y: x / y  # integer division
         }
 
