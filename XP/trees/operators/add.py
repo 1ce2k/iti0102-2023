@@ -35,5 +35,4 @@ class Add(Operator):
         return {
             (set, set): lambda x, y: x | y,  # set union
             (set, int): lambda x, y: {*x, y},  # add to set
-            (int, int): DefaultOperator(lambda x, y: x + y, "+")
         }
