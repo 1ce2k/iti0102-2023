@@ -22,13 +22,17 @@ class Div(Operator):
         """Make use of the 'operator' library or use a lambda function."""
         return DefaultOperator(lambda x, y: x / y, "/")
 
+
+    def remove(self):
+        pass
+
     @property
     def actions(self):
         """:return a dictionary of custom operations."""
         return {
             (set, set): {},  # set exclusion
-            (set, int): {},  # remove from set
-            (int, int): lambda x, y: x / y # integer division
+            (set, int): lambda x, y: x.remove(y),  # remove from set
+            (int, int): lambda x, y: x / y  # integer division
         }
 
     @property
