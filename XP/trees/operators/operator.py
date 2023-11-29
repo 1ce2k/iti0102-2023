@@ -50,19 +50,6 @@ class Operator(TreeNode):
 
     @property
     @abstractmethod
-    def priority(self):
-        """
-        :abstract method witch should be overridden to return priority of the node.
-
-        Boolean whether the operation is associative or not.
-        For example addition is associative but subtraction is not.
-        Override this property for operations where the given operation is not associative.
-        Visit: https://en.wikipedia.org/wiki/Order_of_operations
-        """
-        pass
-
-    @property
-    @abstractmethod
     def actions(self):
         """
         All custom implemented actions on different data structures.

@@ -34,5 +34,6 @@ class Add(Operator):
         """Return a dictionary of custom operations."""
         return {
             (set, set): lambda x, y: x | y,  # set union
-            (set, int): lambda x, y: {*x, y}  # add to set
+            (set, int): lambda x, y: {*x, y},  # add to set
+            (int, int): DefaultOperator(lambda x, y: x + y, "+")
         }
