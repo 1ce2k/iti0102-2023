@@ -10,20 +10,15 @@ class TreeNode(metaclass=ABCMeta):
         """:param make use of *args and store them in a way that it is easy to use them."""
         self.__value = args
 
-    # @abstractmethod
-    # def apply(self):
-    #     """:abstract method which should be overridden to compute the value of the given abstract tree."""
-    #     print(self.__value)
-
     @abstractmethod
     def class_str(self):
         """:return class string representation of the object."""
         return f"{self.__class__.__name__}({', '.join([x.class_str() for x in self.__value])})"
 
-    @abstractmethod
-    def __str__(self):
-        """:return string representation of the object."""
-        return f" {self.default_operator} ".join([self.__encase(x, i == 0) for i, x in enumerate(self.__value)])
+    # @abstractmethod
+    # def __str__(self):
+    #     """:return string representation of the object."""
+    #     return f" {self.default_operator} ".join([self.__encase(x, i == 0) for i, x in enumerate(self.__value)])
 
     def __eq__(self, other):
         """:return True when 2 object trees have the same shape and values."""
