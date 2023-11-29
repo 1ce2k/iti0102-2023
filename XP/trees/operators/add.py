@@ -24,7 +24,9 @@ class Add(Operator):
         """Return the default operator of the operation."""
         return DefaultOperator(lambda x, y: x + y, "+")
 
+    @property
     def associativity(self):
+        """Return if operator is associative or not."""
         return True
 
     @property

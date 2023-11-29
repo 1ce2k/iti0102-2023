@@ -24,7 +24,9 @@ class Sub(Operator):
         """Make use of the 'operator' library or use a lambda function."""
         return DefaultOperator(lambda x, y: x - y, "-")
 
+    @property
     def associativity(self):
+        """Return if operator is associative or not."""
         return False
 
     def remove(self, set_a, int_a):

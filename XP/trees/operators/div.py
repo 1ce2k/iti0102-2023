@@ -31,5 +31,7 @@ class Div(Operator):
             (int, int): -1  # integer division
         }
 
+    @property
     def associativity(self):
+        """Return if operator is associative or not."""
         return False
