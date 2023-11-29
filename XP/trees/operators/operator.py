@@ -46,17 +46,3 @@ class Operator(TreeNode):
     def default_operator(self):
         """:abstract method which should be overridden to return the default_operator object."""
         return self.default_operator
-
-    @property
-    @abstractmethod
-    def actions(self):
-        """
-        All custom implemented actions on different data structures.
-
-        For example set - int does not exist, but we can implement it.
-        :return a dictionary of functions where key is accepted parameters and value is a function which takes the
-        aforementioned parameters as inputs and computes a value with them.
-        """
-        return {
-            (set, set): lambda x, y: x | y
-        }
