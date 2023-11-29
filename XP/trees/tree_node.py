@@ -10,10 +10,10 @@ class TreeNode(metaclass=ABCMeta):
         """:param make use of *args and store them in a way that it is easy to use them."""
         self.__value = args
 
-    @abstractmethod
-    def apply(self):
-        """:abstract method which should be overridden to compute the value of the given abstract tree."""
-        print(self.__value)
+    # @abstractmethod
+    # def apply(self):
+    #     """:abstract method which should be overridden to compute the value of the given abstract tree."""
+    #     print(self.__value)
 
     @abstractmethod
     def class_str(self):

@@ -25,5 +25,4 @@ class Pow(Operator):
     @property
     def actions(self):
         """No additional actions needs to be defined here."""
-        return {
-        }
+        return {}
