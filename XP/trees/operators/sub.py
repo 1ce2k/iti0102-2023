@@ -39,5 +39,5 @@ class Sub(Operator):
     def actions(self):
         """:return a dictionary of custom operations."""
         return {
-            (set, int): self.remove  # set without the element
+            (set, int): lambda x, y: self.remove(x, y)  # set without the element
         }
