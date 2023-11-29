@@ -59,4 +59,3 @@ def test_division_given_addition_to_string():
 def test_set_add_adds_when_given_leaves_with_sets():
     """."""
     assert Add(Leaf({5}), Leaf({6})).apply() == {5, 6}
-
