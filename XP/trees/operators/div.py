@@ -30,3 +30,6 @@ class Div(Operator):
             (set, int): {},  # remove from set
             (int, int): -1  # integer division
         }
+
+    def associativity(self):
+        return True
