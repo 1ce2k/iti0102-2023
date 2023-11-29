@@ -14,7 +14,12 @@ class Operator(TreeNode):
 
     def apply(self):
         """Make use of the *args to compute the value of the given subtree. Recursion is your friend."""
-        return self.default_operator(*[x.apply() for x in self.__value])
+        params = [x.apply() for x in self.__value]
+        types = tuple(type(x) for x in params)
+        if self.actions.get(types):
+            return self.actions[types](*params)
+        else:
+            return self.default_operator(*params)
 
     def class_str(self):
         """:return class string representation of the object."""
@@ -22,7 +27,6 @@ class Operator(TreeNode):
 
     def __str__(self):
         """:return the mathematical string representation of the tree with least amount of parenthesis."""
-        # return "5 + 6"
         return f" {self.default_operator} ".join([self.__encase(x) for x in self.__value])
 
     def __encase(self, node):
@@ -37,11 +41,6 @@ class Operator(TreeNode):
             return f"{node.__str__()}"
         return str(f"({node.__str__()})")
 
-    @property
-    # def associativity(self, node):
-    #     """:abstract method witch should be overridden to return a boolean when the node is not associative."""
-    #     return node.associativity()
-    #
     @property
     @abstractmethod
     def default_operator(self):
@@ -58,4 +57,6 @@ class Operator(TreeNode):
         :return a dictionary of functions where key is accepted parameters and value is a function which takes the
         aforementioned parameters as inputs and computes a value with them.
         """
-        pass
+        return {
+            (set, set): lambda x, y: x | y
+        }
