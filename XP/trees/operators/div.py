@@ -28,7 +28,6 @@ class Div(Operator):
         return {
             (set, set): lambda x, y: x - y,  # set exclusion
             (set, int): lambda x, y: x - {y},  # remove from set
-            (set, float): lambda x, y: x,
             (int, int): lambda x, y: x // y  # integer division
         }
 
