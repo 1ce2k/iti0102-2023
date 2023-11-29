@@ -40,8 +40,6 @@ class Mixer(NoteCollection):
         return [x.name for x in self.chords.chords]
 
 
-
-
     def extract(self) -> list[Note | Chord]:
         """
         Extract mixer.

@@ -54,3 +54,9 @@ def test_division_given_addition_to_string():
     tree = Div(Add(Leaf(12), Leaf(6)), Leaf(6))
     assert tree.apply() == 3
     assert tree.__str__() == "(12 + 6) / 6"
+
+
+def test_set_add_adds_when_given_leaves_with_sets():
+    """."""
+    assert Add(Leaf({5}), Leaf({6})).apply() == {5, 6}
+

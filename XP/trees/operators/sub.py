@@ -17,7 +17,7 @@ class Sub(Operator):
     @property
     def priority(self):
         """:priority of the operation."""
-        return 1
+        return 10
 
     @property
     def default_operator(self):
