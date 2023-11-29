@@ -28,7 +28,7 @@ class Div(Operator):
         return {
             (set, set): {},  # set exclusion
             (set, int): {},  # remove from set
-            (int, int): -1  # integer division
+            (int, int): lambda x, y: x / y # integer division
         }
 
     @property
