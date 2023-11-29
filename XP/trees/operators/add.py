@@ -22,7 +22,7 @@ class Add(Operator):
     @property
     def default_operator(self):
         """Return the default operator of the operation."""
-        return DefaultOperator(lambda x, y: self.actions)
+        return DefaultOperator(lambda x, y: self.actions, "+")
 
     @property
     def associativity(self):
