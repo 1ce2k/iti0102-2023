@@ -32,4 +32,4 @@ class Div(Operator):
         }
 
     def associativity(self):
-        return True
+        return False

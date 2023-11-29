@@ -17,7 +17,7 @@ class Sub(Operator):
     @property
     def priority(self):
         """:priority of the operation."""
-        return -1
+        return 1
 
     @property
     def default_operator(self):
@@ -25,7 +25,7 @@ class Sub(Operator):
         return DefaultOperator(lambda x, y: x - y, "-")
 
     def associativity(self):
-        return True
+        return False
 
     def remove(self, set_a, int_a):
         """Remove int from set."""
