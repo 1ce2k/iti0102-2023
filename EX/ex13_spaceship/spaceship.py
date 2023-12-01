@@ -52,7 +52,7 @@ class Spaceship:
 
     def add_crewmate(self, crewmate: Crewmate):
         """Add new crewmate."""
-        if crewmate not in self.crewmate and not isinstance(crewmate, Impostor):
+        if crewmate.color not in [x.color for x in self.crewmate] and not isinstance(crewmate, Impostor):
             self.crewmate.append(crewmate)
             self.players.append(crewmate)
 
