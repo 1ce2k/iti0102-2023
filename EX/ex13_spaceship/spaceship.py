@@ -80,7 +80,7 @@ class Spaceship:
             self.crewmate.remove(matched_killed[0])
             matched_killed[0].alive = False
 
-        if matched_killed and isinstance(killer, Impostor) and matched_killed[0].protected:
+        elif matched_killed and isinstance(killer, Impostor) and matched_killed[0].protected:
             matched_killed[0].protected = False
 
     def protect_crewmate(self, guardian, crewmate):
