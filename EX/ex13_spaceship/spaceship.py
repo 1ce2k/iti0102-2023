@@ -91,6 +91,7 @@ class Spaceship:
         if altruist.role == "Altruist" and killed.role != 'Impostor' and killed in self.dead_players:
             self.dead_players.remove(killed)
             self.crewmate.append(killed)
+            self.dead_players.append(altruist)
 
     def get_role_of_player(self, color):
         for player in self.players:
