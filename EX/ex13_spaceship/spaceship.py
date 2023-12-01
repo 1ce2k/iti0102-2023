@@ -102,7 +102,6 @@ class Spaceship:
     def sort_crewmates_by_tasks(self):
         return sorted(self.crewmate, key=lambda x: x.tasks_left)
 
-    def
 
 if __name__ == "__main__":
     print("Spaceship.")
