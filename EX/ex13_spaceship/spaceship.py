@@ -74,7 +74,7 @@ class Spaceship:
     def kill_crewmate(self, killer, killed):
         """Kill crewmate."""
         matched_killed = [x for x in self.crewmate if x.color == killed.capitalize()]
-        if matched_killed and isinstance(killer, Impostor) and not matched_killed[0].protected:
+        if matched_killed and isinstance(killer, Impostor) and not matched_killed[0].protected and not isinstance(matched_killed[0], Impostor):
             killer.kills += 1
             self.dead_players.append(matched_killed[0])
             self.crewmate.remove(matched_killed[0])
