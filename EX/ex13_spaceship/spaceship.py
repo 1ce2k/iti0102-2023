@@ -26,7 +26,7 @@ class Crewmate:
 class Impostor(Crewmate):
     def __init__(self, color):
         """Init impostor."""
-        super().__init__(color, 'Imposter', 0)
+        super().__init__(color, 'Impostor', 0)
         self.kills = 0
 
     def add_kill(self):
