@@ -96,8 +96,7 @@ class Spaceship:
 
     def get_role_of_player(self, color):
         player = [x for x in self.players if x.color == color]
-        if player:
-            return player[0].role
+        return player[0].role
 
     def sort_crewmates_by_tasks(self):
         return sorted(self.crewmate, key=lambda x: x.tasks_left)
