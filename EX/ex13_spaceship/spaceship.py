@@ -89,7 +89,6 @@ class Spaceship:
             crewmate.protected = True
     def revive_crewmate(self, altruist, killed):
         if killed in self.dead_players and altruist.role == "Altruist":
-            killed.alive = True
             self.dead_players.remove(killed)
             self.crewmate.append(killed)
 
