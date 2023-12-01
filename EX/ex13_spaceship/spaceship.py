@@ -50,11 +50,11 @@ class Spaceship:
         """Return dead players list."""
         return self.dead_players
 
-    def add_crewmate(self, crewmate: Crewmate):
+    def add_crewmate(self, new: Crewmate):
         """Add new crewmate."""
-        if crewmate.color not in [x.color for x in self.crewmate] and not isinstance(crewmate, Impostor):
-            self.crewmate.append(crewmate)
-            self.players.append(crewmate)
+        if new.color not in [x.color for x in self.crewmate] and not isinstance(new, Impostor):
+            self.crewmate.append(new)
+            self.players.append(new)
 
     def get_crewmate_list(self):
         """Return crewmate list."""
