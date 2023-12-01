@@ -101,6 +101,9 @@ class Spaceship:
     def sort_crewmates_by_tasks(self):
         return sorted(self.crewmate, key=lambda x: x.tasks_left)
 
+    def get_regular_crewmates(self):
+        return [x for x in self.crewmate if x.role == "Crewmate"]
+
     def get_impostor_with_most_kills(self):
         return sorted(self.impostors, key=lambda x: -x.kills)[0]
 
@@ -108,7 +111,7 @@ class Spaceship:
         return sorted(self.crewmate, key=lambda x: x.tasks_left)[0]
 
     def sort_impostors_by_kills(self):
-        return sorted(self.impostors, key=lambda x: x.kills)
+        return sorted(self.impostors, key=lambda x: -x.kills)
 
 
 if __name__ == "__main__":
