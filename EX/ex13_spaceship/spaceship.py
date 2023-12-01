@@ -77,6 +77,7 @@ class Spaceship:
         if matched_killed and isinstance(killer, Impostor) and not matched_killed[0].protected:
             killer.kills += 1
             self.dead_players.append(matched_killed[0])
+            self.crewmate.remove(matched_killed[0])
             matched_killed[0].alive = False
 
         if matched_killed and isinstance(killer, Impostor) and matched_killed[0].protected:
@@ -91,6 +92,7 @@ class Spaceship:
         if killed in self.dead_players and altruist.role == "Altruist":
             killed.alive = True
             self.dead_players.remove(killed)
+            self.crewmate.append(killed)
 
     def get_role_of_player(self, color):
         player = [x for x in self.players if x.color == color]
@@ -100,6 +102,7 @@ class Spaceship:
     def sort_crewmates_by_tasks(self):
         return sorted(self.crewmate, key=lambda x: x.tasks_left)
 
+    def
 
 if __name__ == "__main__":
     print("Spaceship.")
