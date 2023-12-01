@@ -91,7 +91,6 @@ class Spaceship:
         if killed in self.dead_players and altruist.role == "Altruist":
             self.dead_players.remove(killed)
             self.crewmate.append(killed)
-            self.crewmate.remove(altruist)
             self.dead_players.append(altruist)
 
     def get_role_of_player(self, color):
