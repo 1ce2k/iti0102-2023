@@ -52,7 +52,7 @@ class Spaceship:
 
     def add_crewmate(self, crewmate: Crewmate):
         """Add new crewmate."""
-        if crewmate not in self.players and not isinstance(crewmate, Impostor):
+        if crewmate not in self.crewmate and not isinstance(crewmate, Impostor):
             self.crewmate.append(crewmate)
             self.players.append(crewmate)
 
@@ -95,7 +95,9 @@ class Spaceship:
             self.crewmate.append(killed)
 
     def get_role_of_player(self, color):
-        return color
+        for player in self.players:
+            if player.color == color.capitalize():
+                return player.role
 
     def sort_crewmates_by_tasks(self):
         return sorted(self.crewmate, key=lambda x: x.tasks_left)
