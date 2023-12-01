@@ -92,6 +92,7 @@ class Spaceship:
             self.dead_players.remove(killed)
             self.crewmate.append(killed)
             self.dead_players.append(altruist)
+            self.crewmate.remove(altruist)
     def get_role_of_player(self, color):
         for player in self.players:
             if player.color == color.capitalize():
