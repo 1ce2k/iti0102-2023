@@ -95,8 +95,7 @@ class Spaceship:
             self.crewmate.append(killed)
 
     def get_role_of_player(self, color):
-        player = [x for x in self.players if x.color == color]
-        return player[0].role
+        return color
 
     def sort_crewmates_by_tasks(self):
         return sorted(self.crewmate, key=lambda x: x.tasks_left)
