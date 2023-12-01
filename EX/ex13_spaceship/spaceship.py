@@ -5,7 +5,7 @@ class Crewmate:
     def __init__(self, color: str, role: str, tasks: int = 10):
         """Init crewmate."""
         self.color = color.capitalize()
-        self.role = role.title() if role.title() != 'Impostor' else 'Crewmate'
+        self.role = role.title()
         self.tasks_left = tasks
         self.alive = True
         self.protected = False
@@ -35,7 +35,7 @@ class Impostor(Crewmate):
 
     def __repr__(self):
         """Return str repr of impostor."""
-        return f"Impostor {self.color}, kills: {self.kills}"
+        return f"Impostor {self.color}, kills: {self.kills}."
 
 
 class Spaceship:
