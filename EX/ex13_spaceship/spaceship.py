@@ -102,7 +102,7 @@ class Spaceship:
         return sorted(self.crewmate, key=lambda x: x.tasks_left)
 
     def get_impostor_with_most_kills(self):
-        return sorted(self.impostors, key=lambda x: -x.kills)
+        return sorted(self.impostors, key=lambda x: -x.kills)[0]
 
 
 if __name__ == "__main__":
