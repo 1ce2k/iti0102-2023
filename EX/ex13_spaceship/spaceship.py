@@ -97,7 +97,7 @@ class Spaceship:
                 return player.role
 
     def sort_crewmates_by_tasks(self):
-        return sorted([x for x in self.crewmate if x.role == 'Crewmate'], key=lambda x: x.tasks_left)
+        return sorted(self.crewmate, key=lambda x: x.tasks_left)
 
     def get_regular_crewmates(self):
         return [x for x in self.crewmate if x.role == "Crewmate"]
