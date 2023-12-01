@@ -5,11 +5,11 @@ class Crewmate:
     def __init__(self, color: str, role: str, tasks: int = 10):
         """Init crewmate."""
         self.color = color.capitalize()
-        self.role = role.capitalize() if role.capitalize() != 'Impostor' else 'Crewmate'
+        self.role = role.title() if role.title() != 'Impostor' else 'Crewmate'
         self.tasks_left = tasks
         self.alive = True
         self.protected = False
-        self.guardian = True if role == "Guardian angel" else False
+        self.guardian = True if role == "Guardian Angel" else False
 
     def complete_task(self):
         """Complete task."""
