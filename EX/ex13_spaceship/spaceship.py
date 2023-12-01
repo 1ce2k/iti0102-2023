@@ -97,7 +97,7 @@ class Spaceship:
                 return player.role
 
     def sort_crewmates_by_tasks(self):
-        return sorted(self.crewmate, key=lambda x: x.tasks_left)
+        return sorted([x for x in self.crewmate if x.role == 'Crewmate'], key=lambda x: x.tasks_left)
 
     def get_regular_crewmates(self):
         return [x for x in self.crewmate if x.role == "Crewmate"]
@@ -116,6 +116,7 @@ if __name__ == "__main__":
     print("Spaceship.")
 
     spaceship = Spaceship()
+    print("Check for dead players")
     print(spaceship.get_dead_players())  # -> []
     print()
 
@@ -147,8 +148,9 @@ if __name__ == "__main__":
     spaceship.add_impostor(blue)  # Blue cannot be an Impostor.
     print([x.color for x in spaceship.get_impostor_list()])  # -> []
     spaceship.add_crewmate(blue)
-    print()
+    print([x.color for x in spaceship.get_crewmate_list()])  # -> []
 
+    print()
     print("Now let's add impostors.")
     orange = Impostor("orANge")
     black = Impostor("black")
@@ -166,6 +168,7 @@ if __name__ == "__main__":
     spaceship.kill_crewmate(orange, "yellow")
     print(orange)  # -> Impostor Orange, kills: 1.
     spaceship.kill_crewmate(black, "purple")  # You can't kill another Impostor, silly!
+    print(spaceship.get_impostor_list())
     print(spaceship.get_dead_players())  # -> Yellow
     print()
 
@@ -186,7 +189,7 @@ if __name__ == "__main__":
     print("Let's check if the sorting and filtering works correctly.")
 
     red.complete_task()
-    print(spaceship.get_role_of_player("Blue"))  # -> Sheriff
+    print(spaceship.get_role_of_player("white"))  # -> Sheriff
     spaceship.kill_crewmate(purple, "blue")
     print(spaceship.sort_crewmates_by_tasks())  # -> Red, White
     print(spaceship.sort_impostors_by_kills())  # -> Purple, Orange, Black
