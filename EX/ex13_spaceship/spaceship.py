@@ -107,6 +107,9 @@ class Spaceship:
     def get_crewmate_with_most_tasks_done(self):
         return sorted(self.crewmate, key=lambda x: x.tasks_left)[0]
 
+    def sort_impostors_by_kills(self):
+        return sorted(self.impostors, key=lambda x: x.kills)
+
 
 if __name__ == "__main__":
     print("Spaceship.")
