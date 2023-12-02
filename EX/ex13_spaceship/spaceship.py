@@ -69,11 +69,13 @@ class Spaceship:
         """Return impostor list."""
         return self.impostors
 
-    def kill_crewmate(self, player1, player2):
-        if player1.role == 'Impostor' and isinstance(player2, Crewmate):
+    def kill_crewmate(self, player1, player2_color):
+        player2 = next(x for x in self.players if x.color == player2_color.capitalize())
+        if player1.role == 'Impostor' and player2.role != 'Impostor':
             if player2.protected:
                 player2.protected = False
             else:
+                player1.add_kill()
                 self.dead_players.append(player2)
                 self.crewmates.remove(player2)
 
