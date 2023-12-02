@@ -35,7 +35,7 @@ class Spaceship:
 
     def kill_impostor(self, killer, target):
         """Kill impostor."""
-        if killer in self.crewmate_list and killer.role == 'Sheriff' and killer not in self.dead_players and isinstance(target, Impostor) and target not in self.dead_players and not target.protected:
+        if killer in self.crewmate_list and killer.role == 'Sheriff' and killer not in self.dead_players and target.role == 'Impostor' and target not in self.dead_players:
             self.dead_players.append(target)
 
     def protect_crewmate(self, guardian_angel, target):
