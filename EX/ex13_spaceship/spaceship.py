@@ -40,6 +40,7 @@ class Spaceship:
         if target and killer in self.crewmate_list and killer.role == 'Sheriff' and target.role == 'Impostor':
             self.dead_players.append(target)
             self.impostor_list.remove(target)
+            self.dead_players.append(killer)
 
     def protect_crewmate(self, guardian_angel, target):
         """Protect someone."""
