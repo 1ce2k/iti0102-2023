@@ -30,13 +30,13 @@ class Spaceship:
     def protect_crewmate(self, guardian_angel, target):
         # print(guardian_angel)
         # print(f"{target} is protected {target.protected}")
-        if guardian_angel in self.dead_players and isinstance(target, Crewmate) and not self.is_anyone_protected and guardian_angel.role == 'Altruist':
+        if guardian_angel in self.dead_players and isinstance(target, Crewmate) and not self.is_anyone_protected and guardian_angel.role == 'Guardian Angel':
             # print(1)
             target.protected = True
             self.is_anyone_protected = True
 
     def revive_crewmate(self, reviver, target):
-        if reviver in self.crewmate_list and isinstance(target, Crewmate) and target in self.dead_players:
+        if reviver in self.crewmate_list and isinstance(target, Crewmate) and reviver.role == 'Altruist' and target in self.dead_players:
             target.is_dead = False
             self.dead_players.remove(target)
 
