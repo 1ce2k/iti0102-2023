@@ -38,6 +38,10 @@ class Spaceship:
         """Kill impostor."""
         if killer.role != "Sheriff" or killer not in self.crewmate_list:
             return
+        if target_name in [x.name for x in self.crewmate_list]:
+            self.crewmate_list.remove(killer)
+            self.dead_players.append(killer)
+            return
         target = next((impostor for impostor in self.impostor_list if impostor.name == target_name.capitalize()), None)
         print(target)
         if target and target.role == 'Impostor':
