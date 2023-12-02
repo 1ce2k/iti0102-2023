@@ -163,4 +163,3 @@ if __name__ == "__main__":
     # print(blue in spaceship.dead_players)
     # print(impostor in spaceship.dead_players)
     # print(impostor in spaceship.impostor_list)
-#
