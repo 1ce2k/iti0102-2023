@@ -68,7 +68,7 @@ class Crewmate:
         if not self.is_dead and self.tasks_left > 0:
             self.tasks_left -= 1
 
-    def __str__(self):
+    def __repr__(self):
         return f"{self.name}, role: {self.role}, tasks left: {self.tasks_left}."
 
 
@@ -77,7 +77,7 @@ class Impostor:
         self.name = name.capitalize()
         self.kills = 0
 
-    def __str__(self):
+    def __repr__(self):
         return f"Impostor {self.name}, kills: {self.kills}."
 
 
