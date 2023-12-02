@@ -41,6 +41,8 @@ class Spaceship:
             if not target.protected:
                 self.dead_players.append(target)
                 self.impostor_list.remove(target)
+                self.dead_players.append(killer)
+                self.crewmate_list.remove(killer)
             else:
                 target.protected = False
 
@@ -56,7 +58,9 @@ class Spaceship:
             target.is_dead = False
             reviver.is_dead = True
             self.dead_players.remove(target)
+            self.crewmate_list.append(target)
             self.dead_players.append(reviver)
+            self.crewmate_list.remove(reviver)
 
 
     def get_crewmate_list(self):
