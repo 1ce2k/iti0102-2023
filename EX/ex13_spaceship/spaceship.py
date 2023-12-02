@@ -69,29 +69,13 @@ class Spaceship:
         """Return impostor list."""
         return self.impostors
 
-    def kill_crewmate(self, killer, killed):
-        """Kill crewmate."""
-        matched_killed = [x for x in self.crewmate if x.color == killed.capitalize()]
-        if matched_killed and isinstance(killer, Impostor) and not matched_killed[0].protected and not isinstance(matched_killed[0], Impostor):
-            killer.kills += 1
-            self.dead_players.append(matched_killed[0])
-            self.crewmate.remove(matched_killed[0])
-            matched_killed[0].alive = False
-
-        elif matched_killed and isinstance(killer, Impostor) and matched_killed[0].protected:
-            matched_killed[0].protected = False
-            self.some_one_is_protected = False
-
-    def protect_crewmate(self, guardian, crewmate):
-        """Protect crewmate."""
-        if guardian.role == 'Guardian Angel' and crewmate not in self.dead_players and not self.some_one_is_protected:
-            crewmate.protected = True
-            self.some_one_is_protected = True
-
-    def revive_crewmate(self, altruist, killed):
-        if altruist.role == "Altruist" and killed.role != 'Impostor' and killed in self.dead_players:
-            self.dead_players.remove(killed)
-            self.crewmate.append(killed)
+    def kill_crewmate(self, player1, player2):
+        if player1.role == 'Impostor' and isinstance(player2, Crewmate):
+            if player2.protected:
+                player2.protected = False
+            else:
+                self.dead_players.append(player2)
+                self.crewmate.remove(player2)
 
     def get_role_of_player(self, color):
         for player in self.players:
