@@ -28,6 +28,7 @@ class Spaceship:
             if not target.protected:
                 target.is_dead = True
                 self.dead_players.append(target)
+                self.crewmate_list.remove(target)
                 killer.kills += 1
             else:
                 target.protected = False
@@ -39,6 +40,7 @@ class Spaceship:
         if target and killer in self.crewmate_list and killer.role == 'Sheriff' and target.role == 'Impostor':
             if not target.protected:
                 self.dead_players.append(target)
+                self.impostor_list.remove(target)
             else:
                 target.protected = False
 
@@ -52,7 +54,10 @@ class Spaceship:
         """Revive someone."""
         if reviver in self.crewmate_list and reviver.role == 'Altruist' and not reviver.is_dead and target in self.dead_players:
             target.is_dead = False
+            reviver.is_dead = True
             self.dead_players.remove(target)
+            self.dead_players.append(reviver)
+
 
     def get_crewmate_list(self):
         """Return crewmate list."""
