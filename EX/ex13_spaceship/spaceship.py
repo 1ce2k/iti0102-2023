@@ -71,7 +71,7 @@ class Spaceship:
 
     def kill_crewmate(self, player1, player2_color):
         player2 = next(x for x in self.players if x.color == player2_color.capitalize())
-        if player1.role == 'Impostor' and player2.role != 'Impostor':
+        if player1 in self.players and player2 in self.players and player1.role == 'Impostor' and player2.role != 'Impostor':
             if player2.protected:
                 player2.protected = False
             else:
