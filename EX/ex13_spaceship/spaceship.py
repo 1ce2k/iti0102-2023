@@ -2,20 +2,16 @@
 
 
 class Crewmate:
-    def __init__(self, color: str, role: str, tasks = 10):
+    def __init__(self, color: str, role: str, tasks=10):
         """Init crewmate."""
         self.color = color.capitalize()
         self.role = role.title() if role.title() != 'Impostor' else 'Crewmate'
         self.tasks_left = tasks
-        self.alive = True
         self.protected = False
-        self.guardian = True if role == "Guardian Angel" else False
 
     def complete_task(self):
         """Complete task."""
         self.tasks_left -= 1
-
-    # def get_role
 
     # Red, role: Crewmate, tasks left: 10.
     def __repr__(self):
@@ -23,10 +19,11 @@ class Crewmate:
         return f"{self.color}, role: {self.role}, tasks left: {self.tasks_left}."
 
 
-class Impostor(Crewmate):
+class Impostor:
     def __init__(self, color):
         """Init impostor."""
-        super().__init__(color, 'Impostor', 0)
+        self.color = color
+        self.role = 'Impostor'
         self.kills = 0
 
     def add_kill(self):
