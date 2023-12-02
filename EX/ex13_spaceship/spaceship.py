@@ -11,7 +11,7 @@ class Spaceship:
             self.crewmate_list.append(crewmate)
 
     def add_impostor(self, impostor):
-        if isinstance(impostor, Impostor) and impostor not in self.impostor_list and impostor not in self.crewmate_list:
+        if isinstance(impostor, Impostor) and impostor not in self.impostor_list and impostor not in self.crewmate_list and len(self.impostor_list) < 3:
             self.impostor_list.append(impostor)
 
     def kill_crewmate(self, killer, target_name):
@@ -54,6 +54,11 @@ class Spaceship:
 
     def sort_impostors_by_kills(self):
         return sorted(self.impostor_list, key=lambda x: -x.kills)
+
+    def get_role_of_player(self, name):
+        for player in (self.impostor_list + self.crewmate_list):
+            if player.name == name.capitalize():
+                return player.role
 
 
 class Crewmate:
@@ -120,12 +125,12 @@ if __name__ == "__main__":
     spaceship.add_crewmate(white)
     spaceship.add_crewmate(yellow)
     spaceship.add_crewmate(green)
-    print([x.color for x in spaceship.get_crewmate_list()])  # -> Red, White, Yellow and Green
+    print([x.name for x in spaceship.get_crewmate_list()])  # -> Red, White, Yellow and Green
 
     spaceship.add_impostor(blue)  # Blue cannot be an Impostor.
-    print([x.color for x in spaceship.get_impostor_list()])  # -> []
+    print([x.name for x in spaceship.get_impostor_list()])  # -> []
     spaceship.add_crewmate(blue)
-    print([x.color for x in spaceship.get_crewmate_list()])  # -> []
+    print([x.name for x in spaceship.get_crewmate_list()])  # -> []
 
     print()
     print("Now let's add impostors.")
