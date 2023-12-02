@@ -80,6 +80,7 @@ class Crewmate:
 class Impostor:
     def __init__(self, name):
         self.name = name.capitalize()
+        self.role = "Impostor"
         self.kills = 0
 
     def __repr__(self):
