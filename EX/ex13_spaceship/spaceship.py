@@ -36,7 +36,7 @@ class Spaceship:
 
     def kill_impostor(self, killer, target_name):
         """Kill impostor."""
-        if killer.role != "Sheriff" and killer not in self.crewmate_list:
+        if killer.role != "Sheriff" or killer not in self.crewmate_list:
             return
         target = next((impostor for impostor in self.impostor_list if impostor.name == target_name.capitalize()), None)
         print(target)
