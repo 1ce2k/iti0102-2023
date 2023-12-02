@@ -26,7 +26,7 @@ class Spaceship:
         target = next((crewmate for crewmate in self.crewmate_list if crewmate.name == target_name.capitalize()), None)
         if target and killer in self.impostor_list and target not in self.dead_players:
             if not target.protected:
-                target.id_dead = True
+                target.is_dead = True
                 self.dead_players.append(target)
                 killer.kills += 1
             else:
@@ -50,7 +50,7 @@ class Spaceship:
 
     def revive_crewmate(self, reviver, target):
         """Revive someone."""
-        if reviver in self.crewmate_list and reviver.role == 'Altruist' and target in self.dead_players:
+        if reviver in self.crewmate_list and reviver.role == 'Altruist' and not reviver.is_dead and target in self.dead_players:
             target.is_dead = False
             self.dead_players.remove(target)
 
@@ -170,11 +170,11 @@ if __name__ == "__main__":
     black = Impostor("black")
     purple = Impostor("Purple")
     spaceship.add_impostor(orange)
-    spaceship.add_impostor(black)
+    # spaceship.add_impostor(black)
 
-    spaceship.add_impostor(Impostor("Blue"))  # Blue player already exists in Spaceship.
+    # spaceship.add_impostor(Impostor("Blue"))  # Blue player already exists in Spaceship.
     spaceship.add_impostor(purple)
-    spaceship.add_impostor(Impostor("Pink"))  # No more than three impostors can be on Spaceship.
+    # spaceship.add_impostor(Impostor("Pink"))  # No more than three impostors can be on Spaceship.
     print(spaceship.get_impostor_list())  # -> Orange, Black and Purple
     print()
 
@@ -197,9 +197,9 @@ if __name__ == "__main__":
     print()
 
     print("Green revives their ally.")
-    spaceship.kill_crewmate(purple, "RED")
+    spaceship.kill_crewmate(purple, "Green")
     print(spaceship.get_dead_players())
-    spaceship.revive_crewmate(green, red)
+    spaceship.revive_crewmate(green, green)
     print(spaceship.get_dead_players())
     print(red in spaceship.dead_players)  # -> False
     print()
