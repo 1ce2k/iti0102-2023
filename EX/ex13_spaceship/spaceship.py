@@ -86,6 +86,12 @@ class Spaceship:
                 player2.protected = True
                 self.some_one_is_protected = True
 
+
+    def kill_impostor(self, player):
+        if isinstance(player, Impostor):
+            self.dead_players.append(player)
+            self.impostors.remove(player)
+
     def get_role_of_player(self, color):
         for player in self.players:
             if player.color == color.capitalize():
