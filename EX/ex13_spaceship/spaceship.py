@@ -36,7 +36,7 @@ class Spaceship:
             self.is_anyone_protected = True
 
     def revive_crewmate(self, reviver, target):
-        if reviver in self.crewmate_list and reviver.role == 'Altruist' and isinstance(target, Crewmate) and target in self.dead_players:
+        if reviver in self.crewmate_list and reviver.role == 'Altruist' and reviver not in self.dead_players and target in self.dead_players:
             target.is_dead = False
             self.dead_players.remove(target)
 
