@@ -40,6 +40,21 @@ class Spaceship:
     def get_dead_players(self):
         return self.dead_players
 
+    def sort_crewmates_by_tasks(self):
+        return sorted(self.crewmate_list, key=lambda x: x.tasks_left)
+
+    def get_regular_crewmates(self):
+        return [x for x in self.crewmate_list if x.role == "Crewmate"]
+
+    def get_impostor_with_most_kills(self):
+        return sorted(self.impostor_list, key=lambda x: -x.kills)[0]
+
+    def get_crewmate_with_most_tasks_done(self):
+        return sorted(self.crewmate_list, key=lambda x: x.tasks_left)[0]
+
+    def sort_impostors_by_kills(self):
+        return sorted(self.impostor_list, key=lambda x: -x.kills)
+
 
 class Crewmate:
     def __init__(self, name, role, tasks=10):
@@ -88,6 +103,14 @@ if __name__ == "__main__":
     print()
 
     print("Let's make Yellow complete a task.")
+    yellow.complete_task()
+    yellow.complete_task()
+    yellow.complete_task()
+    yellow.complete_task()
+    yellow.complete_task()
+    yellow.complete_task()
+    yellow.complete_task()
+    yellow.complete_task()
     yellow.complete_task()
     print(yellow)  # ->  Yellow, role: Guardian Angel, tasks left: 4.
     print()
