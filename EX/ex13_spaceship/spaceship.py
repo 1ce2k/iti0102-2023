@@ -1,115 +1,69 @@
 """EX 13."""
 
+class Spaceship:
+    def __init__(self):
+        self.crewmate_list = []
+        self.impostor_list = []
+        self.dead_players = []
+
+    def add_crewmate(self, crewmate):
+        if isinstance(crewmate, Crewmate) and crewmate not in self.crewmate_list and crewmate not in self.impostor_list:
+            self.crewmate_list.append(crewmate)
+
+    def add_impostor(self, impostor):
+        if isinstance(impostor, Impostor) and impostor not in self.impostor_list and impostor not in self.crewmate_list:
+            self.impostor_list.append(impostor)
+
+    def kill_crewmate(self, killer, target_name):
+        target = next((crewmate for crewmate in self.crewmate_list if crewmate.name == target_name.upper()), None)
+        if target:
+            if isinstance(killer, Impostor) and target not in self.dead_players:
+                target.id_dead = True
+                self.dead_players.append(target)
+                killer.kills += 1
+
+    def protect_crewmate(self, guardian_angel, target):
+        if guardian_angel in self.dead_players and isinstance(target, Crewmate):
+            target.protected = True
+
+    def revive_crewmate(self, reviver, target):
+        if reviver in self.crewmate_list and isinstance(target, Crewmate) and target in self.dead_players:
+            target.is_dead = False
+            self.dead_players.remove(target)
+
+    def get_crewmate_list(self):
+        return self.crewmate_list
+
+    def get_impostor_list(self):
+        return self.impostor_list
+
+    def get_dead_players(self):
+        return self.dead_players
+
 
 class Crewmate:
-    def __init__(self, color: str, role: str, tasks=10):
-        """Init crewmate."""
-        self.color = color.capitalize()
-        self.role = role.title() if role.title() != 'Impostor' else 'Crewmate'
+    def __init__(self, name, role, tasks=10):
+        self.name = name.capitalize()
+        self.role = role if role != 'Impostor' else 'Crewmate'
         self.tasks_left = tasks
+        self.is_dead = False
         self.protected = False
 
     def complete_task(self):
-        """Complete task."""
-        self.tasks_left -= 1
+        if not self.is_dead and self.tasks_left > 0:
+            self.tasks_left -= 1
 
-    # Red, role: Crewmate, tasks left: 10.
-    def __repr__(self):
-        """Return str repr of obj."""
-        return f"{self.color}, role: {self.role}, tasks left: {self.tasks_left}."
+    def __str__(self):
+        return f"{self.name}, role: {self.role}, tasks left: {self.tasks_left}."
 
 
 class Impostor:
-    def __init__(self, color):
-        """Init impostor."""
-        self.color = color.capitalize()
-        self.role = 'Impostor'
+    def __init__(self, name):
+        self.name = name
         self.kills = 0
 
-    def add_kill(self):
-        """Add kill to impostor."""
-        self.kills += 1
-
-    def __repr__(self):
-        """Return str repr of impostor."""
-        return f"Impostor {self.color}, kills: {self.kills}."
-
-
-class Spaceship:
-    def __init__(self):
-        """Init spaceship."""
-        self.players = []
-        self.crewmate_list = []
-        self.impostors = []
-        self.dead_players = []
-        self.some_one_is_protected = False
-
-    def get_dead_players(self):
-        """Return dead players list."""
-        return self.dead_players
-
-    def add_crewmate(self, new: Crewmate):
-        """Add new crewmate."""
-        if new.color not in [x.color for x in self.crewmate_list] and not isinstance(new, Impostor):
-            self.crewmate_list.append(new)
-            self.players.append(new)
-
-    def get_crewmate_list(self):
-        """Return crewmate list."""
-        return self.crewmate_list
-
-    def add_impostor(self, impostor: Impostor):
-        """Add new impostor."""
-        if isinstance(impostor, Impostor) and impostor.color not in [x.color for x in self.crewmate_list] and len(
-                self.impostors) <= 2:
-            self.impostors.append(impostor)
-            self.players.append(impostor)
-
-    def get_impostor_list(self):
-        """Return impostor list."""
-        return self.impostors
-
-    def kill_crewmate(self, player1, player2_color):
-        if player1 in self.players and player2_color in [x.color for x in self.players]:
-            player2 = next(x for x in self.players if x.color == player2_color.capitalize())
-            if player1.role == 'Impostor' and player2.role != 'Impostor':
-                if player2.protected is True:
-                    player2.protected = False
-                else:
-                    player1.add_kill()
-                    self.dead_players.append(player2)
-                    self.crewmate_list.remove(player2)
-
-    def protect_crewmate(self, player1, player2):
-        if player1 in self.dead_players and player1.role == "Guardian Angel":
-            if player2 not in self.dead_players and not self.some_one_is_protected:
-                player2.protected = True
-                self.some_one_is_protected = True
-
-    def kill_impostor(self, player1, player2):
-        if player1 in self.players and player2 in self.players:
-            if player1.role == 'Sheriff' and player1 not in self.dead_players and player2.role == 'Impostor':
-                self.dead_players.append(player2)
-
-    def get_role_of_player(self, color):
-        for player in self.players:
-            if player.color == color.capitalize():
-                return player.role
-
-    def sort_crewmates_by_tasks(self):
-        return sorted(self.crewmate_list, key=lambda x: x.tasks_left)
-
-    def get_regular_crewmates(self):
-        return [x for x in self.crewmate_list if x.role == "Crewmate"]
-
-    def get_impostor_with_most_kills(self):
-        return sorted(self.impostors, key=lambda x: -x.kills)[0]
-
-    def get_crewmate_with_most_tasks_done(self):
-        return sorted(self.crewmate_list, key=lambda x: x.tasks_left)[0]
-
-    def sort_impostors_by_kills(self):
-        return sorted(self.impostors, key=lambda x: -x.kills)
+    def __str__(self):
+        return f"Impostor {self.name}, kills: {self.kills}."
 
 
 if __name__ == "__main__":
