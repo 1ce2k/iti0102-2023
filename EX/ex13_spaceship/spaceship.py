@@ -2,7 +2,7 @@
 
 
 class Crewmate:
-    def __init__(self, color: str, role: str, tasks=10):
+    def __init__(self, color: str, role: str, tasks=0):
         """Init crewmate."""
         self.color = color.capitalize()
         self.role = role.title() if role.title() != 'Impostor' else 'Crewmate'
