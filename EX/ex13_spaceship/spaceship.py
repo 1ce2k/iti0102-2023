@@ -41,18 +41,12 @@ class Spaceship:
             return
         target = next((x for x in (self.impostor_list + self.crewmate_list) if x.name == target_name.capitalize()), None)
         if target and target.role != 'Impostor':
-            print('wrong color')
             self.crewmate_list.remove(killer)
             self.dead_players.append(killer)
-            self.dead_players.append(target)
-            self.crewmate_list.remove(target)
 
         elif target and target in self.impostor_list:
-            'right color'
             self.dead_players.append(target)
             self.impostor_list.remove(target)
-            self.dead_players.append(killer)
-            self.crewmate_list.remove(killer)
 
     def protect_crewmate(self, guardian_angel, target):
         """Protect someone."""
