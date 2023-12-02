@@ -87,10 +87,12 @@ class Spaceship:
                 self.some_one_is_protected = True
 
 
-    def kill_impostor(self, player):
-        if isinstance(player, Impostor):
-            self.dead_players.append(player)
-            self.impostors.remove(player)
+    def kill_impostor(self, player1, player2):
+        if player1 in self.players and player2 in self.players:
+            if player1.role == 'Sheriff' and player1 not in self.dead_players and player2.role == 'Impostor':
+                self.dead_players.append(player2)
+                self.impostors.remove(player2)
+
 
     def get_role_of_player(self, color):
         for player in self.players:
