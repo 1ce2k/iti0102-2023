@@ -44,7 +44,7 @@ class Spaceship:
 class Crewmate:
     def __init__(self, name, role, tasks=10):
         self.name = name.capitalize()
-        self.role = role.title() if role != 'Impostor' else 'Crewmate'
+        self.role = role.title() if role.title() != 'Impostor' else 'Crewmate'
         self.tasks_left = tasks
         self.is_dead = False
         self.protected = False
