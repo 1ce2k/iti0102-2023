@@ -33,8 +33,9 @@ class Spaceship:
                 target.protected = False
                 self.is_anyone_protected = False
 
-    def kill_impostor(self, killer, target):
+    def kill_impostor(self, killer, target_name):
         """Kill impostor."""
+        target = next((impostor for impostor in self.impostor_list if impostor.name == target_name.capitalize()), None)
         if killer in self.crewmate_list and killer.role == 'Sheriff' and killer not in self.dead_players and target.role == 'Impostor' and target not in self.dead_players:
             self.dead_players.append(target)
 
