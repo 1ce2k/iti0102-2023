@@ -7,7 +7,7 @@ class Spaceship:
         self.dead_players = []
 
     def add_crewmate(self, crewmate):
-        if isinstance(crewmate, Crewmate) and crewmate not in self.crewmate_list and crewmate not in self.impostor_list:
+        if isinstance(crewmate, Crewmate) and crewmate.name not in [x.name for x in self.crewmate_list] and crewmate not in [x.name for x in self.impostor_list]:
             self.crewmate_list.append(crewmate)
 
     def add_impostor(self, impostor):
