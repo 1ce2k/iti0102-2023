@@ -3,6 +3,7 @@
 
 class Spaceship:
     """Spaceship class."""
+
     def __init__(self):
         """Init spaceship."""
         self.crewmate_list = []
@@ -90,6 +91,7 @@ class Spaceship:
 
 class Crewmate:
     """Crewmate class."""
+
     def __init__(self, name, role, tasks=10):
         """Init crewmate."""
         self.name = name.capitalize()
@@ -110,6 +112,7 @@ class Crewmate:
 
 class Impostor:
     """Impostor class."""
+
     def __init__(self, name):
         """Init impostor."""
         self.name = name.capitalize()
