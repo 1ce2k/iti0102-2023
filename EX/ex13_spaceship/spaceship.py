@@ -82,7 +82,7 @@ class Spaceship:
 
     def protect_crewmate(self, guardian, crewmate):
         """Protect crewmate."""
-        if guardian.guardian and crewmate not in self.dead_players and not guardian.alive:
+        if guardian.role == 'Guardian Angel' and crewmate not in self.dead_players and not guardian.alive:
             crewmate.protected = True
 
     def revive_crewmate(self, altruist, killed):
