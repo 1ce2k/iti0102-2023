@@ -38,7 +38,7 @@ class Spaceship:
     def revive_crewmate(self, reviver, target):
         if reviver in self.crewmate_list and isinstance(target, Crewmate) and reviver.role == 'Altruist' and target in self.dead_players:
             target.is_dead = False
-            # self.dead_players.remove(target)
+            self.dead_players.remove(target)
 
     def get_crewmate_list(self):
         return self.crewmate_list
@@ -163,9 +163,11 @@ if __name__ == "__main__":
     print(green.protected)  # -> False
     print()
 
-    # print("Green revives their ally.")
-    # spaceship.kill_crewmate(purple, "RED")
-    # spaceship.revive_crewmate(green, red)
-    # print(red in spaceship.dead_players)  # -> False
-    # print()
+    print("Green revives their ally.")
+    spaceship.kill_crewmate(purple, "RED")
+    print(spaceship.get_dead_players())
+    spaceship.revive_crewmate(green, red)
+    print(spaceship.get_dead_players())
+    print(red in spaceship.dead_players)  # -> False
+    print()
 #
