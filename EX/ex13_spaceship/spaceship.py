@@ -39,7 +39,7 @@ class Spaceship:
     def __init__(self):
         """Init spaceship."""
         self.players = []
-        self.crewmate = []
+        self.crewmates = []
         self.impostors = []
         self.dead_players = []
         self.some_one_is_protected = False
@@ -50,17 +50,17 @@ class Spaceship:
 
     def add_crewmate(self, new: Crewmate):
         """Add new crewmate."""
-        if new.color not in [x.color for x in self.crewmate] and not isinstance(new, Impostor):
-            self.crewmate.append(new)
+        if new.color not in [x.color for x in self.crewmates] and not isinstance(new, Impostor):
+            self.crewmates.append(new)
             self.players.append(new)
 
     def get_crewmate_list(self):
         """Return crewmate list."""
-        return self.crewmate
+        return self.crewmates
 
     def add_impostor(self, impostor: Impostor):
         """Add new impostor."""
-        if isinstance(impostor, Impostor) and impostor.color not in [x.color for x in self.crewmate] and len(
+        if isinstance(impostor, Impostor) and impostor.color not in [x.color for x in self.crewmates] and len(
                 self.impostors) <= 2:
             self.impostors.append(impostor)
             self.players.append(impostor)
@@ -75,7 +75,13 @@ class Spaceship:
                 player2.protected = False
             else:
                 self.dead_players.append(player2)
-                self.crewmate.remove(player2)
+                self.crewmates.remove(player2)
+
+    def protect_crewmate(self, player1, player2):
+        if player1 in self.dead_players and player1.role == "Guardian Angel":
+            if player2 not in self.dead_players and not self.some_one_is_protected:
+                player2.protected = True
+                self.some_one_is_protected = True
 
     def get_role_of_player(self, color):
         for player in self.players:
@@ -83,16 +89,16 @@ class Spaceship:
                 return player.role
 
     def sort_crewmates_by_tasks(self):
-        return sorted(self.crewmate, key=lambda x: x.tasks_left)
+        return sorted(self.crewmates, key=lambda x: x.tasks_left)
 
     def get_regular_crewmates(self):
-        return [x for x in self.crewmate if x.role == "Crewmate"]
+        return [x for x in self.crewmates if x.role == "Crewmate"]
 
     def get_impostor_with_most_kills(self):
         return sorted(self.impostors, key=lambda x: -x.kills)[0]
 
     def get_crewmate_with_most_tasks_done(self):
-        return sorted(self.crewmate, key=lambda x: x.tasks_left)[0]
+        return sorted(self.crewmates, key=lambda x: x.tasks_left)[0]
 
     def sort_impostors_by_kills(self):
         return sorted(self.impostors, key=lambda x: -x.kills)
