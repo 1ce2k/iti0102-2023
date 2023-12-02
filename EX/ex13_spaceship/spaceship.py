@@ -27,6 +27,10 @@ class Spaceship:
                     target.protected = False
                     self.is_anyone_protected = False
 
+    def kill_impostor(self, killer, target):
+        if killer in self.crewmate_list and killer.role == 'Sheriff' and killer not in self.dead_players and isinstance(target, Impostor) and target not in self.dead_players and not target.protected:
+            self.dead_players.append(target)
+
     def protect_crewmate(self, guardian_angel, target):
         # print(guardian_angel)
         # print(f"{target} is protected {target.protected}")
@@ -39,10 +43,6 @@ class Spaceship:
         if reviver in self.crewmate_list and reviver.role == 'Altruist' and reviver not in self.dead_players and target in self.dead_players:
             target.is_dead = False
             self.dead_players.remove(target)
-
-    def kill_impostor(self, killer, target):
-        if killer in self.crewmate_list and killer.role == 'Sheriff' and isinstance(target, Impostor) and target not in self.dead_players and not target.protected:
-            self.dead_players.append(target)
 
     def get_crewmate_list(self):
         return self.crewmate_list
