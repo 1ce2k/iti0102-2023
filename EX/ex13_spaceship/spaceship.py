@@ -41,6 +41,7 @@ class Spaceship:
             self.dead_players.append(target)
             self.impostor_list.remove(target)
             self.dead_players.append(killer)
+            self.crewmate_list.remove(killer)
 
     def protect_crewmate(self, guardian_angel, target):
         """Protect someone."""
