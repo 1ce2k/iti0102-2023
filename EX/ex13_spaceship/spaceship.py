@@ -42,6 +42,7 @@ class Spaceship:
         self.crewmate = []
         self.impostors = []
         self.dead_players = []
+        self.some_one_is_protected = False
 
     def get_dead_players(self):
         """Return dead players list."""
@@ -79,11 +80,13 @@ class Spaceship:
 
         elif matched_killed and isinstance(killer, Impostor) and matched_killed[0].protected:
             matched_killed[0].protected = False
+            self.some_one_is_protected = False
 
     def protect_crewmate(self, guardian, crewmate):
         """Protect crewmate."""
-        if guardian.role == 'Guardian Angel' and crewmate not in self.dead_players and not guardian.alive:
+        if guardian.role == 'Guardian Angel' and crewmate not in self.dead_players and not self.some_one_is_protected:
             crewmate.protected = True
+            self.some_one_is_protected = True
 
     def revive_crewmate(self, altruist, killed):
         if altruist.role == "Altruist" and killed.role != 'Impostor' and killed in self.dead_players:
