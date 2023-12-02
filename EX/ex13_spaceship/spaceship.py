@@ -2,6 +2,7 @@
 
 
 class Spaceship:
+    """Spaceship class."""
     def __init__(self):
         """Init spaceship."""
         self.crewmate_list = []
@@ -81,13 +82,14 @@ class Spaceship:
         return sorted(self.impostor_list, key=lambda x: -x.kills)
 
     def get_role_of_player(self, name):
-        """Return role of player"""
+        """Return role of player."""
         for player in (self.impostor_list + self.crewmate_list):
             if player.name == name.capitalize():
                 return player.role
 
 
 class Crewmate:
+    """Crewmate class."""
     def __init__(self, name, role, tasks=10):
         """Init crewmate."""
         self.name = name.capitalize()
@@ -107,6 +109,7 @@ class Crewmate:
 
 
 class Impostor:
+    """Impostor class."""
     def __init__(self, name):
         """Init impostor."""
         self.name = name.capitalize()
