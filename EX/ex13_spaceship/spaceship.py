@@ -44,6 +44,8 @@ class Spaceship:
             print('wrong color')
             self.crewmate_list.remove(killer)
             self.dead_players.append(killer)
+            self.dead_players.append(target)
+            self.dead_players.remove(target)
 
         elif target and target in self.impostor_list:
             'right color'
