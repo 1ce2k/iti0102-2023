@@ -25,13 +25,15 @@ class Spaceship:
                     killer.kills += 1
                 else:
                     target.protected = False
+                    self.is_anyone_protected = False
 
     def protect_crewmate(self, guardian_angel, target):
-        print(guardian_angel)
-        print(f"{target} is protected {target.protected}")
-        if guardian_angel in self.dead_players and isinstance(target, Crewmate):
-            print(1)
+        # print(guardian_angel)
+        # print(f"{target} is protected {target.protected}")
+        if guardian_angel in self.dead_players and isinstance(target, Crewmate) and not self.is_anyone_protected:
+            # print(1)
             target.protected = True
+            self.is_anyone_protected = True
 
     def revive_crewmate(self, reviver, target):
         if reviver in self.crewmate_list and isinstance(target, Crewmate) and target in self.dead_players:
@@ -151,16 +153,16 @@ if __name__ == "__main__":
     print(spaceship.get_dead_players())  # -> Yellow
     print()
 
-    # print("Yellow is a Guardian angel, and can protect their allies when dead.")
-    # spaceship.protect_crewmate(yellow, green)
-    # print(green.protected)  # -> True
-    # spaceship.protect_crewmate(yellow, red)
-    # print(red.protected)
-    # spaceship.kill_crewmate(orange, "green")
-    # print(green in spaceship.dead_players)  # -> False
-    # print(green.protected)  # -> False
-    # print()
-    #
+    print("Yellow is a Guardian angel, and can protect their allies when dead.")
+    spaceship.protect_crewmate(yellow, green)
+    print(green.protected)  # -> True
+    spaceship.protect_crewmate(yellow, red)
+    print(red.protected)
+    spaceship.kill_crewmate(orange, "green")
+    print(green in spaceship.dead_players)  # -> False
+    print(green.protected)  # -> False
+    print()
+
     # print("Green revives their ally.")
     # spaceship.kill_crewmate(purple, "RED")
     # spaceship.revive_crewmate(green, red)
