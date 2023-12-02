@@ -17,7 +17,7 @@ class Spaceship:
 
     def kill_crewmate(self, killer, target_name):
         target = next((crewmate for crewmate in self.crewmate_list if crewmate.name == target_name.capitalize()), None)
-        if target:
+        if target and killer in self.impostor_list:
             if isinstance(killer, Impostor) and target not in self.dead_players:
                 target.id_dead = True
                 self.dead_players.append(target)
