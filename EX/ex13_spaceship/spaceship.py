@@ -22,7 +22,7 @@ class Crewmate:
 class Impostor:
     def __init__(self, color):
         """Init impostor."""
-        self.color = color.capitalie()
+        self.color = color.capitalize()
         self.role = 'Impostor'
         self.kills = 0
 
