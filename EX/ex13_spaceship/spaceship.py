@@ -41,6 +41,7 @@ class Spaceship:
             if not target.protected:
                 self.dead_players.append(target)
                 self.impostor_list.remove(target)
+                self.dead_players.append(killer)
             else:
                 target.protected = False
 
