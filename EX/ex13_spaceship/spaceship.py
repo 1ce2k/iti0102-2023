@@ -37,8 +37,9 @@ class Spaceship:
     def kill_impostor(self, killer, target_name):
         """Kill impostor."""
         target = next((impostor for impostor in self.impostor_list if impostor.name == target_name.capitalize()), None)
+        print(target)
         if target and killer in self.crewmate_list and killer.role == 'Sheriff' and target.role == 'Impostor':
-            if killer.protected:
+            if not killer.protected:
                 self.dead_players.append(target)
                 self.impostor_list.remove(target)
             else:
@@ -140,20 +141,24 @@ class Impostor:
 
 if __name__ == "__main__":
     spaceship = Spaceship()
-    crew1 = Crewmate("Blue", "Sheriff", 10)
-    crew2 = Crewmate("Green", "Crewmate", 10)
-    crew3 = Crewmate("Red", "Guardian angel", 10)
-    crew4 = Crewmate("yellow", "altruist", 10)
+    blue = Crewmate("Blue", "Sheriff", 10)
+    green = Crewmate("Green", "Crewmate", 10)
+    red = Crewmate("Red", "Guardian angel", 10)
+    yellow = Crewmate("yellow", "altruist", 10)
     impostor = Impostor("Black")
-    spaceship.add_crewmate(crew1)
-    spaceship.add_crewmate(crew2)
-    spaceship.add_crewmate(crew3)
-    spaceship.add_crewmate(crew4)
+    spaceship.add_crewmate(blue)
+    spaceship.add_crewmate(green)
+    spaceship.add_crewmate(red)
+    spaceship.add_crewmate(yellow)
     spaceship.add_impostor(impostor)
     print(spaceship.get_crewmate_list())
     print(spaceship.get_impostor_list())
+    print()
+    spaceship.kill_crewmate(impostor, 'red')
 
-    spaceship.kill_impostor(crew1, "black")
-    print(spaceship.get_crewmate_list())
-    print(spaceship.get_impostor_list())
-    print(spaceship.get_dead_players())
+    print("Test kill impostor")
+    spaceship.kill_impostor(blue, "black")
+    print(blue in spaceship.crewmate_list)
+    print(blue in spaceship.dead_players)
+    print(impostor in spaceship.dead_players)
+    print(impostor in spaceship.impostor_list)
