@@ -17,15 +17,14 @@ class Spaceship:
 
     def kill_crewmate(self, killer, target_name):
         target = next((crewmate for crewmate in self.crewmate_list if crewmate.name == target_name.capitalize()), None)
-        if target and killer in self.impostor_list:
-            if isinstance(killer, Impostor) and target not in self.dead_players:
-                if not target.protected:
-                    target.id_dead = True
-                    self.dead_players.append(target)
-                    killer.kills += 1
-                else:
-                    target.protected = False
-                    self.is_anyone_protected = False
+        if target and killer in self.impostor_list and target not in self.dead_players:
+            if not target.protected:
+                target.id_dead = True
+                self.dead_players.append(target)
+                killer.kills += 1
+            else:
+                target.protected = False
+                self.is_anyone_protected = False
 
     def kill_impostor(self, killer, target):
         if killer in self.crewmate_list and killer.role == 'Sheriff' and killer not in self.dead_players and isinstance(target, Impostor) and target not in self.dead_players and not target.protected:
@@ -176,3 +175,7 @@ if __name__ == "__main__":
     print(red in spaceship.dead_players)  # -> False
     print()
 #
+
+
+    spaceship.kill_impostor(blue, black)
+    print(spaceship.get_dead_players())
