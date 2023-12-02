@@ -19,12 +19,12 @@ class Spaceship:
         target = next((crewmate for crewmate in self.crewmate_list if crewmate.name == target_name.capitalize()), None)
         if target and killer in self.impostor_list:
             if isinstance(killer, Impostor) and target not in self.dead_players:
-                    if not target.protected:
-                        target.id_dead = True
-                        self.dead_players.append(target)
-                        killer.kills += 1
-                    else:
-                        target.protected = False
+                if not target.protected:
+                    target.id_dead = True
+                    self.dead_players.append(target)
+                    killer.kills += 1
+                else:
+                    target.protected = False
 
     def protect_crewmate(self, guardian_angel, target):
         print(guardian_angel)
