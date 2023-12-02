@@ -30,7 +30,7 @@ class Spaceship:
     def protect_crewmate(self, guardian_angel, target):
         # print(guardian_angel)
         # print(f"{target} is protected {target.protected}")
-        if guardian_angel in self.dead_players and isinstance(target, Crewmate) and not self.is_anyone_protected and guardian_angel.role == 'Guardian Angel':
+        if guardian_angel in self.dead_players and isinstance(target, Crewmate) and not self.is_anyone_protected and guardian_angel.role == 'Altruist':
             # print(1)
             target.protected = True
             self.is_anyone_protected = True
@@ -130,7 +130,7 @@ if __name__ == "__main__":
 
     spaceship.add_impostor(blue)  # Blue cannot be an Impostor.
     spaceship.add_crewmate(blue)
-    print([x.name for x in spaceship.get_crewmate_list()])  # -> Red, White, Yellow and Green
+    print(spaceship.get_crewmate_list())  # -> Red, White, Yellow and Green
 
     print("Now let's add impostors.")
     orange = Impostor("orANge")
