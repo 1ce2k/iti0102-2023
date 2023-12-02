@@ -37,14 +37,11 @@ class Spaceship:
     def kill_impostor(self, killer, target_name):
         """Kill impostor."""
         target = next((impostor for impostor in self.impostor_list if impostor.name == target_name.capitalize()), None)
-        if target and killer in self.crewmate_list and killer.role == 'Sheriff' and target.role == 'Impostor' and target not in self.dead_players:
-            if not target.protected and killer.protected:
-                self.dead_players.append(target)
-                self.impostor_list.remove(target)
-                self.dead_players.append(killer)
-                self.crewmate_list.remove(killer)
-            else:
-                target.protected = False
+        if target and killer in self.crewmate_list and killer.role == 'Sheriff' and target.role == 'Impostor':
+            self.dead_players.append(target)
+            self.impostor_list.remove(target)
+            self.crewmate_list.remove(killer)
+            self.dead_players.append(killer)
 
     def protect_crewmate(self, guardian_angel, target):
         """Protect someone."""
@@ -61,7 +58,6 @@ class Spaceship:
             self.crewmate_list.append(target)
             self.dead_players.append(reviver)
             self.crewmate_list.remove(reviver)
-
 
     def get_crewmate_list(self):
         """Return crewmate list."""
