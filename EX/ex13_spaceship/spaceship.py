@@ -37,14 +37,16 @@ class Spaceship:
     def kill_impostor(self, killer, target_name):
         """Kill impostor."""
         if killer.role != "Sheriff" or killer not in self.crewmate_list:
+            print(1)
             return
-        if target_name in [x.name for x in self.crewmate_list]:
+        target = next((x for x in (self.impostor_list + self.crewmate_list) if x.name == target_name.capitalize()), None)
+        if target and target.role != 'Impostor':
+            print('wrong color')
             self.crewmate_list.remove(killer)
             self.dead_players.append(killer)
-            return
-        target = next((impostor for impostor in self.impostor_list if impostor.name == target_name.capitalize()), None)
-        print(target)
-        if target and target.role == 'Impostor':
+
+        elif target and target in self.impostor_list:
+            'right color'
             self.dead_players.append(target)
             self.impostor_list.remove(target)
             self.dead_players.append(killer)
@@ -159,8 +161,10 @@ if __name__ == "__main__":
     spaceship.kill_crewmate(impostor, 'red')
 
     print("Test kill impostor")
-    spaceship.kill_impostor(blue, "black")
-    print(blue in spaceship.crewmate_list)
-    print(blue in spaceship.dead_players)
-    print(impostor in spaceship.dead_players)
-    print(impostor in spaceship.impostor_list)
+    spaceship.kill_impostor(blue, "green")
+    print(spaceship.dead_players)
+    # print(blue in spaceship.crewmate_list)
+    # print(blue in spaceship.dead_players)
+    # print(impostor in spaceship.dead_players)
+    # print(impostor in spaceship.impostor_list)
+#
