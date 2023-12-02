@@ -40,6 +40,10 @@ class Spaceship:
             target.is_dead = False
             self.dead_players.remove(target)
 
+    def kill_impostor(self, killer, target):
+        if killer in self.crewmate_list and killer.role == 'Sheriff' and isinstance(target, Impostor) and target not in self.dead_players:
+            self.dead_players.append(target)
+
     def get_crewmate_list(self):
         return self.crewmate_list
 
