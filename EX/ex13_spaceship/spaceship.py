@@ -73,7 +73,7 @@ class Spaceship:
         if player1 in self.players and player2_color in [x.color for x in self.players]:
             player2 = next(x for x in self.players if x.color == player2_color.capitalize())
             if player1.role == 'Impostor' and player2.role != 'Impostor':
-                if player2.protected:
+                if player2.protected is True:
                     player2.protected = False
                 else:
                     player1.add_kill()
