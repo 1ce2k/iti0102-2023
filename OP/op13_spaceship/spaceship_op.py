@@ -17,19 +17,16 @@ class OPSpaceship(Spaceship):
         self.meeting = False
         self.votes = {}
         self.game = False
-        self.player_num = 0
 
     def add_crewmate(self, crewmate):
         """Add new crewmate."""
         if not self.game:
             super().add_crewmate(crewmate)
-            self.player_num += 1
 
     def add_impostor(self, impostor):
         """Add new impostor."""
         if not self.game:
             super().add_impostor(impostor)
-            self.player_num += 1
 
     def kill_crewmate(self, killer, target_name):
         """Kill crewmate."""
