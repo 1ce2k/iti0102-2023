@@ -78,21 +78,24 @@ class OPSpaceship(Spaceship):
 
     def cast_vote(self, player, target_name):
         target = next((target for target in (self.crewmate_list + self.impostor_list) if target.name == target_name.capitalize()), None)
-        if self.meeting and player not in self.dead_players and player.name not in self.votes and target and self.game:
+        if self.meeting and player not in self.dead_players and player.name not in self.votes and target and self.game and player in (self.impostor_list + self.crewmate_list):
             self.votes[player.name] = target.name
 
     def end_meeting(self):
         if self.meeting:
             vote_counts = Counter(self.votes.values())
+            print(vote_counts)
             max_votes = max(vote_counts.values(), default=0)
             skipped = self.player_num - len(self.votes)
+            voted_players_names = [x for x in vote_counts if vote_counts[x] == max_votes]
+            print(voted_players_names)
             print(skipped)
             if max_votes < skipped or max_votes == 0:
                 self.meeting = False
                 self.dead_players.clear()
                 self.votes.clear()
                 return "No one was ejected. (Skipped)"
-            elif max_votes == skipped:
+            elif max_votes == skipped and len(voted_players_names) > 1:
                 self.meeting = False
                 self.dead_players.clear()
                 self.votes.clear()
@@ -142,8 +145,9 @@ if __name__ == "__main__":
     spaceship.kill_crewmate(black, 'orange')
     # print(yellow in spaceship.dead_players)
     spaceship.report_dead_body(black, orange)
-    # spaceship.cast_vote(black, 'red')
+    spaceship.cast_vote(black, 'red')
     # spaceship.cast_vote(blue, 'red')
+    spaceship.cast_vote(red, 'black')
     # spaceship.cast_vote(pink, 'black')
     # spaceship.cast_vote(blue, 'black')
     # spaceship.cast_vote(red, 'black')
@@ -151,7 +155,7 @@ if __name__ == "__main__":
     # spaceship.cast_vote(green, 'red')
     # spaceship.cast_vote(purple, 'red')
 
-    # print(spaceship.get_votes())
+    print(spaceship.get_votes())
 
     print(spaceship.end_meeting())
 
