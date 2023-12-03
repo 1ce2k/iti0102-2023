@@ -26,7 +26,8 @@ class OPSpaceship(Spaceship):
     def kill_crewmate(self, killer, target_name):
         if self.game and not self.meeting:
             super().kill_crewmate(killer, target_name)
-        self.check_if_game_ended()
+        if self.check_if_game_ended():
+            return self.who_won()
 
     def kill_impostor(self, killer, target_name):
         if self.game and not self.meeting:
@@ -34,12 +35,16 @@ class OPSpaceship(Spaceship):
         self.check_if_game_ended()
 
     def check_if_game_ended(self):
+        if len(self.impostor_list) == 0 or len(self.impostor_list) == len(self.crewmate_list) <= 3:
+            self.game = False
+            return True
+
+    def who_won(self):
         if len(self.impostor_list) == 0:
-            self.game = False
-            print('Crewmates won.')
+            return 'Crewmates won.'
         elif len(self.impostor_list) == len(self.crewmate_list) <= 3:
-            self.game = False
-            print('Impostors won.')
+            return "Impostors won."
+
 
     def start_game(self):
         if len(self.impostor_list) >= 1 and len(self.crewmate_list) >= 2 and len(self.crewmate_list) > len(self.impostor_list):
