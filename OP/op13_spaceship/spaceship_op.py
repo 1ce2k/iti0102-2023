@@ -98,6 +98,23 @@ class OPSpaceship(Spaceship):
                 return "No one was ejected. (Skipped)"
             elif max_votes == skipped_voting or len(players_to_eject) != 1:
                 return "No one was ejected. (Tie)"
+            else:
+                target = players_to_eject[0]
+                self.crewmate_list.remove(target) if isinstance(target, Crewmate) else self.impostor_list.remove(target)
+                if self.check_if_game_ended():
+                    return self.who_won()
+                if self.difficulty == 'hard':
+                    return f"{target.name} was ejected."
+                elif self.difficulty == 'easy':
+                    if len(self.impostor_list) == 1 and isinstance(target, Impostor):
+                        return f"{target.name} was an Impostor. 1 Impostor remains."
+                    elif len(self.impostor_list) == 1 and isinstance(target, Crewmate):
+                        return f"{target.name} was not an Impostor. 1 Impostor remains."
+                    elif len(self.impostor_list) > 1 and isinstance(target, Impostor):
+                        return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
+                    elif len(self.impostor_list) > 1 and isinstance(target, Crewmate):
+                        return f"{target.name} was not an Impostor. {len(self.impostor_list)} Impostors remain."
+
 
 
 
