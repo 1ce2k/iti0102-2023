@@ -109,6 +109,8 @@ class OPSpaceship(Spaceship):
                         self.meeting = False
                         self.dead_players.clear()
                         self.votes.clear()
+                        if self.check_if_game_ended():
+                            return self.who_won()
                         return f"{ejected.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
                     else:
                         self.crewmate_list.remove(ejected)
@@ -116,6 +118,8 @@ class OPSpaceship(Spaceship):
                         self.meeting = False
                         self.dead_players.clear()
                         self.votes.clear()
+                        if self.check_if_game_ended():
+                            return self.who_won()
                         return f"{ejected.name} was not an Impostor. {len(self.impostor_list)} Impostors remain."
 
 
