@@ -16,15 +16,17 @@ class OPSpaceship(Spaceship):
         self.meeting = False
         self.votes = {}
         self.game = False
-        self.players = []
+        self.player_num = 0
 
     def add_crewmate(self, crewmate):
         if not self.game:
             super().add_crewmate(crewmate)
+            self.player_num += 1
 
     def add_impostor(self, impostor):
         if not self.game:
             super().add_impostor(impostor)
+            self.player_num += 1
 
     def kill_crewmate(self, killer, target_name):
         if self.game and not self.meeting:
@@ -83,11 +85,18 @@ class OPSpaceship(Spaceship):
         if self.meeting:
             vote_counts = Counter(self.votes.values())
             max_votes = max(vote_counts.values(), default=0)
-            if max_votes == 0:
+            skipped = self.player_num - len(self.votes)
+            print(skipped)
+            if max_votes < skipped or max_votes == 0:
                 self.meeting = False
                 self.dead_players.clear()
                 self.votes.clear()
                 return "No one was ejected. (Skipped)"
+            elif max_votes == skipped:
+                self.meeting = False
+                self.dead_players.clear()
+                self.votes.clear()
+                return "No one was ejected. (Tie)"
 
     def get_vote(self, color: str):
         if color.capitalize() in self.votes:
@@ -133,8 +142,8 @@ if __name__ == "__main__":
     spaceship.kill_crewmate(black, 'orange')
     # print(yellow in spaceship.dead_players)
     spaceship.report_dead_body(black, orange)
-    spaceship.cast_vote(black, 'red')
-    spaceship.cast_vote(blue, 'red')
+    # spaceship.cast_vote(black, 'red')
+    # spaceship.cast_vote(blue, 'red')
     # spaceship.cast_vote(pink, 'black')
     # spaceship.cast_vote(blue, 'black')
     # spaceship.cast_vote(red, 'black')
@@ -142,7 +151,7 @@ if __name__ == "__main__":
     # spaceship.cast_vote(green, 'red')
     # spaceship.cast_vote(purple, 'red')
 
-    print(spaceship.get_votes())
+    # print(spaceship.get_votes())
 
     print(spaceship.end_meeting())
 
