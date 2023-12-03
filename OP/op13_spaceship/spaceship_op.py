@@ -81,6 +81,21 @@ class OPSpaceship(Spaceship):
 
 
 
+
+    def get_vote(self, color: str):
+        for color in self.votes:
+            return self.votes[color]
+
+    def get_ejected_players(self):
+        return self.ejected_players
+
+    def get_votes(self):
+        return self.votes
+
+    def is_meeting(self):
+        return self.is_meeting
+
+
 if __name__ == "__main__":
     orange = Crewmate("orange", 'Crewmate')
     red = Crewmate("red", 'Sheriff')
