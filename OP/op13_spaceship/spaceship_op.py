@@ -103,17 +103,21 @@ class OPSpaceship(Spaceship):
                             return self.who_won()
 
                         if len(self.impostor_list) > 1:
+                            self.game = False
                             return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
                         else:
-                            return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostor remains."
+                            self.game = False
+                            return f"{target.name} was not an Impostor. {len(self.impostor_list)} Impostor remains."
                     else:
                         self.crewmate_list.remove(target)
                         self.ejected_players.append(target)
                         if self.check_if_game_ended():
                             return self.who_won()
                         if len(self.impostor_list) > 1:
+                            self.game = False
                             return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
                         else:
+                            self.game = False
                             return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostor remains."
 
 
