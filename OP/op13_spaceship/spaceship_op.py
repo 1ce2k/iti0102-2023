@@ -134,8 +134,9 @@ if __name__ == "__main__":
     spaceship.add_impostor(black)
     spaceship.add_crewmate(green)
     spaceship.add_crewmate(pink)
-    # spaceship.add_crewmate(dunk)
-    # spaceship.add_crewmate(yellow)
+    spaceship.add_crewmate(dunk)
+    spaceship.add_crewmate(yellow)
+    spaceship.add_crewmate(purple)
 
     print(len(spaceship.get_impostor_list() + spaceship.get_crewmate_list()))
 
@@ -149,9 +150,9 @@ if __name__ == "__main__":
     # spaceship.cast_vote(pink, 'black')
     # spaceship.cast_vote(blue, 'black')
     # spaceship.cast_vote(red, 'black')
-    # spaceship.cast_vote(dunk, 'red')
+    spaceship.cast_vote(dunk, 'red')
     spaceship.cast_vote(green, 'red')
-    # spaceship.cast_vote(purple, 'red')
+    spaceship.cast_vote(purple, 'black')
 
     print(spaceship.get_votes())
 
