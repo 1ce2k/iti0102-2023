@@ -10,16 +10,19 @@ class Spaceship:
         self.impostor_list = []
         self.dead_players = []
         self.is_anyone_protected = False
+        self.players = []
 
     def add_crewmate(self, crewmate):
         """Add new crewmate."""
         if isinstance(crewmate, Crewmate) and crewmate.name not in [x.name for x in self.crewmate_list] and crewmate.name not in [x.name for x in self.impostor_list]:
             self.crewmate_list.append(crewmate)
+            self.players.append(crewmate)
 
     def add_impostor(self, impostor):
         """Add new impostor."""
         if isinstance(impostor, Impostor) and impostor.name not in [x.name for x in self.crewmate_list] and impostor.name not in [x.name for x in self.impostor_list] and len(self.impostor_list) < 3:
             self.impostor_list.append(impostor)
+            self.players.append(impostor)
 
     def kill_crewmate(self, killer, target_name):
         """Kill crewmate."""
