@@ -88,13 +88,16 @@ class OPSpaceship(Spaceship):
             vote_count = dict(Counter(self.votes.values()))
             max_votes = max(vote_count.values(), default=0)
             skipped_voting = len(self.impostor_list + self.crewmate_list) - len(self.votes)
+            players_to_eject = [x for x in (self.impostor_list + self.crewmate_list) if x.name in vote_count]
+            print(players_to_eject)
             self.votes.clear()
             print(vote_count)
             print(max_votes)
             print(skipped_voting)
             if max_votes == 0 or max_votes < skipped_voting:
                 return "No one was ejected. (Skipped)"
-
+            elif max_votes == skipped_voting or len(players_to_eject) > 1:
+                return "No one was ejected. (Tie)"
 
 
 
