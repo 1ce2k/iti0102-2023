@@ -96,7 +96,7 @@ class OPSpaceship(Spaceship):
                 self.dead_players.clear()
                 self.votes.clear()
                 return "No one was ejected. (Skipped)"
-            elif max_votes == skipped or len(voted_players_names) > 1:
+            elif max_votes == skipped:
                 self.meeting = False
                 self.dead_players.clear()
                 self.votes.clear()
