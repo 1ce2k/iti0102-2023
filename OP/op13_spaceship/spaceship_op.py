@@ -83,8 +83,9 @@ class OPSpaceship(Spaceship):
 
 
     def get_vote(self, color: str):
-        for color in self.votes:
-            return self.votes[color]
+        for name in self.votes:
+            if name == color:
+                return self.votes[name]
         return 'No vote found'
 
     def get_ejected_players(self):
