@@ -100,6 +100,7 @@ class OPSpaceship(Spaceship):
                 return "No one was ejected. (Tie)"
             else:
                 target = players_to_eject[0]
+                self.ejected_players.append(target)
                 self.crewmate_list.remove(target) if isinstance(target, Crewmate) else self.impostor_list.remove(target)
                 if self.check_if_game_ended():
                     return self.who_won()
