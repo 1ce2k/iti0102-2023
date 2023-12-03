@@ -73,9 +73,10 @@ class OPSpaceship(Spaceship):
             self.meeting = True
 
     def cast_vote(self, player, target_name):
+        self.votes[player] = player in self.players
         target = next((target for target in (self.crewmate_list + self.impostor_list) if target.name == target_name.capitalize()), None)
-        if self.meeting and player in (self.crewmate_list + self.impostor_list) and player.name not in self.votes and target and self.game:
-            self.votes[player.name] = target.name
+        # if self.meeting and player in (self.crewmate_list + self.impostor_list) and player.name not in self.votes and target and self.game:
+        #     self.votes[player.name] = target.name
 
     def end_meeting(self):
         pass
