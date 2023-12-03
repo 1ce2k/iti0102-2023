@@ -1,4 +1,6 @@
 """OP13."""
+from collections import Counter
+
 from spaceship import Spaceship
 from spaceship import Impostor
 from spaceship import Crewmate
@@ -78,7 +80,41 @@ class OPSpaceship(Spaceship):
             self.votes[player.name] = target.name
 
     def end_meeting(self):
-        pass
+        self.meeting = False
+        self.dead_players = []
+        if len(self.votes) < len(self.crewmate_list + self.impostor_list) - len(self.votes):
+            return "No one was ejected. (Skipped)"
+        elif len(self.votes) == len(self.crewmate_list + self.impostor_list) - len(self.votes):
+            return "No one was ejected. (Tie)"
+        else:
+            votes_count = Counter(self.votes.values())
+            max_votes = max(votes_count.values())
+            players_to_eject = [x for x in votes_count if votes_count[x] == max_votes]
+            if len(players_to_eject) > 1:
+                return 'No one was ejected. (Tie)'
+            elif len(players_to_eject) == 1:
+                target = next((x for x in (self.impostor_list + self.crewmate_list) if x.name == players_to_eject[0]), None)
+                if self.difficulty == 'easy':
+                    if target.role == 'Impostor':
+                        self.impostor_list.remove(target)
+                        self.ejected_players.append(target)
+                        if self.check_if_game_ended():
+                            return self.who_won()
+
+                        if len(self.impostor_list) > 1:
+                            return f"{target.role} was an Impostor. {len(self.impostor_list)} Impostors remain."
+                        else:
+                            return f"{target.role} was an Impostor. {len(self.impostor_list)} Impostor remains."
+                    else:
+                        self.crewmate_list.remove(target)
+                        self.ejected_players.append(target)
+                        if self.check_if_game_ended():
+                            return self.who_won()
+                        if len(self.impostor_list) > 1:
+                            return f"{target.role} was an Impostor. {len(self.impostor_list)} Impostors remain."
+                        else:
+                            return f"{target.role} was an Impostor. {len(self.impostor_list)} Impostor remains."
+
 
 
 
@@ -103,6 +139,11 @@ if __name__ == "__main__":
     orange = Crewmate("orange", 'Crewmate')
     red = Crewmate("red", 'Sheriff')
     blue = Crewmate("blue", 'Crewmate')
+    green = Crewmate('green', 'crewmate')
+    pink = Crewmate("pink", 'Crewmate')
+    purple = Crewmate("purple", 'Sheriff')
+    dunk = Crewmate("dunk", 'Crewmate')
+    yellow = Crewmate('yellow', 'crewmate')
     black = Impostor("black")
 
     spaceship = OPSpaceship('easy')
@@ -110,26 +151,29 @@ if __name__ == "__main__":
     spaceship.add_crewmate(red)
     spaceship.add_crewmate(blue)
     spaceship.add_impostor(black)
+    # spaceship.add_crewmate(green)
+    # spaceship.add_crewmate(pink)
+    # spaceship.add_crewmate(purple)
+    # spaceship.add_crewmate(dunk)
+    # spaceship.add_crewmate(yellow)
 
-    # print(spaceship.get_crewmate_list())
-    # print(spaceship.get_impostor_list())
-    print(spaceship.get_votes())
+    print(spaceship.get_crewmate_list())
+    print(spaceship.get_impostor_list())
+
     spaceship.start_game()
-    print(spaceship.kill_crewmate(black, 'blue'))
-    print(spaceship.report_dead_body(black, blue))
-    # print(spaceship.meeting)
-    # print(spaceship.crewmate_list)
-    # print(spaceship.impostor_list)
-    print(spaceship.players)
-    green = Crewmate('green', 'crewmate')
+    spaceship.kill_crewmate(black, 'orange')
+    # print(yellow in spaceship.dead_players)
+    spaceship.report_dead_body(black, orange)
     spaceship.cast_vote(black, 'red')
     spaceship.cast_vote(blue, 'red')
-    spaceship.cast_vote(orange, 'blue')
-    spaceship.cast_vote(red, 'red')
-    print(spaceship.get_vote('green'))
-    print(spaceship.get_votes())
-    # print(spaceship.kill_crewmate(black, 'red'))
+    # spaceship.cast_vote(pink, 'black')
+    # spaceship.cast_vote(blue, 'black')
+    # spaceship.cast_vote(red, 'black')
+    # spaceship.cast_vote(dunk, 'red')
+    # spaceship.cast_vote(green, 'red')
+    # spaceship.cast_vote(purple, 'red')
 
-    # print(blue in spaceship.dead_players)
-    # print(spaceship.kill_impostor(red, 'black'))
+    print(spaceship.get_votes())
+
+    print(spaceship.end_meeting())
 
