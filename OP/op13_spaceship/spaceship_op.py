@@ -118,14 +118,18 @@ class OPSpaceship(Spaceship):
                 if self.difficulty == 'hard':
                     return f"{target.name} was ejected."
                 elif self.difficulty == 'easy':
-                    if len(self.impostor_list) == 1 and isinstance(target, Impostor):
-                        return f"{target.name} was an Impostor. 1 Impostor remains."
-                    elif len(self.impostor_list) == 1 and isinstance(target, Crewmate):
-                        return f"{target.name} was not an Impostor. 1 Impostor remains."
-                    elif len(self.impostor_list) > 1 and isinstance(target, Impostor):
-                        return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
-                    elif len(self.impostor_list) > 1 and isinstance(target, Crewmate):
-                        return f"{target.name} was not an Impostor. {len(self.impostor_list)} Impostors remain."
+                    self.easy_game_end_meeting(target)
+
+    def easy_game_end_meeting(self, target):
+        """Help func to make end meeting less complex."""
+        if len(self.impostor_list) == 1 and isinstance(target, Impostor):
+            return f"{target.name} was an Impostor. 1 Impostor remains."
+        elif len(self.impostor_list) == 1 and isinstance(target, Crewmate):
+            return f"{target.name} was not an Impostor. 1 Impostor remains."
+        elif len(self.impostor_list) > 1 and isinstance(target, Impostor):
+            return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
+        elif len(self.impostor_list) > 1 and isinstance(target, Crewmate):
+            return f"{target.name} was not an Impostor. {len(self.impostor_list)} Impostors remain."
 
     def get_vote(self, color: str):
         """Return players vote from current meeting."""
