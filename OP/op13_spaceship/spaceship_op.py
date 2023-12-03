@@ -37,6 +37,10 @@ class OPSpaceship(Spaceship):
 
     def check_if_game_ended(self):
         if len(self.impostor_list) == 0 or len(self.impostor_list) == len(self.crewmate_list) <= 3:
+            return True
+
+    def who_won(self):
+        if len(self.impostor_list) == 0:
             self.game = False
             self.meeting = False
             self.crewmate_list = []
@@ -46,12 +50,17 @@ class OPSpaceship(Spaceship):
             self.votes = {}
             self.difficulty = ''
             self.is_anyone_protected = False
-            return True
-
-    def who_won(self):
-        if len(self.impostor_list) == 0:
             return 'Crewmates won.'
         elif len(self.impostor_list) == len(self.crewmate_list) <= 3:
+            self.game = False
+            self.meeting = False
+            self.crewmate_list = []
+            self.dead_players = []
+            self.impostor_list = []
+            self.ejected_players = []
+            self.votes = {}
+            self.difficulty = ''
+            self.is_anyone_protected = False
             return "Impostors won."
 
     def start_game(self):
@@ -76,7 +85,10 @@ if __name__ == "__main__":
     print(spaceship.get_impostor_list())
 
     spaceship.start_game()
-    spaceship.kill_crewmate(black, 'blue')
-    print(blue in spaceship.dead_players)
-    print(spaceship.kill_impostor(red, 'black'))
+    print(spaceship.kill_crewmate(black, 'blue'))
+    # print(spaceship.kill_crewmate(black, ''))
+    print(spaceship.kill_crewmate(black, 'red'))
+
+    # print(blue in spaceship.dead_players)
+    # print(spaceship.kill_impostor(red, 'black'))
 
