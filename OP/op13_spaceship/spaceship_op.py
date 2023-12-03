@@ -69,7 +69,7 @@ class OPSpaceship(Spaceship):
 
     def report_dead_body(self, reporting_player, dead_body):
         if reporting_player not in self.dead_players and dead_body in self.dead_players:
-            self.meeting = True
+            self.is_meeting = True
 
 
 
@@ -91,7 +91,8 @@ if __name__ == "__main__":
 
     spaceship.start_game()
     print(spaceship.kill_crewmate(black, 'blue'))
-    # print(spaceship.kill_crewmate(black, ''))
+    print(spaceship.report_dead_body(black, blue))
+    print(spaceship.is_meeting)
     print(spaceship.kill_crewmate(black, 'red'))
 
     # print(blue in spaceship.dead_players)
