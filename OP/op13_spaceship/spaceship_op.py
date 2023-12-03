@@ -11,7 +11,7 @@ class OPSpaceship(Spaceship):
         super().__init__()
         self.difficulty = difficulty.lower() if difficulty.lower() == 'easy' else 'hard'
         self.ejected_players = []
-        self.is_meeting = False
+        self.meeting = False
         self.votes = {}
         self.game = False
 
@@ -24,13 +24,13 @@ class OPSpaceship(Spaceship):
             super().add_impostor(impostor)
 
     def kill_crewmate(self, killer, target_name):
-        if self.game and not self.is_meeting:
+        if self.game and not self.meeting:
             super().kill_crewmate(killer, target_name)
         if self.check_if_game_ended():
             return self.who_won()
 
     def kill_impostor(self, killer, target_name):
-        if self.game and not self.is_meeting:
+        if self.game and not self.meeting:
             super().kill_impostor(killer, target_name)
         if self.check_if_game_ended():
             return self.who_won()
@@ -42,7 +42,7 @@ class OPSpaceship(Spaceship):
     def who_won(self):
         if len(self.impostor_list) == 0:
             self.game = False
-            self.is_meeting = False
+            self.meeting = False
             self.crewmate_list = []
             self.dead_players = []
             self.impostor_list = []
@@ -53,7 +53,7 @@ class OPSpaceship(Spaceship):
             return 'Crewmates won.'
         elif len(self.impostor_list) == len(self.crewmate_list) <= 3:
             self.game = False
-            self.is_meeting = False
+            self.meeting = False
             self.crewmate_list = []
             self.dead_players = []
             self.impostor_list = []
@@ -69,10 +69,10 @@ class OPSpaceship(Spaceship):
 
     def report_dead_body(self, reporting_player, dead_body):
         if reporting_player not in self.dead_players and dead_body in self.dead_players:
-            self.is_meeting = True
+            self.meeting = True
 
     def cast_vote(self, player, target):
-        if player.name not in self.votes and self.is_meeting and (target in self.crewmate_list or target in self.impostor_list):
+        if player.name not in self.votes and self.meeting and (target in self.crewmate_list or target in self.impostor_list):
             self.votes[player.name] = target.name
 
     def end_meeting(self):
@@ -95,7 +95,7 @@ class OPSpaceship(Spaceship):
         return self.votes
 
     def is_meeting(self):
-        return self.is_meeting
+        return self.meeting
 
 
 if __name__ == "__main__":
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     spaceship.start_game()
     print(spaceship.kill_crewmate(black, 'blue'))
     print(spaceship.report_dead_body(black, blue))
-    print(spaceship.is_meeting)
+    print(spaceship.meeting)
     print(spaceship.crewmate_list)
     print(spaceship.impostor_list)
     spaceship.cast_vote(red, red)
