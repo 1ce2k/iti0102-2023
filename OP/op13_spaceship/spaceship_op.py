@@ -80,50 +80,12 @@ class OPSpaceship(Spaceship):
             self.votes[player.name] = target.name
 
     def end_meeting(self):
-        self.meeting = False
-        self.dead_players = []
-        if len(self.votes) < len(self.crewmate_list + self.impostor_list) - len(self.votes):
-            return "No one was ejected. (Skipped)"
-        elif len(self.votes) == len(self.crewmate_list + self.impostor_list) - len(self.votes):
-            return "No one was ejected. (Tie)"
-        else:
-            votes_count = Counter(self.votes.values())
-            max_votes = max(votes_count.values())
-            players_to_eject = [x for x in votes_count if votes_count[x] == max_votes]
-            if len(players_to_eject) > 1:
-                return 'No one was ejected. (Tie)'
-            elif len(players_to_eject) == 1:
-                target = next((x for x in (self.impostor_list + self.crewmate_list) if x.name == players_to_eject[0]), None)
-                self.votes = {}
-                if self.difficulty == 'easy':
-                    if target.role == 'Impostor':
-                        self.impostor_list.remove(target)
-                        self.ejected_players.append(target)
-                        if self.check_if_game_ended():
-                            return self.who_won()
-
-                        if len(self.impostor_list) > 1:
-                            self.game = False
-                            return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
-                        else:
-                            self.game = False
-                            return f"{target.name} was not an Impostor. {len(self.impostor_list)} Impostor remains."
-                    else:
-                        self.crewmate_list.remove(target)
-                        self.ejected_players.append(target)
-                        if self.check_if_game_ended():
-                            return self.who_won()
-                        if len(self.impostor_list) > 1:
-                            self.game = False
-                            return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
-                        else:
-                            self.game = False
-                            return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostor remains."
-
-
-
-
-
+        if self.meeting:
+            vote_counts = Counter(self.votes.values())
+            max_votes = max(vote_counts.values(), default=0)
+            if max_votes == 0:
+                self.meeting = False
+                return "No one was ejected. (Skipped)"
 
     def get_vote(self, color: str):
         if color.capitalize() in self.votes:
