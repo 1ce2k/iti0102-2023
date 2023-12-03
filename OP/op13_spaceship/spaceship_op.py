@@ -86,6 +86,7 @@ class OPSpaceship(Spaceship):
             vote_counts = Counter(self.votes.values())
             # print(vote_counts)
             max_votes = max(vote_counts.values(), default=0)
+            print(max_votes)
             skipped = self.player_num - len(self.votes)
             voted_players_names = [x for x in vote_counts if vote_counts[x] == max_votes]
             print(voted_players_names)
@@ -101,27 +102,22 @@ class OPSpaceship(Spaceship):
                 self.votes.clear()
                 return "No one was ejected. (Tie)"
             else:
-                if self.difficulty == 'easy':
-                    ejected = next(x for x in (self.impostor_list + self.crewmate_list) if x.name == voted_players_names[0])
-                    if isinstance(ejected, Impostor):
-                        self.impostor_list.remove(ejected)
-                        self.ejected_players.append(ejected)
-                        self.meeting = False
-                        self.dead_players.clear()
-                        self.votes.clear()
-                        if self.check_if_game_ended():
-                            return self.who_won()
-                        return f"{ejected.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
-                    else:
-                        self.crewmate_list.remove(ejected)
-                        self.ejected_players.append(ejected)
-                        self.meeting = False
-                        self.dead_players.clear()
-                        self.votes.clear()
-                        if self.check_if_game_ended():
-                            return self.who_won()
-                        return f"{ejected.name} was not an Impostor. {len(self.impostor_list)} Impostors remain."
+                if self.difficulty == 'hard':
+                    ejected_player = next(x for x in self.players if x.name == voted_players_names[0])
+                    self.ejected_players.append(ejected_player)
+                    if isinstance(ejected_player, Impostor):
+                        self.impostor_list.remove(ejected_player)
+                    elif isinstance(ejected_player, Crewmate):
+                        self.crewmate_list.remove(ejected_player)
+                    self.meeting = False
+                    self.dead_players.clear()
+                    self.votes.clear()
+                    if self.check_if_game_ended():
+                        return self.who_won()
+                    return f"{ejected_player.name} was ejected."
 
+
+                    print(ejected_player)
 
     def get_vote(self, color: str):
         if color.capitalize() in self.votes:
@@ -149,7 +145,7 @@ if __name__ == "__main__":
     yellow = Crewmate('yellow', 'crewmate')
     black = Impostor("black")
 
-    spaceship = OPSpaceship('easy')
+    spaceship = OPSpaceship('hard')
     spaceship.add_crewmate(orange)
     spaceship.add_crewmate(red)
     spaceship.add_crewmate(blue)
@@ -166,15 +162,15 @@ if __name__ == "__main__":
     spaceship.kill_crewmate(black, 'orange')
     # print(yellow in spaceship.dead_players)
     spaceship.report_dead_body(black, orange)
-    spaceship.cast_vote(black, 'red')
+    spaceship.cast_vote(black, 'black')
     # spaceship.cast_vote(blue, 'red')
-    spaceship.cast_vote(red, 'red')
+    spaceship.cast_vote(red, 'black')
     # spaceship.cast_vote(pink, 'black')
     # spaceship.cast_vote(blue, 'black')
     # spaceship.cast_vote(red, 'black')
-    spaceship.cast_vote(dunk, 'red')
-    spaceship.cast_vote(green, 'red')
-    spaceship.cast_vote(purple, 'red')
+    spaceship.cast_vote(dunk, 'black')
+    spaceship.cast_vote(green, 'black')
+    spaceship.cast_vote(purple, 'black')
 
     print(spaceship.get_votes())
 
