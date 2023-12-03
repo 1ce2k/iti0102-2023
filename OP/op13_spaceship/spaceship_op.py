@@ -84,12 +84,12 @@ class OPSpaceship(Spaceship):
     def end_meeting(self):
         if self.meeting:
             vote_counts = Counter(self.votes.values())
-            print(vote_counts)
+            # print(vote_counts)
             max_votes = max(vote_counts.values(), default=0)
             skipped = self.player_num - len(self.votes)
             voted_players_names = [x for x in vote_counts if vote_counts[x] == max_votes]
             print(voted_players_names)
-            print(skipped)
+            # print(skipped)
             if max_votes < skipped or max_votes == 0:
                 self.meeting = False
                 self.dead_players.clear()
@@ -100,6 +100,24 @@ class OPSpaceship(Spaceship):
                 self.dead_players.clear()
                 self.votes.clear()
                 return "No one was ejected. (Tie)"
+            else:
+                if self.difficulty == 'easy':
+                    ejected = next(x for x in (self.impostor_list + self.crewmate_list) if x.name == voted_players_names[0])
+                    if isinstance(ejected, Impostor):
+                        self.impostor_list.remove(ejected)
+                        self.ejected_players.append(ejected)
+                        self.meeting = False
+                        self.dead_players.clear()
+                        self.votes.clear()
+                        return f"{ejected.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
+                    else:
+                        self.crewmate_list.remove(ejected)
+                        self.ejected_players.append(ejected)
+                        self.meeting = False
+                        self.dead_players.clear()
+                        self.votes.clear()
+                        return f"{ejected.name} was not an Impostor. {len(self.impostor_list)} Impostors remain."
+
 
     def get_vote(self, color: str):
         if color.capitalize() in self.votes:
@@ -152,7 +170,7 @@ if __name__ == "__main__":
     # spaceship.cast_vote(red, 'black')
     spaceship.cast_vote(dunk, 'red')
     spaceship.cast_vote(green, 'red')
-    spaceship.cast_vote(purple, 'black')
+    spaceship.cast_vote(purple, 'red')
 
     print(spaceship.get_votes())
 
