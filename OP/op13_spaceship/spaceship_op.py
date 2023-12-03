@@ -94,6 +94,7 @@ class OPSpaceship(Spaceship):
                 return 'No one was ejected. (Tie)'
             elif len(players_to_eject) == 1:
                 target = next((x for x in (self.impostor_list + self.crewmate_list) if x.name == players_to_eject[0]), None)
+                self.votes = {}
                 if self.difficulty == 'easy':
                     if target.role == 'Impostor':
                         self.impostor_list.remove(target)
@@ -102,18 +103,18 @@ class OPSpaceship(Spaceship):
                             return self.who_won()
 
                         if len(self.impostor_list) > 1:
-                            return f"{target.role} was an Impostor. {len(self.impostor_list)} Impostors remain."
+                            return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
                         else:
-                            return f"{target.role} was an Impostor. {len(self.impostor_list)} Impostor remains."
+                            return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostor remains."
                     else:
                         self.crewmate_list.remove(target)
                         self.ejected_players.append(target)
                         if self.check_if_game_ended():
                             return self.who_won()
                         if len(self.impostor_list) > 1:
-                            return f"{target.role} was an Impostor. {len(self.impostor_list)} Impostors remain."
+                            return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
                         else:
-                            return f"{target.role} was an Impostor. {len(self.impostor_list)} Impostor remains."
+                            return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostor remains."
 
 
 
