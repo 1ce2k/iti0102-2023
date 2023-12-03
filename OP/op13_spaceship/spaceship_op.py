@@ -85,8 +85,8 @@ class OPSpaceship(Spaceship):
             max_votes = max(vote_counts.values(), default=0)
             if max_votes == 0:
                 self.meeting = False
-                self.dead_players = []
-                self.votes = {}
+                self.dead_players.clear()
+                self.votes.clear()
                 return "No one was ejected. (Skipped)"
 
     def get_vote(self, color: str):
