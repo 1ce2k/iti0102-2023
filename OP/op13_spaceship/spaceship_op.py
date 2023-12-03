@@ -11,7 +11,7 @@ class OPSpaceship(Spaceship):
         super().__init__()
         self.difficulty = difficulty.lower() if difficulty.lower() == 'easy' else 'hard'
         self.ejected_players = []
-        self.meeting = False
+        self.is_meeting = False
         self.votes = {}
         self.game = False
 
@@ -24,13 +24,13 @@ class OPSpaceship(Spaceship):
             super().add_impostor(impostor)
 
     def kill_crewmate(self, killer, target_name):
-        if self.game and not self.meeting:
+        if self.game and not self.is_meeting:
             super().kill_crewmate(killer, target_name)
         if self.check_if_game_ended():
             return self.who_won()
 
     def kill_impostor(self, killer, target_name):
-        if self.game and not self.meeting:
+        if self.game and not self.is_meeting:
             super().kill_impostor(killer, target_name)
         if self.check_if_game_ended():
             return self.who_won()
@@ -42,7 +42,7 @@ class OPSpaceship(Spaceship):
     def who_won(self):
         if len(self.impostor_list) == 0:
             self.game = False
-            self.meeting = False
+            self.is_meeting = False
             self.crewmate_list = []
             self.dead_players = []
             self.impostor_list = []
@@ -53,7 +53,7 @@ class OPSpaceship(Spaceship):
             return 'Crewmates won.'
         elif len(self.impostor_list) == len(self.crewmate_list) <= 3:
             self.game = False
-            self.meeting = False
+            self.is_meeting = False
             self.crewmate_list = []
             self.dead_players = []
             self.impostor_list = []
