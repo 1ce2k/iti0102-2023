@@ -118,7 +118,7 @@ class OPSpaceship(Spaceship):
                 if self.difficulty == 'hard':
                     return f"{target.name} was ejected."
                 elif self.difficulty == 'easy':
-                    self.easy_game_end_meeting(target)
+                    return self.easy_game_end_meeting(target)
 
     def easy_game_end_meeting(self, target):
         """Help func to make end meeting less complex."""
