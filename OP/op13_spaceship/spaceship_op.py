@@ -67,6 +67,11 @@ class OPSpaceship(Spaceship):
         if len(self.impostor_list) >= 1 and len(self.crewmate_list) >= 2 and len(self.crewmate_list) > len(self.impostor_list):
             self.game = True
 
+    def report_dead_body(self, reporting_player, dead_body):
+        if reporting_player not in self.dead_players and dead_body in self.dead_players:
+            self.meeting = True
+
+
 
 
 if __name__ == "__main__":
