@@ -88,16 +88,16 @@ class OPSpaceship(Spaceship):
             vote_count = dict(Counter(self.votes.values()))
             max_votes = max(vote_count.values(), default=0)
             skipped_voting = len(self.impostor_list + self.crewmate_list) - len(self.votes)
-            players_to_eject = [x for x in (self.impostor_list + self.crewmate_list) if x.name in vote_count]
-            print(players_to_eject)
+            players_to_eject = [x for x in (self.impostor_list + self.crewmate_list) if x.name in vote_count and vote_count[x.name] == max_votes]
             self.votes.clear()
-            print(vote_count)
-            print(max_votes)
-            print(skipped_voting)
+            print(players_to_eject)
+            # print(vote_count)
+            # print(max_votes)
+            # print(skipped_voting)
             if max_votes == 0 or max_votes < skipped_voting:
                 return "No one was ejected. (Skipped)"
             elif max_votes == skipped_voting or len(players_to_eject) != 1:
-                return vote_count
+                return "No one was ejected. (Tie)"
 
 
 
@@ -117,45 +117,37 @@ class OPSpaceship(Spaceship):
 
 
 if __name__ == "__main__":
-    orange = Crewmate("orange", 'Crewmate')
-    red = Crewmate("red", 'Sheriff')
-    blue = Crewmate("blue", 'Crewmate')
-    green = Crewmate('green', 'crewmate')
-    pink = Crewmate("pink", 'Crewmate')
-    purple = Crewmate("purple", 'Sheriff')
-    dunk = Crewmate("dunk", 'Crewmate')
-    yellow = Crewmate('yellow', 'crewmate')
+    #  'Create players'
+    blue = Crewmate("blue", "Crewmate")
+    green = Crewmate("green", "Crewmate")
+    red = Crewmate("red", "Crewmate")
+    orange = Crewmate("orange", "Crewmate")
+    yellow = Crewmate("yellow", "Crewmate")
     black = Impostor("black")
-    crew = Crewmate("crew", 'Crewmate')
 
+    # create a spaceship object
     spaceship = OPSpaceship('hard')
-    spaceship.add_crewmate(orange)
-    spaceship.add_crewmate(red)
+
+    # add players to spaceship
     spaceship.add_crewmate(blue)
-    spaceship.add_impostor(black)
     spaceship.add_crewmate(green)
-    spaceship.add_crewmate(pink)
-    spaceship.add_crewmate(dunk)
+    spaceship.add_crewmate(red)
+    spaceship.add_crewmate(orange)
     spaceship.add_crewmate(yellow)
-    spaceship.add_crewmate(purple)
-    spaceship.add_crewmate(crew)
+    spaceship.add_impostor(black)
+    print(len(spaceship.impostor_list + spaceship.crewmate_list))
 
-    print(len(spaceship.get_impostor_list() + spaceship.get_crewmate_list()))
-
+    # start the game
     spaceship.start_game()
-    spaceship.kill_crewmate(black, 'orange')
-    # print(yellow in spaceship.dead_players)
-    spaceship.report_dead_body(black, orange)
-    spaceship.cast_vote(black, 'red')
-    spaceship.cast_vote(green, 'red')
-    spaceship.cast_vote(purple, 'red')
-    spaceship.cast_vote(pink, 'pink')
-    spaceship.cast_vote(yellow, 'pink')
-    spaceship.cast_vote(dunk, 'pink')
-    spaceship.cast_vote(blue, 'black')
-    spaceship.cast_vote(red, 'black')
-    spaceship.cast_vote(crew, 'black')
 
+    # kill crewmate
+    spaceship.kill_crewmate(black, "green")
+    spaceship.report_dead_body(blue, green)
+    spaceship.cast_vote(red, 'black')
+    spaceship.cast_vote(blue, 'black')
+    spaceship.cast_vote(orange, 'black')
+    spaceship.cast_vote(yellow, 'black')
+    spaceship.cast_vote(black, 'orange')
     print(spaceship.get_votes())
 
     print(spaceship.end_meeting())
