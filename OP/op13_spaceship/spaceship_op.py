@@ -84,7 +84,7 @@ class OPSpaceship(Spaceship):
 
     def get_vote(self, color: str):
         for name in self.votes:
-            if name == color:
+            if name == color.capitalize():
                 return self.votes[name]
         return 'No vote found'
 
