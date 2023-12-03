@@ -97,7 +97,7 @@ class OPSpaceship(Spaceship):
             if max_votes == 0 or max_votes < skipped_voting:
                 return "No one was ejected. (Skipped)"
             elif max_votes == skipped_voting or len(players_to_eject) != 1:
-                return "No one was ejected. (Tie)"
+                return players_to_eject
 
 
 
