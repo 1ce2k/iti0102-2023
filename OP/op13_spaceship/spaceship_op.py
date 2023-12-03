@@ -85,6 +85,7 @@ class OPSpaceship(Spaceship):
     def get_vote(self, color: str):
         for color in self.votes:
             return self.votes[color]
+        return 'No vote found'
 
     def get_ejected_players(self):
         return self.ejected_players
@@ -118,7 +119,7 @@ if __name__ == "__main__":
     print(spaceship.crewmate_list)
     print(spaceship.impostor_list)
     spaceship.cast_vote(red, red)
-    spaceship.cast_vote(red, red)
+    print(spaceship.get_vote('red'))
     print(spaceship.votes)
     # print(spaceship.kill_crewmate(black, 'red'))
 
