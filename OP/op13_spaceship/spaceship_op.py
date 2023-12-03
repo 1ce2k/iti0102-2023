@@ -90,12 +90,12 @@ class OPSpaceship(Spaceship):
             voted_players_names = [x for x in vote_counts if vote_counts[x] == max_votes]
             print(voted_players_names)
             print(skipped)
-            if max_votes < skipped and max_votes == 0:
+            if max_votes < skipped or max_votes == 0:
                 self.meeting = False
                 self.dead_players.clear()
                 self.votes.clear()
                 return "No one was ejected. (Skipped)"
-            elif max_votes == skipped and len(voted_players_names) > 1:
+            elif max_votes == skipped or len(voted_players_names) > 1:
                 self.meeting = False
                 self.dead_players.clear()
                 self.votes.clear()
