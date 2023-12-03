@@ -70,7 +70,7 @@ class OPSpaceship(Spaceship):
     def report_dead_body(self, reporting_player, dead_body):
         if reporting_player not in self.dead_players and dead_body in self.dead_players and self.game:
             self.meeting = True
-            self.dead_players.remove(dead_body)
+            self.dead_players = []
 
     def cast_vote(self, player, target):
         if player.name not in self.votes and self.meeting and (target in self.crewmate_list or target in self.impostor_list) and self.game:
@@ -121,7 +121,7 @@ if __name__ == "__main__":
     print(spaceship.impostor_list)
     spaceship.cast_vote(red, red)
     print(spaceship.get_vote('red'))
-    print(spaceship.votes)
+    print(spaceship.get_votes())
     # print(spaceship.kill_crewmate(black, 'red'))
 
     # print(blue in spaceship.dead_players)
