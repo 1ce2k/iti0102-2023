@@ -96,7 +96,7 @@ class OPSpaceship(Spaceship):
                 self.dead_players.clear()
                 self.votes.clear()
                 return "No one was ejected. (Skipped)"
-            elif max_votes == skipped:
+            elif max_votes == skipped or len(voted_players_names) > 1:
                 self.meeting = False
                 self.dead_players.clear()
                 self.votes.clear()
@@ -150,11 +150,11 @@ if __name__ == "__main__":
     spaceship.add_crewmate(red)
     spaceship.add_crewmate(blue)
     spaceship.add_impostor(black)
-    spaceship.add_crewmate(green)
-    spaceship.add_crewmate(pink)
-    spaceship.add_crewmate(dunk)
-    spaceship.add_crewmate(yellow)
-    spaceship.add_crewmate(purple)
+    # spaceship.add_crewmate(green)
+    # spaceship.add_crewmate(pink)
+    # spaceship.add_crewmate(dunk)
+    # spaceship.add_crewmate(yellow)
+    # spaceship.add_crewmate(purple)
 
     print(len(spaceship.get_impostor_list() + spaceship.get_crewmate_list()))
 
@@ -162,15 +162,15 @@ if __name__ == "__main__":
     spaceship.kill_crewmate(black, 'orange')
     # print(yellow in spaceship.dead_players)
     spaceship.report_dead_body(black, orange)
-    spaceship.cast_vote(black, 'black')
-    # spaceship.cast_vote(blue, 'red')
+    spaceship.cast_vote(black, 'red')
+    spaceship.cast_vote(blue, 'red')
     spaceship.cast_vote(red, 'black')
     # spaceship.cast_vote(pink, 'black')
     # spaceship.cast_vote(blue, 'black')
     # spaceship.cast_vote(red, 'black')
-    spaceship.cast_vote(dunk, 'black')
-    spaceship.cast_vote(green, 'black')
-    spaceship.cast_vote(purple, 'black')
+    # spaceship.cast_vote(dunk, 'black')
+    # spaceship.cast_vote(green, 'black')
+    # spaceship.cast_vote(purple, 'black')
 
     print(spaceship.get_votes())
 
