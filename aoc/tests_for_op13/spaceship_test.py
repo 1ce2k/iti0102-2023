@@ -1,6 +1,6 @@
-from OP.op13_spaceship.spaceship import Spaceship
-from OP.op13_spaceship.spaceship import Crewmate
-from OP.op13_spaceship.spaceship import Impostor
+from spaceship import Spaceship
+from spaceship import Crewmate
+from spaceship import Impostor
 
 
 def test__crewmate_basic():

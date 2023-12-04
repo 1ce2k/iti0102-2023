@@ -44,12 +44,12 @@ class OPSpaceship(Spaceship):
 
     def check_if_game_ended(self):
         """Check if game has ended."""
-        if len(self.impostor_list) == 0 or len(self.impostor_list) == len(self.crewmate_list) <= 3:
+        if len(self.impostor_list) == 0 or len(self.impostor_list) == len(self.crewmate_list):
             return True
 
     def who_won(self):
         """Return which team has won and set all to defaults."""
-        if len(self.impostor_list) == 0:
+        if len(self.impostor_list) == 0 and len(self.crewmate_list) >= 2:
             self.game = False
             self.meeting = False
             self.crewmate_list = []
@@ -119,12 +119,16 @@ class OPSpaceship(Spaceship):
 
     def easy_game_end_meeting(self, target):
         """Help func to make end meeting less complex."""
+        # +
         if len(self.impostor_list) == 1 and isinstance(target, Impostor):
             return f"{target.name} was an Impostor. 1 Impostor remains."
+        #
         elif len(self.impostor_list) == 1 and isinstance(target, Crewmate):
             return f"{target.name} was not an Impostor. 1 Impostor remains."
+        # +
         elif len(self.impostor_list) > 1 and isinstance(target, Impostor):
             return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
+        # +
         elif len(self.impostor_list) > 1 and isinstance(target, Crewmate):
             return f"{target.name} was not an Impostor. {len(self.impostor_list)} Impostors remain."
 
