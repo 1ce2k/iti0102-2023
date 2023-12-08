@@ -35,4 +35,5 @@ def min_cubes_for_game():
         count += red_cubes * green_cubes * blue_cubes
     return count
 
-print(min_cubes_for_game())
+# print(min_cubes_for_game())
+print(count_possible_games_by_max_values())
