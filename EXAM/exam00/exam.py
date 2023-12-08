@@ -147,7 +147,6 @@ def rainbows(field: str, lower=False) -> int:
     :param field: string to search rainbows from
     :return: number of rainbows in the string
     """
-    # make input case-insensitive
     s = field.lower()
 
     # check if there is some rainbow in str
@@ -501,5 +500,3 @@ if __name__ == '__main__':
         'sauna': 200
     }
     assert hotel.get_most_profitable_feature() == 'bed'
-
-    # TODO: try to add a room so that two or more features have the same profit
