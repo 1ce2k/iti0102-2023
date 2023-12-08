@@ -1,3 +1,5 @@
+"""AOC DAY 2 part A"""
+
 import re
 
 red_max, green_max, blue_max = 12, 13, 14
