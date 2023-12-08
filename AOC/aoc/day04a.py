@@ -4,10 +4,11 @@
 with open('data.txt', 'r') as file:
     input_data = [line.strip() for line in file]
 
+
 total_points = 0
 # print(input_data)
 for line in input_data:
-    card_poits = 0
+    card_points = 0
     matching_num_count = 0
     card_num, nums = line.split(':')
     win_nums, all_nums = nums.split('|')
@@ -17,9 +18,9 @@ for line in input_data:
         if num in card_nums:
             if matching_num_count == 0:
                 matching_num_count += 1
-                card_poits += 1
+                card_points += 1
             else:
                 matching_num_count += 1
-                card_poits *= 2
-    total_points += card_poits
+                card_points *= 2
+    total_points += card_points
 print(total_points)
