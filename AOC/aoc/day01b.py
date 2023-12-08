@@ -1,7 +1,5 @@
-import re
-
-
 def trebuchet(file) -> int:
+    """Return sum of numbers."""
     with open(file, 'r') as file:
         data = file.readlines()
         # print(data)
@@ -16,7 +14,7 @@ def trebuchet(file) -> int:
 
 
 def find_last_digit(s, index_to_start):
-    # print(s)
+    """Find last digit."""
     word_to_num = {'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6', 'seven': '7',
                    'eight': '8', 'nine': '9'}
     last_num = ''
@@ -31,6 +29,7 @@ def find_last_digit(s, index_to_start):
 
 
 def find_first_digit(s):
+    """Find first digit."""
     word_to_num = {'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6', 'seven': '7',
                    'eight': '8', 'nine': '9'}
     # Get the first and last characters
@@ -43,12 +42,3 @@ def find_first_digit(s):
                 return first_num
             elif s[i:j].isdigit():
                 return s[i:j]
-
-
-# print(find_first_digit('3mbjccssjgtdttvbdhdfxvldpmhcpc'),  find_last_digit('3mbjccssjgtdttvbdhdfxvldpmhcpc', 2))  # 23
-# print(find_first_digit('twone1abc757n89') + find_last_digit('twone1abc757n89', 2))  # 29
-# print(find_first_digit('4nineeightseven2') + find_last_digit('4nineeightseven2'))  # 29
-# print('4nineeightseven2'[-1].isdigit())
-# print(find_last_digit('4nineeightseven2'))
-#
-print(trebuchet('data.txt'))
