@@ -1,3 +1,6 @@
+"""AOC DAY 1 part B."""
+
+
 def trebuchet(file) -> int:
     """Return sum of numbers."""
     with open(file, 'r') as file:
