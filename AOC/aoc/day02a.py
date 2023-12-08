@@ -1,4 +1,4 @@
-"""AOC DAY 2 part A"""
+"""AOC DAY 2 part A."""
 
 import re
 
