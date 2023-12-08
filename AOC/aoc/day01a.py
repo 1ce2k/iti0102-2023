@@ -22,10 +22,9 @@ def find_last_digit(s):
         if x.isdigit():
             return x
 
+
 def find_first_digit(s):
     """Find last digit."""
     for x in s:
         if x.isdigit():
             return x
-
-print(trebuchet('data.txt'))
