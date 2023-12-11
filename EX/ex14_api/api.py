@@ -16,7 +16,7 @@ def get_request(url: str) -> int:
     return requests.get(url).status_code
 
 
-def get_request_error_handling(url: str) -> int | requests.RequestException:
+def get_request_error_handling(url: str):
     """
     Send an HTTP GET request to the specified URL with error handling.
 
@@ -26,7 +26,7 @@ def get_request_error_handling(url: str) -> int | requests.RequestException:
     :return: Server's response object or the exception object if an error occurs.
     """
     try:
-        return requests.get(url).status_code
+        return requests.get(url)
     except requests.exceptions.RequestException as e:
         return e
 
@@ -44,7 +44,7 @@ def post_request(url: str, data: dict) -> requests.Response:
     pass
 
 
-def delete_request(url: str) -> int | requests.RequestException:
+def delete_request(url: str):
     """
     Send an HTTP DELETE request to the specified URL.
 
@@ -71,7 +71,7 @@ def stream_request(url: str) -> str:
     pass
 
 
-def get_authenticated_request(url: str, auth_token: str) -> Any | requests.RequestException:
+def get_authenticated_request(url: str, auth_token: str):
     """
     Send an authenticated HTTP GET request using the provided token.
 
@@ -126,6 +126,7 @@ def fetch_aggregate_data(url: str) -> dict:
 
 if __name__ == '__main__':
     print(get_request("https://www.google.com"))  # 200
+    print(get_request_error_handling("https://www.google1.com"))
     print(advanced_user_filter(
         "https://cs.taltech.ee/services/ex14/json-data",
         750000, 900, 2500))
