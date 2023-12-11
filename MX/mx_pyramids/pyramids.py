@@ -223,5 +223,13 @@ def create_empty_pyramid(height: int, current=1) -> str:
     :param current: Keeping track of current layer.
     :return: Pyramid.
     """
-    pass
+    if current > height:
+        return ""
 
+    spaces = " " * (height - current)
+    if current == 1 or current == height:
+        pyramid_layer = spaces + "*" * (2 * current - 1) + "\n"
+    else:
+        pyramid_layer = spaces + "*" + " " * (2 * current - 3) + "*" + "\n"
+
+    return pyramid_layer + create_empty_pyramid(height, current + 1)
