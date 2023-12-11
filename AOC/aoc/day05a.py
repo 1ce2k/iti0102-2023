@@ -2,5 +2,5 @@
 
 
 def somefunc():
-    """Some func"""
+    """Help func."""
     return
