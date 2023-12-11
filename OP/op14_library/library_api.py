@@ -114,7 +114,7 @@ class Controller:
         self.library = librarystats
 
     def get(self, path):
-        book = re.search('/books/(\.)/', path).group(1)
+        book = re.search(r'/books/(\.)/', path).group(1)
         if path == '/books':
             return self.library.get_book_titles()
         elif path == '/borrowers':
