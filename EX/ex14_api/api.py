@@ -95,7 +95,7 @@ def get_authenticated_request(url: str, auth_token: str):
 
     """
     try:
-        r = requests.get(url, headers={"Authorization": auth_token}).json()
+        r = requests.get(url, headers={"Authorization": f"auth_token {auth_token}"}).json()
         return r
     except requests.exceptions.RequestException as e:
         return e
