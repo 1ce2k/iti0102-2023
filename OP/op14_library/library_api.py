@@ -109,7 +109,8 @@ class LibraryStats:
 class Controller:
     """Controller class."""
 
-    pass
+    def __init__(self, librarystats: LibraryStats):
+        self.library = librarystats
 
 
 if __name__ == "__main__":
