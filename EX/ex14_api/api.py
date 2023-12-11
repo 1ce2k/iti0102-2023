@@ -26,7 +26,9 @@ def get_request_error_handling(url: str):
     :return: Server's response object or the exception object if an error occurs.
     """
     try:
-        return requests.get(url)
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        return response.status_code
     except requests.exceptions.RequestException as e:
         return e
 
