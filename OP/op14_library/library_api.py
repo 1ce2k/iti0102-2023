@@ -112,6 +112,14 @@ class Controller:
     def __init__(self, librarystats: LibraryStats):
         self.library = librarystats
 
+    def get(self, path):
+        if path == '/books':
+            self.library.get_book_titles()
+        elif path == '/borrowers':
+            self.library.get_borrower_names()
+        elif path == '/total':
+            self.library.get_total_transactions()
+
 
 if __name__ == "__main__":
     library = LibraryStats('example.csv')
