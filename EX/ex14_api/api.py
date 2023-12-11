@@ -76,7 +76,9 @@ def stream_request(url: str) -> str:
     :param url: The URL to send the GET request to.
     :return: A string containing the streamed content.
     """
-    return requests.get(url, stream=True).text
+    r = requests.get(url, stream=True)
+    for line in r.iter_lines():
+        print(line)
 
 
 def get_authenticated_request(url: str, auth_token: str):
@@ -135,6 +137,7 @@ def fetch_aggregate_data(url: str) -> dict:
 if __name__ == '__main__':
     print(get_request("https://www.google.com"))  # 200
     print(get_request_error_handling("https://www.google1.com"))
+    print(stream_request('https://requests.readthedocs.io/en/latest/user/advanced/#streaming-requests'))
     print(advanced_user_filter(
         "https://cs.taltech.ee/services/ex14/json-data",
         750000, 900, 2500))
