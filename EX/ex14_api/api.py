@@ -94,8 +94,11 @@ def get_authenticated_request(url: str, auth_token: str):
     :return: Server's response json object or the exception object if an error occurs.
 
     """
-    r = requests.get(url, headers={'Authorization': f'Bearer {auth_token}'})
-    return url, auth_token
+    try:
+        return requests.get(url, headers={'Authorization': f'Bearer {auth_token}'}).json()
+    except requests.exceptions.RequestException as e:
+        return e
+
 
 def advanced_user_filter(url, min_followers: int, min_posts: int, min_following: int) -> list:
     """
