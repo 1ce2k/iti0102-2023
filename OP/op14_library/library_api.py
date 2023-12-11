@@ -19,13 +19,19 @@ class LibraryStats:
             }
             self.data.append(new_dict)
 
-
     def get_borrower_names(self):
         borrower_names = []
         for line in self.data:
                 if line['user'] not in borrower_names:
                     borrower_names.append(line['user'])
         return borrower_names
+
+    def get_book_titles(self):
+        books = []
+        for line in self.data:
+            if line['book'] not in books:
+                books.append(line['book'])
+        return books
 
 
 class Controller:
@@ -36,3 +42,4 @@ if __name__ == "__main__":
     library = LibraryStats('example.csv')
     print(library.data)
     print(library.get_borrower_names())
+    print(library.get_book_titles())
