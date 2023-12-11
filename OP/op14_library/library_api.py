@@ -114,11 +114,11 @@ class Controller:
 
     def get(self, path):
         if path == '/books':
-            self.library.get_book_titles()
+            return self.library.get_book_titles()
         elif path == '/borrowers':
-            self.library.get_borrower_names()
+            return self.library.get_borrower_names()
         elif path == '/total':
-            self.library.get_total_transactions()
+            return self.library.get_total_transactions()
 
 
 if __name__ == "__main__":
