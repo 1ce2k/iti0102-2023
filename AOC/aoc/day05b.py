@@ -4,4 +4,3 @@
 def somefunc():
     """Help func."""
     return
-
