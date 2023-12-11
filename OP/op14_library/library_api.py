@@ -26,6 +26,9 @@ class LibraryStats:
         return borrower_names
 
 
+class Controller:
+    pass
+
 if __name__ == "__main__":
     library = LibraryStats('example.csv')
     print(library.data)
