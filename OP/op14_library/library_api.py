@@ -33,6 +33,9 @@ class LibraryStats:
                 books.append(line['book'])
         return books
 
+    def get_total_transactions(self):
+        return len(self.data)
+
 
 class Controller:
     pass
