@@ -48,6 +48,8 @@ class LibraryStats:
         for line in self.data:
             if line['user'] == username and line['action'] == 'laenutus':
                 count += 1
+        return count
+
 
 class Controller:
     pass
