@@ -57,6 +57,17 @@ class LibraryStats:
                 count += 1
         return count
 
+    def get_favourite_book(self, username):
+        books = {}
+        for line in self.data:
+            if line['user'] == username and line['action'] == 'laenutus':
+                if line['book'] not in books:
+                    books[line['book']] = 0
+                books[line['book']] += 1
+        return max(books.keys(), key=books.get)
+
+
+
 
 class Controller:
     """Controller class."""
@@ -69,3 +80,4 @@ if __name__ == "__main__":
     print(library.get_borrower_names())
     print(library.get_book_titles())
     print(library.get_total_transactions())
+    print(library.get_favourite_book('Mati'))
