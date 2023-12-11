@@ -124,8 +124,9 @@ class Controller:
             return self.library.get_total_transactions()
         elif re.search(r'/book/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1):
             return self.get_data_per_book(path)
-        elif re.search(r'/borrower/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1):
-            return self.get_data_per_user(path)
+        return path
+        # elif re.search(r'/borrower/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1):
+        #     return self.get_data_per_user(path)
 
     def get_data_per_book(self, path):
         """Help func."""
