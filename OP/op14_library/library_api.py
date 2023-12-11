@@ -3,7 +3,9 @@ import datetime
 
 
 class LibraryStats:
+    """Library Stats class."""
     def __init__(self, filename):
+        """Read file to dict."""
         self.data = []
         with open(filename, 'r', encoding="utf-8") as f:
             reader = csv.reader(f, delimiter=';')
@@ -20,6 +22,7 @@ class LibraryStats:
             self.data.append(new_dict)
 
     def get_borrower_names(self):
+        """Return list of borrower names."""
         borrower_names = []
         for line in self.data:
                 if line['user'] not in borrower_names:
@@ -27,6 +30,7 @@ class LibraryStats:
         return borrower_names
 
     def get_book_titles(self):
+        """Return list of book titles."""
         books = []
         for line in self.data:
             if line['book'] not in books:
@@ -34,9 +38,11 @@ class LibraryStats:
         return books
 
     def get_total_transactions(self):
+        """Return count of al transactions."""
         return len(self.data)
 
     def get_total_borrows_of_book(self, book_name):
+        """Return how often book was borrowed."""
         count = 0
         for line in self.data:
             if line['book'] == book_name and line['action'] == 'laenutus':
@@ -44,6 +50,7 @@ class LibraryStats:
         return count
 
     def get_total_borrows_by(self, username):
+        """Return how often user borrows."""
         count = 0
         for line in self.data:
             if line['user'] == username and line['action'] == 'laenutus':
@@ -52,6 +59,7 @@ class LibraryStats:
 
 
 class Controller:
+    """Controller class."""
     pass
 
 
