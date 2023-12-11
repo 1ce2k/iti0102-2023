@@ -82,7 +82,7 @@ class LibraryStats:
                 users[line['user']] += 1
         return max(users.keys(), key=users.get)
 
-    def get_status(self, book_name):
+    def get_current_status(self, book_name):
         book_data = []
         for line in self.data:
             if line['book'] == book_name:
@@ -101,4 +101,3 @@ class Controller:
 if __name__ == "__main__":
     library = LibraryStats('example.csv')
     print(library.data)
-    print(library.get_status('Harry Potter'))
