@@ -37,7 +37,7 @@ class LibraryStats:
     def get_total_transactions(self):
         return len(self.data)
 
-    def get_total_borrows_of_books(self, book_name):
+    def get_total_borrows_of_book(self, book_name):
         count = 0
         for line in self.data:
             if line['name'] == book_name:
