@@ -116,17 +116,14 @@ class Controller:
 
     def get(self, path):
         """Return valid method from librarystats."""
-        book = re.search(r'/book/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1)
-        # book = re.search(r'/book/([A-Za-z-]+)/', path).group(1)
-        print(book)
-        # user = re.search()
         if path == '/books':
             return self.library.get_book_titles()
         elif path == '/borrowers':
             return self.library.get_borrower_names()
         elif path == '/total':
             return self.library.get_total_transactions()
-        elif book:
+        elif re.search(r'/book/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1):
+            book = re.search(r'/book/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1)
             if path == f'/book/{book}/borrows':
                 return self.library.get_total_borrows_of_book(book)
 
