@@ -164,6 +164,7 @@ def fetch_aggregate_data(url: str) -> dict:
     }
     return ret
 
+
 if __name__ == '__main__':
     print(get_request("https://www.google.com"))  # 200
     print(get_request_error_handling("https://www.google1.com"))
