@@ -200,10 +200,12 @@ def create_diamond(height: int, current=1) -> str:
     :param current: Keeping track of current layer.
     :return: Diamond.
     """
-    return create_regular_pyramid(height, current) + create_regular_pyramid_upside_down(height, current)
-
-
-print(create_diamond(4))
+    if current > height:
+        return ""
+    spaces = " " * (height - current)
+    stars = "*" * (2 * current - 1)
+    layer = spaces + stars + "\n"
+    return layer + create_diamond(height, current + 1) + layer
 
 
 def create_empty_pyramid(height: int, current=1) -> str:
