@@ -40,7 +40,7 @@ class LibraryStats:
     def get_total_borrows_of_book(self, book_name):
         count = 0
         for line in self.data:
-            if line['book'] == book_name:
+            if line['book'] == book_name and line['action'] == 'laenutus':
                 count += 1
         return count
 
