@@ -128,7 +128,15 @@ def create_number_pyramid_right_down(height: int, current=1) -> str:
     :param current: Keeping track of current layer.
     :return: Pyramid.
     """
-    pass
+    if height == 0:
+        return ""
+
+    layer = ''.join(str(i) for i in range(1, height + 1))
+    rest = create_number_pyramid_right_down(height - 1, current + 1)
+    pyramid = f'{layer}\n{" " * current + rest}'
+    return pyramid
+
+print(create_number_pyramid_right_down(4))
 
 
 def create_regular_pyramid(height: int, current=1) -> str:
