@@ -10,21 +10,22 @@ class LibraryStats:
             data_list = []
             for line in reader:
                 data_list.append(line)
-            keys = data_list[0]
         for line in data_list[1:]:
-            y = {}
-            for x in range(len(keys)):
-                y[keys[x]] = line[x]
-                self.data.append(y)
+            new_dict = {
+                'date': datetime.datetime.strptime(line[0], '%Y-%m-%d'),
+                'book': line[1],
+                'user': line[2],
+                'action': line[3]
+            }
+            self.data.append(new_dict)
+
 
     def get_borrower_names(self):
         borrower_names = []
         for line in self.data:
-            return line
-            # if line['action'] == 'laenutus':
-            #     if line['user'] not in borrower_names:
-            #         borrower_names.append(line['user'])
-        # return borrower_names
+                if line['user'] not in borrower_names:
+                    borrower_names.append(line['user'])
+        return borrower_names
 
 
 class Controller:
