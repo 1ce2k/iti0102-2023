@@ -73,12 +73,13 @@ class LibraryStats:
                 history.append(line['book'])
         return history
 
-    def get_most_frequent_borrower(self):
+    def get_most_frequent_borrower(self, book_name):
         users = {}
         for line in self.data:
-            if line['user'] not in users:
-                users[line['user']] = 0
-            users[line['user']] += 1
+            if line['book'] == book_name and line['action'] == "laenutus":
+                if line['user'] not in users:
+                    users[line['user']] = 0
+                users[line['user']] += 1
         return max(users.keys(), key=users.get)
 
 class Controller:
