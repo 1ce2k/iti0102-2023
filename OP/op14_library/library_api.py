@@ -92,6 +92,13 @@ class LibraryStats:
         else:
             return 'tagastatud'
 
+    def get_borrow_dates(self, book_name):
+        dates = []
+        for line in self.data:
+            if line['book'] == book_name and line['action'] == 'laenutus':
+                dates.append(line['date'])
+        return dates
+
 
 class Controller:
     """Controller class."""
