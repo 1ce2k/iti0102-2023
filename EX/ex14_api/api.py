@@ -77,8 +77,10 @@ def stream_request(url: str) -> str:
     :return: A string containing the streamed content.
     """
     r = requests.get(url, stream=True)
+    ret = ''
     for line in r.iter_lines():
-        print(line)
+        ret += str(line) + '\n'
+    return ret
 
 
 def get_authenticated_request(url: str, auth_token: str):
