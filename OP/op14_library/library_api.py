@@ -21,10 +21,10 @@ class LibraryStats:
         borrower_names = []
         for line in self.data:
             return line
-            if line['action'] == 'laenutus':
-                if line['user'] not in borrower_names:
-                    borrower_names.append(line['user'])
-        return borrower_names
+            # if line['action'] == 'laenutus':
+            #     if line['user'] not in borrower_names:
+            #         borrower_names.append(line['user'])
+        # return borrower_names
 
 
 class Controller:
