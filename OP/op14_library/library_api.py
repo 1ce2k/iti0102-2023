@@ -14,7 +14,7 @@ class LibraryStats:
                 data_list.append(line)
         for line in data_list:
             new_dict = {
-                'date': datetime.datetime.strptime(line[0], '%Y-%m-%d'),
+                'date': line[0],
                 'book': line[1],
                 'user': line[2],
                 'action': line[3]
