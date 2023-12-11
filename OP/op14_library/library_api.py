@@ -82,6 +82,17 @@ class LibraryStats:
                 users[line['user']] += 1
         return max(users.keys(), key=users.get)
 
+    def get_status(self, book_name):
+        book_data = []
+        for line in self.data:
+            if line['book'] == book_name:
+                book_data.append(line)
+        if book_data[-1]['action'] == 'laenutus':
+            return 'laenatud'
+        else:
+            return 'tagastatud'
+
+
 class Controller:
     """Controller class."""
     pass
@@ -90,7 +101,4 @@ class Controller:
 if __name__ == "__main__":
     library = LibraryStats('example.csv')
     print(library.data)
-    print(library.get_borrower_names())
-    print(library.get_book_titles())
-    print(library.get_total_transactions())
-    print(library.get_favourite_book('Mati'))
+    print(library.get_status('Harry Potter'))
