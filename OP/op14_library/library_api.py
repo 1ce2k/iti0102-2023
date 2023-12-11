@@ -114,15 +114,17 @@ class Controller:
         self.library = librarystats
 
     def get(self, path):
-        book = re.search(r'/books/(\.)/', path).group(1)
+        # book = re.search(r'/books/(\.)/', path).group(1)
+        # user = re.search()
         if path == '/books':
             return self.library.get_book_titles()
         elif path == '/borrowers':
             return self.library.get_borrower_names()
         elif path == '/total':
             return self.library.get_total_transactions()
-        elif path == f'/book/{book}/total-borrows':
-            return self.library.get_total_borrows_of_book(book)
+        return path
+        # elif path == f'/book/{book}/total-borrows':
+        #     return self.library.get_total_borrows_of_book(book)
 
 
 if __name__ == "__main__":
