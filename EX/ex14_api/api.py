@@ -117,8 +117,17 @@ def advanced_user_filter(url, min_followers: int, min_posts: int, min_following:
     list_of_users = []
     for person in data:
         if person['following'] >= min_following and person['followers'] >= min_followers and person['posts'] >= min_posts:
-            list_of_users.append(person)
+            new_person = {
+                'username':person['username'],
+                'full_name': person['full_name'],
+                'followers': person['followers'],
+                'following': person['following'],
+                'posts': person['posts']
+            }
+            list_of_users.append(new_person)
     return list_of_users
+
+
 
 def fetch_aggregate_data(url: str) -> dict:
     """
