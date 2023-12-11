@@ -61,7 +61,13 @@ def create_number_pyramid_left(height: int, current=1) -> str:
     :param current: Keeping track of current layer.
     :return: Pyramid.
     """
-    pass
+    if current > height:
+        return ""
+
+    current_line = ''.join(str(i) for i in range(1, current + 1))
+    next_lines = create_number_pyramid_left(height, current + 1)
+    pyramid = f"{current_line}\n{next_lines}" if next_lines else current_line
+    return pyramid
 
 
 def create_number_pyramid_right(height: int, current=1) -> str:
@@ -79,7 +85,17 @@ def create_number_pyramid_right(height: int, current=1) -> str:
     :param current: Keeping track of current layer.
     :return: Pyramid.
     """
-    pass
+    if current > height:
+        return ''
+
+    spaces = ' ' * (height - current)
+    numbers = ''.join(str(i) for i in range(current, 0, -1))
+    pyramid_layer = spaces + numbers + '\n'
+
+    return pyramid_layer + create_number_pyramid_right(height, current + 1)
+
+
+print(create_number_pyramid_right(4))
 
 
 def create_number_pyramid_left_down(height: int, current=1) -> str:
