@@ -15,7 +15,7 @@ class Book:
         pass
 
 
-class LibraryStat:
+class LibraryStats:
     def __init__(self, filename):
         self.data = []
         with open(filename, 'r') as f:
