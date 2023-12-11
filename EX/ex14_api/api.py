@@ -1,5 +1,5 @@
 """API exercise."""
-from typing import Any
+# from typing import Any
 import requests
 import requests.exceptions
 
@@ -43,7 +43,10 @@ def post_request(url: str, data: dict) -> requests.Response:
     :param data: Dictionary to be sent along with the POST request.
     :return: Server's response json object or the exception object if an error occurs.
     """
-    pass
+    try:
+        return requests.post(url, json=data)
+    except requests.exceptions.RequestException as e:
+        return e
 
 
 def delete_request(url: str):
