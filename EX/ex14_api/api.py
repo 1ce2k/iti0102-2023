@@ -33,7 +33,7 @@ def get_request_error_handling(url: str):
         return e
 
 
-def post_request(url: str, data: dict) -> requests.Response:
+def post_request(url: str, data: dict):
     """
     Send an HTTP POST request with JSON data to the specified URL.
 
@@ -58,7 +58,10 @@ def delete_request(url: str):
     :param url: The URL to which the DELETE request will be sent.
     :return: Server's response status code or the exception object if an error occurs.
     """
-    pass
+    try:
+        return requests.delete(url).status_code
+    except requests.exceptions.RequestException as e:
+        return e
 
 
 def stream_request(url: str) -> str:
