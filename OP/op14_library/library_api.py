@@ -127,7 +127,7 @@ class Controller:
         elif path == '/total':
             return self.library.get_total_transactions()
         elif book:
-            if path == f'/book/{book}/total-borrows':
+            if path == f'/book/{book}/borrows':
                 return self.library.get_total_borrows_of_book(book)
 
 
