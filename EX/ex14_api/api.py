@@ -76,7 +76,7 @@ def stream_request(url: str) -> str:
     :param url: The URL to send the GET request to.
     :return: A string containing the streamed content.
     """
-    pass
+    return requests.get(url).text
 
 
 def get_authenticated_request(url: str, auth_token: str):
