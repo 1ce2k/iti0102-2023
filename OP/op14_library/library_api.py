@@ -122,7 +122,7 @@ class Controller:
             return self.library.get_borrower_names()
         elif path == '/total':
             return self.library.get_total_transactions()
-        elif re.search(r'/book/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1):
+        elif re.search(r'/book/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1) is not None:
             return self.get_data_per_book(path)
         return path
         # elif re.search(r'/borrower/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1):
