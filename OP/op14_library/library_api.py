@@ -66,7 +66,12 @@ class LibraryStats:
                 books[line['book']] += 1
         return max(books.keys(), key=books.get)
 
-
+    def get_borrow_history(self, username):
+        history = []
+        for line in self.data:
+            if line['user'] == username and line['action'] == 'laenutus':
+                history.append(line['book'])
+        return history
 
 
 class Controller:
