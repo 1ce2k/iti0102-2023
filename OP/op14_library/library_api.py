@@ -10,7 +10,7 @@ class LibraryStats:
             data_list = []
             for line in reader:
                 data_list.append(line)
-        for line in data_list[1:]:
+        for line in data_list:
             new_dict = {
                 'date': datetime.datetime.strptime(line[0], '%Y-%m-%d'),
                 'book': line[1],
@@ -29,6 +29,7 @@ class LibraryStats:
     def get_book_titles(self):
         books = []
         for line in self.data:
+            print(line)
             if line['book'] not in books:
                 books.append(line['book'])
         return books
@@ -46,3 +47,4 @@ if __name__ == "__main__":
     print(library.data)
     print(library.get_borrower_names())
     print(library.get_book_titles())
+    print(library.get_total_transactions())
