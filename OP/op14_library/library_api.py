@@ -1,5 +1,6 @@
 """OP 14."""
 import csv
+import re
 
 
 class LibraryStats:
@@ -113,12 +114,15 @@ class Controller:
         self.library = librarystats
 
     def get(self, path):
+        book = re.search('/books/(.)/', path).group(1)
         if path == '/books':
             return self.library.get_book_titles()
         elif path == '/borrowers':
             return self.library.get_borrower_names()
         elif path == '/total':
             return self.library.get_total_transactions()
+        elif path == f'/book/{book}/total-borrows':
+            return self.library.get_total_borrows_of_book(book)
 
 
 if __name__ == "__main__":
