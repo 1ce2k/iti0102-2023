@@ -138,7 +138,7 @@ class Controller:
                 return self.library.get_total_borrows_by(user)
             elif path == f'/borrower/{user}/favourite-book':
                 return self.library.get_favourite_book(user)
-            elif path== f'/borrower/{user}/borrow-history':
+            elif path == f'/borrower/{user}/borrow-history':
                 return self.library.get_borrow_history(user)
 
 
