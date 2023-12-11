@@ -29,7 +29,6 @@ class LibraryStats:
     def get_book_titles(self):
         books = []
         for line in self.data:
-            print(line)
             if line['book'] not in books:
                 books.append(line['book'])
         return books
@@ -44,6 +43,11 @@ class LibraryStats:
                 count += 1
         return count
 
+    def get_total_borrows_by(self, username):
+        count = 0
+        for line in self.data:
+            if line['user'] == username and line['action'] == 'laenutus':
+                count += 1
 
 class Controller:
     pass
