@@ -117,7 +117,7 @@ class Controller:
     def get(self, path):
         """Return valid method from librarystats."""
         book = re.search(r'/book/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1)
-        book = re.search(r'/book/([A-Za-z-]+)/', path).group(1)
+        # book = re.search(r'/book/([A-Za-z-]+)/', path).group(1)
         print(book)
         # user = re.search()
         if path == '/books':
