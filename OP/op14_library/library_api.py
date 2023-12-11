@@ -123,24 +123,32 @@ class Controller:
         elif path == '/total':
             return self.library.get_total_transactions()
         elif re.search(r'/book/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1):
-            book = re.search(r'/book/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1)
-            if path == f'/book/{book}/borrows':
-                return self.library.get_total_borrows_of_book(book)
-            elif path == f'/book/{book}/most-frequent-borrower':
-                return self.library.get_most_frequent_borrower(book)
-            elif path == f'/book/{book}/borrow-dates':
-                return self.library.get_borrow_dates(book)
-            elif path == f'/book/{book}/current-status':
-                return self.library.get_current_status(book)
+            self.get_data_per_book(path)
         elif re.search(r'/borrower/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1):
-            user = re.search(r'/borrower/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1)
-            if path == f'/borrower/{user}/total-borrows':
-                return self.library.get_total_borrows_by(user)
-            elif path == f'/borrower/{user}/favourite-book':
-                return self.library.get_favourite_book(user)
-            elif path == f'/borrower/{user}/borrow-history':
-                return self.library.get_borrow_history(user)
+            self.get_data_per_user(path)
 
+    def get_data_per_book(self, path):
+        """Help func."""
+        book = re.search(r'/book/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1)
+        if path == f'/book/{book}/borrows':
+            return self.library.get_total_borrows_of_book(book)
+        elif path == f'/book/{book}/most-frequent-borrower':
+            return self.library.get_most_frequent_borrower(book)
+        elif path == f'/book/{book}/borrow-dates':
+            return self.library.get_borrow_dates(book)
+        elif path == f'/book/{book}/current-status':
+            return self.library.get_current_status(book)
+
+    def get_data_per_user(self, path):
+        """Help func."""
+        return path
+        # user = re.search(r'/borrower/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1)
+        # if path == f'/borrower/{user}/total-borrows':
+        #     return self.library.get_total_borrows_by(user)
+        # elif path == f'/borrower/{user}/favourite-book':
+        #     return self.library.get_favourite_book(user)
+        # elif path == f'/borrower/{user}/borrow-history':
+        #     return self.library.get_borrow_history(user)
 
 if __name__ == "__main__":
     library = LibraryStats('example.csv')
