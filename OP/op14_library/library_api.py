@@ -20,6 +20,7 @@ class LibraryStats:
     def get_borrower_names(self):
         borrower_names = []
         for line in self.data:
+            return line
             if line['action'] == 'laenutus':
                 if line['user'] not in borrower_names:
                     borrower_names.append(line['user'])
@@ -28,6 +29,7 @@ class LibraryStats:
 
 class Controller:
     pass
+
 
 if __name__ == "__main__":
     library = LibraryStats('example.csv')
