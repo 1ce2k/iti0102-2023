@@ -111,6 +111,7 @@ class Controller:
     """Controller class."""
 
     def __init__(self, librarystats: LibraryStats):
+        """Init controller."""
         self.library = librarystats
 
     def get(self, path):
