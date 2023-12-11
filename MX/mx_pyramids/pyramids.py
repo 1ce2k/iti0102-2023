@@ -156,7 +156,15 @@ def create_regular_pyramid(height: int, current=1) -> str:
     :param current: Keeping track of current layer.
     :return: Pyramid.
     """
-    pass
+    if current > height:
+        return ""
+
+    spaces = " " * (height - current)
+    stars = "*" * (2 * current - 1)
+
+    pyramid_layer = spaces + stars + "\n"
+
+    return pyramid_layer + create_regular_pyramid(height, current + 1)
 
 
 def create_regular_pyramid_upside_down(height: int, current=1) -> str:
