@@ -115,6 +115,7 @@ class Controller:
 
     def get(self, path):
         book = re.search(r'/book/([A-Za-z-]+)/', path).group(1)
+        print(book)
         # user = re.search()
         if path == '/books':
             return self.library.get_book_titles()
@@ -122,8 +123,9 @@ class Controller:
             return self.library.get_borrower_names()
         elif path == '/total':
             return self.library.get_total_transactions()
-        elif path == f'/book/{book}/total-borrows':
-            return self.library.get_total_borrows_of_book(book)
+        elif book:
+            if path == f'/book/{book}/total-borrows':
+                return self.library.get_total_borrows_of_book(book)
 
 
 if __name__ == "__main__":
