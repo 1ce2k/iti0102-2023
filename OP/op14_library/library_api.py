@@ -142,10 +142,10 @@ class Controller:
 
     def get_data_per_user(self, path):
         """Help func."""
-        return path
-        # user = re.search(r'/borrower/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1)
-        # if path == f'/borrower/{user}/total-borrows':
-        #     return self.library.get_total_borrows_by(user)
+        # return path
+        user = re.search(r'/borrower/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1)
+        if path == f'/borrower/{user}/total-borrows':
+            return self.library.get_total_borrows_by(user)
         # elif path == f'/borrower/{user}/favourite-book':
         #     return self.library.get_favourite_book(user)
         # elif path == f'/borrower/{user}/borrow-history':
