@@ -1,9 +1,9 @@
 import csv
-import datetime
 
 
 class LibraryStats:
     """Library Stats class."""
+
     def __init__(self, filename):
         """Read file to dict."""
         self.data = []
@@ -25,8 +25,8 @@ class LibraryStats:
         """Return list of borrower names."""
         borrower_names = []
         for line in self.data:
-                if line['user'] not in borrower_names:
-                    borrower_names.append(line['user'])
+            if line['user'] not in borrower_names:
+                borrower_names.append(line['user'])
         return borrower_names
 
     def get_book_titles(self):
@@ -58,6 +58,7 @@ class LibraryStats:
         return count
 
     def get_favourite_book(self, username):
+        """Return users favourite book."""
         books = {}
         for line in self.data:
             if line['user'] == username and line['action'] == 'laenutus':
@@ -67,6 +68,7 @@ class LibraryStats:
         return max(books.keys(), key=books.get)
 
     def get_borrow_history(self, username):
+        """Return user borrow history."""
         history = []
         for line in self.data:
             if line['user'] == username and line['action'] == 'laenutus':
@@ -74,6 +76,7 @@ class LibraryStats:
         return history
 
     def get_most_frequent_borrower(self, book_name):
+        """Return most book frequent borrower."""
         users = {}
         for line in self.data:
             if line['book'] == book_name and line['action'] == "laenutus":
@@ -83,6 +86,7 @@ class LibraryStats:
         return max(users.keys(), key=users.get)
 
     def get_current_status(self, book_name):
+        """Return book status."""
         book_data = []
         for line in self.data:
             if line['book'] == book_name:
@@ -93,6 +97,7 @@ class LibraryStats:
             return 'tagastatud'
 
     def get_borrow_dates(self, book_name):
+        """Return list of dates when book was borrowed."""
         dates = []
         for line in self.data:
             if line['book'] == book_name and line['action'] == 'laenutus':
