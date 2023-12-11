@@ -146,10 +146,11 @@ class Controller:
         user = re.search(r'/borrower/([A-ZÜÕÖÄa-züõöä\d-]+)/', path).group(1)
         if path == f'/borrower/{user}/total-borrows':
             return self.library.get_total_borrows_by(user)
-        # elif path == f'/borrower/{user}/favourite-book':
-        #     return self.library.get_favourite_book(user)
-        # elif path == f'/borrower/{user}/borrow-history':
-        #     return self.library.get_borrow_history(user)
+        elif path == f'/borrower/{user}/favourite-book':
+            return self.library.get_favourite_book(user)
+        elif path == f'/borrower/{user}/borrow-history':
+            return self.library.get_borrow_history(user)
+
 
 if __name__ == "__main__":
     library = LibraryStats('example.csv')
