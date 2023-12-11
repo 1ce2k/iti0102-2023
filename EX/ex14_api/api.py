@@ -113,8 +113,12 @@ def advanced_user_filter(url, min_followers: int, min_posts: int, min_following:
     :param min_following: Minimum following required.
     :return: List of user data dictionaries.
     """
-    pass
-
+    data = requests.get(url).json()
+    list_of_users = []
+    for person in data:
+        if person['following'] >= min_following and person['followers'] >= min_followers and person['posts'] >= min_posts:
+            list_of_users.append(person)
+    return list_of_users
 
 def fetch_aggregate_data(url: str) -> dict:
     """
@@ -142,7 +146,6 @@ def fetch_aggregate_data(url: str) -> dict:
 if __name__ == '__main__':
     print(get_request("https://www.google.com"))  # 200
     print(get_request_error_handling("https://www.google1.com"))
-    print(stream_request('https://requests.readthedocs.io/en/latest/user/advanced/#streaming-requests'))
     print(advanced_user_filter(
         "https://cs.taltech.ee/services/ex14/json-data",
         750000, 900, 2500))
