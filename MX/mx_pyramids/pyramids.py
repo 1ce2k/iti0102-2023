@@ -95,9 +95,6 @@ def create_number_pyramid_right(height: int, current=1) -> str:
     return pyramid_layer + create_number_pyramid_right(height, current + 1)
 
 
-print(create_number_pyramid_right(4))
-
-
 def create_number_pyramid_left_down(height: int, current=1) -> str:
     """
     Create left-aligned number pyramid upside-down.
@@ -113,7 +110,17 @@ def create_number_pyramid_left_down(height: int, current=1) -> str:
     :param current: Keeping track of current layer.
     :return: Pyramid.
     """
-    pass
+    if current > height:  # Base case: when current layer exceeds the height
+        return ''
+
+    layer = ''.join(str(i) for i in range(height, current - 1, -1))  # Generate the current layer
+    pyramid_rest = create_number_pyramid_left_down(height, current + 1)  # Recursively generate the rest of the pyramid
+
+    return layer + '\n' + pyramid_rest if pyramid_rest else layer  # Combine current layer with the rest of the pyramid
+
+
+print(create_number_pyramid_left_down(4))
+
 
 
 def create_number_pyramid_right_down(height: int, current=1) -> str:
