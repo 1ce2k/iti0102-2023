@@ -215,7 +215,7 @@ def find_animal_with_longest_lifespan(animal_data: list) -> str:
     :param animal_data: List of structured animal data.
     :return: The common name of the animal with the longest lifespan.
     """
-    return ""
+    return max(animal_data, key=lambda x: x[2])[0]
 
 
 def create_animal_descriptions(animal_data: list) -> list:
