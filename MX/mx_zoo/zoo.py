@@ -24,7 +24,7 @@ def parse_animal(animal_str: str) -> list:
     weight = [float(animal_info[3].split('-')[0]), float(animal_info[3].split('-')[1])]
     height = [float(animal_info[4].split('-')[0]), float(animal_info[4].split('-')[1])]
 
-    return animal_info[:2] + [int(animal_info[3]), weight, height] + animal_info[5:]
+    return animal_info[:2] + [int(animal_info[2]), weight, height] + animal_info[5:]
 
 
 def list_species_and_scientific_names(animal_data: list) -> list:
