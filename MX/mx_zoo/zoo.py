@@ -73,8 +73,7 @@ def find_how_many_pumpkins_are_needed_to_feed_animals(animal_data: list) -> int:
     :param animal_data: List of structured animal data.
     :return: Total number of pumpkins needed, rounded up to the nearest whole number.
     """
-    daily = lambda x: (sum(x[3])) * 0.06 if x[5].lower() in ('herbivorous', 'omnivorous') else 0
-    total = reduce(lambda x, y: x + y, map(daily, animal_data))
+    total = reduce(lambda x, y: x + y, map(lambda x: (sum(x[3])) * 0.06 if x[5].lower() in ('herbivorous', 'omnivorous') else 0, animal_data))
     return math.ceil(total * 90 / 3)
 
 
