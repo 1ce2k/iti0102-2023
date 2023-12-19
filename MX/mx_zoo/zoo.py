@@ -140,9 +140,9 @@ def total_feather_count(animal_data: list) -> float:
     :param animal_data: A list containing details about multiple animals.
     :return: The total feather count of all animals in the list.
     """
-    if animal_data:
-        return reduce(lambda x, y: x + y, map(lambda x: (sum(x[3]) / 2) * 1000, animal_data))
-    return 0
+    if not animal_data:
+        return 0
+    return reduce(lambda x, y: x + y, map(lambda x: (sum(x[3]) / 2) * 1000, animal_data))
 
 
 def zoo_weight_on_other_planet(animal_data: list) -> float:
