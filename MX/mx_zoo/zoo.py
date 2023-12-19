@@ -142,6 +142,7 @@ def total_feather_count(animal_data: list) -> float:
     """
     if animal_data:
         return reduce(lambda x, y: x + y, map(lambda x: (sum(x[3]) / 2) * 1000, animal_data))
+    return 0
 
 
 def zoo_weight_on_other_planet(animal_data: list) -> float:
@@ -156,8 +157,9 @@ def zoo_weight_on_other_planet(animal_data: list) -> float:
     :param animal_data: A list containing details about multiple animals.
     :return: The total weight of the zoo on the other planet.
     """
-    if animal_data:
-        return reduce(lambda x, y: x + y, map(lambda x: (sum(x[3]) / 2) * 0.5, animal_data))
+    if not animal_data:
+        return 0
+    return reduce(lambda x, y: x + y, map(lambda x: (sum(x[3]) / 2) * 0.5, animal_data))
 
 
 def sort_alphabetically_by_scientific_name(animal_data: list) -> list:
