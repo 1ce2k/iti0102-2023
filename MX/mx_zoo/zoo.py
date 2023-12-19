@@ -232,7 +232,7 @@ def create_animal_descriptions(animal_data: list) -> list:
     :param animal_data: List of structured animal data.
     :return: List of string descriptions for each animal.
     """
-    return []
+    return list(map(lambda x: f"{x[0]} ({x[1]}) lives in {x[-1]} and its diet is {x[5]}. These animals can live up to {x[2]} years, and they weigh between {x[3][0]} kg and {x[3][1]} kg as adults.", animal_data))
 
 
 def calculate_ecological_impact_score(animal_data: list) -> float:
