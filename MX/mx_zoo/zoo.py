@@ -90,7 +90,9 @@ def total_noise_level(animal_data: list) -> float:
     :param animal_data: A list containing details about multiple animals.
     :return: The total noise level of all animals in the list.
     """
-    return 0
+    if not animal_data:
+        return 0
+    return reduce(lambda x, y: x + y, map(lambda x: (sum(x[3]) / 2) * 0.01, animal_data))
 
 
 def zoo_parade_length(animal_data: list) -> float:
