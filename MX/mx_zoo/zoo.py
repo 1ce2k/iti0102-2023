@@ -262,11 +262,7 @@ def calculate_ecological_impact_score(animal_data: list) -> float:
     """
     if not animal_data:
         return 0
-    weight = lambda x: sum(x[3]) / 2 * 0.001
-    diet = lambda x: {'herbivorous': 1.2, 'carnivorous': 1.5, 'omnivorous': 1.3}.get(x[5].lower(), 1)
-    habitat = lambda x: {'savannah': 5, 'tropics': 4, 'temperate forest': 3}.get(x[6].lower(), 0)
-    calc = lambda x: (10 + weight(x)) * diet(x) + habitat(x)
-    return reduce(lambda x, y: x + calc(y), animal_data, 0)
+    return reduce(lambda y, x: y + (10 + sum(x[3]) / 2 * 0.001) * {'herbivorous': 1.2, 'carnivorous': 1.5, 'omnivorous': 1.3}.get(x[5].lower(), 1) + {'savannah': 5, 'tropics': 4, 'temperate forest': 3}.get(x[6].lower(), 0), animal_data, 0)
 
 
 if __name__ == '__main__':
