@@ -260,7 +260,13 @@ def calculate_ecological_impact_score(animal_data: list) -> float:
     :param animal_data: List of structured animal data.
     :return: The total ecological impact score.
     """
-    return 0
+    if not animal_data:
+        return 0
+    weight = lambda x: sum(x[3]) / 2 * 0.001
+    diet = lambda x: {'herbivorous': 1.2, 'carnivorous': 1.5, 'omnivorous': 1.3}.get(x[5].lower(), 1)
+    habitat = lambda x: {'savannah': 5, 'tropics': 4, 'temperate forest': 3}.get(x[6].lower(), 0)
+    calc = lambda x: (10 + weight(x)) * diet(x) + habitat(x)
+    return reduce(lambda x, y: x + calc(y), animal_data, 0)
 
 
 if __name__ == '__main__':
@@ -272,24 +278,6 @@ if __name__ == '__main__':
         "Brown bear,Ursus arctos,33,130-217,1.4-2.8,omnivorous,temperate forest"
     ]
     animal_data = list(map(parse_animal, test_data))
-
-    print(find_animal_with_longest_lifespan(animal_data))
-    print('African bush elephant')
-    # Expected Output: 'African bush elephant'
-
-    print(create_animal_descriptions(animal_data))
-    print([
-              "African bush elephant (Loxodonta africana) lives in savannah and its diet is herbivorous. These animals can live up to 70 years, and they weigh between 3000 kg and 6000 kg as adults.",
-              "Little red flying-fox (Pteropus scapulatus) lives in tropics and its diet is herbivorous. These animals can live up to 30 years, and they weigh between 0.3 kg and 0.6 kg as adults.",
-              "Giraffe (Giraffa camelopardalis) lives in savannah and its diet is herbivorous. These animals can live up to 25 years, and they weigh between 1200 kg and 1800 kg as adults.",
-              "Eurasian lynx (Lynx lynx) lives in temperate forest and its diet is carnivorous. These animals can live up to 7 years, and they weigh between 60 kg and 75 kg as adults.",
-              "Brown bear (Ursus arctos) lives in temperate forest and its diet is omnivorous. These animals can live up to 33 years, and they weigh between 130 kg and 217 kg as adults."])
-    # Expected Output:
-    # ["African bush elephant (Loxodonta africana) lives in savannah and its diet is herbivorous. These animals can live up to 70 years, and they weigh between 3000 kg and 6000 kg as adults.",
-    #     "Little red flying-fox (Pteropus scapulatus) lives in tropics and its diet is herbivorous. These animals can live up to 30 years, and they weigh between 0.3 kg and 0.6 kg as adults.",
-    #     "Giraffe (Giraffa camelopardalis) lives in savannah and its diet is herbivorous. These animals can live up to 25 years, and they weigh between 1200 kg and 1800 kg as adults.",
-    #     "Eurasian lynx (Lynx lynx) lives in temperate forest and its diet is carnivorous. These animals can live up to 7 years, and they weigh between 60 kg and 75 kg as adults.",
-    #     "Brown bear (Ursus arctos) lives in temperate forest and its diet is omnivorous. These animals can live up to 33 years, and they weigh between 130 kg and 217 kg as adults."]
 
     print("Ecological Impact Score: {:.2f}".format(calculate_ecological_impact_score(animal_data)))
     print('Ecological Impact Score: 91.53')
