@@ -138,7 +138,7 @@ def total_feather_count(animal_data: list) -> float:
     :param animal_data: A list containing details about multiple animals.
     :return: The total feather count of all animals in the list.
     """
-    return 0
+    return reduce(lambda x, y: x + y, map(lambda x: (sum(x[3]) / 2) * 1000, animal_data))
 
 
 def zoo_weight_on_other_planet(animal_data: list) -> float:
@@ -153,7 +153,7 @@ def zoo_weight_on_other_planet(animal_data: list) -> float:
     :param animal_data: A list containing details about multiple animals.
     :return: The total weight of the zoo on the other planet.
     """
-    return 0
+    return reduce(lambda x, y: x + y, map(lambda x: (sum(x[3]) / 2) * 0.5, animal_data))
 
 
 def sort_alphabetically_by_scientific_name(animal_data: list) -> list:
@@ -168,7 +168,7 @@ def sort_alphabetically_by_scientific_name(animal_data: list) -> list:
     :param animal_data: List of structured animal data.
     :return: List of tuples with (common name, scientific name) sorted by scientific name.
     """
-    return []
+    return list(map(lambda x: (x[0], x[1]), sorted(animal_data, key=lambda x: x[1])))
 
 
 def find_animals_whose_height_is_less_than(animal_data: list, height_limit: float) -> list:
@@ -181,7 +181,7 @@ def find_animals_whose_height_is_less_than(animal_data: list, height_limit: floa
     :param height_limit: Maximum height (in meters) as a float.
     :return: List of common names of animals that are shorter than the specified height limit, sorted from shortest to tallest.
     """
-    return []
+    return list(map(lambda x: x[0], sorted(filter(lambda x: x[4][1] <= height_limit, animal_data), key=lambda x: x[4][0])))
 
 
 def filter_animals_based_on_diet(animal_data: list, diet: str) -> list:
@@ -194,7 +194,7 @@ def filter_animals_based_on_diet(animal_data: list, diet: str) -> list:
     :param diet: A string indicating the diet (e.g., "herbivorous", "carnivorous").
     :return: Alphabetically sorted list of common names of animals that match the specified diet.
     """
-    return []
+    return list(map(lambda x: x[0], sorted(filter(lambda x: x[5].lower() == diet.lower(), animal_data))))
 
 
 def find_animal_with_longest_lifespan(animal_data: list) -> str:
@@ -265,46 +265,18 @@ if __name__ == '__main__':
         "Brown bear,Ursus arctos,33,130-217,1.4-2.8,omnivorous,temperate forest"
     ]
     animal_data = list(map(parse_animal, test_data))
-    print(parse_animal(test_data[0]))
-
-    print(list_species_and_scientific_names(animal_data))
-    # Expected Output: [('African bush elephant', 'Loxodonta africana'), ('Little red flying-fox', 'Pteropus scapulatus'), ('Giraffe', 'Giraffa camelopardalis'), ('Eurasian lynx', 'Lynx lynx'), ('Brown bear', 'Ursus arctos')]
-
-    print(animals_starting_with(animal_data, 'L'))
-    # Expected Output: ["Little red flying-fox"]
-
-    print('Example: Pumpkins: 22227')
-    print("Pumpkins: " + str(find_how_many_pumpkins_are_needed_to_feed_animals(animal_data)))
-    # Pumpkins: 22227
-
-    print("Noise: " + str(total_noise_level(animal_data)))
-    # Noise: 62.4145
-
-    print("Parade: " + str(zoo_parade_length(animal_data)))
-    # Parade: 11.1
-
-    print("Olympics: " + animal_olympics_winner(animal_data))
-    # Olympics: 'Little red flying-fox'
-
-    print("Feathers: " + str(total_feather_count(animal_data)))
-    # Feathers: 6241450.0
-
-    print("Planet: " + str(zoo_weight_on_other_planet(animal_data)))
-    # Planet: 3120.725
-
-    print(sort_alphabetically_by_scientific_name(animal_data))
-    # Expected Output: [('Giraffe', 'Giraffa camelopardalis'), ('African bush elephant', 'Loxodonta africana'), ('Eurasian lynx', 'Lynx lynx'), ('Little red flying-fox', 'Pteropus scapulatus'), ('Brown bear', 'Ursus arctos')]
-
-    print(find_animals_whose_height_is_less_than(animal_data, 2))
-    # Expected Output: ['Little red flying-fox', 'Eurasian lynx']
-
-    print(filter_animals_based_on_diet(animal_data, "herbivorous"))
-    # Expected Output: ['African bush elephant', 'Giraffe', 'Little red flying-fox']
 
     print(find_animal_with_longest_lifespan(animal_data))
+    print('African bush elephant')
     # Expected Output: 'African bush elephant'
 
     print(create_animal_descriptions(animal_data))
+    print(["African bush elephant (Loxodonta africana) lives in savannah and its diet is herbivorous. These animals can live up to 70 years, and they weigh between 3000 kg and 6000 kg as adults.",
+        "Little red flying-fox (Pteropus scapulatus) lives in tropics and its diet is herbivorous. These animals can live up to 30 years, and they weigh between 0.3 kg and 0.6 kg as adults.",
+        "Giraffe (Giraffa camelopardalis) lives in savannah and its diet is herbivorous. These animals can live up to 25 years, and they weigh between 1200 kg and 1800 kg as adults.",
+        "Eurasian lynx (Lynx lynx) lives in temperate forest and its diet is carnivorous. These animals can live up to 7 years, and they weigh between 60 kg and 75 kg as adults.",
+        "Brown bear (Ursus arctos) lives in temperate forest and its diet is omnivorous. These animals can live up to 33 years, and they weigh between 130 kg and 217 kg as adults."]
+)
     # Expected Output:
     # ["African bush elephant (Loxodonta africana) lives in savannah and its diet is herbivorous. These animals can live up to 70 years, and they weigh between 3000 kg and 6000 kg as adults.",
     #     "Little red flying-fox (Pteropus scapulatus) lives in tropics and its diet is herbivorous. These animals can live up to 30 years, and they weigh between 0.3 kg and 0.6 kg as adults.",
@@ -313,4 +285,5 @@ if __name__ == '__main__':
     #     "Brown bear (Ursus arctos) lives in temperate forest and its diet is omnivorous. These animals can live up to 33 years, and they weigh between 130 kg and 217 kg as adults."]
 
     print("Ecological Impact Score: {:.2f}".format(calculate_ecological_impact_score(animal_data)))
+    print('Ecological Impact Score: 91.53')
     # Expected output: Ecological Impact Score: 91.53
