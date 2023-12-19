@@ -106,7 +106,9 @@ def zoo_parade_length(animal_data: list) -> float:
     :param animal_data: A list containing details about multiple animals.
     :return: The total parade length of all animals in the list.
     """
-    return 0
+    if not animal_data:
+        return 0
+    return reduce(lambda x, y: x + y, map(lambda x: (sum(x[4]) / 2), animal_data))
 
 
 def animal_olympics_winner(animal_data: list) -> str:
@@ -121,7 +123,7 @@ def animal_olympics_winner(animal_data: list) -> str:
     :param animal_data: A list containing details about multiple animals.
     :return: The species name of the winning animal.
     """
-    return ""
+    return max(animal_data, key=lambda x: 1 / (sum(x[3]) / 2))[0]
 
 
 def total_feather_count(animal_data: list) -> float:
