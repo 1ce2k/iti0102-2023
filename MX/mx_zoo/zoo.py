@@ -21,8 +21,8 @@ def parse_animal(animal_str: str) -> list:
     :return: A list containing structured animal data.
     """
     animal_info = animal_str.split(',')
-    weight = (float(animal_info[3].split('-')[0]), float(animal_info[3].split('-')[1]))
-    height = (float(animal_info[4].split('-')[0]), float(animal_info[4].split('-')[1]))
+    weight = [float(animal_info[3].split('-')[0]), float(animal_info[3].split('-')[1])]
+    height = [float(animal_info[4].split('-')[0]), float(animal_info[4].split('-')[1])]
 
     return animal_info[:3] + [weight, height] + animal_info[5:]
 
