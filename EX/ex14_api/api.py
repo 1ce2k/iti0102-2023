@@ -163,13 +163,3 @@ def fetch_aggregate_data(url: str) -> dict:
         'total_posts': total_posts
     }
     return ret
-
-
-if __name__ == '__main__':
-    print(get_request("https://www.google.com"))  # 200
-    print(get_request_error_handling("https://www.google1.com"))
-    print(advanced_user_filter(
-        "https://cs.taltech.ee/services/ex14/json-data",
-        750000, 900, 2500))
-    print(fetch_aggregate_data(
-        "https://cs.taltech.ee/services/ex14/json-data"))

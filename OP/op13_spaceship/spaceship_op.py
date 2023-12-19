@@ -85,7 +85,13 @@ class OPSpaceship(Spaceship):
     def cast_vote(self, player, target_name):
         """Cast vote for player for current meeting."""
         target = next((target for target in (self.crewmate_list + self.impostor_list) if target.name == target_name.capitalize()), None)
-        if self.meeting and player not in self.dead_players and player.name not in self.votes and target and self.game and player in (self.impostor_list + self.crewmate_list):
+        if (
+                self.meeting
+                and player not in self.dead_players
+                and player.name not in self.votes
+                and target
+                and self.game
+                and player in (self.impostor_list + self.crewmate_list)):
             self.votes[player.name] = target.name
 
     def end_meeting(self):
@@ -98,10 +104,6 @@ class OPSpaceship(Spaceship):
             skipped_voting = len(self.impostor_list + self.crewmate_list) - len(self.votes)
             players_to_eject = [x for x in (self.impostor_list + self.crewmate_list) if x.name in vote_count and vote_count[x.name] == max_votes]
             self.votes.clear()
-            print(players_to_eject)
-            # print(vote_count)
-            # print(max_votes)
-            # print(skipped_voting)
             if max_votes == 0 or max_votes < skipped_voting:
                 return "No one was ejected. (Skipped)"
             elif max_votes == skipped_voting or len(players_to_eject) != 1:
@@ -119,16 +121,12 @@ class OPSpaceship(Spaceship):
 
     def easy_game_end_meeting(self, target):
         """Help func to make end meeting less complex."""
-        # +
         if len(self.impostor_list) == 1 and isinstance(target, Impostor):
             return f"{target.name} was an Impostor. 1 Impostor remains."
-        #
         elif len(self.impostor_list) == 1 and isinstance(target, Crewmate):
             return f"{target.name} was not an Impostor. 1 Impostor remains."
-        # +
         elif len(self.impostor_list) > 1 and isinstance(target, Impostor):
             return f"{target.name} was an Impostor. {len(self.impostor_list)} Impostors remain."
-        # +
         elif len(self.impostor_list) > 1 and isinstance(target, Crewmate):
             return f"{target.name} was not an Impostor. {len(self.impostor_list)} Impostors remain."
 
@@ -149,3 +147,28 @@ class OPSpaceship(Spaceship):
     def is_meeting(self):
         """Return if meeting is going or not."""
         return self.meeting
+
+
+
+
+blue = Crewmate("Blue", 'Crew')
+pink = Crewmate("pink", 'Crew')
+purple = Crewmate("purple", 'Crew')
+black = Impostor("black")
+crew = [blue, pink, purple]
+spaceship = OPSpaceship("Easy")
+spaceship.add_crewmate(blue)
+spaceship.add_crewmate(purple)
+spaceship.add_crewmate(pink)
+print(spaceship.crewmate_list)
+spaceship.add_impostor(black)
+
+spaceship.start_game()
+spaceship.meeting = True
+spaceship.cast_vote(black, 'blue')
+spaceship.cast_vote(pink, 'blue')
+spaceship.cast_vote(blue, 'black')
+spaceship.cast_vote(purple, 'black')
+print(spaceship.votes)
+
+print(spaceship.end_meeting())
