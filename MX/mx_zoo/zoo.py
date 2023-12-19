@@ -75,7 +75,9 @@ def find_how_many_pumpkins_are_needed_to_feed_animals(animal_data: list) -> int:
     """
     if not animal_data:
         return 0
-    total = reduce(lambda x, y: x + y, map(lambda x: (sum(x[3])) * 0.06 if x[5].lower() in ('herbivorous', 'omnivorous') else 0, animal_data))
+    total = reduce(lambda x, y: x + y,
+                   map(lambda x: (sum(x[3])) * 0.06 if x[5].lower() in ('herbivorous', 'omnivorous') else 0,
+                       animal_data))
     return math.ceil(total * 90 / 3)
 
 
@@ -181,7 +183,8 @@ def find_animals_whose_height_is_less_than(animal_data: list, height_limit: floa
     :param height_limit: Maximum height (in meters) as a float.
     :return: List of common names of animals that are shorter than the specified height limit, sorted from shortest to tallest.
     """
-    return list(map(lambda x: x[0], sorted(filter(lambda x: x[4][1] <= height_limit, animal_data), key=lambda x: x[4][0])))
+    return list(
+        map(lambda x: x[0], sorted(filter(lambda x: x[4][1] <= height_limit, animal_data), key=lambda x: x[4][0])))
 
 
 def filter_animals_based_on_diet(animal_data: list, diet: str) -> list:
@@ -271,12 +274,12 @@ if __name__ == '__main__':
     # Expected Output: 'African bush elephant'
 
     print(create_animal_descriptions(animal_data))
-    print(["African bush elephant (Loxodonta africana) lives in savannah and its diet is herbivorous. These animals can live up to 70 years, and they weigh between 3000 kg and 6000 kg as adults.",
-        "Little red flying-fox (Pteropus scapulatus) lives in tropics and its diet is herbivorous. These animals can live up to 30 years, and they weigh between 0.3 kg and 0.6 kg as adults.",
-        "Giraffe (Giraffa camelopardalis) lives in savannah and its diet is herbivorous. These animals can live up to 25 years, and they weigh between 1200 kg and 1800 kg as adults.",
-        "Eurasian lynx (Lynx lynx) lives in temperate forest and its diet is carnivorous. These animals can live up to 7 years, and they weigh between 60 kg and 75 kg as adults.",
-        "Brown bear (Ursus arctos) lives in temperate forest and its diet is omnivorous. These animals can live up to 33 years, and they weigh between 130 kg and 217 kg as adults."]
-)
+    print([
+              "African bush elephant (Loxodonta africana) lives in savannah and its diet is herbivorous. These animals can live up to 70 years, and they weigh between 3000 kg and 6000 kg as adults.",
+              "Little red flying-fox (Pteropus scapulatus) lives in tropics and its diet is herbivorous. These animals can live up to 30 years, and they weigh between 0.3 kg and 0.6 kg as adults.",
+              "Giraffe (Giraffa camelopardalis) lives in savannah and its diet is herbivorous. These animals can live up to 25 years, and they weigh between 1200 kg and 1800 kg as adults.",
+              "Eurasian lynx (Lynx lynx) lives in temperate forest and its diet is carnivorous. These animals can live up to 7 years, and they weigh between 60 kg and 75 kg as adults.",
+              "Brown bear (Ursus arctos) lives in temperate forest and its diet is omnivorous. These animals can live up to 33 years, and they weigh between 130 kg and 217 kg as adults."])
     # Expected Output:
     # ["African bush elephant (Loxodonta africana) lives in savannah and its diet is herbivorous. These animals can live up to 70 years, and they weigh between 3000 kg and 6000 kg as adults.",
     #     "Little red flying-fox (Pteropus scapulatus) lives in tropics and its diet is herbivorous. These animals can live up to 30 years, and they weigh between 0.3 kg and 0.6 kg as adults.",
