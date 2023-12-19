@@ -263,18 +263,3 @@ def calculate_ecological_impact_score(animal_data: list) -> float:
     if not animal_data:
         return 0
     return reduce(lambda y, x: y + (10 + sum(x[3]) / 2 * 0.001) * {'herbivorous': 1.2, 'carnivorous': 1.5, 'omnivorous': 1.3}.get(x[5].lower(), 1) + {'savannah': 5, 'tropics': 4, 'temperate forest': 3}.get(x[6].lower(), 0), animal_data, 0)
-
-
-if __name__ == '__main__':
-    test_data = [
-        "African bush elephant,Loxodonta africana,70,3000-6000,2.2-4,herbivorous,savannah",
-        "Little red flying-fox,Pteropus scapulatus,30,0.3-0.6,0.24-0.26,herbivorous,tropics",
-        "Giraffe,Giraffa camelopardalis,25,1200-1800,4.3-5.7,herbivorous,savannah",
-        "Eurasian lynx,Lynx lynx,7,60-75,0.55-0.75,carnivorous,temperate forest",
-        "Brown bear,Ursus arctos,33,130-217,1.4-2.8,omnivorous,temperate forest"
-    ]
-    animal_data = list(map(parse_animal, test_data))
-
-    print("Ecological Impact Score: {:.2f}".format(calculate_ecological_impact_score(animal_data)))
-    print('Ecological Impact Score: 91.53')
-    # Expected output: Ecological Impact Score: 91.53
