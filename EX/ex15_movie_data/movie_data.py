@@ -61,18 +61,11 @@ class MovieData:
         """
         rating_temp = self.ratings.drop(labels=['userId', 'timestamp'], axis=1)
         tag_temp = self.tags.groupby(by=['movieId']).agg({'tag': lambda x: ' '.join(x)})
-        self.aggregate_movie_dataframe = self.movies.merge(rating_temp, on='movieId', how='left')
-        self.aggregate_movie_dataframe = self.aggregate_movie_dataframe.merge(tag_temp, on='movieId', how='left')
-        self.aggregate_movie_dataframe['tag'] = self.aggregate_movie_dataframe['tag'].fillna(nan_placeholder)
-        print(self.aggregate_movie_dataframe)
+        result = self.movies.merge(rating_temp, on='movieId', how='left')
+        result = result.merge(tag_temp, on='movieId', how='left')
+        result['tag'] = result['tag'].fillna(nan_placeholder)
+        self.aggregate_movie_dataframe = result
 
-
-
-
-
-
-
-    #  -> pd.DataFrame | None
     def get_aggregate_movie_dataframe(self):
         """
         Return aggregate_movie_dataframe variable.
@@ -81,7 +74,6 @@ class MovieData:
         """
         return self.aggregate_movie_dataframe
 
-    #  -> pd.DataFrame | None
     def get_movies_dataframe(self):
         """
         Return movies dataframe.
@@ -90,7 +82,6 @@ class MovieData:
         """
         return self.movies
 
-    #  -> pd.DataFrame | None
     def get_ratings_dataframe(self):
         """
         Return ratings dataframe.
@@ -99,7 +90,6 @@ class MovieData:
         """
         return self.ratings
 
-    #  -> pd.DataFrame | None
     def get_tags_dataframe(self):
         """
         Return tags dataframe.
