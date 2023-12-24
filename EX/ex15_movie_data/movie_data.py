@@ -37,6 +37,12 @@ class MovieData:
         if movies_filename is None or ratings_filename is None or tags_filename is None:
             raise ValueError("File path cannot be empty.")
 
+        try:
+            self.movies = pd.read_csv(movies_filename)
+            self.ratings = pd.read_csv(ratings_filename)
+            self.tags = pd.read_csv(tags_filename)
+        except Exception as e:
+            print(e)
     def create_aggregate_movie_dataframe(self, nan_placeholder: str = '') -> None:
         """
         Create an aggregate dataframe from frames self.movies, self.ratings and self.tags.
