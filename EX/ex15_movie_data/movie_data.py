@@ -228,7 +228,8 @@ class MovieFilter:
 
         :return: pandas DataFrame object of the search result
         """
-        pass
+        df = self.movie_data
+        return df[(df['rating'].astype(float) >= 3.0) & (df['genres'].str.lower().str.contains('children'))]
 
 
 if __name__ == '__main__':
