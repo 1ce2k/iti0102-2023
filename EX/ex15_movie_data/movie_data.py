@@ -218,7 +218,7 @@ class MovieFilter:
 
         :return: pandas DataFrame object of the search result
         """
-        pass
+        return self.filter_movies_by_genre(self.get_decent_movies(), 'Comedy')
 
     #  -> pd.DataFrame | None
     def get_decent_children_movies(self):
