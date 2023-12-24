@@ -218,7 +218,8 @@ class MovieFilter:
 
         :return: pandas DataFrame object of the search result
         """
-        return self.filter_movies_by_genre(self.get_decent_movies(), 'Comedy')
+        df = self.movie_data
+        return df[df['rating'].astype(float) == 3.0, df['genres'].str.lower().str.contains('comedy')]
 
     #  -> pd.DataFrame | None
     def get_decent_children_movies(self):
