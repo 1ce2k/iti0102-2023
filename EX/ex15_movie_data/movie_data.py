@@ -149,7 +149,9 @@ class MovieFilter:
         :param genre: string value to filter by
         :return: pandas DataFrame object of the filtration result
         """
-        pass
+        if genre is None:
+            raise ValueError("Enter genre.")
+
 
     def filter_movies_by_tag(self, tag: str) -> pd.DataFrame:
         """
@@ -163,7 +165,8 @@ class MovieFilter:
         :param tag: string value tu filter by
         :return: pandas DataFrame object of the filtration result
         """
-        pass
+        if tag is None:
+            raise ValueError("Enter tag.")
 
     def filter_movies_by_year(self, year: int) -> pd.DataFrame:
         """
@@ -176,6 +179,8 @@ class MovieFilter:
         :param year: integer value of the year to filter by
         :return: pandas DataFrame object of the filtration result
         """
+        if year is None:
+            raise ValueError("Enter year.")
         pass
 
     def get_decent_movies(self) -> pd.DataFrame:
