@@ -155,7 +155,7 @@ class MovieFilter:
             raise ValueError("Enter genre.")
 
         df = self.movie_data
-        return df[df['genres'].str.contains(genre.capitalize())]
+        return df[df['genres'].str.lower().str.contains(genre.lower())]
 
     def filter_movies_by_tag(self, tag: str) -> pd.DataFrame:
         """
