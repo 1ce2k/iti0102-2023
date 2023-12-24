@@ -1,4 +1,5 @@
 """What should we watch, Honey?..."""
+import csv
 
 import pandas as pd
 
@@ -37,12 +38,10 @@ class MovieData:
         if movies_filename is None or ratings_filename is None or tags_filename is None:
             raise ValueError("File path cannot be empty.")
 
-        try:
-            self.movies = pd.read_csv(movies_filename)
-            self.ratings = pd.read_csv(ratings_filename)
-            self.tags = pd.read_csv(tags_filename)
-        except Exception as e:
-            print(e)
+        self.movies = pd.read_csv(movies_filename)
+        self.ratings = pd.read_csv(ratings_filename)
+        self.tags = pd.read_csv(tags_filename)
+
     def create_aggregate_movie_dataframe(self, nan_placeholder: str = '') -> None:
         """
         Create an aggregate dataframe from frames self.movies, self.ratings and self.tags.
@@ -63,7 +62,9 @@ class MovieData:
         """
         pass
 
-    def get_aggregate_movie_dataframe(self) -> pd.DataFrame | None:
+
+    #  -> pd.DataFrame | None
+    def get_aggregate_movie_dataframe(self):
         """
         Return aggregate_movie_dataframe variable.
 
@@ -71,7 +72,8 @@ class MovieData:
         """
         pass
 
-    def get_movies_dataframe(self) -> pd.DataFrame | None:
+    #  -> pd.DataFrame | None
+    def get_movies_dataframe(self):
         """
         Return movies dataframe.
 
@@ -79,7 +81,8 @@ class MovieData:
         """
         pass
 
-    def get_ratings_dataframe(self) -> pd.DataFrame | None:
+    #  -> pd.DataFrame | None
+    def get_ratings_dataframe(self):
         """
         Return ratings dataframe.
 
@@ -87,7 +90,8 @@ class MovieData:
         """
         pass
 
-    def get_tags_dataframe(self) -> pd.DataFrame | None:
+    #  -> pd.DataFrame | None
+    def get_tags_dataframe(self):
         """
         Return tags dataframe.
 
@@ -121,7 +125,8 @@ class MovieFilter:
         """
         pass
 
-    def filter_movies_by_rating_value(self, rating: float, comp: str) -> pd.DataFrame | None:
+    #  -> pd.DataFrame | None
+    def filter_movies_by_rating_value(self, rating: float, comp: str):
         """
         Return pandas DataFrame of self.movie_data filtered according to rating and comp string value.
 
@@ -183,7 +188,9 @@ class MovieFilter:
         """
         pass
 
-    def get_decent_comedy_movies(self) -> pd.DataFrame | None:
+
+    #  -> pd.DataFrame | None
+    def get_decent_comedy_movies(self):
         """
         Return all movies with a rating of at least 3.0 and where genre is 'Comedy'.
 
@@ -191,7 +198,8 @@ class MovieFilter:
         """
         pass
 
-    def get_decent_children_movies(self) -> pd.DataFrame | None:
+    #  -> pd.DataFrame | None
+    def get_decent_children_movies(self):
         """
         Return all movies with a rating of at least 3.0 and where genre is 'Children'.
 
@@ -211,7 +219,10 @@ if __name__ == '__main__':
 
         # give correct path names here. These names are only good if you
         # installed the 3 data files in 'EX/ex15_movie_data/ml-latest-small/'
-        my_movie_data.load_data("ml-latest-small/movies.csv", "ml-latest-small/ratings.csv", "ml-latest-small/tags.csv")
+        my_movie_data.load_data("movies.csv", "ratings.csv", "tags.csv")
+        print(my_movie_data.movies)
+
+
         print(my_movie_data.get_movies_dataframe())  # ->
         #       movieId                    title                                       genres
         # 0           1         Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy
