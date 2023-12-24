@@ -135,9 +135,19 @@ class MovieFilter:
         :param comp: string representation of the comparison operation
         :return: pandas DataFrame object of the filtration result
         """
-        if rating is None:
+        if rating is None or rating < 0:
             raise ValueError("Enter rating.")
 
+        if comp is None or comp not in {'greater_than', 'equal', 'less_than'}:
+            raise ValueError("Enter valid comp.")
+
+        df = self.movie_data
+        if comp == 'equal':
+            return df[df['rating'].astype(float) == float(rating)]
+        elif comp == 'less_than':
+            return df[df['rating'].astype(float) < float(rating)]
+        elif comp == 'greater_than':
+            return df[df['rating'].astype(float) > float(rating)]
 
     def filter_movies_by_genre(self, genre: str) -> pd.DataFrame:
         """
