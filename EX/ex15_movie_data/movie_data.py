@@ -145,9 +145,9 @@ class MovieFilter:
         if comp == 'equals':
             return df[df['rating'].astype(float) == float(rating)]
         elif comp == 'less_than':
-            return df[df['rating'].astype(float) <= float(rating)]
+            return df[df['rating'].astype(float) < float(rating)]
         elif comp == 'greater_than':
-            return df[df['rating'].astype(float) >= float(rating)]
+            return df[df['rating'].astype(float) > float(rating)]
 
     def filter_movies_by_genre(self, genre: str) -> pd.DataFrame:
         """
@@ -210,8 +210,8 @@ class MovieFilter:
 
         :return: pandas DataFrame object of the search result
         """
-        return self.filter_movies_by_rating_value(3.0, 'greater_than')
-    #  -> pd.DataFrame | None
+        return self.filter_movies_by_rating_value(2.9, 'greater_than')
+
     def get_decent_comedy_movies(self):
         """
         Return all movies with a rating of at least 3.0 and where genre is 'Comedy'.
