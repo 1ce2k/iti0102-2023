@@ -135,7 +135,9 @@ class MovieFilter:
         :param comp: string representation of the comparison operation
         :return: pandas DataFrame object of the filtration result
         """
-        pass
+        if rating is None:
+            raise ValueError("Enter rating.")
+
 
     def filter_movies_by_genre(self, genre: str) -> pd.DataFrame:
         """
@@ -153,6 +155,9 @@ class MovieFilter:
             raise ValueError("Enter genre.")
 
 
+
+
+
     def filter_movies_by_tag(self, tag: str) -> pd.DataFrame:
         """
         Return a pandas DataFrame of self.movie_data filtered by parameter tag.
@@ -168,6 +173,8 @@ class MovieFilter:
         if tag is None:
             raise ValueError("Enter tag.")
 
+        df = self.movie_data
+
     def filter_movies_by_year(self, year: int) -> pd.DataFrame:
         """
         Return a pandas DataFrame of self.movie_data filtered by year of release.
@@ -179,9 +186,12 @@ class MovieFilter:
         :param year: integer value of the year to filter by
         :return: pandas DataFrame object of the filtration result
         """
-        if year is None:
-            raise ValueError("Enter year.")
-        pass
+        if year is None or year < 0:
+            raise ValueError("Enter valid year.")
+        df = self.movie_data
+        df['year'] = df['title'].str.extract(r'\((\d{4})\)')
+        filtered = df[df['year'].astype(float) == float(year)]
+        return filtered.drop(labels='year', axis=1)
 
     def get_decent_movies(self) -> pd.DataFrame:
         """
@@ -207,17 +217,64 @@ class MovieFilter:
 
         :return: pandas DataFrame object of the search result
         """
-        return filter(self.movie_data)
+        pass
 
 
 if __name__ == '__main__':
+    # this pd.option_context menu is for better display purposes
+    # in terminal when using print. Keep these settings the same
+    # unless you wish to display more than 10 rows
     with pd.option_context('display.max_rows', 10,
                            'display.max_columns', 5,
                            'display.width', 200):
         my_movie_data = MovieData()
+
+        # give correct path names here. These names are only good if you
+        # installed the 3 data files in 'EX/ex15_movie_data/ml-latest-small/'
+        my_movie_data.load_data("movies.csv", "ratings.csv", "tags.csv")
+        # print(my_movie_data.get_movies_dataframe())  # ->
+        #       movieId                    title                                       genres
+        # 0           1         Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy
+        # 1           2           Jumanji (1995)                   Adventure|Children|Fantasy
+        # 2           3  Grumpier Old Men (1995)                               Comedy|Romance
+        # 3           4 Waiting to Exhale (1995)                         Comedy|Drama|Romance
+        # ...
+        # [9742 rows x 3 columns]  <- if your numbers match the numbers shown here it's a good
+        #                             chance your function is getting the correct results.
+
+        # print(my_movie_data.get_ratings_dataframe())  # ->
+        #       userId      movieId     rating      timestamp
+        # 0          1            1        4.0      964982703
+        # 1          1            3        4.0      964981247
+        # 2          1            6        4.0      964982224
+        # 3          1           47        5.0      964983815
+        # ...
+        # [100836 rows x 4 columns]
+
+        # print(my_movie_data.get_tags_dataframe())  # ->
+        #       userId      movieId             tag     timestamp
+        # 0          2        60756           funny    1445714994
+        # 1          2        60756 Highly quotable    1445714996
+        # 2          2        60756    will ferrell    1445714992
+        # 3          2        89774    Boxing story    1445715207
+        # ...
+        # [3683 rows x 4 columns]
+
         my_movie_data.create_aggregate_movie_dataframe('--empty--')
+        # print(my_movie_data.get_aggregate_movie_dataframe())  # ->
+        #       movieId             title                                       genres  rating               tag
+        # 0           1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     4.0   pixar pixar fun
+        # 1           1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     4.0   pixar pixar fun
+        # 2           1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     4.0   pixar pixar fun
+        # 3           1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     4.0   pixar pixar fun
+        # ...
+        # [100854 rows x 5 columns]
+        # last rows in the aggregate dataframe will have the tag field set to '--empty--' since here
+        # it is the nan_placeholder value given to the function.
+
         my_movie_filter = MovieFilter()
         my_movie_filter.set_movie_data(my_movie_data.get_aggregate_movie_dataframe())
+        # print(my_movie_filter.filter_movies_by_rating_value(2.1, 'less_than'))  # ->
         #       movieId             title                                       genres  rating               tag
         # 26          1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     0.5   pixar pixar fun
         # 43          1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     2.0   pixar pixar fun
@@ -226,7 +283,7 @@ if __name__ == '__main__':
         # ...
         # [13523 rows x 5 columns]
 
-        # print(my_movie_filter.filter_movies_by_year(1988))  # ->
+        print(my_movie_filter.filter_movies_by_year(1988))  # ->
         #        movieId                    title                                           genres  rating        tag
         # 17962      709  Oliver & Company (1988)      Adventure|Animation|Children|Comedy|Musical     5.0  --empty--
         # 17963      709  Oliver & Company (1988)      Adventure|Animation|Children|Comedy|Musical     2.0  --empty--
