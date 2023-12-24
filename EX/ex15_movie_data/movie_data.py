@@ -79,7 +79,7 @@ class MovieData:
 
         :return: pandas DataFrame
         """
-        pass
+        return self.movies
 
     #  -> pd.DataFrame | None
     def get_ratings_dataframe(self):
@@ -88,7 +88,7 @@ class MovieData:
 
         :return: pandas DataFrame
         """
-        pass
+        return self.ratings
 
     #  -> pd.DataFrame | None
     def get_tags_dataframe(self):
@@ -97,7 +97,7 @@ class MovieData:
 
         :return: pandas DataFrame
         """
-        pass
+        return self.tags
 
 
 class MovieFilter:
@@ -220,8 +220,6 @@ if __name__ == '__main__':
         # give correct path names here. These names are only good if you
         # installed the 3 data files in 'EX/ex15_movie_data/ml-latest-small/'
         my_movie_data.load_data("movies.csv", "ratings.csv", "tags.csv")
-        print(my_movie_data.movies)
-
 
         print(my_movie_data.get_movies_dataframe())  # ->
         #       movieId                    title                                       genres
