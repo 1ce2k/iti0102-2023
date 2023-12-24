@@ -1,6 +1,4 @@
 """What should we watch, Honey?..."""
-import csv
-
 import pandas as pd
 
 
@@ -61,7 +59,6 @@ class MovieData:
         :return: None
         """
         pass
-
 
     #  -> pd.DataFrame | None
     def get_aggregate_movie_dataframe(self):
@@ -187,7 +184,6 @@ class MovieFilter:
         :return: pandas DataFrame object of the search result
         """
         pass
-
 
     #  -> pd.DataFrame | None
     def get_decent_comedy_movies(self):
