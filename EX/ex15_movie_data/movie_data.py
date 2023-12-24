@@ -40,6 +40,7 @@ class MovieData:
         self.ratings = pd.read_csv(ratings_filename)
         self.tags = pd.read_csv(tags_filename)
 
+
     def create_aggregate_movie_dataframe(self, nan_placeholder: str = '') -> None:
         """
         Create an aggregate dataframe from frames self.movies, self.ratings and self.tags.
@@ -58,7 +59,18 @@ class MovieData:
         :param nan_placeholder: Value to replace all np.nan-valued elements in column 'tag'.
         :return: None
         """
-        pass
+        rating_temp = self.ratings.drop(labels=['userId', 'timestamp'], axis=1)
+        tag_temp = self.tags.groupby(by=['movieId']).agg({'tag': lambda x: ' '.join(x)})
+        self.aggregate_movie_dataframe = self.movies.merge(rating_temp, on='movieId', how='left')
+        self.aggregate_movie_dataframe = self.aggregate_movie_dataframe.merge(tag_temp, on='movieId', how='left')
+        self.aggregate_movie_dataframe['tag'] = self.aggregate_movie_dataframe['tag'].fillna(nan_placeholder)
+        print(self.aggregate_movie_dataframe)
+
+
+
+
+
+
 
     #  -> pd.DataFrame | None
     def get_aggregate_movie_dataframe(self):
@@ -67,7 +79,7 @@ class MovieData:
 
         :return: pandas DataFrame
         """
-        pass
+        return self.aggregate_movie_dataframe
 
     #  -> pd.DataFrame | None
     def get_movies_dataframe(self):
@@ -217,7 +229,7 @@ if __name__ == '__main__':
         # installed the 3 data files in 'EX/ex15_movie_data/ml-latest-small/'
         my_movie_data.load_data("movies.csv", "ratings.csv", "tags.csv")
 
-        print(my_movie_data.get_movies_dataframe())  # ->
+        # print(my_movie_data.get_movies_dataframe())  # ->
         #       movieId                    title                                       genres
         # 0           1         Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy
         # 1           2           Jumanji (1995)                   Adventure|Children|Fantasy
@@ -227,7 +239,7 @@ if __name__ == '__main__':
         # [9742 rows x 3 columns]  <- if your numbers match the numbers shown here it's a good
         #                             chance your function is getting the correct results.
 
-        print(my_movie_data.get_ratings_dataframe())  # ->
+        # print(my_movie_data.get_ratings_dataframe())  # ->
         #       userId      movieId     rating      timestamp
         # 0          1            1        4.0      964982703
         # 1          1            3        4.0      964981247
@@ -236,7 +248,7 @@ if __name__ == '__main__':
         # ...
         # [100836 rows x 4 columns]
 
-        print(my_movie_data.get_tags_dataframe())  # ->
+        # print(my_movie_data.get_tags_dataframe())  # ->
         #       userId      movieId             tag     timestamp
         # 0          2        60756           funny    1445714994
         # 1          2        60756 Highly quotable    1445714996
@@ -259,7 +271,7 @@ if __name__ == '__main__':
 
         my_movie_filter = MovieFilter()
         my_movie_filter.set_movie_data(my_movie_data.get_aggregate_movie_dataframe())
-        print(my_movie_filter.filter_movies_by_rating_value(2.1, 'less_than'))  # ->
+        # print(my_movie_filter.filter_movies_by_rating_value(2.1, 'less_than'))  # ->
         #       movieId             title                                       genres  rating               tag
         # 26          1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     0.5   pixar pixar fun
         # 43          1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     2.0   pixar pixar fun
@@ -268,7 +280,7 @@ if __name__ == '__main__':
         # ...
         # [13523 rows x 5 columns]
 
-        print(my_movie_filter.filter_movies_by_year(1988))  # ->
+        # print(my_movie_filter.filter_movies_by_year(1988))  # ->
         #        movieId                    title                                           genres  rating        tag
         # 17962      709  Oliver & Company (1988)      Adventure|Animation|Children|Comedy|Musical     5.0  --empty--
         # 17963      709  Oliver & Company (1988)      Adventure|Animation|Children|Comedy|Musical     2.0  --empty--
@@ -277,12 +289,12 @@ if __name__ == '__main__':
         # ...
         # [1551 rows x 5 columns]
 
-        print(my_movie_filter.get_decent_movies())
+        # print(my_movie_filter.get_decent_movies())
         # -> first five rows all Toy Story
         # dataframe size [81763 rows x 5 columns]
-        print(my_movie_filter.get_decent_comedy_movies())
+        # print(my_movie_filter.get_decent_comedy_movies())
         # -> first five rows all Toy Story
         # dataframe size [30274 rows x 5 columns]
-        print(my_movie_filter.get_decent_children_movies())
+        # print(my_movie_filter.get_decent_children_movies())
         # -> first 5 rows all Toy Story
         # dataframe size [7326 rows x 5 columns]
