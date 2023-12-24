@@ -174,6 +174,8 @@ class MovieFilter:
             raise ValueError("Enter tag.")
 
         df = self.movie_data
+        res = df[df['tag'].str.lower().str.contains(tag.lower())]
+        return res
 
     def filter_movies_by_year(self, year: int) -> pd.DataFrame:
         """
