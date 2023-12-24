@@ -138,11 +138,11 @@ class MovieFilter:
         if rating is None or rating < 0:
             raise ValueError("Enter rating.")
 
-        if comp is None or comp not in {'greater_than', 'equal', 'less_than'}:
+        if comp is None or comp not in {'greater_than', 'equals', 'less_than'}:
             raise ValueError("Enter valid comp.")
 
         df = self.movie_data
-        if comp == 'equal':
+        if comp == 'equals':
             return df[df['rating'].astype(float) == float(rating)]
         elif comp == 'less_than':
             return df[df['rating'].astype(float) < float(rating)]
