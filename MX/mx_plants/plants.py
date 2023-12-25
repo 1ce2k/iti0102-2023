@@ -69,7 +69,7 @@ def calculate_total_plant_costs(plant_prices: dict, plant_inventory: dict) -> di
     :param plant_inventory: dictionary with amount of plants
     :return: dictionary with plants as keys and total cost as values
     """
-    return {x: plant_prices[x] * plant_inventory[x] for x in plants}
+    return {x: plant_prices[x] * plant_inventory[x] for x in plant_prices}
 
 
 # Exercise 5: Calculate Garden Space Requirements
@@ -105,7 +105,7 @@ def group_plants_by_growth_type(growth_type: dict) -> dict:
 
 
 # Exercise 7: Generate Garden Layout
-def generate_garden_layout(rows: int, columns: int, plant_varieties: list,  exclusion_list: list) -> dict:
+def generate_garden_layout(rows: int, columns: int, plant_varieties: list, exclusion_list: list) -> dict:
     """
     Generate a garden layout with rows and columns, assigning random plant varieties to each location.
 
@@ -162,7 +162,7 @@ def count_plant_types(plants: list) -> dict:
 # Exercise 10: Determine Garden Plant Health
 def determine_plant_health(plants: list, watering_frequency: dict, sunlight_hours: dict, pest_infestation: dict) -> dict:
     """
-    Exercise 10: Determine Garden Plant Health
+    Exercise 10: Determine Garden Plant Health.
 
     Determine the health status of garden plants based on multiple factors such as watering frequency, sunlight hours,
     and pest infestation.
