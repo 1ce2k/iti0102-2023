@@ -341,7 +341,7 @@ class MovieFilter:
         genre_filter = df['genres'].str.lower().str.contains(genre.lower())
         tag_filter = df['tag'].str.lower().str.contains(tag.lower())
         result_df = df[year_filter & genre_filter & tag_filter]
-        result_df = result_df.nlargest(1, 'rating')
+        result_df = result_df.nlargest(1, 'rating').drop(labels='year', axis=1)
         return result_df
 
 
