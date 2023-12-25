@@ -287,11 +287,17 @@ class MovieFilter:
 
         :return: pandas DataFrame object
         """
-        mean_ratings = self.movie_data.groupby(by='movieId')['rating'].mean().round(3)
-        result_df = pd.merge(mean_ratings, self.movie_data[['movieId', 'title', 'genres', 'tag']], on='movieId', how='left')
-        result_df = result_df.drop_duplicates(subset=['movieId'])
-        result_df = result_df.dropna(subset=['rating'])
-        return result_df[['movieId', 'title', 'genres', 'rating', 'tag']]
+        df = self.movie_data
+        mean_rating = df.groupby('movieId')['rating'].mean().round(3)
+        # print(mean_rating)
+        df = pd.merge(df, mean_rating, on='movieId', how='left')
+        df = df.drop_duplicates(subset='movieId')
+        df.rename(columns={'rating_y': 'mean'})
+        df = df.drop(labels='rating_x', axis=1)
+        df = df.rename(columns={'rating_y': 'rating'})
+        df = df.dropna(subset='rating')
+        return df[['movieId', 'title', 'genres', 'rating', 'tag']]
+
 
     def get_top_movies_by_genre(self, genre: str, n: int = 3) -> pd.DataFrame:
         """
@@ -339,6 +345,6 @@ if __name__ == '__main__':
         my_movie_filter = MovieFilter()
         my_movie_filter.set_movie_data(my_movie_data.get_aggregate_movie_dataframe())
         my_movie_filter.calculate_rating_statistics()
-        print(my_movie_filter.average_rating)
-        print(my_movie_filter.median_rating)
+        # print(my_movie_filter.average_rating)
+        # print(my_movie_filter.median_rating)
         print(my_movie_filter.calculate_mean_rating_for_every_movie())
