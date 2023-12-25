@@ -287,13 +287,17 @@ class MovieFilter:
 
         :return: pandas DataFrame object
         """
-        df = self.movie_data
-        mean_ratings_df = df.groupby('movieId', as_index=False)['rating'].mean()
-        mean_ratings_df['rating'] = mean_ratings_df['rating'].round(3)
-        result = pd.merge(mean_ratings_df, self.movie_data[['movieId', 'title', 'genres', 'tag']], on='movieId')
-        result = result[['movieId', 'title', 'genres', 'rating', 'tag']]
-        result = result.drop_duplicates(subset=['movieId'])
-        return result
+        mean_ratings = self.movie_data.groupby(by='movieId')['rating'].mean()
+        result_df = pd.merge(mean_ratings, self.movie_data[['movieId', 'title', 'genres', 'tag']], on='movieId', how='left')
+        result_df['rating'] = result_df['rating'].round(3)
+        result_df = result_df.dropna(subset=['rating'])
+        result_df = result_df.drop_duplicates(subset=['movieId'])
+        return result_df[['movieId', 'title', 'genres', 'rating', 'tag']]
+
+
+
+
+
 
     def get_top_movies_by_genre(self, genre: str, n: int = 3) -> pd.DataFrame:
         """
@@ -308,7 +312,10 @@ class MovieFilter:
         if genre is None or genre == '' or n < 0:
             raise ValueError("Enter valid genre or number of movies.")
 
-        return self.filter_movies_by_genre(genre).sort_values(by='rating', ascending=False).head(n)
+        mean_rating_df = self.calculate_mean_rating_for_every_movie()
+        filtered_by_genres = mean_rating_df[mean_rating_df['genres'].str.lower().str.contains(genre.lower())]
+
+        return filtered_by_genres.sort_values(by='rating', ascending=False).head(n)
 
     def get_best_movie_by_year_genre_and_tag(self, year: int, genre: str, tag: str) -> pd.DataFrame:
         """
