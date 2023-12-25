@@ -276,7 +276,7 @@ class MovieFilter:
         if genre is None:
             raise ValueError("Enter valid genre.")
         df = self.movie_data
-        return df[(df['rating'].astype(float) > self.average_rating) & (df['genre'].str.lower().str.contains(genre.lower()))]
+        return df[(df['rating'].astype(float) > self.average_rating) & (df['genres'].str.lower().str.contains(genre.lower()))]
 
     def calculate_mean_rating_for_every_movie(self) -> pd.DataFrame:
         """
