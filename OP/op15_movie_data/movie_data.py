@@ -59,7 +59,7 @@ class MovieData:
         :return: None
         """
         rating_temp = self.ratings.drop(labels=['userId', 'timestamp'], axis=1)
-        tag_temp = self.tags.groupby(by=['movieId']).agg({'tag': lambda x: ' '.join(x)})
+        tag_temp = self.tags.groupby(by=['movieId']).agg({'tag': 'mean'})
         result = self.movies.merge(rating_temp, on='movieId', how='left')
         result = result.merge(tag_temp, on='movieId', how='left')
         result['tag'] = result['tag'].fillna(nan_placeholder)
@@ -287,8 +287,8 @@ class MovieFilter:
         :return: pandas DataFrame object
         """
         df = self.movie_data
-        df = df.groupby('movieId').agg({'title': 'first', 'genres': 'first', 'rating': 'mean', 'tag': 'first'}).round(3)
-        return df.dropna(subset='rating')
+        df = df.groupby('movieId').agg({'title': 'first', 'genres': 'first', 'rating': 'mean', 'tag': 'first'})
+        return df.dropna(subset='rating').round(3)
 
     def get_top_movies_by_genre(self, genre: str, n: int = 3) -> pd.DataFrame:
         """
