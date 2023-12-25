@@ -327,17 +327,19 @@ class MovieFilter:
         :param tag: string value to filter by
         :return: pandas DataFrame object of the search result
         """
-        if year < 0 or genre is None or tag is None:
-            raise ValueError("Enter valid year, genre and data.")
+        if year < 0:
+            raise ValueError("Enter valid year.")
+        if genre is None:
+            raise ValueError("Enter valid genre.")
+        if tag is None:
+            raise ValueError("Enter valid tag.")
 
         mean_rating = self.calculate_mean_rating_for_every_movie()
         filtered = mean_rating[(mean_rating['genres'].str.lower().str.contains(genre.lower())) &
-                               (mean_rating['tag'].str.lower().str.conrains(tag.lower()))]
+                               (mean_rating['tag'].str.lower().str.contains(tag.lower()))]
 
         res = filtered.sort_values(by='rating', ascending=False).head(1)
         return res
-
-
 
 if __name__ == '__main__':
     # this pd.option_context menu is for better display purposes
