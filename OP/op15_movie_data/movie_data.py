@@ -273,7 +273,7 @@ class MovieFilter:
         :param genre: string value to filter by
         :return: pandas DataFrame object of the search result
         """
-        if genre is None:
+        if genre is None or genre == '':
             raise ValueError("Enter valid genre.")
         df = self.movie_data
         return df[(df['rating'].astype(float) > self.average_rating) & (df['genres'].str.lower().str.contains(genre.lower()))]
