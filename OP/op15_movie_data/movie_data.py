@@ -287,11 +287,10 @@ class MovieFilter:
 
         :return: pandas DataFrame object
         """
-        mean_ratings = self.movie_data.groupby(by='movieId')['rating'].mean()
+        mean_ratings = self.movie_data.groupby(by='movieId')['rating'].mean().round(3)
         result_df = pd.merge(mean_ratings, self.movie_data[['movieId', 'title', 'genres', 'tag']], on='movieId', how='left')
-        result_df['rating'] = result_df['rating'].round(3)
-        result_df = result_df.dropna(subset=['rating'])
         result_df = result_df.drop_duplicates(subset=['movieId'])
+        result_df = result_df.dropna(subset=['rating'])
         return result_df[['movieId', 'title', 'genres', 'rating', 'tag']]
 
 
