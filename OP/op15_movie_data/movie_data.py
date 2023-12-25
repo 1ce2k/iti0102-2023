@@ -266,8 +266,7 @@ class MovieFilter:
 
     def get_movies_above_average_by_genre(self, genre: str) -> pd.DataFrame:
         """
-        Return all movies with the given genre where the rating is above
-        the calculated self.average_rating value. Search is case-insensitive.
+        Return all movies with the given genre where the rating is above the calculated self.average_rating value. Search is case-insensitive.
 
         If genre is an empty string or None, raise ValueError.
 
