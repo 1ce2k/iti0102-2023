@@ -59,7 +59,7 @@ class MovieData:
         :return: None
         """
         rating_temp = self.ratings.drop(labels=['userId', 'timestamp'], axis=1)
-        tag_temp = self.tags.groupby(by=['movieId']).agg({'tag': 'mean'})
+        tag_temp = self.tags.groupby(by=['movieId']).agg({'tag': lambda x: ' '.join(x)})
         result = self.movies.merge(rating_temp, on='movieId', how='left')
         result = result.merge(tag_temp, on='movieId', how='left')
         result['tag'] = result['tag'].fillna(nan_placeholder)
