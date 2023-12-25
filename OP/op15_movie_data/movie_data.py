@@ -1,6 +1,4 @@
 """What should we watch, Honey?..."""
-import time
-
 import pandas as pd
 
 
@@ -289,11 +287,6 @@ class MovieFilter:
         :return: pandas DataFrame object
         """
         df = self.movie_data
-        # mean_rating = df.groupby('movieId')['rating'].mean().round(3)
-        # df = df.drop(columns='rating')
-        # df = pd.merge(df, mean_rating, on='movieId', how='left')
-        # df = df.drop_duplicates(subset='movieId')
-        # df = df.dropna(subset='rating')
         df = df.groupby('movieId').agg({'title': 'first', 'genres': 'first', 'rating': 'mean', 'tag': 'first'}).round(3)
         return df.dropna(subset='rating')
 
@@ -346,25 +339,3 @@ class MovieFilter:
         result_df = df[(df['title'].str.extract(r'\((\d{4})\)', expand=False).astype(float) == float(year)) & (df['genres'].str.lower().str.contains(genre.lower())) & (df['tag'].str.lower().str.contains(tag.lower()))]
         result_df = result_df.sort_values(by='rating', ascending=False).head(1)
         return result_df
-
-
-if __name__ == '__main__':
-    # this pd.option_context menu is for better display purposes
-    # in terminal when using print. Keep these settings the same
-    # unless you wish to display more than 10 rows
-    with pd.option_context('display.max_rows', 30,
-                           'display.max_columns', 5,
-                           'display.width', 200):
-        my_movie_data = MovieData()
-        my_movie_data.load_data("movies.csv", "ratings.csv", "tags.csv")
-        my_movie_data.create_aggregate_movie_dataframe('--empty--')
-        my_movie_filter = MovieFilter()
-        my_movie_filter.set_movie_data(my_movie_data.get_aggregate_movie_dataframe())
-        my_movie_filter.calculate_rating_statistics()
-        print(my_movie_filter.average_rating)
-        print(my_movie_filter.median_rating)
-        print(my_movie_filter.calculate_mean_rating_for_every_movie())
-        # start = time.time()
-        # print(my_movie_filter.get_best_movie_by_year_genre_and_tag(1992, 'comedy', 'fun'))
-        # end = time.time()
-        # print(end - start)
