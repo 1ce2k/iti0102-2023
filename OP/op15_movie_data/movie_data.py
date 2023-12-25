@@ -1,4 +1,6 @@
 """What should we watch, Honey?..."""
+import time
+
 import pandas as pd
 
 
@@ -334,14 +336,23 @@ class MovieFilter:
         if tag is None:
             raise ValueError("Enter valid tag.")
 
+        # df = self.calculate_mean_rating_for_every_movie()
+        # # print(df)
+        # df['year'] = df['title'].str.extract(r'\((\d{4})\)')
+        # year_filter = df['year'].astype(float) == float(year)
+        # genre_filter = df['genres'].str.lower().str.contains(genre.lower())
+        # tag_filter = df['tag'].str.lower().str.contains(tag.lower())
+        # result_df = df[year_filter & genre_filter & tag_filter]
+        # result_df = result_df.nlargest(1, 'rating').drop(labels='year', axis=1)
+        # return result_df
+
         df = self.calculate_mean_rating_for_every_movie()
-        # print(df)
-        df['year'] = df['title'].str.extract(r'\((\d{4})\)')
-        year_filter = df['year'].astype(float) == float(year)
-        genre_filter = df['genres'].str.lower().str.contains(genre.lower())
-        tag_filter = df['tag'].str.lower().str.contains(tag.lower())
-        result_df = df[year_filter & genre_filter & tag_filter]
-        result_df = result_df.nlargest(1, 'rating').drop(labels='year', axis=1)
+        df['year'] = df['title'].str.extract(r'\((\d{4})\)').astype(float)
+        result_df = df.query(
+            f"year == {year} and genres.str.lower().str.contains('{genre.lower()}') and tag.str.lower().str.contains('{tag.lower()}')")
+        if result_df.empty:
+            return pd.DataFrame()  # No matching records found
+        result_df = result_df.sort_values(by='rating', ascending=False).head(1).drop(labels='year', axis=1)
         return result_df
 
 
@@ -349,7 +360,7 @@ if __name__ == '__main__':
     # this pd.option_context menu is for better display purposes
     # in terminal when using print. Keep these settings the same
     # unless you wish to display more than 10 rows
-    with pd.option_context('display.max_rows', 10,
+    with pd.option_context('display.max_rows', 30,
                            'display.max_columns', 5,
                            'display.width', 200):
         my_movie_data = MovieData()
@@ -361,4 +372,7 @@ if __name__ == '__main__':
         # print(my_movie_filter.average_rating)
         # print(my_movie_filter.median_rating)
         # print(my_movie_filter.calculate_mean_rating_for_every_movie())
-        print(my_movie_filter.get_best_movie_by_year_genre_and_tag(1995, 'comedy', 'fun'))
+        start = time.time()
+        print(my_movie_filter.get_best_movie_by_year_genre_and_tag(1992, 'comedy', 'fun'))
+        end = time.time()
+        print(end - start)
