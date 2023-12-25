@@ -295,7 +295,6 @@ class MovieFilter:
         result = result.drop_duplicates(subset=['movieId'])
         return result
 
-
     def get_top_movies_by_genre(self, genre: str, n: int = 3) -> pd.DataFrame:
         """
         Return the top n best rated movies with the given genre. Search is case-insensitive.
@@ -306,7 +305,10 @@ class MovieFilter:
         :param n: number of best rated movies to include in the result
         :return: pandas DataFrame object of the search result
         """
-        pass
+        if genre is None or genre == '' or n < 0:
+            raise ValueError("Enter valid genre or number of movies.")
+
+        return self.filter_movies_by_genre(genre).sort_values(by='rating', ascending=False).head(n)
 
     def get_best_movie_by_year_genre_and_tag(self, year: int, genre: str, tag: str) -> pd.DataFrame:
         """
