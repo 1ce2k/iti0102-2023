@@ -292,7 +292,8 @@ class MovieFilter:
         mean_ratings_df['rating'] = mean_ratings_df['rating'].round(3)
         result = pd.merge(mean_ratings_df, self.movie_data[['movieId', 'title', 'genres', 'tag']], on='movieId')
         result = result[['movieId', 'title', 'genres', 'rating', 'tag']]
-        return result.drop_duplicates(subset=['movieId']).dropna()
+        result = result.drop_duplicates(subset=['movieId'])
+        return result
 
 
     def get_top_movies_by_genre(self, genre: str, n: int = 3) -> pd.DataFrame:
