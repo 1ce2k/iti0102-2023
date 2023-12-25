@@ -340,7 +340,7 @@ class MovieFilter:
         year_filter = df['year'].astype(float) == float(year)
         genre_filter = df['genres'].str.lower().str.contains(genre.lower())
         tag_filter = df['tag'].str.lower().str.contains(tag.lower())
-        result_df = df[year_filter& genre_filter & tag_filter]
+        result_df = df[year_filter & genre_filter & tag_filter]
         result_df = result_df.sort_values(by='rating', ascending=False)
         return result_df.drop(labels='year', axis=1).head(1)
 
