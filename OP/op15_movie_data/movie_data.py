@@ -334,12 +334,16 @@ class MovieFilter:
         if tag is None:
             raise ValueError("Enter valid tag.")
 
-        mean_rating = self.calculate_mean_rating_for_every_movie()
-        filtered = mean_rating[(mean_rating['genres'].str.lower().str.contains(genre.lower())) &
-                               (mean_rating['tag'].str.lower().str.contains(tag.lower()))]
-
-        res = filtered.sort_values(by='rating', ascending=False).head(1)
-        return res
+        df = self.calculate_mean_rating_for_every_movie()
+        # print(df)
+        df['year'] = df['title'].str.extract(r'\((\d{4})\)')
+        year_filter = df['year'].astype(float) == float(year)
+        print(df[year_filter])
+        genre_filter = df['genres'].str.lower().str.contains(genre.lower())
+        tag_filter = df['tag'].str.lower().str.contains(tag.lower())
+        result_df = df[genre_filter & tag_filter]
+        result_df = result_df.sort_values(by='rating', ascending=False).head(1)
+        return result_df.drop(labels='year', axis=1)
 
 
 if __name__ == '__main__':
@@ -357,4 +361,5 @@ if __name__ == '__main__':
         my_movie_filter.calculate_rating_statistics()
         # print(my_movie_filter.average_rating)
         # print(my_movie_filter.median_rating)
-        print(my_movie_filter.calculate_mean_rating_for_every_movie())
+        # print(my_movie_filter.calculate_mean_rating_for_every_movie())
+        print(my_movie_filter.get_best_movie_by_year_genre_and_tag(1995, 'comedy', 'fun'))
