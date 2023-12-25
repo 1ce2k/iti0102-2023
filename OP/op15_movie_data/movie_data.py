@@ -280,13 +280,20 @@ class MovieFilter:
 
     def calculate_mean_rating_for_every_movie(self) -> pd.DataFrame:
         """
-        Return a new DataFrame where there is only one line per unique movie and the rating of every movie is the mean rating of all the individual ratings for that movie in self.movie_data, rounded to three decimal places.
+        Return a new DataFrame where there is only one line per unique movie and the rating of every movie is the
+        mean rating of all the individual ratings for that movie in self.movie_data, rounded to three decimal places.
 
         If the mean rating value is NaN, it should be dropped from the result.
 
         :return: pandas DataFrame object
         """
-        pass
+        df = self.movie_data
+        mean_ratings_df = df.groupby('movieId', as_index=False)['rating'].mean()
+        mean_ratings_df['rating'] = mean_ratings_df['rating'].round(3)
+        result = pd.merge(mean_ratings_df, self.movie_data[['movieId', 'title', 'genres', 'tag']], on='movieId')
+        result = result[['movieId', 'title', 'genres', 'rating', 'tag']]
+        return result.drop_duplicates(subset=['movieId'])
+
 
     def get_top_movies_by_genre(self, genre: str, n: int = 3) -> pd.DataFrame:
         """
@@ -330,3 +337,4 @@ if __name__ == '__main__':
         my_movie_filter.calculate_rating_statistics()
         print(my_movie_filter.average_rating)
         print(my_movie_filter.median_rating)
+        print(my_movie_filter.calculate_mean_rating_for_every_movie())
