@@ -338,12 +338,11 @@ class MovieFilter:
         # print(df)
         df['year'] = df['title'].str.extract(r'\((\d{4})\)')
         year_filter = df['year'].astype(float) == float(year)
-        print(df[year_filter])
         genre_filter = df['genres'].str.lower().str.contains(genre.lower())
         tag_filter = df['tag'].str.lower().str.contains(tag.lower())
-        result_df = df[genre_filter & tag_filter]
-        result_df = result_df.sort_values(by='rating', ascending=False).head(1)
-        return result_df.drop(labels='year', axis=1)
+        result_df = df[year_filter& genre_filter & tag_filter]
+        result_df = result_df.sort_values(by='rating', ascending=False)
+        return result_df.drop(labels='year', axis=1).head(1)
 
 
 if __name__ == '__main__':
@@ -362,4 +361,4 @@ if __name__ == '__main__':
         # print(my_movie_filter.average_rating)
         # print(my_movie_filter.median_rating)
         # print(my_movie_filter.calculate_mean_rating_for_every_movie())
-        print(my_movie_filter.get_best_movie_by_year_genre_and_tag(1995, 'comedy', 'fun'))
+        print(my_movie_filter.get_best_movie_by_year_genre_and_tag(1995, 'comedy', 'interesting'))
