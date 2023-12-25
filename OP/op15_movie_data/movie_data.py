@@ -311,10 +311,10 @@ class MovieFilter:
         if genre is None or genre == '' or n < 0:
             raise ValueError("Enter valid genre or number of movies.")
 
-        mean_rating_df = self.calculate_mean_rating_for_every_movie()
-        filtered_by_genres = mean_rating_df[mean_rating_df['genres'].str.lower().str.contains(genre.lower())]
+        mean_rating = self.calculate_mean_rating_for_every_movie()
+        filtered = mean_rating[mean_rating['genres'].str.lower().str.contains(genre.lower())]
+        res = filtered.sort_values(by='rating', ascending=False).head(n)
 
-        return filtered_by_genres.sort_values(by='rating', ascending=False).head(n)
 
     def get_best_movie_by_year_genre_and_tag(self, year: int, genre: str, tag: str) -> pd.DataFrame:
         """
