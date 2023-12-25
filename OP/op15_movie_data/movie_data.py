@@ -338,12 +338,18 @@ class MovieFilter:
 
         df = self.calculate_mean_rating_for_every_movie()
         # print(df)
-        df['year'] = df['title'].str.extract(r'\((\d{4})\)')
-        year_filter = df['year'].astype(float) == float(year)
-        genre_filter = df['genres'].str.lower().str.contains(genre.lower())
-        tag_filter = df['tag'].str.lower().str.contains(tag.lower())
-        result_df = df[year_filter & genre_filter & tag_filter]
-        result_df = result_df.nlargest(1, 'rating').drop(labels='year', axis=1)
+        # df['year'] = df['title'].str.extract(r'\((\d{4})\)')
+        # year_filter = df['year'].astype(float) == float(year)
+        # genre_filter = df['genres'].str.lower().str.contains(genre.lower())
+        # tag_filter = df['tag'].str.lower().str.contains(tag.lower())
+        # result_df = df[year_filter & genre_filter & tag_filter]
+        # result_df = result_df.nlargest(1, 'rating').drop(labels='year', axis=1)
+
+        result_df = df[df['title'].str.extract(r'\((\d{4})\)', expand=False).astype(float) == float(year)]
+        result_df = result_df[result_df['genres'].str.lower().str.contains(genre.lower())]
+        result_df = result_df[result_df['tag'].str.lower().str.contains(tag.lower())]
+
+        result_df = result_df.sort_values(by='rating', ascending=False).head(1)
         return result_df
 
 
