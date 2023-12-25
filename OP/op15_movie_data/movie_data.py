@@ -341,6 +341,7 @@ class MovieFilter:
         res = filtered.sort_values(by='rating', ascending=False).head(1)
         return res
 
+
 if __name__ == '__main__':
     # this pd.option_context menu is for better display purposes
     # in terminal when using print. Keep these settings the same
