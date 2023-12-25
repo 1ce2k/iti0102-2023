@@ -293,11 +293,6 @@ class MovieFilter:
         result_df = result_df.dropna(subset=['rating'])
         return result_df[['movieId', 'title', 'genres', 'rating', 'tag']]
 
-
-
-
-
-
     def get_top_movies_by_genre(self, genre: str, n: int = 3) -> pd.DataFrame:
         """
         Return the top n best rated movies with the given genre. Search is case-insensitive.
