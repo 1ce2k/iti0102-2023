@@ -287,9 +287,8 @@ class MovieFilter:
         :return: pandas DataFrame object
         """
         df = self.movie_data
-        df = df.groupby('movieId').agg({'title': 'first', 'genres': 'first', 'rating': 'mean', 'tag': 'first'})
-        df = df.dropna(subset='rating')
-        return df.round(3)
+        df = df.groupby('movieId').agg({'title': 'first', 'genres': 'first', 'rating': 'mean', 'tag': 'first'}).round(3)
+        return df.dropna(subset='rating')
 
     def get_top_movies_by_genre(self, genre: str, n: int = 3) -> pd.DataFrame:
         """
