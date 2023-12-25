@@ -291,13 +291,10 @@ class MovieFilter:
         df = self.movie_data
         mean_rating = df.groupby('movieId')['rating'].mean().round(3)
         df = pd.merge(df, mean_rating, on='movieId', how='left')
-        df = df.drop_duplicates(subset='movieId')
-        df.rename(columns={'rating_y': 'mean'})
-        df = df.drop(labels='rating_x', axis=1)
+        df = df.drop_duplicates(subset='movieId').drop(columns='rating_x')
         df = df.rename(columns={'rating_y': 'rating'})
         df = df.dropna(subset='rating')
-        df = df.groupby('movieId').agg({'title': lambda x: x, 'genres': lambda x: x, 'rating': lambda x: x, 'tag': lambda x: x})
-        return df
+        return df.groupby('movieId').agg({'title': lambda x: x, 'genres': lambda x: x, 'rating': lambda x: x, 'tag': lambda x: x})
 
     def get_top_movies_by_genre(self, genre: str, n: int = 3) -> pd.DataFrame:
         """
