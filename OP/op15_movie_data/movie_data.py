@@ -289,12 +289,12 @@ class MovieFilter:
         :return: pandas DataFrame object
         """
         df = self.movie_data
-        mean_rating = df.groupby('movieId')['rating'].mean().round(3)
-        df = df.drop(columns='rating')
-        df = pd.merge(df, mean_rating, on='movieId', how='left')
-        df = df.drop_duplicates(subset='movieId')
-        df = df.dropna(subset='rating')
-        return df.groupby('movieId').agg({'title': lambda x: x, 'genres': lambda x: x, 'rating': lambda x: x, 'tag': lambda x: x})
+        # mean_rating = df.groupby('movieId')['rating'].mean().round(3)
+        # df = df.drop(columns='rating')
+        # df = pd.merge(df, mean_rating, on='movieId', how='left')
+        # df = df.drop_duplicates(subset='movieId')
+        # df = df.dropna(subset='rating')
+        return df.groupby('movieId').agg({'title': 'first', 'genres': 'first', 'rating': 'mean', 'tag': 'first'}).round(3)
 
     def get_top_movies_by_genre(self, genre: str, n: int = 3) -> pd.DataFrame:
         """
@@ -363,7 +363,7 @@ if __name__ == '__main__':
         print(my_movie_filter.average_rating)
         print(my_movie_filter.median_rating)
         print(my_movie_filter.calculate_mean_rating_for_every_movie())
-        start = time.time()
-        print(my_movie_filter.get_best_movie_by_year_genre_and_tag(1992, 'comedy', 'fun'))
-        end = time.time()
-        print(end - start)
+        # start = time.time()
+        # print(my_movie_filter.get_best_movie_by_year_genre_and_tag(1992, 'comedy', 'fun'))
+        # end = time.time()
+        # print(end - start)
