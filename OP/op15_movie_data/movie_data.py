@@ -350,8 +350,6 @@ class MovieFilter:
         df['year'] = df['title'].str.extract(r'\((\d{4})\)').astype(float)
         result_df = df.query(
             f"year == {year} and genres.str.lower().str.contains('{genre.lower()}') and tag.str.lower().str.contains('{tag.lower()}')")
-        if result_df.empty:
-            return pd.DataFrame()  # No matching records found
         result_df = result_df.sort_values(by='rating', ascending=False).head(1).drop(labels='year', axis=1)
         return result_df
 
