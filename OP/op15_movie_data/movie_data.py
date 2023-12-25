@@ -337,5 +337,5 @@ class MovieFilter:
         # result_df = result_df.nlargest(1, 'rating').drop(labels='year', axis=1)
 
         result_df = df[(df['title'].str.extract(r'\((\d{4})\)', expand=False).astype(float) == float(year)) & (df['genres'].str.lower().str.contains(genre.lower())) & (df['tag'].str.lower().str.contains(tag.lower()))]
-        result_df = result_df.sort_values(by='rating', ascending=False).head(1)
+        result_df = result_df.nlargest(1, 'rating')
         return result_df
