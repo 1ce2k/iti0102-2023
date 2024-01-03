@@ -202,7 +202,8 @@ class MovieFilter:
         df = self.movie_data
         df['year'] = df['title'].str.extract(r'\((\d{4})\)')
         filtered = df[df['year'].astype(float) == float(year)]
-        return filtered.drop(labels='year', axis=1)
+        result = filtered.drop(columns='year')
+        return result
 
     def get_decent_movies(self) -> pd.DataFrame:
         """
@@ -237,14 +238,14 @@ if __name__ == '__main__':
     # in terminal when using print. Keep these settings the same
     # unless you wish to display more than 10 rows
     with pd.option_context('display.max_rows', 10,
-                           'display.max_columns', 5,
+                           'display.max_columns', 6,
                            'display.width', 200):
         my_movie_data = MovieData()
 
         # give correct path names here. These names are only good if you
         # installed the 3 data files in 'EX/ex15_movie_data/ml-latest-small/'
-        my_movie_data.load_data("movies.csv", "ratings.csv", "tags.csv")
-        # print(my_movie_data.get_movies_dataframe())  # ->
+        my_movie_data.load_data("../../OP/op15_movie_data/movies.csv", "../../OP/op15_movie_data/ratings.csv", "../../OP/op15_movie_data/tags.csv")
+        print(my_movie_data.get_movies_dataframe())  # ->
         #       movieId                    title                                       genres
         # 0           1         Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy
         # 1           2           Jumanji (1995)                   Adventure|Children|Fantasy
@@ -254,7 +255,7 @@ if __name__ == '__main__':
         # [9742 rows x 3 columns]  <- if your numbers match the numbers shown here it's a good
         #                             chance your function is getting the correct results.
 
-        # print(my_movie_data.get_ratings_dataframe())  # ->
+        print(my_movie_data.get_ratings_dataframe())  # ->
         #       userId      movieId     rating      timestamp
         # 0          1            1        4.0      964982703
         # 1          1            3        4.0      964981247
@@ -263,7 +264,7 @@ if __name__ == '__main__':
         # ...
         # [100836 rows x 4 columns]
 
-        # print(my_movie_data.get_tags_dataframe())  # ->
+        print(my_movie_data.get_tags_dataframe())  # ->
         #       userId      movieId             tag     timestamp
         # 0          2        60756           funny    1445714994
         # 1          2        60756 Highly quotable    1445714996
@@ -273,7 +274,7 @@ if __name__ == '__main__':
         # [3683 rows x 4 columns]
 
         my_movie_data.create_aggregate_movie_dataframe('--empty--')
-        # print(my_movie_data.get_aggregate_movie_dataframe())  # ->
+        print(my_movie_data.get_aggregate_movie_dataframe())  # ->
         #       movieId             title                                       genres  rating               tag
         # 0           1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     4.0   pixar pixar fun
         # 1           1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     4.0   pixar pixar fun
@@ -286,7 +287,7 @@ if __name__ == '__main__':
 
         my_movie_filter = MovieFilter()
         my_movie_filter.set_movie_data(my_movie_data.get_aggregate_movie_dataframe())
-        # print(my_movie_filter.filter_movies_by_rating_value(2.1, 'less_than'))  # ->
+        print(my_movie_filter.filter_movies_by_rating_value(2.1, 'less_than'))  # ->
         #       movieId             title                                       genres  rating               tag
         # 26          1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     0.5   pixar pixar fun
         # 43          1  Toy Story (1995)  Adventure|Animation|Children|Comedy|Fantasy     2.0   pixar pixar fun
@@ -304,12 +305,12 @@ if __name__ == '__main__':
         # ...
         # [1551 rows x 5 columns]
 
-        # print(my_movie_filter.get_decent_movies())
+        print(my_movie_filter.get_decent_movies())
         # -> first five rows all Toy Story
         # dataframe size [81763 rows x 5 columns]
-        # print(my_movie_filter.get_decent_comedy_movies())
+        print(my_movie_filter.get_decent_comedy_movies())
         # -> first five rows all Toy Story
         # dataframe size [30274 rows x 5 columns]
-        # print(my_movie_filter.get_decent_children_movies())
+        print(my_movie_filter.get_decent_children_movies())
         # -> first 5 rows all Toy Story
         # dataframe size [7326 rows x 5 columns]
