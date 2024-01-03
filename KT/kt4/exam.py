@@ -34,17 +34,20 @@ def sum_elements_around_last_three(nums: list) -> int:
     :param nums: given list of ints
     :return: sum of elements before and after last 3
     """
-    if len(nums) < 3 or nums.count(3) == 0:
+    if 3 not in nums or len(nums) < 3:
         return 0
-    if (nums[0] == 3 or nums[-1] == 3) and nums.count(3) == 1:
+
+    reversed = nums[::-1]
+    if reversed[0] == 3:
+        reversed = reversed[1:]
+    if reversed[0] == 3:
+        return 3 + reversed[1]
+
+    three_index = reversed.index(3)
+    if three_index == len(nums) - 1:
         return 0
-    nums_reversed = nums[::-1]
-    sum = 0
-    for i in range(len(nums_reversed)):
-        if nums_reversed[i] == 3 and nums_reversed.index(nums_reversed[i]) != 0:
-            sum = nums_reversed[i - 1] + nums_reversed[i + 1]
-            break
-    return sum
+    return reversed[three_index - 1] + reversed[three_index + 1]
+
 
 
 def create_dictionary_from_directed_string_pairs(pairs: list) -> dict:
