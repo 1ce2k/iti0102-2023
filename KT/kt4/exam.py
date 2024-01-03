@@ -45,9 +45,10 @@ def sum_elements_around_last_three(nums: list) -> int:
     if 3 not in num_reversed or len(num_reversed) < 3:
         return 0
     three_index = num_reversed.index(3)
-    if three_index == len(nums) - 1:
-        return 0
-    return num_reversed[three_index - 1] + num_reversed[three_index + 1]
+    return three_index
+    # if three_index == len(nums) - 1:
+    #     return 0
+    # return num_reversed[three_index - 1] + num_reversed[three_index + 1]
 
 
 def create_dictionary_from_directed_string_pairs(pairs: list) -> dict:
