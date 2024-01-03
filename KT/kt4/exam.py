@@ -11,7 +11,7 @@ def two_digits_into_list(nr: int) -> list:
     :param nr: 2-digit number
     :return: list of length 2
     """
-    if len(nr) == 2:
+    if len(str(nr)) == 2:
         return [int(x) for x in str(nr)]
 
 
