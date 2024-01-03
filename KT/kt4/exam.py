@@ -11,7 +11,8 @@ def two_digits_into_list(nr: int) -> list:
     :param nr: 2-digit number
     :return: list of length 2
     """
-    return [int(x) for x in nr]
+    if len(nr) == 2:
+        return [int(x) for x in str(nr)]
 
 
 def sum_elements_around_last_three(nums: list) -> int:
