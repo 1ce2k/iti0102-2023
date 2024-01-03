@@ -55,7 +55,13 @@ def swap_dict_keys_and_value_lists(d: dict) -> dict:
     swap_dict_keys_and_value_lists({}) => {}
     swap_dict_keys_and_value_lists({1: [2]}) => {2: [1]}
     """
-    pass
+    new_dict = {}
+    for key, value in d.items():
+        for x in value:
+            if x not in new_dict:
+                new_dict[x] = []
+            new_dict[x].append(key)
+    return new_dict
 
 
 def substring(s: str, count: int) -> str:
@@ -89,7 +95,8 @@ if __name__ == '__main__':
     assert only_one_pair([1, 2, 1, 3, 1, 2]) is False
 
     assert swap_dict_keys_and_value_lists({"a": ["b", "c"]}) == {"b": ["a"], "c": ["a"]}
-    assert swap_dict_keys_and_value_lists({1: [2, 3], 4: [2, 5]}) == {2: [1, 4], 3: [1], 5: [4]}  # or {2: [4, 1], 3: [1], 5: [4]}
+    print(swap_dict_keys_and_value_lists({1: [2, 3], 4: [2, 5]}))
+    assert swap_dict_keys_and_value_lists({1: [2, 3], 4: [2, 5]}) == {2: [4, 1], 3: [1], 5: [4]}  # or {2: [4, 1], 3: [1], 5: [4]}
     assert swap_dict_keys_and_value_lists({}) == {}
     assert swap_dict_keys_and_value_lists({1: [2]}) == {2: [1]}
 
