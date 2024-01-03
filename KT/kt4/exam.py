@@ -37,16 +37,17 @@ def sum_elements_around_last_three(nums: list) -> int:
     if 3 not in nums or len(nums) < 3:
         return 0
 
-    reversed = nums[::-1]
-    if reversed[0] == 3:
-        reversed = reversed[1:]
-    if reversed[0] == 3:
-        return 3 + reversed[1]
+    num_reversed = nums[::-1]
+    if num_reversed[0] == 3:
+        num_reversed = num_reversed[1:]
+    if num_reversed[0] == 3:
+        return 3 + num_reversed[1]
 
-    three_index = reversed.index(3)
+    three_index = num_reversed.index(3)
     if three_index == len(nums) - 1:
         return 0
-    return reversed[three_index - 1] + reversed[three_index + 1]
+    num_reversed = nums[::-1]
+    return num_reversed[three_index - 1] + num_reversed[three_index + 1]
 
 
 
