@@ -85,12 +85,14 @@ def create_dictionary_from_directed_string_pairs(pairs: list) -> dict:
             key, value = elem.split('>')
             if key not in final_dict:
                 final_dict[key] = []
-            final_dict[key].append(value)
+            if value not in final_dict[key]:
+                final_dict[key].append(value)
         if '<' in elem:
             value, key = elem.split('<')
             if key not in final_dict:
                 final_dict[key] = []
-            final_dict[key].append(value)
+            if value not in final_dict[key]:
+                final_dict[key].append(value)
     return final_dict
 
 def count_the_dumplings(day: int) -> int:
