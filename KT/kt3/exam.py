@@ -31,7 +31,11 @@ def only_one_pair(numbers: list) -> bool:
     only_one_pair([1, 2, 1, 3, 1]) => False
     only_one_pair([1, 2, 1, 3, 1, 2]) => False
     """
-    pass
+    if len(numbers) == len(set(numbers)):
+        return False
+    if len(numbers) - len(set(numbers)) > 1:
+        return False
+    return True
 
 
 def swap_dict_keys_and_value_lists(d: dict) -> dict:
