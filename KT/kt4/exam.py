@@ -114,8 +114,9 @@ def count_the_dumplings(day: int) -> int:
     """
     if day == 0:
         return 0
-    return 2 ** (day - 1)
-
+    if day == 1:
+        return 1
+    return 2 * count_the_dumplings(day - 1)
 
 
 if __name__ == '__main__':
