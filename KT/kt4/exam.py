@@ -95,6 +95,7 @@ def create_dictionary_from_directed_string_pairs(pairs: list) -> dict:
                 final_dict[key].append(value)
     return final_dict
 
+
 def count_the_dumplings(day: int) -> int:
     """
     Count the dumplings.
@@ -111,7 +112,10 @@ def count_the_dumplings(day: int) -> int:
     count_the_dumplings(3) => 4
     count_the_dumplings(30) ==> 536870912
     """
-    pass
+    if day == 0:
+        return 0
+    return 2 ** (day - 1)
+
 
 
 if __name__ == '__main__':
@@ -124,8 +128,8 @@ if __name__ == '__main__':
     # print(sum_elements_around_last_three([1, 2, 3, 4, 6, 4, 3, 4, 5, 3, 3, 2, 3]))  # 5
     # print(sum_elements_around_last_three([1, 2, 3]))  # 0
 
-    print(create_dictionary_from_directed_string_pairs(["a>b", "a<b"]))  # {"a": ["b"], "b": ["a"]}
+    # print(create_dictionary_from_directed_string_pairs(["a>b", "a<b"]))  # {"a": ["b"], "b": ["a"]}
     # print(create_dictionary_from_directed_string_pairs(["1>1", "1>2", "1>1"]))  # {"1": ["1", "2"]}
     #
-    # print(count_the_dumplings(3))   # 4
-    # print(count_the_dumplings(30))  # 536870912
+    print(count_the_dumplings(3))   # 4
+    print(count_the_dumplings(30))  # 536870912
