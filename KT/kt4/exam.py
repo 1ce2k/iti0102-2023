@@ -117,20 +117,3 @@ def count_the_dumplings(day: int) -> int:
     if day == 1:
         return 1
     return 2 * count_the_dumplings(day - 1)
-
-
-if __name__ == '__main__':
-    # print(two_digits_into_list(11))  # [1, 1]
-    # print(two_digits_into_list(71))  # [7, 1]
-
-    # print(sum_elements_around_last_three([1, 3, 7]))  # 8
-    # print(sum_elements_around_last_three([3, 2, 1, 3, 2]))  # 3
-    # print(sum_elements_around_last_three([4, 5, 3, 2, 3, 6])) # 8
-    # print(sum_elements_around_last_three([1, 2, 3, 4, 6, 4, 3, 4, 5, 3, 3, 2, 3]))  # 5
-    # print(sum_elements_around_last_three([1, 2, 3]))  # 0
-
-    # print(create_dictionary_from_directed_string_pairs(["a>b", "a<b"]))  # {"a": ["b"], "b": ["a"]}
-    # print(create_dictionary_from_directed_string_pairs(["1>1", "1>2", "1>1"]))  # {"1": ["1", "2"]}
-    #
-    print(count_the_dumplings(3))   # 4
-    print(count_the_dumplings(30))  # 536870912
