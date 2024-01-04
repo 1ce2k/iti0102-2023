@@ -66,7 +66,7 @@ def get_names_from_results(results_string: str, min_result: int) -> list:
     #     if name and score >= min_result:
     #         name_list.append(name)
     # return name_list
-    return [''.join(res.split()[:-1]) for res in results if int(res.split()[-1]) >= min_result]
+    return [' '.join(res.split()[:-1]) for res in results if int(res.split()[-1]) >= min_result]
 
 
 # print(get_names_from_results("ago 123,peeter 11", 0))
